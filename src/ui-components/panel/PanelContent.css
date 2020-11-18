@@ -1,0 +1,6 @@
+.PanelContent {
+  flex: 1;
+  padding-bottom: 15px;
+  overflow-y: auto;
+  padding: 10px;
+}

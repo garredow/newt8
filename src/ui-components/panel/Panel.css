@@ -1,0 +1,16 @@
+.Panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Panel__header {
+  margin: 10px 25px;
+  font-weight: 300px;
+}
+
+.Panel__content {
+  flex: 1;
+  padding-bottom: 15px;
+  overflow-y: auto;
+}

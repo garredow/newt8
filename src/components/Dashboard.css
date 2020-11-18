@@ -1,0 +1,12 @@
+.Dashboard {
+  display: grid;
+  grid-template-columns: 350px 1fr 1fr;
+  grid-template-rows: 100vh;
+  max-height: 100vh;
+  padding: 0 10px;
+  column-gap: 10px;
+}
+
+.Dashboard > div {
+  overflow: hidden;
+}

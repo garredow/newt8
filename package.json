@@ -2,42 +2,48 @@
   "name": "newt8",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build:watch": "cra-build-watch",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",
     "@testing-library/user-event": "^12.2.0",
+    "@types/chrome": "0.0.126",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.19.4",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
+    "date-fns": "^2.16.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
     "typescript": "^4.0.5",
     "web-vitals": "^0.2.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "cra-build-watch": "^3.4.0",
+    "eslint-config-prettier": "^6.15.0"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "prettier"
     ]
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 2 Chrome versions",
+      "last 2 Firefox versions"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 2 Chrome versions",
+      "last 2 Firefox versions"
     ]
   }
 }

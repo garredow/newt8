@@ -1,0 +1,44 @@
+.TabRow {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.TabRow:hover {
+  background-color: var(--card-highlight-color);
+}
+
+.TabRow__icon {
+  height: 24px;
+  width: 24px;
+  margin-right: 15px;
+}
+
+.TabRow__details-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.TabRow__title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.TabRow__line2 {
+  display: flex;
+  font-size: 0.8rem;
+}
+
+.TabRow__time {
+  color: var(--card-accent-color);
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+
+.TabRow__url {
+  flex: 1;
+  opacity: 0.5;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
