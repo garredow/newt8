@@ -1,0 +1,25 @@
+.IconButton {
+  /* border-radius: 100%; */
+  height: 36px;
+  width: 36px;
+  opacity: 0.2;
+  transition: opacity 150ms;
+}
+
+.IconButton:hover {
+  /* background-color: var(--card-button-highlight-color); */
+  opacity: 0.8;
+}
+
+.IconButton:active {
+  /* background-color: var(--card-accent-color); */
+  /* opacity: 0.8; */
+}
+
+.IconButton__button {
+  fill: var(--card-button-text-color);
+}
+
+.IconButton:active .IconButton__button {
+  fill: var(--card-accent-color);
+}
