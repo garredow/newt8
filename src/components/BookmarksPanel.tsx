@@ -19,7 +19,7 @@ function BookmarkRow({ bookmark, onClick }: BookmarkRowProps) {
       <div>
         <img
           className="BookmarkRow__icon"
-          src={`https://www.google.com/s2/favicons?domain=${bookmark.url}`}
+          src={`chrome://favicon/size/32@1x/${bookmark.url}`}
           alt=""
         />
       </div>

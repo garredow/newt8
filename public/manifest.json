@@ -26,6 +26,7 @@
   "permissions": [
     "bookmarks",
     "tabs",
-    "storage"
+    "storage",
+    "chrome://favicon/"
   ]
 }
