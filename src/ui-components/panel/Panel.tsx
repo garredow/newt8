@@ -1,13 +1,11 @@
 import React from 'react';
 import { ComponentBase } from '../../models/ComponentBase';
-import './Panel.css';
+import styles from './Panel.module.css';
 
 type PanelProps = ComponentBase;
 
 export function Panel(props: PanelProps) {
-  return (
-    <div className={`Panel ${props.className || ''}`}>{props.children}</div>
-  );
+  return <div className={styles.root}>{props.children}</div>;
 }
 
 // type PanelHeaderProps = ComponentBase & {

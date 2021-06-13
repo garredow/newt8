@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react';
 import { IconContext } from 'react-icons/lib';
 import { ComponentBase } from '../../models/ComponentBase';
-import './IconButton.css';
+import styles from './IconButton.module.css';
 
 type IconButtonProps = ComponentBase & {
   icon?: any;
@@ -10,10 +10,8 @@ type IconButtonProps = ComponentBase & {
 
 export function IconButton(props: IconButtonProps) {
   return (
-    <button className="IconButton" onClick={props.onClick}>
-      <IconContext.Provider
-        value={{ size: '24px', className: 'IconButton__button' }}
-      >
+    <button className={styles.root} onClick={props.onClick}>
+      <IconContext.Provider value={{ size: '24px', className: styles.icon }}>
         {props.children}
       </IconContext.Provider>
     </button>

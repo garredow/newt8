@@ -1,15 +1,15 @@
-.WindowsPanel {
+.root {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.WindowsPanel__header {
+.header {
   margin: 10px 25px;
   font-weight: 300px;
 }
 
-.WindowsPanel__window-list {
+.content {
   flex: 1;
   padding-bottom: 15px;
   overflow-y: auto;

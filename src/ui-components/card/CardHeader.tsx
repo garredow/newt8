@@ -1,5 +1,5 @@
 import React from 'react';
-import './CardHeader.css';
+import styles from './CardHeader.module.css';
 
 type CardHeaderProps = {
   text?: string;
@@ -9,10 +9,10 @@ type CardHeaderProps = {
 
 export function CardHeader(props: CardHeaderProps) {
   return (
-    <div className="CardHeader">
-      <div className="CardHeader__row">
-        <div className="CardHeader__text">{props.text}</div>
-        <div className="CardHeader__actions">{props.actions}</div>
+    <div className={styles.root}>
+      <div className={styles.row}>
+        <div className={styles.title}>{props.text}</div>
+        <div className={styles.actions}>{props.actions}</div>
       </div>
       {props.children}
     </div>

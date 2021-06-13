@@ -1,5 +1,5 @@
 import React from 'react';
-import './CardButton.css';
+import styles from './CardButton.module.css';
 
 type CardButtonProps = {
   text: string;
@@ -8,7 +8,7 @@ type CardButtonProps = {
 
 export function CardButton(props: CardButtonProps) {
   return (
-    <button className="CardButton-button" onClick={() => props.onClick()}>
+    <button className={styles.root} onClick={() => props.onClick()}>
       {props.text}
     </button>
   );

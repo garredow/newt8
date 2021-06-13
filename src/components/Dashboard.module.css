@@ -1,6 +1,6 @@
-.Dashboard {
+.root {
   display: grid;
-  grid-template-columns: 350px 1fr 1fr;
+  grid-template-columns: 1fr 2fr 2fr;
   grid-template-rows: 100vh;
   flex: 1;
   max-height: 100vh;
@@ -8,6 +8,6 @@
   column-gap: 10px;
 }
 
-.Dashboard > div {
+.root > div {
   overflow: hidden;
 }

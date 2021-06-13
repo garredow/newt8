@@ -1,0 +1,13 @@
+.root {
+  margin: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 300px;
+  margin: 0;
+}

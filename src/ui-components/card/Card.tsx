@@ -1,11 +1,9 @@
 import React from 'react';
-import './Card.css';
-
+import styles from './Card.module.css';
 export type CardProps = {
   children?: any;
-  className?: string;
 };
 
-export function Card({ children, className = '' }: CardProps) {
-  return <div className={`Card ${className}`}>{children}</div>;
+export function Card({ children }: CardProps) {
+  return <div className={styles.root}>{children}</div>;
 }
