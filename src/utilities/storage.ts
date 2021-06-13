@@ -1,3 +1,7 @@
+export const STORAGE_KEY = {
+  SETTINGS: 'settings',
+};
+
 export async function getItem<T>(key: string): Promise<T> {
   return new Promise((resolve) => {
     chrome.storage.local.get(key, (result) => resolve(result[key]));
