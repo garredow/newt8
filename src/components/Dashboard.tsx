@@ -11,7 +11,7 @@ export function DashboardView() {
     <div className={styles.root}>
       <BookmarksPanel />
       <RecentTabs />
-      <WindowsPanel />
+      {/* <WindowsPanel /> */}
     </div>
   );
 }

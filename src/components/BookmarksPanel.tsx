@@ -23,20 +23,18 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
     <div className={styles.root}>
       <Panel>
         <PanelHeader text="Bookmarks" />
-        <PanelContent>
+        <PanelContent columns={2}>
           {bookmarks.map((group) => (
             <Card key={group.id}>
               <CardHeader text={group.title} />
-              <div>
-                {group.children!.map((site) => (
-                  <SiteRow
-                    key={site.id}
-                    title={site.title}
-                    iconUrl={`chrome://favicon/size/32@1x/${site.url}`}
-                    onClick={() => openSite(site.url as string)}
-                  />
-                ))}
-              </div>
+              {group.children!.map((site) => (
+                <SiteRow
+                  key={site.id}
+                  title={site.title}
+                  iconUrl={`chrome://favicon/size/32@1x/${site.url}`}
+                  onClick={() => openSite(site.url as string)}
+                />
+              ))}
             </Card>
           ))}
         </PanelContent>
