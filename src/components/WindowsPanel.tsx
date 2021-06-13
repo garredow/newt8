@@ -30,6 +30,7 @@ function WindowCard({ window }: WindowCardProps) {
       <CardHeader text={title} />
       {tabs.map((tab) => (
         <SiteRow
+          key={tab.id}
           title={tab.title}
           iconUrl={tab.favIconUrl}
           url={tab.url}

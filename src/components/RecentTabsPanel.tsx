@@ -25,6 +25,7 @@ export function RecentTabs() {
           <Card>
             {tabs.map((tab) => (
               <SiteRow
+                key={tab.id}
                 title={tab.title}
                 iconUrl={tab.favIconUrl}
                 url={tab.url}
