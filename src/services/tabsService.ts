@@ -53,8 +53,36 @@ function sortTabsBy(tabs: ChromeTab[], sortField: string) {
   return sortedTabs;
 }
 
-export async function getMetadata(): Promise<TabMetadata[]> {
+export async function getMetadata(
+  tabs?: chrome.tabs.Tab[]
+): Promise<TabMetadata[]> {
   const metadata = await storage.getItem<TabMetadata[]>('tabs');
+
+  // Ensure metadata exsists for all tabs
+  if (tabs) {
+    let addedMetadata = false;
+    tabs.forEach((tab) => {
+      if (metadata.find((a) => a.id === tab.id)) {
+        return;
+      }
+
+      const newData: TabMetadata = {
+        id: tab.id!,
+        windowId: tab.windowId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        accessedAt: new Date().toISOString(),
+      };
+
+      metadata.push(newData);
+      addedMetadata = true;
+    });
+
+    if (addedMetadata) {
+      saveMetadata(metadata);
+    }
+  }
+
   return metadata || [];
 }
 
@@ -68,20 +96,27 @@ async function getTabsWithMetadata(
     rawTabs = rawTabs.filter((a) => a.id !== currentTab.id);
   }
 
-  const metadata = await getMetadata();
+  const metadata = await getMetadata(rawTabs);
   const metadataMap = metadata.reduce((acc: any, data) => {
     acc[data.id] = data;
     return acc;
   }, {});
+
   const tabs = rawTabs.map((rawTab) => {
     const meta = metadataMap[rawTab.id as number];
     return Object.assign(rawTab, {
       id: rawTab.id as number,
-      createdAt: meta.createdAt || new Date().toISOString(),
-      updatedAt: meta.updatedAt || new Date().toISOString(),
-      accessedAt: meta.accessedAt || new Date().toISOString(),
+      createdAt: meta?.createdAt || new Date().toISOString(),
+      updatedAt: meta?.updatedAt || new Date().toISOString(),
+      accessedAt: meta?.accessedAt || new Date().toISOString(),
     });
   });
 
   return tabs;
+}
+
+function saveMetadata(metadata: TabMetadata[]) {
+  return new Promise<void>((resolve) => {
+    chrome.storage.local.set({ tabs: metadata }, resolve);
+  });
 }
