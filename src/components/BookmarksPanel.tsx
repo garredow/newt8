@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { MdSettings } from 'react-icons/md';
 import { Bookmark } from '../models/Bookmark';
 import { getBookmarks, openUrl } from '../services/chromeService';
+import { IconButton } from '../ui-components/button';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent, PanelHeader } from '../ui-components/panel';
 import styles from './BookmarksPanel.module.css';
 
-type BookmarksPanelProps = {};
+type BookmarksPanelOptions = {};
+
+type BookmarksPanelProps = {
+  options: BookmarksPanelOptions;
+  onOptionsChanged: (options: BookmarksPanelOptions) => void;
+};
 
 export function BookmarksPanel(props: BookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     getBookmarks().then((res) => setBookmarks(res));
@@ -22,8 +30,18 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   return (
     <div className={styles.root}>
       <Panel>
-        <PanelHeader text="Bookmarks" />
-        <PanelContent columns={2}>
+        <PanelHeader
+          text="Bookmarks"
+          actions={
+            <>
+              <IconButton onClick={() => setShowSettings(!showSettings)}>
+                <MdSettings />
+              </IconButton>
+            </>
+          }
+        />
+        {showSettings ? <PanelContent>Settings</PanelContent> : null}
+        <PanelContent>
           {bookmarks.map((group) => (
             <Card key={group.id}>
               <CardHeader text={group.title} />

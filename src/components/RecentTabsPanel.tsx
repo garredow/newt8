@@ -8,7 +8,14 @@ import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { switchToTab } from '../services/chromeService';
 
-export function RecentTabs() {
+type RecentTabsPanelOptions = {};
+
+type RecentTabsPanelProps = {
+  options: RecentTabsPanelOptions;
+  onOptionsChanged: (options: RecentTabsPanelOptions) => void;
+};
+
+export function RecentTabsPanel(props: RecentTabsPanelProps) {
   const [tabs, setTabs] = useState<ChromeTab[]>([]);
 
   useEffect(() => {
@@ -21,7 +28,7 @@ export function RecentTabs() {
     <div className={styles.root}>
       <Panel>
         <PanelHeader text="Recent Tabs" />
-        <PanelContent>
+        <PanelContent columns={1}>
           <Card>
             {tabs.map((tab) => (
               <SiteRow

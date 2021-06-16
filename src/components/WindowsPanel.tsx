@@ -51,7 +51,12 @@ function WindowCard({ window }: WindowCardProps) {
   );
 }
 
-type WindowsPanelProps = {};
+type WindowsPanelOptions = {};
+
+type WindowsPanelProps = {
+  options: WindowsPanelOptions;
+  onOptionsChanged: (options: WindowsPanelOptions) => void;
+};
 
 export function WindowsPanel(props: WindowsPanelProps) {
   const [windows, setWindows] = useState<ChromeWindow[]>([]);
@@ -76,7 +81,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
           }
         />
         {showSettings ? <PanelContent>Settings</PanelContent> : null}
-        <PanelContent>
+        <PanelContent columns={1}>
           {windows.map((window) => (
             <WindowCard window={window} key={window.id} />
           ))}
