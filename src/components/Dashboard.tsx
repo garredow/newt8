@@ -80,7 +80,7 @@ export function DashboardView() {
           />
         );
       case PanelType.Bookmarks:
-        const defaultBookmarksOpts = { columns: 0, width: 'full' } as any;
+        const defaultBookmarksOpts = { columns: 0, width: 3 } as any;
         return (
           <BookmarksPanel
             key={panel.id}
@@ -92,7 +92,7 @@ export function DashboardView() {
           />
         );
       case PanelType.RecentTabs:
-        const defaultRecentTabsOpts = { columns: 1, width: 'full' } as any;
+        const defaultRecentTabsOpts = { columns: 1, width: 3 } as any;
         return (
           <RecentTabsPanel
             key={panel.id}
@@ -104,7 +104,7 @@ export function DashboardView() {
           />
         );
       case PanelType.Windows:
-        const defaultWindowsOpts = { columns: 1, width: 'full' } as any;
+        const defaultWindowsOpts = { columns: 1, width: 3 } as any;
         return (
           <WindowsPanel
             key={panel.id}

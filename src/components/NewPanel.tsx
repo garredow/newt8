@@ -22,7 +22,7 @@ export function NewPanel(props: NewPanelProps) {
   console.log('available', props.availablePanels);
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} style={{ gridColumn: 'span 3' }}>
       <Panel>
         <PanelHeader text="New Panel" />
         <PanelContent columns={1}>

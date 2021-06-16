@@ -13,7 +13,7 @@ import styles from './BookmarksPanel.module.css';
 
 type BookmarksPanelOptions = {
   columns: number;
-  width: 'half' | 'full';
+  width: 1 | 2 | 3 | 4 | 5;
 };
 
 type BookmarksPanelProps = {
@@ -42,11 +42,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   return (
     <div
       className={styles.root}
-      style={
-        props.options.width === 'half'
-          ? { gridColumn: 'span 1' }
-          : { gridColumn: 'span 2' }
-      }
+      style={{ gridColumn: `span ${props.options.width}` }}
     >
       <Panel>
         <PanelHeader
@@ -86,8 +82,11 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                 defaultValue={props.options.width}
                 onChange={(ev) => setOptionValue('width', ev.target.value)}
               >
-                <option value="half">Half</option>
-                <option value="full">Full</option>
+                <option value={1}>Smallest</option>
+                <option value={2}>Small</option>
+                <option value={3}>Medium</option>
+                <option value={4}>Large</option>
+                <option value={5}>Largest</option>
               </select>
             </SettingsRow>
             <CardButton
