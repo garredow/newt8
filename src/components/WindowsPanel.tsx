@@ -6,14 +6,14 @@ import { ChromeWindow } from '../models/ChromeWindow';
 import { switchToTab } from '../services/chromeService';
 import { getWindows } from '../services/windowsService';
 import { IconButton } from '../ui-components/button';
-import {
-  Card,
-  CardButton,
-  CardFooter,
-  CardHeader,
-} from '../ui-components/card';
+import { Card, CardFooter, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
-import { Panel, PanelContent, PanelHeader } from '../ui-components/panel';
+import {
+  Panel,
+  PanelButton,
+  PanelContent,
+  PanelHeader,
+} from '../ui-components/panel';
 import { PanelSettings } from '../ui-components/panel/PanelSettings';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './WindowsPanel.module.css';
@@ -44,7 +44,7 @@ function WindowCard({ window }: WindowCardProps) {
         />
       ))}
       <CardFooter>
-        <CardButton
+        <PanelButton
           text={expanded ? 'See less' : 'See more'}
           onClick={() => setExpanded(!expanded)}
         />
@@ -127,11 +127,11 @@ export function WindowsPanel(props: WindowsPanelProps) {
                 <option value={5}>Largest</option>
               </select>
             </SettingsRow>
-            <CardButton
+            <PanelButton
               text="Delete"
               type={ButtonType.Danger}
               onClick={props.onDeletePanel}
-            ></CardButton>
+            ></PanelButton>
           </PanelSettings>
         ) : null}
         <PanelContent columns={props.options.columns}>

@@ -4,9 +4,14 @@ import { ButtonType } from '../enums/buttonType';
 import { Bookmark } from '../models/Bookmark';
 import { getBookmarks, openUrl } from '../services/chromeService';
 import { IconButton } from '../ui-components/button';
-import { Card, CardButton, CardHeader } from '../ui-components/card';
+import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
-import { Panel, PanelContent, PanelHeader } from '../ui-components/panel';
+import {
+  Panel,
+  PanelButton,
+  PanelContent,
+  PanelHeader,
+} from '../ui-components/panel';
 import { PanelSettings } from '../ui-components/panel/PanelSettings';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './BookmarksPanel.module.css';
@@ -89,11 +94,11 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                 <option value={5}>Largest</option>
               </select>
             </SettingsRow>
-            <CardButton
+            <PanelButton
               text="Delete"
               type={ButtonType.Danger}
               onClick={props.onDeletePanel}
-            ></CardButton>
+            ></PanelButton>
           </PanelSettings>
         ) : null}
         <PanelContent columns={props.options.columns}>

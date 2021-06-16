@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ChromeTab } from '../models/ChromeTab';
 import { getRecentTabs } from '../services/tabsService';
-import { Card, CardButton } from '../ui-components/card';
-import { Panel, PanelContent, PanelHeader } from '../ui-components/panel';
+import { Card } from '../ui-components/card';
+import {
+  Panel,
+  PanelButton,
+  PanelContent,
+  PanelHeader,
+} from '../ui-components/panel';
 import styles from './RecentTabsPanel.module.css';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
@@ -89,11 +94,11 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
                 <option value={5}>Largest</option>
               </select>
             </SettingsRow>
-            <CardButton
+            <PanelButton
               text="Delete"
               type={ButtonType.Danger}
               onClick={props.onDeletePanel}
-            ></CardButton>
+            ></PanelButton>
           </PanelSettings>
         ) : null}
         <PanelContent columns={props.options.columns}>

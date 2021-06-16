@@ -1,14 +1,14 @@
 import React from 'react';
 import { ButtonType } from '../../enums/buttonType';
-import styles from './CardButton.module.css';
+import styles from './PanelButton.module.css';
 
-type CardButtonProps = {
+type PanelButtonProps = {
   text: string;
   type?: ButtonType;
   onClick: Function;
 };
 
-export function CardButton(props: CardButtonProps) {
+export function PanelButton(props: PanelButtonProps) {
   let classes = [styles.root];
   switch (props.type) {
     case ButtonType.Primary:

@@ -1,8 +1,12 @@
 import React from 'react';
-import { Panel, PanelContent, PanelHeader } from '../ui-components/panel';
+import {
+  Panel,
+  PanelButton,
+  PanelContent,
+  PanelHeader,
+} from '../ui-components/panel';
 import styles from './NewPanel.module.css';
 import { PanelType } from '../enums/panelType';
-import { CardButton } from '../ui-components/card';
 import { ButtonType } from '../enums/buttonType';
 
 const panelNameMap = {
@@ -33,17 +37,17 @@ export function NewPanel(props: NewPanelProps) {
             </div>
           )}
           {props.availablePanels.map((panel) => (
-            <CardButton
+            <PanelButton
               key={panel}
               text={panelNameMap[panel]}
               onClick={() => props.onPanelTypeChanged(panel)}
-            ></CardButton>
+            ></PanelButton>
           ))}
-          <CardButton
+          <PanelButton
             text="Delete"
             type={ButtonType.Danger}
             onClick={props.onDeletePanel}
-          ></CardButton>
+          ></PanelButton>
         </PanelContent>
       </Panel>
     </div>
