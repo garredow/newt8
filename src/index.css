@@ -1,19 +1,22 @@
 :root {
-  --main-bg-color: #0c1920;
-  --main-text-color: rgba(255, 255, 255, 0.88);
+  --background-color: #0c1920;
+  --primary-text-color: rgba(255, 255, 255, 0.88);
+  --secondary-text-color: rgba(255, 255, 255, 0.6);
+  --warning-text-color: #f6f5ae;
+  --error-text-color: #f24236;
   --card-bg-color: #12252f;
   --card-accent-color: #dbebc0;
-  /* --card-accent-color: #ffa500; */
+  --card-accent-color: #ffa500;
   --card-highlight-color: rgba(255, 255, 255, 0.05);
-  --card-button-bg-color: transparent;
+  --card-button-bg-color: #1c3a4a;
   --card-button-text-color: rgba(255, 255, 255, 0.88);
-  /* --card-button-icon-color: rgba(255, 255, 255, 0.7); */
+  --card-button-icon-color: rgba(255, 255, 255, 0.7);
   --card-button-highlight-color: rgba(255, 255, 255, 0.05);
 }
 
 body {
-  background: var(--main-bg-color);
-  color: var(--main-text-color);
+  background: var(--background-color);
+  color: var(--primary-text-color);
   font-size: 16px;
 }
 
