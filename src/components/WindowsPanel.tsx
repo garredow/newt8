@@ -1,10 +1,10 @@
 import { formatDistance } from 'date-fns';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
+import { ButtonType } from '../enums/buttonType';
 import { ChromeWindow } from '../models/ChromeWindow';
 import { switchToTab } from '../services/chromeService';
 import { getWindows } from '../services/windowsService';
-import { SettingsContext } from '../SettingsContext';
 import { IconButton } from '../ui-components/button';
 import {
   Card,
@@ -14,6 +14,8 @@ import {
 } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent, PanelHeader } from '../ui-components/panel';
+import { PanelSettings } from '../ui-components/panel/PanelSettings';
+import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './WindowsPanel.module.css';
 
 type WindowCardProps = {
@@ -51,24 +53,39 @@ function WindowCard({ window }: WindowCardProps) {
   );
 }
 
-type WindowsPanelOptions = {};
+type WindowsPanelOptions = {
+  columns: number;
+  width: 'half' | 'full';
+};
 
 type WindowsPanelProps = {
   options: WindowsPanelOptions;
   onOptionsChanged: (options: WindowsPanelOptions) => void;
+  onDeletePanel: () => void;
 };
 
 export function WindowsPanel(props: WindowsPanelProps) {
   const [windows, setWindows] = useState<ChromeWindow[]>([]);
   const [showSettings, setShowSettings] = useState(false);
-  const { settings } = useContext(SettingsContext);
 
   useEffect(() => {
     getWindows().then((res) => setWindows(res));
   }, []);
 
+  function setOptionValue(key: string, val: any) {
+    const newOpts = { ...props.options, [key]: val };
+    props.onOptionsChanged(newOpts);
+  }
+
   return (
-    <div className={styles.root}>
+    <div
+      className={styles.root}
+      style={
+        props.options.width === 'half'
+          ? { gridColumn: 'span 1' }
+          : { gridColumn: 'span 2' }
+      }
+    >
       <Panel>
         <PanelHeader
           text="Windows"
@@ -80,8 +97,45 @@ export function WindowsPanel(props: WindowsPanelProps) {
             </>
           }
         />
-        {showSettings ? <PanelContent>Settings</PanelContent> : null}
-        <PanelContent columns={1}>
+        {showSettings ? (
+          <PanelSettings>
+            <SettingsRow label="Columns">
+              <select
+                defaultValue={props.options.columns}
+                onChange={(ev) =>
+                  setOptionValue('columns', parseInt(ev.target.value, 10))
+                }
+              >
+                <option value={0}>Auto</option>
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={3}>3</option>
+                <option value={4}>4</option>
+                <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={7}>7</option>
+                <option value={8}>8</option>
+                <option value={9}>9</option>
+                <option value={10}>10</option>
+              </select>
+            </SettingsRow>
+            <SettingsRow label="Width">
+              <select
+                defaultValue={props.options.width}
+                onChange={(ev) => setOptionValue('width', ev.target.value)}
+              >
+                <option value="half">Half</option>
+                <option value="full">Full</option>
+              </select>
+            </SettingsRow>
+            <CardButton
+              text="Delete"
+              type={ButtonType.Danger}
+              onClick={props.onDeletePanel}
+            ></CardButton>
+          </PanelSettings>
+        ) : null}
+        <PanelContent columns={props.options.columns}>
           {windows.map((window) => (
             <WindowCard window={window} key={window.id} />
           ))}

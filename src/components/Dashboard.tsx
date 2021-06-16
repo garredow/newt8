@@ -8,6 +8,9 @@ import { Panel } from '../models/Panel';
 import { useEffect } from 'react';
 import { getItem, setItem, STORAGE_KEY } from '../utilities/storage';
 import { PanelType } from '../enums/panelType';
+import { IconButton } from '../ui-components/button';
+import { MdAdd } from 'react-icons/md';
+import { NewPanel } from './NewPanel';
 
 export function DashboardView() {
   const [panels, setPanels] = useState<Panel[]>([]);
@@ -23,8 +26,8 @@ export function DashboardView() {
     setPanels(newPanels);
   }
 
-  function updatePanel(panel: Panel) {
-    const index = panels.findIndex((a) => a.id === panel.id);
+  function updatePanel(panelId: PanelType, panel: Panel) {
+    const index = panels.findIndex((a) => a.id === panelId);
     if (index === -1) {
       return;
     }
@@ -35,44 +38,81 @@ export function DashboardView() {
     setPanels(newPanels);
   }
 
+  function deletePanel(panelId: PanelType) {
+    const newPanels = panels.filter((a) => a.id !== panelId);
+    setItem(STORAGE_KEY.PANELS, newPanels);
+    setPanels(newPanels);
+  }
+
   function handleOptionsChanged(panelId: PanelType, options: {}) {
     const panel = panels.find((a) => a.id === panelId);
     if (!panel) return;
 
     panel.options = options;
-    updatePanel(panel);
+    updatePanel(panelId, panel);
+  }
+
+  function handlePanelTypeChange(panelId: PanelType, newPanelId: PanelType) {
+    updatePanel(panelId, {
+      id: newPanelId,
+      options: {},
+    });
   }
 
   function renderPanel(panel: Panel) {
     switch (panel.id) {
+      case PanelType.New:
+        const currentPanels = panels.map((a) => a.id);
+        const availablePanels = [
+          PanelType.Bookmarks,
+          PanelType.RecentTabs,
+          PanelType.Windows,
+        ].filter((a) => !currentPanels.includes(a));
+
+        return (
+          <NewPanel
+            key={panel.id}
+            availablePanels={availablePanels}
+            onPanelTypeChanged={(panelType) =>
+              handlePanelTypeChange(panel.id, panelType)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
       case PanelType.Bookmarks:
+        const defaultBookmarksOpts = { columns: 0, width: 'full' } as any;
         return (
           <BookmarksPanel
             key={panel.id}
-            options={panel.options}
+            options={{ ...defaultBookmarksOpts, ...panel.options }}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
+            onDeletePanel={() => deletePanel(panel.id)}
           />
         );
       case PanelType.RecentTabs:
+        const defaultRecentTabsOpts = { columns: 1, width: 'full' } as any;
         return (
           <RecentTabsPanel
             key={panel.id}
-            options={panel.options}
+            options={{ ...defaultRecentTabsOpts, ...panel.options }}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
+            onDeletePanel={() => deletePanel(panel.id)}
           />
         );
       case PanelType.Windows:
+        const defaultWindowsOpts = { columns: 1, width: 'full' } as any;
         return (
           <WindowsPanel
             key={panel.id}
-            options={panel.options}
+            options={{ ...defaultWindowsOpts, ...panel.options }}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
+            onDeletePanel={() => deletePanel(panel.id)}
           />
         );
     }
@@ -82,6 +122,7 @@ export function DashboardView() {
     getNewtFolderId();
 
     getItem<Panel[]>(STORAGE_KEY.PANELS).then((storedPanels: Panel[] = []) => {
+      console.log('stored panels', storedPanels);
       if (storedPanels.length === 0) {
         addPanel({
           id: PanelType.Bookmarks,
@@ -95,7 +136,24 @@ export function DashboardView() {
 
   return (
     <div className={styles.root}>
-      {panels.map((panel) => renderPanel(panel))}
+      <div className={styles.panels}>
+        {panels.map((panel) => renderPanel(panel))}
+      </div>
+      <div className={styles.sidebar}>
+        <IconButton
+          onClick={() => {
+            // Only allow one new panel at a time
+            if (panels.some((a) => a.id === PanelType.New)) return;
+
+            addPanel({
+              id: PanelType.New,
+              options: {},
+            });
+          }}
+        >
+          <MdAdd />
+        </IconButton>
+      </div>
     </div>
   );
 }

@@ -6,8 +6,23 @@
   padding: 10px 15px;
   background-color: var(--card-button-bg-color);
   color: var(--card-button-text-color);
+  border-radius: 5px;
 }
 
 .root:active {
   background-color: var(--card-button-highlight-color);
+}
+
+.primary {
+}
+
+.secondary {
+}
+
+.warning {
+  color: var(--warning-text-color);
+}
+
+.danger {
+  color: var(--error-text-color);
 }

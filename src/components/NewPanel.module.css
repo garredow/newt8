@@ -1,0 +1,11 @@
+.root {
+}
+
+.message {
+  margin: 10px 0;
+  color: var(--secondary-text-color);
+}
+
+.delete {
+  margin-top: 20px;
+}
