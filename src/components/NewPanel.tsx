@@ -14,6 +14,8 @@ const panelNameMap = {
   [PanelType.Bookmarks]: 'Bookmarks',
   [PanelType.RecentTabs]: 'Recent Tabs',
   [PanelType.Windows]: 'Windows',
+  [PanelType.RecentlyClosed]: 'Recently Closed Tabs',
+  [PanelType.Devices]: 'Other Devices',
 };
 
 type NewPanelProps = {

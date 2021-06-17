@@ -11,6 +11,8 @@ import { PanelType } from '../enums/panelType';
 import { IconButton } from '../ui-components/button';
 import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
+import { RecentlyClosedPanel } from './RecentlyClosedPanel';
+import { DevicesPanel } from './DevicesPanel';
 
 export function DashboardView() {
   const [panels, setPanels] = useState<Panel[]>([]);
@@ -65,6 +67,8 @@ export function DashboardView() {
         const currentPanels = panels.map((a) => a.id);
         const availablePanels = [
           PanelType.Bookmarks,
+          PanelType.Devices,
+          PanelType.RecentlyClosed,
           PanelType.RecentTabs,
           PanelType.Windows,
         ].filter((a) => !currentPanels.includes(a));
@@ -109,6 +113,30 @@ export function DashboardView() {
           <WindowsPanel
             key={panel.id}
             options={{ ...defaultWindowsOpts, ...panel.options }}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelType.RecentlyClosed:
+        const defaultRecentlyClosedOpts = { columns: 1, width: 3 } as any;
+        return (
+          <RecentlyClosedPanel
+            key={panel.id}
+            options={{ ...defaultRecentlyClosedOpts, ...panel.options }}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelType.Devices:
+        const defaultDevicesOpts = { columns: 1, width: 3 } as any;
+        return (
+          <DevicesPanel
+            key={panel.id}
+            options={{ ...defaultDevicesOpts, ...panel.options }}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }

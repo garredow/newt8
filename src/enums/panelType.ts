@@ -3,4 +3,6 @@ export enum PanelType {
   Bookmarks = 'bookmarks',
   RecentTabs = 'recentTabs',
   Windows = 'windows',
+  RecentlyClosed = 'recentlyClosed',
+  Devices = 'devices',
 }
