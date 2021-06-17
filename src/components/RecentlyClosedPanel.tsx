@@ -15,6 +15,7 @@ import { ButtonType } from '../enums/buttonType';
 import { PanelSettings } from '../ui-components/panel/PanelSettings';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import { getRecentlyClosed } from '../services/sessionsService';
+import { openUrl } from '../services/chromeService';
 
 type RecentlyClosedPanelOptions = {
   columns: number;
@@ -101,7 +102,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
           <Card>
             {sessions.map((session) => (
               <SiteRow
-                key={session.tab!.id}
+                key={session.tab!.sessionId}
                 title={session.tab!.title}
                 iconUrl={session.tab!.favIconUrl}
                 url={session.tab!.url}
@@ -113,6 +114,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
                     includeSeconds: true,
                   }
                 )}
+                onClick={() => openUrl(session.tab!.url as string)}
               />
             ))}
           </Card>
