@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Newt - A Better New Tab",
   "short_name": "Newt",
-  "version": "8.1.0",
+  "version": "8.2.0",
   "author": "Garrett Downs",
   "description": "A replacement for Google Chrome's 'new tab' page that lets you easily access your favorite bookmarks and more.",
   "icons": {
@@ -27,6 +27,7 @@
     "bookmarks",
     "tabs",
     "storage",
+    "sessions",
     "chrome://favicon/"
   ]
 }
