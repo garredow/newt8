@@ -28,7 +28,7 @@ a:visited {
 }
 
 button {
-  border: none;
+  border: 1px solid transparent;
   background-color: transparent;
   font-family: inherit;
   padding: 0;
@@ -37,4 +37,19 @@ button {
   align-items: center;
   justify-content: center;
   outline: unset;
+}
+button:focus {
+  border: 1px solid var(--card-accent-color);
+}
+
+select {
+  padding: 8px 5px 8px 5px;
+  background-color: var(--card-button-bg-color);
+  color: var(--primary-text-color);
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 5px;
+}
+select:focus {
+  border: 1px solid var(--card-accent-color);
 }

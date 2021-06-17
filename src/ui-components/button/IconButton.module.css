@@ -3,6 +3,7 @@
   width: 36px;
   opacity: 0.2;
   transition: opacity 150ms;
+  border-radius: 100%;
 }
 
 .root:hover {
