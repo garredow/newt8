@@ -44,12 +44,21 @@ button:focus {
 
 select {
   padding: 8px 5px 8px 5px;
-  background-color: var(--card-button-bg-color);
-  color: var(--primary-text-color);
+  background-color: transparent;
+  color: var(--card-accent-color);
   border: 1px solid transparent;
   outline: none;
   border-radius: 5px;
+  text-align-last: end;
 }
 select:focus {
   border: 1px solid var(--card-accent-color);
+}
+
+input {
+  background-color: transparent;
+  color: var(--primary-text-color);
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--card-accent-color);
 }

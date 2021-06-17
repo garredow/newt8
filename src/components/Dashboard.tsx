@@ -13,6 +13,7 @@ import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel } from './DevicesPanel';
+import { PanelOptions } from '../ui-components/panel';
 
 export function DashboardView() {
   const [panels, setPanels] = useState<Panel[]>([]);
@@ -46,7 +47,7 @@ export function DashboardView() {
     setPanels(newPanels);
   }
 
-  function handleOptionsChanged(panelId: PanelType, options: {}) {
+  function handleOptionsChanged(panelId: PanelType, options: PanelOptions) {
     const panel = panels.find((a) => a.id === panelId);
     if (!panel) return;
 
@@ -57,7 +58,7 @@ export function DashboardView() {
   function handlePanelTypeChange(panelId: PanelType, newPanelId: PanelType) {
     updatePanel(panelId, {
       id: newPanelId,
-      options: {},
+      options: {} as PanelOptions,
     });
   }
 
@@ -77,6 +78,7 @@ export function DashboardView() {
           <NewPanel
             key={panel.id}
             availablePanels={availablePanels}
+            options={{} as PanelOptions}
             onPanelTypeChanged={(panelType) =>
               handlePanelTypeChange(panel.id, panelType)
             }
@@ -84,11 +86,10 @@ export function DashboardView() {
           />
         );
       case PanelType.Bookmarks:
-        const defaultBookmarksOpts = { columns: 0, width: 3 } as any;
         return (
           <BookmarksPanel
             key={panel.id}
-            options={{ ...defaultBookmarksOpts, ...panel.options }}
+            options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -96,11 +97,10 @@ export function DashboardView() {
           />
         );
       case PanelType.RecentTabs:
-        const defaultRecentTabsOpts = { columns: 1, width: 3 } as any;
         return (
           <RecentTabsPanel
             key={panel.id}
-            options={{ ...defaultRecentTabsOpts, ...panel.options }}
+            options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -108,11 +108,10 @@ export function DashboardView() {
           />
         );
       case PanelType.Windows:
-        const defaultWindowsOpts = { columns: 1, width: 3 } as any;
         return (
           <WindowsPanel
             key={panel.id}
-            options={{ ...defaultWindowsOpts, ...panel.options }}
+            options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -120,11 +119,10 @@ export function DashboardView() {
           />
         );
       case PanelType.RecentlyClosed:
-        const defaultRecentlyClosedOpts = { columns: 1, width: 3 } as any;
         return (
           <RecentlyClosedPanel
             key={panel.id}
-            options={{ ...defaultRecentlyClosedOpts, ...panel.options }}
+            options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -132,11 +130,10 @@ export function DashboardView() {
           />
         );
       case PanelType.Devices:
-        const defaultDevicesOpts = { columns: 1, width: 3 } as any;
         return (
           <DevicesPanel
             key={panel.id}
-            options={{ ...defaultDevicesOpts, ...panel.options }}
+            options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -154,7 +151,7 @@ export function DashboardView() {
       if (storedPanels.length === 0) {
         addPanel({
           id: PanelType.Bookmarks,
-          options: {},
+          options: {} as PanelOptions,
         });
         return;
       }
@@ -176,7 +173,7 @@ export function DashboardView() {
 
             addPanel({
               id: PanelType.New,
-              options: {},
+              options: {} as PanelOptions,
             });
           }}
         >

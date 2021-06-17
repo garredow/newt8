@@ -1,8 +1,5 @@
 .root {
   padding: 10px 0;
-}
-
-.row {
   display: flex;
   justify-content: space-between;
 }
@@ -10,4 +7,10 @@
 .title {
   font-weight: 300px;
   margin: 0;
+}
+.title:focus {
+  outline: none;
+}
+.title[contentEditable='true'] {
+  border-bottom: 1px solid var(--card-accent-color);
 }
