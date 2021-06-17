@@ -16,8 +16,24 @@ import { DevicesPanel } from './DevicesPanel';
 import { PanelButton, PanelOptions } from '../ui-components/panel';
 import { ButtonType } from '../enums/buttonType';
 
+enum LoadingStatus {
+  Init,
+  Loading,
+  Idle,
+}
 export function DashboardView() {
   const [panels, setPanels] = useState<Panel[]>([]);
+  const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
+
+  useEffect(() => {
+    getNewtFolderId();
+
+    setStatus(LoadingStatus.Loading);
+    getItem<Panel[]>(STORAGE_KEY.PANELS).then((storedPanels: Panel[] = []) => {
+      setPanels(storedPanels);
+      setStatus(LoadingStatus.Idle);
+    });
+  }, []);
 
   function addPanel(panel: Panel) {
     const index = panels.findIndex((a) => a.id === panel.id);
@@ -144,21 +160,9 @@ export function DashboardView() {
     }
   }
 
-  useEffect(() => {
-    getNewtFolderId();
-
-    getItem<Panel[]>(STORAGE_KEY.PANELS).then((storedPanels: Panel[] = []) => {
-      setPanels(storedPanels);
-    });
-  }, []);
-
   return (
     <div className={styles.root}>
-      {panels.length > 0 ? (
-        <div className={styles.panels}>
-          {panels.map((panel) => renderPanel(panel))}
-        </div>
-      ) : (
+      {panels.length === 0 && status === LoadingStatus.Idle ? (
         <div className={styles.empty}>
           <div className={styles.message}>
             Looks like there aren't any panels here yet. Want to add one?
@@ -183,6 +187,10 @@ export function DashboardView() {
               }
             />
           </div>
+        </div>
+      ) : (
+        <div className={styles.panels}>
+          {panels.map((panel) => renderPanel(panel))}
         </div>
       )}
       <div className={styles.sidebar}>
