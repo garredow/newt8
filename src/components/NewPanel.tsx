@@ -55,6 +55,7 @@ export function NewPanel(props: NewPanelProps) {
           <PanelButton
             key={panel}
             text={panelNameMap[panel]}
+            type={ButtonType.Primary}
             onClick={() => props.onPanelTypeChanged(panel)}
           ></PanelButton>
         ))}

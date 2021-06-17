@@ -8,6 +8,10 @@ type PanelButtonProps = {
   onClick: Function;
 };
 
+PanelButton.defaultProps = {
+  type: ButtonType.Secondary,
+};
+
 export function PanelButton(props: PanelButtonProps) {
   let classes = [styles.root];
   switch (props.type) {

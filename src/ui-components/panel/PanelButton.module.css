@@ -1,28 +1,34 @@
 .root {
   border: unset;
   outline: unset;
-  /* border: 1px solid rgba(255, 255, 255, 0.1); */
   cursor: pointer;
   padding: 10px 15px;
-  background-color: var(--card-button-bg-color);
   color: var(--card-button-text-color);
   border-radius: 5px;
+  filter: none;
+  transition: 150ms filter;
 }
-
+.root:hover,
+.root:focus {
+  filter: brightness(130%);
+}
 .root:active {
-  background-color: var(--card-button-highlight-color);
+  filter: brightness(70%);
+  transition: none;
 }
 
 .primary {
+  background-color: var(--card-button-bg-color);
 }
 
 .secondary {
+  background-color: transparent;
 }
 
 .warning {
-  color: var(--warning-text-color);
+  background-color: var(--warning-text-color);
 }
 
 .danger {
-  color: var(--error-text-color);
+  background-color: var(--error-text-color);
 }

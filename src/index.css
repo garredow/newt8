@@ -38,9 +38,6 @@ button {
   justify-content: center;
   outline: unset;
 }
-button:focus {
-  border: 1px solid var(--card-accent-color);
-}
 
 select {
   padding: 8px 5px 8px 5px;

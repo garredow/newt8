@@ -1,25 +1,19 @@
 .root {
   height: 36px;
   width: 36px;
-  opacity: 0.2;
-  transition: opacity 150ms;
   border-radius: 100%;
+  filter: none;
+  transition: 150ms filter;
 }
-
-.root:hover {
-  /* background-color: var(--card-button-highlight-color); */
-  opacity: 0.8;
+.root:hover,
+.root:focus {
+  filter: brightness(130%);
 }
-
 .root:active {
-  /* background-color: var(--card-accent-color); */
-  /* opacity: 0.8; */
+  filter: brightness(70%);
+  transition: none;
 }
 
 .icon {
-  fill: var(--card-button-text-color);
-}
-
-.root:active .icon {
-  fill: var(--card-accent-color);
+  fill: var(--card-button-bg-color);
 }
