@@ -13,7 +13,8 @@ import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel } from './DevicesPanel';
-import { PanelOptions } from '../ui-components/panel';
+import { PanelButton, PanelOptions } from '../ui-components/panel';
+import { ButtonType } from '../enums/buttonType';
 
 export function DashboardView() {
   const [panels, setPanels] = useState<Panel[]>([]);
@@ -147,24 +148,43 @@ export function DashboardView() {
     getNewtFolderId();
 
     getItem<Panel[]>(STORAGE_KEY.PANELS).then((storedPanels: Panel[] = []) => {
-      console.log('stored panels', storedPanels);
-      if (storedPanels.length === 0) {
-        addPanel({
-          id: PanelType.Bookmarks,
-          options: {} as PanelOptions,
-        });
-        return;
-      }
-
       setPanels(storedPanels);
     });
   }, []);
 
   return (
     <div className={styles.root}>
-      <div className={styles.panels}>
-        {panels.map((panel) => renderPanel(panel))}
-      </div>
+      {panels.length > 0 ? (
+        <div className={styles.panels}>
+          {panels.map((panel) => renderPanel(panel))}
+        </div>
+      ) : (
+        <div className={styles.empty}>
+          <div className={styles.message}>
+            Looks like there aren't any panels here yet. Want to add one?
+            <PanelButton
+              text="Bookmarks"
+              type={ButtonType.Primary}
+              onClick={() =>
+                addPanel({
+                  id: PanelType.Bookmarks,
+                  options: {} as PanelOptions,
+                })
+              }
+            />
+            <PanelButton
+              text="Something else..."
+              type={ButtonType.Secondary}
+              onClick={() =>
+                addPanel({
+                  id: PanelType.New,
+                  options: {} as PanelOptions,
+                })
+              }
+            />
+          </div>
+        </div>
+      )}
       <div className={styles.sidebar}>
         <IconButton
           onClick={() => {
