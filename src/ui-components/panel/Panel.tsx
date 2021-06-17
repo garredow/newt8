@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { PanelButton, PanelHeader } from '.';
 import { ButtonType } from '../../enums/buttonType';
@@ -27,6 +28,17 @@ Panel.defaultProps = {
 
 export function Panel(props: PanelProps) {
   const [showSettings, setShowSettings] = useState(false);
+
+  useEffect(() => {
+    const handleEscapeKey = (ev: KeyboardEvent) => {
+      if (ev.key === 'Escape' && showSettings) {
+        setShowSettings(false);
+      }
+    };
+    window.addEventListener('keydown', handleEscapeKey);
+
+    return () => window.removeEventListener('keydown', handleEscapeKey);
+  });
 
   function setOptionValue(key: string, val: any) {
     const newOpts = { ...props.options, [key]: val };
