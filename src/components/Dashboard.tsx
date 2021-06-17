@@ -156,6 +156,7 @@ export function DashboardView() {
           id: PanelType.Bookmarks,
           options: {},
         });
+        return;
       }
 
       setPanels(storedPanels);
