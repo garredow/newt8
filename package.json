@@ -6,6 +6,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:watch": "cra-build-watch",
+    "build:package": "react-scripts build && node deploy.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
+    "archiver": "^5.3.0",
     "cra-build-watch": "^3.4.0",
     "eslint-config-prettier": "^6.15.0"
   },
