@@ -7,10 +7,11 @@
 .title {
   font-weight: 300px;
   margin: 0;
+  color: var(--panel-title-text-color);
 }
 .title:focus {
   outline: none;
 }
 .title[contentEditable='true'] {
-  border-bottom: 1px solid var(--card-accent-color);
+  border-bottom: 1px solid var(--panel-accent-color);
 }

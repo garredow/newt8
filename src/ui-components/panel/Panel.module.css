@@ -2,6 +2,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  color: var(--panel-primary-text-color);
 }
 
 .header {
@@ -13,4 +14,15 @@
   flex: 1;
   padding-bottom: 15px;
   overflow-y: auto;
+}
+
+.root select {
+  color: var(--panel-accent-color);
+}
+.root select:focus {
+  border: 1px solid var(--panel-accent-color);
+}
+.root input {
+  color: var(--panel-primary-text-color);
+  border-bottom: 1px solid var(--panel-accent-color);
 }

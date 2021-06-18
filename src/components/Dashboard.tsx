@@ -13,8 +13,9 @@ import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel } from './DevicesPanel';
-import { PanelButton, PanelOptions } from '../ui-components/panel';
+import { PanelOptions } from '../ui-components/panel';
 import { ButtonType } from '../enums/buttonType';
+import { Button } from '../ui-components/button/Button';
 
 enum LoadingStatus {
   Init,
@@ -166,7 +167,7 @@ export function DashboardView() {
         <div className={styles.empty}>
           <div className={styles.message}>
             Looks like there aren't any panels here yet. Want to add one?
-            <PanelButton
+            <Button
               text="Bookmarks"
               type={ButtonType.Primary}
               onClick={() =>
@@ -176,7 +177,7 @@ export function DashboardView() {
                 })
               }
             />
-            <PanelButton
+            <Button
               text="Something else..."
               type={ButtonType.Secondary}
               onClick={() =>

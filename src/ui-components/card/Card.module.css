@@ -1,10 +1,19 @@
 .root {
-  /* margin: 20px 10px; */
-  /* margin-bottom: 20px;
-  padding-bottom: 10px; */
   background-color: var(--card-bg-color);
+  color: var(--card-primary-text-color);
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   overflow: hidden;
   padding: 10px 0;
+}
+
+.root select {
+  color: var(--card-accent-color);
+}
+.root select:focus {
+  border: 1px solid var(--card-accent-color);
+}
+.root input {
+  color: var(--card-primary-text-color);
+  border-bottom: 1px solid var(--card-accent-color);
 }

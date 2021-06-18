@@ -5,7 +5,7 @@
   cursor: pointer;
 }
 .root:hover {
-  background-color: var(--card-highlight-color);
+  backdrop-filter: brightness(130%);
 }
 
 .icon {
@@ -33,7 +33,7 @@
 }
 
 .line2 {
-  opacity: 0.5;
+  color: var(--card-secondary-text-color);
   font-size: 0.9rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -41,6 +41,5 @@
 
 .line3 {
   color: var(--card-accent-color);
-  opacity: 0.75;
   font-size: 0.9rem;
 }

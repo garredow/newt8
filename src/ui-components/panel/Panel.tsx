@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { MdSettings } from 'react-icons/md';
-import { PanelButton, PanelHeader } from '.';
+import { PanelHeader } from '.';
 import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { IconButton } from '../button';
+import { Button } from '../button/Button';
 import styles from './Panel.module.css';
 import { PanelSettings } from './PanelSettings';
 import { SettingsRow } from './SettingsRow';
@@ -95,11 +96,11 @@ export function Panel(props: PanelProps) {
               <option value={5}>Largest</option>
             </select>
           </SettingsRow>
-          <PanelButton
+          <Button
             text="Delete"
             type={ButtonType.Danger}
             onClick={props.onDeletePanel}
-          ></PanelButton>
+          />
         </PanelSettings>
       ) : null}
       {props.children}

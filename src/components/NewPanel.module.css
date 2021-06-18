@@ -3,7 +3,7 @@
 
 .message {
   margin: 10px 0;
-  color: var(--secondary-text-color);
+  color: var(--panel-secondary-text-color);
 }
 
 .delete {

@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-  Panel,
-  PanelButton,
-  PanelContent,
-  PanelOptions,
-} from '../ui-components/panel';
+import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
 import styles from './NewPanel.module.css';
 import { PanelType } from '../enums/panelType';
 import { ButtonType } from '../enums/buttonType';
+import { ButtonKind } from '../enums/buttonKind';
+import { Button } from '../ui-components/button/Button';
 
 const panelNameMap = {
   [PanelType.New]: 'New',
@@ -52,18 +49,20 @@ export function NewPanel(props: NewPanelProps) {
           </div>
         )}
         {props.availablePanels.map((panel) => (
-          <PanelButton
+          <Button
             key={panel}
             text={panelNameMap[panel]}
-            type={ButtonType.Primary}
+            type={ButtonType.Secondary}
+            kind={ButtonKind.Panel}
             onClick={() => props.onPanelTypeChanged(panel)}
-          ></PanelButton>
+          />
         ))}
-        <PanelButton
+        <Button
           text="Delete"
           type={ButtonType.Danger}
+          kind={ButtonKind.Panel}
           onClick={props.onDeletePanel}
-        ></PanelButton>
+        />
       </PanelContent>
     </Panel>
   );

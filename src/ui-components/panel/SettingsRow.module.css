@@ -1,7 +1,7 @@
 .root {
   padding-bottom: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid var(--card-button-bg-color);
+  border-bottom: 1px solid var(--panel-divider-color);
 }
 .root:last-of-type {
   margin-bottom: 15px;
@@ -17,5 +17,5 @@
 }
 
 .helptext {
-  color: var(--secondary-text-color);
+  color: var(--panel-secondary-text-color);
 }

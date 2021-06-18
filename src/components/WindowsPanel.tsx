@@ -1,16 +1,13 @@
 import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import { ButtonKind } from '../enums/buttonKind';
 import { ChromeWindow } from '../models/ChromeWindow';
 import { switchToTab } from '../services/chromeService';
 import { getWindows } from '../services/windowsService';
+import { Button } from '../ui-components/button/Button';
 import { Card, CardFooter, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
-import {
-  Panel,
-  PanelButton,
-  PanelContent,
-  PanelOptions,
-} from '../ui-components/panel';
+import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
 import styles from './WindowsPanel.module.css';
 
 type WindowCardProps = {
@@ -39,8 +36,9 @@ function WindowCard({ window }: WindowCardProps) {
         />
       ))}
       <CardFooter>
-        <PanelButton
+        <Button
           text={expanded ? 'See less' : 'See more'}
+          kind={ButtonKind.Card}
           onClick={() => setExpanded(!expanded)}
         />
       </CardFooter>

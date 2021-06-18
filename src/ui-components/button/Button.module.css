@@ -1,0 +1,79 @@
+.root {
+  border: unset;
+  outline: unset;
+  cursor: pointer;
+  padding: 10px 15px;
+  color: var(--primary-text-color);
+  background-color: none;
+  border-radius: 5px;
+  filter: none;
+  transition: 150ms filter;
+}
+.root:hover,
+.root:focus {
+  filter: brightness(130%);
+}
+.root:active {
+  filter: brightness(70%);
+  transition: none;
+}
+
+.primary {
+  background-color: var(--primary-button-bg-color);
+  color: var(--primary-button-text-color);
+}
+
+.secondary {
+  background-color: var(--secondary-button-bg-color);
+  color: var(--secondary-button-text-color);
+}
+
+.warning {
+  background-color: var(--warning-button-bg-color);
+  color: var(--warning-button-text-color);
+}
+
+.danger {
+  background-color: var(--danger-button-bg-color);
+  color: var(--danger-button-text-color);
+}
+
+.panel.primary {
+  background-color: var(--panel-primary-button-bg-color);
+  color: var(--panel-primary-button-text-color);
+}
+
+.panel.secondary {
+  background-color: var(--panel-secondary-button-bg-color);
+  color: var(--panel-secondary-button-text-color);
+}
+
+.panel.warning {
+  background-color: var(--panel-warning-button-bg-color);
+  color: var(--panel-warning-button-text-color);
+}
+
+.panel.danger {
+  background-color: var(--panel-danger-button-bg-color);
+  color: var(--panel-danger-button-text-color);
+}
+
+.card.primary {
+  background-color: var(--card-primary-button-bg-color);
+  color: var(--card-primary-button-text-color);
+}
+
+.card.secondary {
+  background-color: var(--card-secondary-button-bg-color);
+  color: var(--card-secondary-button-text-color);
+}
+
+.card.warning {
+  background-color: var(--card-warning-button-bg-color);
+  color: var(--card-warning-button-text-color);
+}
+
+.card.danger {
+  background-color: var(--card-danger-button-bg-color);
+  color: var(--card-danger-button-text-color);
+}

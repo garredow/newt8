@@ -3,17 +3,54 @@
   width: 36px;
   border-radius: 100%;
   filter: none;
-  transition: 150ms filter;
+  transition: 150ms backdrop-filter filter;
 }
 .root:hover,
 .root:focus {
   filter: brightness(130%);
+  backdrop-filter: brightness(110%);
 }
 .root:active {
   filter: brightness(70%);
+  backdrop-filter: brightness(70%);
   transition: none;
 }
 
-.icon {
-  fill: var(--card-button-bg-color);
+.primary {
+  fill: var(--primary-button-bg-color);
+}
+.secondary {
+  fill: var(--secondary-button-bg-color);
+}
+.warning {
+  fill: var(--warning-button-bg-color);
+}
+.danger {
+  fill: var(--danger-button-bg-color);
+}
+
+.panel.primary {
+  fill: var(--panel-primary-button-bg-color);
+}
+.panel.secondary {
+  fill: var(--panel-secondary-button-bg-color);
+}
+.panel.warning {
+  fill: var(--panel-warning-button-bg-color);
+}
+.panel.danger {
+  fill: var(--panel-danger-button-bg-color);
+}
+
+.card.primary {
+  fill: var(--card-primary-button-bg-color);
+}
+.card.secondary {
+  fill: var(--card-secondary-button-bg-color);
+}
+.card.warning {
+  fill: var(--card-warning-button-bg-color);
+}
+.card.danger {
+  fill: var(--card-danger-button-bg-color);
 }

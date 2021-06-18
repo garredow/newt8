@@ -1,21 +1,58 @@
 :root {
-  --background-color: #0c1920;
+  --app-bg-color: #0c1920;
+  --app-accent-color: #ffa500;
+
   --primary-text-color: rgba(255, 255, 255, 0.88);
   --secondary-text-color: rgba(255, 255, 255, 0.6);
   --warning-text-color: #f6f5ae;
   --error-text-color: #f24236;
+
+  --primary-button-bg-color: var(--app-accent-color);
+  --primary-button-text-color: var(--primary-text-color);
+  --secondary-button-bg-color: #1c3a4a;
+  --secondary-button-text-color: var(--primary-text-color);
+  --warning-button-bg-color: var(--warning-text-color);
+  --warning-button-text-color: var(--primary-text-color);
+  --danger-button-bg-color: var(--error-text-color);
+  --danger-button-text-color: var(--primary-text-color);
+
+  /* Panel */
+  --panel-bg-color: none;
+  --panel-accent-color: var(--app-accent-color);
+  --panel-divider-color: var(--secondary-text-color);
+  --panel-title-text-color: var(--primary-text-color);
+  --panel-primary-text-color: var(--primary-text-color);
+  --panel-secondary-text-color: var(--primary-text-color);
+
+  --panel-primary-button-bg-color: var(--primary-button-bg-color);
+  --panel-primary-button-text-color: var(--primary-button-text-color);
+  --panel-secondary-button-bg-color: var(--secondary-button-bg-color);
+  --panel-secondary-button-text-color: var(--secondary-button-text-color);
+  --panel-warning-button-bg-color: var(--warning-button-bg-color);
+  --panel-warning-button-text-color: var(--warning-button-text-color);
+  --panel-danger-button-bg-color: var(--danger-button-bg-color);
+  --panel-danger-button-text-color: var(--danger-button-text-color);
+
+  /* Card */
   --card-bg-color: #12252f;
-  --card-accent-color: #dbebc0;
-  --card-accent-color: #ffa500;
-  --card-highlight-color: rgba(255, 255, 255, 0.05);
-  --card-button-bg-color: #1c3a4a;
-  --card-button-text-color: rgba(255, 255, 255, 0.88);
-  --card-button-icon-color: rgba(255, 255, 255, 0.7);
-  --card-button-highlight-color: rgba(255, 255, 255, 0.05);
+  --card-accent-color: var(--app-accent-color);
+  --card-divider-color: var(--primary-text-color);
+  --card-title-text-color: var(--primary-text-color);
+  --card-primary-text-color: var(--primary-text-color);
+  --card-secondary-text-color: var(--secondary-text-color);
+
+  --card-primary-button-bg-color: var(--primary-button-bg-color);
+  --card-primary-button-text-color: var(--primary-button-text-color);
+  --card-secondary-button-bg-color: var(--secondary-button-bg-color);
+  --card-secondary-button-text-color: var(--secondary-button-text-color);
+  --card-warning-button-bg-color: var(--warning-button-bg-color);
+  --card-warning-button-text-color: var(--warning-button-text-color);
+  --card-danger-button-bg-color: var(--danger-button-bg-color);
+  --card-danger-button-text-color: var(--danger-button-text-color);
 }
 
 body {
-  background: var(--background-color);
+  background: var(--app-bg-color);
   color: var(--primary-text-color);
   font-size: 16px;
 }
@@ -23,7 +60,7 @@ body {
 a,
 a:active,
 a:visited {
-  color: var(--card-accent-color);
+  color: var(--app-accent-color);
   text-decoration: none;
 }
 
@@ -42,14 +79,14 @@ button {
 select {
   padding: 8px 5px 8px 5px;
   background-color: transparent;
-  color: var(--card-accent-color);
+  color: var(--app-accent-color);
   border: 1px solid transparent;
   outline: none;
   border-radius: 5px;
   text-align-last: end;
 }
 select:focus {
-  border: 1px solid var(--card-accent-color);
+  border: 1px solid var(--app-accent-color);
 }
 
 input {
@@ -57,5 +94,5 @@ input {
   color: var(--primary-text-color);
   border: none;
   outline: none;
-  border-bottom: 1px solid var(--card-accent-color);
+  border-bottom: 1px solid var(--app-accent-color);
 }
