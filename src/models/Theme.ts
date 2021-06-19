@@ -1,13 +1,58 @@
-type ThemeColor = {
+export type ThemeColor = {
   name: string;
-  id: string;
+  variable: string;
   value: string;
+};
+
+export type ThemeValues = {
+  appBgColor: ThemeColor;
+  appAccentColor: ThemeColor;
+  primaryTextColor: ThemeColor;
+  secondaryTextColor: ThemeColor;
+  warningTextColor: ThemeColor;
+  errorTextColor: ThemeColor;
+  primaryButtonBgColor: ThemeColor;
+  primaryButtonTextColor: ThemeColor;
+  secondaryButtonBgColor: ThemeColor;
+  secondaryButtonTextColor: ThemeColor;
+  warningButtonBgColor: ThemeColor;
+  warningButtonTextColor: ThemeColor;
+  dangerButtonBgColor: ThemeColor;
+  dangerButtonTextColor: ThemeColor;
+
+  panelBgColor: ThemeColor;
+  panelAccentColor: ThemeColor;
+  panelDividerColor: ThemeColor;
+  panelTitleTextColor: ThemeColor;
+  panelPrimaryTextColor: ThemeColor;
+  panelSecondaryTextColor: ThemeColor;
+  panelPrimaryButtonBgColor: ThemeColor;
+  panelPrimaryButtonTextColor: ThemeColor;
+  panelSecondaryButtonBgColor: ThemeColor;
+  panelSecondaryButtonTextColor: ThemeColor;
+  panelWarningButtonBgColor: ThemeColor;
+  panelWarningButtonTextColor: ThemeColor;
+  panelDangerButtonBgColor: ThemeColor;
+  panelDangerButtonTextColor: ThemeColor;
+
+  cardBgColor: ThemeColor;
+  cardAccentColor: ThemeColor;
+  cardDividerColor: ThemeColor;
+  cardTitleTextColor: ThemeColor;
+  cardPrimaryTextColor: ThemeColor;
+  cardSecondaryTextColor: ThemeColor;
+  cardPrimaryButtonBgColor: ThemeColor;
+  cardPrimaryButtonTextColor: ThemeColor;
+  cardSecondaryButtonBgColor: ThemeColor;
+  cardSecondaryButtonTextColor: ThemeColor;
+  cardWarningButtonBgColor: ThemeColor;
+  cardWarningButtonTextColor: ThemeColor;
+  cardDangerButtonBgColor: ThemeColor;
+  cardDangerButtonTextColor: ThemeColor;
 };
 
 export type Theme = {
   id: string;
   name: string;
-  base: ThemeColor[];
-  panel: ThemeColor[];
-  card: ThemeColor[];
+  values: ThemeValues;
 };

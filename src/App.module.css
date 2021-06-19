@@ -24,7 +24,6 @@ a,
 a:active,
 a:visited {
   color: var(--app-accent-color);
-  text-decoration: none;
 }
 
 button {

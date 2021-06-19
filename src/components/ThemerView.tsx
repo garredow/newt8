@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { MdCheck, MdClose } from 'react-icons/md';
+import { MdCheck, MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
-import { Theme } from '../models/Theme';
+import { Theme, ThemeColor, ThemeValues } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
@@ -16,9 +16,104 @@ import styles from './ThemerView.module.css';
 
 export type ThemerViewProps = {};
 
+type Section = {
+  title: string;
+  colors: (keyof ThemeValues)[];
+};
+
+const basicSections: Section[] = [
+  {
+    title: 'Base',
+    colors: ['appBgColor', 'appAccentColor', 'panelBgColor', 'cardBgColor'],
+  },
+  {
+    title: 'Text',
+    colors: [
+      'primaryTextColor',
+      'secondaryTextColor',
+      'warningTextColor',
+      'errorTextColor',
+    ],
+  },
+  {
+    title: 'Buttons',
+    colors: [
+      'primaryButtonBgColor',
+      'primaryButtonTextColor',
+      'secondaryButtonBgColor',
+      'secondaryButtonTextColor',
+      'warningButtonBgColor',
+      'warningButtonTextColor',
+      'dangerButtonBgColor',
+      'dangerButtonTextColor',
+    ],
+  },
+];
+
+const sections: Section[] = [
+  {
+    title: 'Base',
+    colors: [
+      'appBgColor',
+      'appAccentColor',
+      'primaryTextColor',
+      'secondaryTextColor',
+      'warningTextColor',
+      'errorTextColor',
+      'primaryButtonBgColor',
+      'primaryButtonTextColor',
+      'secondaryButtonBgColor',
+      'secondaryButtonTextColor',
+      'warningButtonBgColor',
+      'warningButtonTextColor',
+      'dangerButtonBgColor',
+      'dangerButtonTextColor',
+    ],
+  },
+  {
+    title: 'Panels',
+    colors: [
+      'panelBgColor',
+      'panelAccentColor',
+      'panelDividerColor',
+      'panelTitleTextColor',
+      'panelPrimaryTextColor',
+      'panelSecondaryTextColor',
+      'panelPrimaryButtonBgColor',
+      'panelPrimaryButtonTextColor',
+      'panelSecondaryButtonBgColor',
+      'panelSecondaryButtonTextColor',
+      'panelWarningButtonBgColor',
+      'panelWarningButtonTextColor',
+      'panelDangerButtonBgColor',
+      'panelDangerButtonTextColor',
+    ],
+  },
+  {
+    title: 'Cards',
+    colors: [
+      'cardBgColor',
+      'cardAccentColor',
+      'cardDividerColor',
+      'cardTitleTextColor',
+      'cardPrimaryTextColor',
+      'cardSecondaryTextColor',
+      'cardPrimaryButtonBgColor',
+      'cardPrimaryButtonTextColor',
+      'cardSecondaryButtonBgColor',
+      'cardSecondaryButtonTextColor',
+      'cardWarningButtonBgColor',
+      'cardWarningButtonTextColor',
+      'cardDangerButtonBgColor',
+      'cardDangerButtonTextColor',
+    ],
+  },
+];
+
 export function ThemerView(props: ThemerViewProps) {
   const [workingTheme, setWorkingTheme] = useState<Theme>(null as any);
   const [showConfig, setShowconfig] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [themePreviewStyles, setThemePreviewStyles] = useState<any>({});
   const { settings, setSettings } = useContext(SettingsContext);
 
@@ -33,9 +128,10 @@ export function ThemerView(props: ThemerViewProps) {
     if (!workingTheme) return;
 
     const styles: any = {};
-    workingTheme.base.forEach((a) => (styles[`--${a.id}`] = a.value));
-    workingTheme.panel.forEach((a) => (styles[`--${a.id}`] = a.value));
-    workingTheme.card.forEach((a) => (styles[`--${a.id}`] = a.value));
+    for (const id in workingTheme.values) {
+      styles[`--${workingTheme.values[id as keyof ThemeValues].variable}`] =
+        workingTheme.values[id as keyof ThemeValues].value;
+    }
     setThemePreviewStyles(styles);
   }, [workingTheme]);
 
@@ -51,9 +147,7 @@ export function ThemerView(props: ThemerViewProps) {
     const newTheme: Theme = {
       id: `custom_${new Date().toISOString()}`,
       name: 'My Custom Theme',
-      base: [...currentTheme.base],
-      panel: [...currentTheme.panel],
-      card: [...currentTheme.card],
+      values: { ...currentTheme.values },
     };
 
     setWorkingTheme(newTheme);
@@ -74,10 +168,94 @@ export function ThemerView(props: ThemerViewProps) {
     });
   }
 
-  function updateWorkingThemeColor(section: string, id: string, val: string) {
-    const newTheme: any = JSON.parse(JSON.stringify(workingTheme));
-    const index = newTheme[section].findIndex((a: any) => a.id === id);
-    newTheme[section][index].value = val;
+  function updateWorkingThemeColor(id: string, val: string) {
+    const newTheme: Theme = JSON.parse(JSON.stringify(workingTheme));
+    newTheme.values[id as keyof ThemeValues].value = val;
+    console.log('newtheme', newTheme);
+
+    setWorkingTheme(newTheme);
+  }
+
+  function updateBasicWorkingThemeColor(id: keyof ThemeValues, val: string) {
+    const newTheme: Theme = JSON.parse(JSON.stringify(workingTheme));
+
+    // TODO: Find a better way?
+    switch (id) {
+      case 'appBgColor':
+        newTheme.values.appBgColor.value = val;
+        break;
+      case 'appAccentColor':
+        newTheme.values.appAccentColor.value = val;
+        newTheme.values.panelAccentColor.value = val;
+        newTheme.values.cardAccentColor.value = val;
+        break;
+      case 'panelBgColor':
+        newTheme.values.panelBgColor.value = val;
+        break;
+      case 'cardBgColor':
+        newTheme.values.cardBgColor.value = val;
+        break;
+      case 'primaryTextColor':
+        newTheme.values.primaryTextColor.value = val;
+        newTheme.values.panelTitleTextColor.value = val;
+        newTheme.values.panelPrimaryTextColor.value = val;
+        newTheme.values.cardTitleTextColor.value = val;
+        newTheme.values.cardPrimaryTextColor.value = val;
+        break;
+      case 'secondaryTextColor':
+        newTheme.values.secondaryTextColor.value = val;
+        newTheme.values.panelDividerColor.value = val;
+        newTheme.values.panelSecondaryTextColor.value = val;
+        newTheme.values.cardDividerColor.value = val;
+        newTheme.values.cardSecondaryTextColor.value = val;
+        break;
+      case 'warningTextColor':
+        newTheme.values.warningTextColor.value = val;
+        break;
+      case 'errorTextColor':
+        newTheme.values.errorTextColor.value = val;
+        break;
+      case 'primaryButtonBgColor':
+        newTheme.values.primaryButtonBgColor.value = val;
+        newTheme.values.panelPrimaryButtonBgColor.value = val;
+        newTheme.values.cardPrimaryButtonBgColor.value = val;
+        break;
+      case 'primaryButtonTextColor':
+        newTheme.values.primaryButtonTextColor.value = val;
+        newTheme.values.panelPrimaryButtonTextColor.value = val;
+        newTheme.values.cardPrimaryButtonTextColor.value = val;
+        break;
+      case 'secondaryButtonBgColor':
+        newTheme.values.secondaryButtonBgColor.value = val;
+        newTheme.values.panelSecondaryButtonBgColor.value = val;
+        newTheme.values.cardSecondaryButtonBgColor.value = val;
+        break;
+      case 'secondaryButtonTextColor':
+        newTheme.values.secondaryButtonTextColor.value = val;
+        newTheme.values.panelSecondaryButtonTextColor.value = val;
+        newTheme.values.cardSecondaryButtonTextColor.value = val;
+        break;
+      case 'warningButtonBgColor':
+        newTheme.values.warningButtonBgColor.value = val;
+        newTheme.values.panelWarningButtonBgColor.value = val;
+        newTheme.values.cardWarningButtonBgColor.value = val;
+        break;
+      case 'warningButtonTextColor':
+        newTheme.values.warningButtonTextColor.value = val;
+        newTheme.values.panelWarningButtonTextColor.value = val;
+        newTheme.values.cardWarningButtonTextColor.value = val;
+        break;
+      case 'dangerButtonBgColor':
+        newTheme.values.dangerButtonBgColor.value = val;
+        newTheme.values.panelDangerButtonBgColor.value = val;
+        newTheme.values.cardDangerButtonBgColor.value = val;
+        break;
+      case 'dangerButtonTextColor':
+        newTheme.values.dangerButtonTextColor.value = val;
+        newTheme.values.panelDangerButtonTextColor.value = val;
+        newTheme.values.cardDangerButtonTextColor.value = val;
+        break;
+    }
 
     setWorkingTheme(newTheme);
   }
@@ -86,9 +264,7 @@ export function ThemerView(props: ThemerViewProps) {
     const newTheme: Theme = {
       id: workingTheme.id,
       name: name,
-      base: [...workingTheme.base],
-      panel: [...workingTheme.panel],
-      card: [...workingTheme.card],
+      values: { ...workingTheme.values },
     };
 
     setWorkingTheme(newTheme);
@@ -144,70 +320,70 @@ export function ThemerView(props: ThemerViewProps) {
               defaultValue={workingTheme.name}
               onInput={(ev) => updateWorkingThemeName((ev.target as any).value)}
             />
-            {/* <h2>Basic</h2>
+            <h2>Basic</h2>
             <p>
-              Colors defined here will apply to multiple items under the
-              Advanced section.
+              You can click on a color block to bring up a color picker, or type
+              in your values manually. Each field accepts all color formats
+              (hex, rgb, hsl, etc), but only hex values will display in the
+              color block. I highly recommend a site like{' '}
+              <a
+                href="https://coolors.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Coolors
+              </a>{' '}
+              for palette ideas and experimentation.
             </p>
-            {workingTheme.base.slice(0, 6).map((opt) => (
-              <ColorChooser
-                key={opt.id}
-                name={opt.name}
-                variable={opt.id}
-                value={opt.value}
-                onChange={(color) =>
-                  updateWorkingThemeColor('base', opt.id, color)
-                }
-              />
-            ))} */}
-            <h2>Advanced</h2>
-            <p>
-              If you need fine grain control, this is for you. You can customize
-              the colors for the general app, panels, cards, and anything else.
-              These are the values that will get saved as your theme.
-            </p>
-            <h3>Base</h3>
-            <div className={styles.colorList}>
-              {workingTheme.base.map((opt) => (
-                <ColorChooser
-                  key={opt.id}
-                  name={opt.name}
-                  variable={opt.id}
-                  value={opt.value}
-                  onChange={(color) =>
-                    updateWorkingThemeColor('base', opt.id, color)
-                  }
-                />
-              ))}
+            <p>Need more control? Head down to the advanced section.</p>
+            {basicSections.map((section) => (
+              <div key={section.title}>
+                <h3>{section.title}</h3>
+                <div className={styles.colorList}>
+                  {section.colors.map((colorKey) => (
+                    <ColorChooser
+                      key={colorKey}
+                      id={colorKey}
+                      color={workingTheme.values[colorKey]}
+                      onChange={updateBasicWorkingThemeColor}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className={styles.mainSectionHeader}>
+              <h2>Advanced</h2>
+              <IconButton
+                type={ButtonType.Primary}
+                onClick={() => setShowAdvanced(!showAdvanced)}
+              >
+                {showAdvanced ? <MdExpandLess /> : <MdExpandMore />}
+              </IconButton>
             </div>
-            <h3>Panels</h3>
-            <div className={styles.colorList}>
-              {workingTheme.panel.map((opt) => (
-                <ColorChooser
-                  key={opt.id}
-                  name={opt.name}
-                  variable={opt.id}
-                  value={opt.value}
-                  onChange={(color) =>
-                    updateWorkingThemeColor('panel', opt.id, color)
-                  }
-                />
-              ))}
-            </div>
-            <h3>Cards</h3>
-            <div className={styles.colorList}>
-              {workingTheme.card.map((opt) => (
-                <ColorChooser
-                  key={opt.id}
-                  name={opt.name}
-                  variable={opt.id}
-                  value={opt.value}
-                  onChange={(color) =>
-                    updateWorkingThemeColor('card', opt.id, color)
-                  }
-                />
-              ))}
-            </div>
+            {showAdvanced ? (
+              <>
+                <p>
+                  Here you can individually customize the colors for the general
+                  app, panels, cards, and anything else. These are the values
+                  that will get saved as your theme.
+                </p>
+                {sections.map((section) => (
+                  <div key={section.title}>
+                    <h3>{section.title}</h3>
+                    <div className={styles.colorList}>
+                      {section.colors.map((colorKey) => (
+                        <ColorChooser
+                          key={colorKey}
+                          id={colorKey}
+                          color={workingTheme.values[colorKey]}
+                          onChange={updateWorkingThemeColor}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : null}
           </div>
         </div>
       ) : (
@@ -381,32 +557,31 @@ export function ThemerView(props: ThemerViewProps) {
 }
 
 type ColorChooserProps = {
-  name: string;
-  variable: string;
-  value: string;
-  onChange: (newVal: string) => void;
+  id: keyof ThemeValues;
+  color: ThemeColor;
+  onChange: (id: keyof ThemeValues, newVal: string) => void;
 };
 
-function ColorChooser(props: ColorChooserProps) {
+function ColorChooser({ id, color, onChange }: ColorChooserProps) {
   function handleColorChange(ev: any) {
-    props.onChange(ev.target.value);
+    onChange(id, ev.target.value);
   }
 
-  const isHex = new RegExp(/#[0-9a-fA-F]{6}/).test(props.value);
+  const isHex = new RegExp(/#[0-9a-fA-F]{6}/).test(color.value);
 
   return (
     <div className={styles.colorChooser}>
-      <div className={styles.colorName}>{props.name}</div>
+      <div className={styles.colorName}>{color.name}</div>
       <input
         className={styles.colorInput}
-        value={props.value}
+        value={color.value}
         onChange={handleColorChange}
         readOnly={false}
       />
       <input
         type="color"
         className={styles.colorPreview}
-        value={isHex ? props.value : '#000000'}
+        value={isHex ? color.value : '#000000'}
         onInput={handleColorChange}
       ></input>
     </div>

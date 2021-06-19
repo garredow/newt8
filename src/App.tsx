@@ -11,7 +11,7 @@ import { IconButton } from './ui-components/button';
 import { MdBrush, MdDashboard } from 'react-icons/md';
 import { ButtonType } from './enums/buttonType';
 import { ThemerView } from './components/ThemerView';
-import { Theme } from './models/Theme';
+import { Theme, ThemeValues } from './models/Theme';
 
 function App() {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);
@@ -28,9 +28,10 @@ function App() {
 
   function applyTheme(theme: Theme) {
     const styles: any = {};
-    theme.base.forEach((a) => (styles[`--${a.id}`] = a.value));
-    theme.panel.forEach((a) => (styles[`--${a.id}`] = a.value));
-    theme.card.forEach((a) => (styles[`--${a.id}`] = a.value));
+    for (const id in theme.values) {
+      styles[`--${theme.values[id as keyof ThemeValues].variable}`] =
+        theme.values[id as keyof ThemeValues].value;
+    }
     setThemeStyles(styles);
   }
 

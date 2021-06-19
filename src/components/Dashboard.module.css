@@ -1,6 +1,6 @@
 .root {
   display: grid;
-  grid-template-columns: 1fr 48px;
+  grid-template-columns: 1fr 40px;
 }
 
 .panels {
@@ -10,8 +10,7 @@
   grid-template-rows: 100vh;
   flex: 1;
   max-height: 100vh;
-  padding: 0 15px;
-  column-gap: 30px;
+  column-gap: 10px;
 }
 
 .panels > div {
