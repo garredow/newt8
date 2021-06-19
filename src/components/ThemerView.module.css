@@ -1,0 +1,125 @@
+.root {
+  height: 100vh;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+}
+
+.basePreview {
+  grid-column: span 3;
+}
+.basePreview > button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.secondaryText {
+  color: var(--secondary-text-color);
+}
+
+.accent {
+  color: var(--app-accent-color);
+}
+
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+}
+
+.preview {
+  border: 3px solid var(--primary-text-color);
+  color: var(--primary-text-color);
+  background-color: var(--app-bg-color);
+  border-radius: 10px;
+  padding: 20px 20px 30px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.panels {
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-columns: 1fr;
+  grid-template-rows: min-content;
+  flex: 1;
+  max-height: 100vh;
+  padding: 0 15px;
+  grid-gap: 30px;
+}
+
+.panelSecondaryText {
+  color: var(--panel-secondary-text-color);
+}
+
+.panelAccent {
+  color: var(--panel-accent-color);
+}
+
+.configContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+}
+
+.configure {
+  border: 3px solid var(--primary-text-color);
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.colorList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 10px;
+}
+
+.configureHeader {
+  display: flex;
+  align-items: center;
+}
+.configureHeader > h1 {
+  flex: 1;
+}
+.configureHeader > button {
+  margin-left: 10px;
+}
+
+.themeName {
+  width: 100%;
+}
+
+.colorChooser {
+  display: grid;
+  grid-template-columns: 1fr 38px;
+  margin-bottom: 20px;
+}
+
+.colorName {
+  grid-column: span 2;
+}
+
+.colorInput {
+  border-bottom: 1px solid var(--primary-text-color);
+  margin-right: 10px;
+}
+
+.colorPreview {
+  height: 36px;
+  width: 36px;
+  border: none;
+}
+
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+}
+
+.settingsContainer > button {
+  margin-bottom: 10px;
+}

@@ -1,10 +1,10 @@
 :root {
-  --app-bg-color: #0c1920;
+  --app-bg-color: #0c1920; /* TODO: Make default theme light */
   --app-accent-color: #ffa500;
 
   --primary-text-color: rgba(255, 255, 255, 0.88);
   --secondary-text-color: rgba(255, 255, 255, 0.6);
-  --warning-text-color: #f6f5ae;
+  --warning-text-color: #f5f749;
   --error-text-color: #f24236;
 
   --primary-button-bg-color: var(--app-accent-color);
@@ -12,7 +12,7 @@
   --secondary-button-bg-color: #1c3a4a;
   --secondary-button-text-color: var(--primary-text-color);
   --warning-button-bg-color: var(--warning-text-color);
-  --warning-button-text-color: var(--primary-text-color);
+  --warning-button-text-color: rgba(0, 0, 0, 0.88);
   --danger-button-bg-color: var(--error-text-color);
   --danger-button-text-color: var(--primary-text-color);
 
@@ -22,7 +22,7 @@
   --panel-divider-color: var(--secondary-text-color);
   --panel-title-text-color: var(--primary-text-color);
   --panel-primary-text-color: var(--primary-text-color);
-  --panel-secondary-text-color: var(--primary-text-color);
+  --panel-secondary-text-color: var(--secondary-text-color);
 
   --panel-primary-button-bg-color: var(--primary-button-bg-color);
   --panel-primary-button-text-color: var(--primary-button-text-color);
@@ -52,47 +52,5 @@
 }
 
 body {
-  background: var(--app-bg-color);
-  color: var(--primary-text-color);
   font-size: 16px;
-}
-
-a,
-a:active,
-a:visited {
-  color: var(--app-accent-color);
-  text-decoration: none;
-}
-
-button {
-  border: 1px solid transparent;
-  background-color: transparent;
-  font-family: inherit;
-  padding: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  outline: unset;
-}
-
-select {
-  padding: 8px 5px 8px 5px;
-  background-color: transparent;
-  color: var(--app-accent-color);
-  border: 1px solid transparent;
-  outline: none;
-  border-radius: 5px;
-  text-align-last: end;
-}
-select:focus {
-  border: 1px solid var(--app-accent-color);
-}
-
-input {
-  background-color: transparent;
-  color: var(--primary-text-color);
-  border: none;
-  outline: none;
-  border-bottom: 1px solid var(--app-accent-color);
 }

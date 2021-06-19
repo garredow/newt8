@@ -17,3 +17,8 @@
   color: var(--card-primary-text-color);
   border-bottom: 1px solid var(--card-accent-color);
 }
+
+.root > button {
+  width: calc(100% - 20px);
+  margin: 10px 10px 0px 10px;
+}

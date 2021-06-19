@@ -1,9 +1,57 @@
 .root {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 48px 1fr;
   grid-gap: 20px;
+  background: var(--app-bg-color);
+  color: var(--primary-text-color);
 }
 
 .sidebar {
   /* background-color: #0b171e; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+a,
+a:active,
+a:visited {
+  color: var(--app-accent-color);
+  text-decoration: none;
+}
+
+button {
+  border: 1px solid transparent;
+  background-color: transparent;
+  font-family: inherit;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: unset;
+}
+
+select {
+  padding: 8px 5px 8px 5px;
+  background-color: transparent;
+  color: var(--app-accent-color);
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 5px;
+  text-align-last: end;
+}
+select:focus {
+  border: 1px solid var(--app-accent-color);
+}
+
+input {
+  background-color: transparent;
+  color: var(--primary-text-color);
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--app-accent-color);
+}
+
+input[type='checkbox'] {
 }

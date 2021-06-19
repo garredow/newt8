@@ -1,6 +1,7 @@
 export const STORAGE_KEY = {
   SETTINGS: 'settings',
   PANELS: 'panels',
+  THEMES: 'themes',
 };
 
 export async function getItem<T>(key: string): Promise<T> {
