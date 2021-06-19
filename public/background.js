@@ -122,7 +122,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 
   storedTab.accessedAt = new Date().toISOString();
 
-  saveTab(storedTab);
+  updateTab(storedTab);
 });
 
 chrome.windows.onRemoved.addListener((windowId) => {
