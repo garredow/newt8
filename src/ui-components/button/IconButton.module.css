@@ -7,12 +7,10 @@
 }
 .root:hover,
 .root:focus {
-  filter: brightness(130%);
-  backdrop-filter: brightness(110%);
+  filter: brightness(var(--button-highlight));
 }
 .root:active {
-  filter: brightness(70%);
-  backdrop-filter: brightness(70%);
+  filter: brightness(var(--button-dim));
   transition: none;
 }
 

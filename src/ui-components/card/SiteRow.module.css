@@ -5,7 +5,10 @@
   cursor: pointer;
 }
 .root:hover {
-  backdrop-filter: brightness(130%);
+  backdrop-filter: brightness(var(--row-highlight));
+}
+.root:active {
+  backdrop-filter: brightness(var(--row-dim));
 }
 
 .icon {
