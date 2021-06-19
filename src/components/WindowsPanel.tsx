@@ -26,7 +26,7 @@ function WindowCard({ window }: WindowCardProps) {
         <SiteRow
           key={tab.id}
           title={tab.title}
-          iconUrl={tab.favIconUrl}
+          iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
           url={tab.url}
           line3={formatDistance(new Date(tab.accessedAt), new Date(), {
             addSuffix: true,

@@ -46,7 +46,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
                 <SiteRow
                   key={tab.sessionId}
                   title={tab.title}
-                  iconUrl={tab.favIconUrl}
+                  iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
                   url={tab.url}
                   line3={formatDistance(
                     new Date(session.lastModified * 1000),

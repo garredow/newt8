@@ -42,7 +42,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
             <SiteRow
               key={session.tab!.sessionId}
               title={session.tab!.title}
-              iconUrl={session.tab!.favIconUrl}
+              iconUrl={`chrome://favicon/size/32@1x/${session.tab!.url}`}
               url={session.tab!.url}
               line3={formatDistance(
                 new Date(session.lastModified * 1000),
