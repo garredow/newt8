@@ -49,7 +49,7 @@ function App() {
           <div className={styles.sidebar}>
             <Link to="/themer">
               <IconButton
-                size={48}
+                size={40}
                 type={ButtonType.Primary}
                 onClick={() => {}}
               >
@@ -58,7 +58,7 @@ function App() {
             </Link>
             <Link to="/dashboard">
               <IconButton
-                size={48}
+                size={40}
                 type={ButtonType.Primary}
                 onClick={() => {}}
               >

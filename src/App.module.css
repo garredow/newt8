@@ -1,16 +1,23 @@
 .root {
   display: grid;
-  grid-template-columns: 48px 1fr;
+  grid-template-columns: 50px 1fr;
   grid-gap: 20px;
   background: var(--app-bg-color);
   color: var(--primary-text-color);
 }
 
 .sidebar {
-  /* background-color: #0b171e; */
+  background-color: var(--card-bg-color);
+  padding: 10px 5px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+}
+.sidebar > * {
+  margin-bottom: 10px;
+}
+.sidebar > *:last-child {
+  margin-bottom: 0;
 }
 
 a,
