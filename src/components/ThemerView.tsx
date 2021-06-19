@@ -391,6 +391,9 @@ function ColorChooser(props: ColorChooserProps) {
   function handleColorChange(ev: any) {
     props.onChange(ev.target.value);
   }
+
+  const isHex = new RegExp(/#[0-9a-fA-F]{6}/).test(props.value);
+
   return (
     <div className={styles.colorChooser}>
       <div className={styles.colorName}>{props.name}</div>
@@ -403,7 +406,7 @@ function ColorChooser(props: ColorChooserProps) {
       <input
         type="color"
         className={styles.colorPreview}
-        value={props.value}
+        value={isHex ? props.value : '#000000'}
         onInput={handleColorChange}
       ></input>
     </div>
