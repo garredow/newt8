@@ -18,6 +18,19 @@
   transition: none;
 }
 
+.root[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.root[disabled]:hover,
+.root[disabled]:focus {
+  filter: none;
+}
+.root[disabled]:active {
+  filter: none;
+  transition: none;
+}
+
 .primary {
   background-color: var(--primary-button-bg-color);
   color: var(--primary-button-text-color);

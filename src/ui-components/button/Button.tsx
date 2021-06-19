@@ -7,12 +7,14 @@ type ButtonProps = {
   text: string;
   type?: ButtonType;
   kind?: ButtonKind;
+  disabled?: boolean;
   onClick: Function;
 };
 
 export function Button({
   type = ButtonType.Secondary,
   kind = ButtonKind.Default,
+  disabled = false,
   ...props
 }: ButtonProps) {
   function getButtonClasses() {
@@ -45,7 +47,11 @@ export function Button({
   }
 
   return (
-    <button className={getButtonClasses()} onClick={() => props.onClick()}>
+    <button
+      className={getButtonClasses()}
+      disabled={disabled}
+      onClick={() => props.onClick()}
+    >
       {props.text}
     </button>
   );
