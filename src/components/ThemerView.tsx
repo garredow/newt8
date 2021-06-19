@@ -462,7 +462,7 @@ export function ThemerView(props: ThemerViewProps) {
               options={{
                 columns: 1,
                 width: 3,
-                title: 'Recent Tabs',
+                title: 'Example Panel',
               }}
               onOptionsChanged={() => {}}
               onDeletePanel={() => {}}
