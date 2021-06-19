@@ -17,12 +17,12 @@ const defaultThemes: Theme[] = [
       {
         id: 'primary-text-color',
         name: 'primary-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'secondary-text-color',
         name: 'secondary-text-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'warning-text-color',
@@ -38,7 +38,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'primary-button-text-color',
         name: 'primary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'secondary-button-bg-color',
@@ -48,7 +48,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'secondary-button-text-color',
         name: 'secondary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'warning-button-bg-color',
@@ -58,7 +58,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'warning-button-text-color',
         name: 'warning-button-text-color',
-        value: '#cccccc',
+        value: 'rgba(0, 0, 0, 0.88)',
       },
       {
         id: 'danger-button-bg-color',
@@ -68,7 +68,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'danger-button-text-color',
         name: 'danger-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
     ],
     panel: [
@@ -81,27 +81,27 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-divider-color',
         name: 'panel-divider-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'panel-title-text-color',
         name: 'panel-title-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-primary-text-color',
         name: 'panel-primary-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-secondary-text-color',
         name: 'panel-secondary-text-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'panel-primary-button-text-color',
         name: 'panel-primary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-secondary-button-bg-color',
@@ -111,7 +111,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-secondary-button-text-color',
         name: 'panel-secondary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-warning-button-bg-color',
@@ -121,7 +121,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-warning-button-text-color',
         name: 'panel-warning-button-text-color',
-        value: '#cccccc',
+        value: 'rgba(0, 0, 0, 0.88)',
       },
       {
         id: 'panel-danger-button-bg-color',
@@ -131,7 +131,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-danger-button-text-color',
         name: 'panel-danger-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
     ],
     card: [
@@ -144,27 +144,27 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-divider-color',
         name: 'card-divider-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'card-title-text-color',
         name: 'card-title-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-primary-text-color',
         name: 'card-primary-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-secondary-text-color',
         name: 'card-secondary-text-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'card-primary-button-text-color',
         name: 'card-primary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-secondary-button-bg-color',
@@ -174,7 +174,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-secondary-button-text-color',
         name: 'card-secondary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-warning-button-bg-color',
@@ -184,7 +184,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-warning-button-text-color',
         name: 'card-warning-button-text-color',
-        value: '#cccccc',
+        value: 'rgba(0, 0, 0, 0.88)',
       },
       {
         id: 'card-danger-button-bg-color',
@@ -194,7 +194,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-danger-button-text-color',
         name: 'card-danger-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
     ],
   },
@@ -207,12 +207,12 @@ const defaultThemes: Theme[] = [
       {
         id: 'primary-text-color',
         name: 'primary-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'secondary-text-color',
         name: 'secondary-text-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'warning-text-color',
@@ -228,7 +228,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'primary-button-text-color',
         name: 'primary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'secondary-button-bg-color',
@@ -238,7 +238,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'secondary-button-text-color',
         name: 'secondary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'warning-button-bg-color',
@@ -248,7 +248,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'warning-button-text-color',
         name: 'warning-button-text-color',
-        value: '#cccccc',
+        value: 'rgba(0, 0, 0, 0.88)',
       },
       {
         id: 'danger-button-bg-color',
@@ -258,7 +258,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'danger-button-text-color',
         name: 'danger-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
     ],
     panel: [
@@ -271,27 +271,27 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-divider-color',
         name: 'panel-divider-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'panel-title-text-color',
         name: 'panel-title-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-primary-text-color',
         name: 'panel-primary-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-secondary-text-color',
         name: 'panel-secondary-text-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'panel-primary-button-text-color',
         name: 'panel-primary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-secondary-button-bg-color',
@@ -301,7 +301,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-secondary-button-text-color',
         name: 'panel-secondary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'panel-warning-button-bg-color',
@@ -311,7 +311,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-warning-button-text-color',
         name: 'panel-warning-button-text-color',
-        value: '#cccccc',
+        value: 'rgba(0, 0, 0, 0.88)',
       },
       {
         id: 'panel-danger-button-bg-color',
@@ -321,7 +321,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'panel-danger-button-text-color',
         name: 'panel-danger-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
     ],
     card: [
@@ -334,27 +334,27 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-divider-color',
         name: 'card-divider-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'card-title-text-color',
         name: 'card-title-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-primary-text-color',
         name: 'card-primary-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-secondary-text-color',
         name: 'card-secondary-text-color',
-        value: '#cccccc',
+        value: 'rgba(255, 255, 255, 0.6)',
       },
       {
         id: 'card-primary-button-text-color',
         name: 'card-primary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-secondary-button-bg-color',
@@ -364,7 +364,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-secondary-button-text-color',
         name: 'card-secondary-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
       {
         id: 'card-warning-button-bg-color',
@@ -374,7 +374,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-warning-button-text-color',
         name: 'card-warning-button-text-color',
-        value: '#cccccc',
+        value: 'rgba(0, 0, 0, 0.88)',
       },
       {
         id: 'card-danger-button-bg-color',
@@ -384,7 +384,7 @@ const defaultThemes: Theme[] = [
       {
         id: 'card-danger-button-text-color',
         name: 'card-danger-button-text-color',
-        value: '#ffffff',
+        value: 'rgba(255, 255, 255, 0.88)',
       },
     ],
   },
