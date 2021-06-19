@@ -1,15 +1,15 @@
 :root {
-  --app-bg-color: #0c1920; /* TODO: Make default theme light */
-  --app-accent-color: #ffa500;
+  --app-bg-color: #fff; /* Matches initial browser new tab backgroudn color */
+  --app-accent-color: #75abbc;
 
-  --primary-text-color: rgba(255, 255, 255, 0.88);
-  --secondary-text-color: rgba(255, 255, 255, 0.6);
-  --warning-text-color: #f5f749;
-  --error-text-color: #f24236;
+  --primary-text-color: rgba(0, 0, 0, 0.88);
+  --secondary-text-color: rgba(0, 0, 0, 0.5);
+  --warning-text-color: #f6f862;
+  --error-text-color: #f45d52;
 
   --primary-button-bg-color: var(--app-accent-color);
   --primary-button-text-color: var(--primary-text-color);
-  --secondary-button-bg-color: #1c3a4a;
+  --secondary-button-bg-color: #d0d6dd;
   --secondary-button-text-color: var(--primary-text-color);
   --warning-button-bg-color: var(--warning-text-color);
   --warning-button-text-color: rgba(0, 0, 0, 0.88);
@@ -34,7 +34,7 @@
   --panel-danger-button-text-color: var(--danger-button-text-color);
 
   /* Card */
-  --card-bg-color: #12252f;
+  --card-bg-color: #ffffff;
   --card-accent-color: var(--app-accent-color);
   --card-divider-color: var(--primary-text-color);
   --card-title-text-color: var(--primary-text-color);
