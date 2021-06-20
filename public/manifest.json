@@ -24,10 +24,13 @@
     "persistent": false
   },
   "permissions": [
+    "storage"
+  ],
+  "optional_permissions": [
     "bookmarks",
     "tabs",
-    "storage",
     "sessions",
-    "chrome://favicon/"
+    "topSites",
+    "chrome://favicon/*"
   ]
 }

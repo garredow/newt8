@@ -9,3 +9,15 @@
 .delete {
   margin-top: 20px;
 }
+
+.permissionsList > li {
+  margin-bottom: 10px;
+}
+
+li > b {
+  color: var(--panel-accent-color);
+}
+
+.error {
+  color: var(--error-text-color);
+}

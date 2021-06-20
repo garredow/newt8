@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getNewtFolderId } from '../services/chromeService';
 import { BookmarksPanel } from './BookmarksPanel';
 import { RecentTabsPanel } from './RecentTabsPanel';
 import { WindowsPanel } from './WindowsPanel';
@@ -27,8 +26,6 @@ export function DashboardView() {
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
 
   useEffect(() => {
-    getNewtFolderId();
-
     setStatus(LoadingStatus.Loading);
     getItem<Panel[]>(StorageKey.Panels).then((storedPanels: Panel[] = []) => {
       setPanels(storedPanels);
@@ -168,18 +165,8 @@ export function DashboardView() {
           <div className={styles.message}>
             Looks like there aren't any panels here yet. Want to add one?
             <Button
-              text="Bookmarks"
+              text="New Panel"
               type={ButtonType.Primary}
-              onClick={() =>
-                addPanel({
-                  id: PanelType.Bookmarks,
-                  options: {} as PanelOptions,
-                })
-              }
-            />
-            <Button
-              text="Something else..."
-              type={ButtonType.Secondary}
               onClick={() =>
                 addPanel({
                   id: PanelType.New,

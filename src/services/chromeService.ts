@@ -8,7 +8,7 @@ export function getAllTabs(): Promise<chrome.tabs.Tab[]> {
 
 export function getCurrentTab(): Promise<chrome.tabs.Tab> {
   return new Promise((resolve) => {
-    chrome.tabs.getCurrent((tab) => resolve(tab));
+    chrome.tabs.getCurrent((tab) => resolve(tab!));
   });
 }
 
@@ -31,14 +31,6 @@ export function getBookmarks(): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
     });
   });
 }
-
-// export function openInCurrentTab(url: string) {
-//   chrome.tabs.update({ url });
-// }
-
-// export function openInNewTab(url: string, active = true) {
-//   chrome.tabs.create({ url, active });
-// }
 
 export function openUrl(url: string, newTab = false) {
   newTab
