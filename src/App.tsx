@@ -3,8 +3,7 @@ import { MemoryRouter, Switch, Route, Link } from 'react-router-dom';
 import { DashboardView } from './components/Dashboard';
 import { defaultSettings, SettingsContext } from './SettingsContext';
 import { Settings } from './models/Settings';
-import { getItem, setItem } from './services/chromeService';
-import { STORAGE_KEY } from './utilities/storage';
+import { getItem, setItem, StorageKey } from './utilities/storage';
 import styles from './App.module.css';
 import { SettingsView } from './components/SettingsView';
 import { IconButton } from './ui-components/button';
@@ -18,7 +17,7 @@ function App() {
   const [themeStyles, setThemeStyles] = useState<any>({});
 
   useEffect(() => {
-    getItem<Settings>(STORAGE_KEY.SETTINGS).then((res = defaultSettings) => {
+    getItem<Settings>(StorageKey.Settings).then((res = defaultSettings) => {
       const theme =
         res.themes.find((a) => a.id === res.activeTheme) || res.themes[0];
       applyTheme(theme);
@@ -40,7 +39,7 @@ function App() {
     const theme =
       val.themes.find((a) => a.id === val.activeTheme) || val.themes[0];
     applyTheme(theme);
-    await setItem<Settings>(STORAGE_KEY.SETTINGS, val);
+    await setItem<Settings>(StorageKey.Settings, val);
   }
 
   return (

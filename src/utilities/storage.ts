@@ -1,8 +1,8 @@
-export const STORAGE_KEY = {
-  SETTINGS: 'settings',
-  PANELS: 'panels',
-  THEMES: 'themes',
-};
+export enum StorageKey {
+  Settings = 'settings',
+  Panels = 'panels',
+  Themes = 'themes',
+}
 
 export async function getItem<T>(key: string): Promise<T> {
   return new Promise((resolve) => {
@@ -10,7 +10,7 @@ export async function getItem<T>(key: string): Promise<T> {
   });
 }
 
-export async function setItem<T>(key: string, data: T) {
+export async function setItem<T>(key: string, data: T): Promise<void> {
   return new Promise((resolve) => {
     chrome.storage.local.set({ [key]: data }, resolve);
   });

@@ -26,7 +26,7 @@ export function getBookmarks(): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
     const newtfolderId = await getNewtFolderId();
 
     chrome.bookmarks.getSubTree(newtfolderId, (subTree) => {
-      const folders = subTree[0].children;
+      const folders = subTree[0].children || [];
       resolve(folders);
     });
   });
@@ -50,18 +50,6 @@ export function switchToTab(windowId: number, tabId: number) {
   chrome.windows.update(windowId, { focused: true });
   chrome.tabs.update(tabId, { active: true });
   window.close();
-}
-
-export async function getItem<T>(key: string): Promise<T> {
-  return new Promise((resolve) => {
-    chrome.storage.local.get(key, (result) => resolve(result[key]));
-  });
-}
-
-export async function setItem<T>(key: string, data: T) {
-  return new Promise((resolve) => {
-    chrome.storage.local.set({ [key]: data }, resolve);
-  });
 }
 
 export function getNewtFolderId(): Promise<string> {

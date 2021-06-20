@@ -6,7 +6,7 @@ import { WindowsPanel } from './WindowsPanel';
 import styles from './Dashboard.module.css';
 import { Panel } from '../models/Panel';
 import { useEffect } from 'react';
-import { getItem, setItem, STORAGE_KEY } from '../utilities/storage';
+import { getItem, setItem, StorageKey } from '../utilities/storage';
 import { PanelType } from '../enums/panelType';
 import { IconButton } from '../ui-components/button';
 import { MdAdd } from 'react-icons/md';
@@ -30,7 +30,7 @@ export function DashboardView() {
     getNewtFolderId();
 
     setStatus(LoadingStatus.Loading);
-    getItem<Panel[]>(STORAGE_KEY.PANELS).then((storedPanels: Panel[] = []) => {
+    getItem<Panel[]>(StorageKey.Panels).then((storedPanels: Panel[] = []) => {
       setPanels(storedPanels);
       setStatus(LoadingStatus.Idle);
     });
@@ -43,7 +43,7 @@ export function DashboardView() {
     }
 
     const newPanels = [...panels, panel];
-    setItem(STORAGE_KEY.PANELS, newPanels);
+    setItem(StorageKey.Panels, newPanels);
     setPanels(newPanels);
   }
 
@@ -55,13 +55,13 @@ export function DashboardView() {
 
     const newPanels = [...panels];
     newPanels[index] = panel;
-    setItem(STORAGE_KEY.PANELS, newPanels);
+    setItem(StorageKey.Panels, newPanels);
     setPanels(newPanels);
   }
 
   function deletePanel(panelId: PanelType) {
     const newPanels = panels.filter((a) => a.id !== panelId);
-    setItem(STORAGE_KEY.PANELS, newPanels);
+    setItem(StorageKey.Panels, newPanels);
     setPanels(newPanels);
   }
 
