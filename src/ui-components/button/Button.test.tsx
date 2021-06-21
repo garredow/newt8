@@ -1,15 +1,24 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { ButtonKind } from '../../enums/buttonKind';
 import { ButtonType } from '../../enums/buttonType';
 import { Button } from './Button';
 
-describe('CardHeader', () => {
+describe('Button', () => {
   test('renders text', () => {
     const props = { text: 'button text' };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toBeVisible();
+  });
+
+  test('handles click', () => {
+    const props = { text: 'button text', onClick: jest.fn() };
+    const { getByText } = render(<Button {...props} />);
+
+    fireEvent.click(getByText(props.text));
+
+    expect(props.onClick).toBeCalledTimes(1);
   });
 
   test('defaults to secondary button', () => {

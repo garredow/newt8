@@ -56,6 +56,7 @@ export function Panel(props: PanelProps) {
         text={props.options.title}
         editable={showSettings}
         onTitleChanged={(title) => setOptionValue('title', title)}
+        data-testid="panel-header"
       >
         {props.enableSettings ? (
           <IconButton
@@ -67,13 +68,14 @@ export function Panel(props: PanelProps) {
         ) : null}
       </PanelHeader>
       {showSettings ? (
-        <PanelSettings>
+        <PanelSettings data-testid="settings">
           <SettingsRow label="Columns">
             <select
               defaultValue={props.options.columns}
               onChange={(ev) =>
                 setOptionValue('columns', parseInt(ev.target.value, 10))
               }
+              data-testid="select-columns"
             >
               <option value={0}>Auto</option>
               <option value={1}>1</option>
@@ -91,7 +93,10 @@ export function Panel(props: PanelProps) {
           <SettingsRow label="Width">
             <select
               defaultValue={props.options.width}
-              onChange={(ev) => setOptionValue('width', ev.target.value)}
+              onChange={(ev) =>
+                setOptionValue('width', parseInt(ev.target.value, 10))
+              }
+              data-testid="select-width"
             >
               <option value={1}>Smallest</option>
               <option value={2}>Small</option>

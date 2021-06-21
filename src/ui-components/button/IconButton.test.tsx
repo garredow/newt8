@@ -1,12 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { MdMenu } from 'react-icons/md';
 import { ButtonKind } from '../../enums/buttonKind';
 import { ButtonType } from '../../enums/buttonType';
-import { Button } from './Button';
 import { IconButton } from './IconButton';
 
-describe('CardHeader', () => {
+describe('IconButton', () => {
+  test('renders icon', () => {
+    const props = {};
+    const { getByTestId } = render(
+      <IconButton {...props}>
+        <MdMenu data-testid="icon" />
+      </IconButton>
+    );
+
+    expect(getByTestId('icon')).toBeVisible();
+  });
   test('defaults to secondary button', () => {
     const props = {};
     const { getByTestId } = render(

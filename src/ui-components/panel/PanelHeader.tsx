@@ -10,7 +10,7 @@ type PanelHeaderProps = ComponentBase & {
 
 export function PanelHeader(props: PanelHeaderProps) {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-testid={props['data-testid']}>
       <h1
         className={styles.title}
         contentEditable={props.editable}
