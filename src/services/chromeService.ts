@@ -32,6 +32,14 @@ export function getBookmarks(): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
   });
 }
 
+export function getRecentBookmarks(): Promise<
+  chrome.bookmarks.BookmarkTreeNode[]
+> {
+  return new Promise(async (resolve) => {
+    chrome.bookmarks.getRecent(20, resolve);
+  });
+}
+
 export function openUrl(url: string, newTab = false) {
   newTab
     ? chrome.tabs.create({ url, active: true })

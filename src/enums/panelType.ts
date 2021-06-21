@@ -5,4 +5,5 @@ export enum PanelType {
   Windows = 'windows',
   RecentlyClosed = 'recentlyClosed',
   Devices = 'devices',
+  NewBookmarks = 'newBookmarks',
 }

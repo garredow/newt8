@@ -48,6 +48,28 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
+  [PanelType.NewBookmarks]: {
+    id: '',
+    name: 'New Bookmarks',
+    kind: PanelType.NewBookmarks,
+    permissions: [
+      { key: Permission.Bookmarks, reason: 'Access list of bookmarks.' },
+      {
+        key: Permission.Tabs,
+        reason: 'Open sites in current tab and create new tabs.',
+      },
+      {
+        key: Permission.FavIcon,
+        reason: 'Display a high quality icon for each site.',
+      },
+    ],
+    defaultOptions: {
+      title: 'New Bookmarks',
+      columns: 1,
+      width: 3,
+    },
+    options: {},
+  },
   [PanelType.RecentTabs]: {
     id: '',
     name: 'Recent Tabs',

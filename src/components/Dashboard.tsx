@@ -16,6 +16,7 @@ import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfigs, PanelOptions } from '../services/panels';
 import { Panel } from '../models/Panel';
+import { NewBookmarksPanel } from './NewBookmarksPanel';
 
 enum LoadingStatus {
   Init,
@@ -147,6 +148,17 @@ export function DashboardView(props: DashboardViewProps) {
       case PanelType.Devices:
         return (
           <DevicesPanel
+            key={panel.id}
+            options={panel.options}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelType.NewBookmarks:
+        return (
+          <NewBookmarksPanel
             key={panel.id}
             options={panel.options}
             onOptionsChanged={(options) =>
