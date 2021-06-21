@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { PanelType } from '../enums/panelType';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBase } from '../models/ComponentBase';
 import { getBookmarks, openUrl } from '../services/chromeService';
+import { getPanelConfig, PanelOptions } from '../services/panels';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
-import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
+import { Panel, PanelContent } from '../ui-components/panel';
 
 type BookmarksPanelOptions = PanelOptions;
 
@@ -18,11 +20,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
   const options: BookmarksPanelOptions = Object.assign(
-    {
-      columns: 0,
-      width: 3,
-      title: 'Bookmarks',
-    },
+    getPanelConfig(PanelType.Bookmarks).defaultOptions,
     props.options
   );
 

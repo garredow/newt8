@@ -4,17 +4,12 @@ import { MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
 import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
+import { PanelOptions } from '../../services/panels';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
 import styles from './Panel.module.css';
 import { PanelSettings } from './PanelSettings';
 import { SettingsRow } from './SettingsRow';
-
-export type PanelOptions = {
-  title: string;
-  width: number;
-  columns: number;
-};
 
 type PanelProps = ComponentBase & {
   options: PanelOptions;

@@ -3,7 +3,6 @@ import { BookmarksPanel } from './BookmarksPanel';
 import { RecentTabsPanel } from './RecentTabsPanel';
 import { WindowsPanel } from './WindowsPanel';
 import styles from './Dashboard.module.css';
-import { Panel } from '../models/Panel';
 import { useEffect } from 'react';
 import { getItem, setItem, StorageKey } from '../utilities/storage';
 import { PanelType } from '../enums/panelType';
@@ -12,10 +11,11 @@ import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel } from './DevicesPanel';
-import { PanelOptions } from '../ui-components/panel';
 import { ButtonType } from '../enums/buttonType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
+import { getPanelConfigs, PanelOptions } from '../services/panels';
+import { Panel } from '../models/Panel';
 
 enum LoadingStatus {
   Init,
@@ -85,13 +85,9 @@ export function DashboardView(props: DashboardViewProps) {
     switch (panel.id) {
       case PanelType.New:
         const currentPanels = panels.map((a) => a.id);
-        const availablePanels = [
-          PanelType.Bookmarks,
-          PanelType.Devices,
-          PanelType.RecentlyClosed,
-          PanelType.RecentTabs,
-          PanelType.Windows,
-        ].filter((a) => !currentPanels.includes(a));
+        const availablePanels = getPanelConfigs()
+          .filter((a) => !currentPanels.includes(a.kind))
+          .map((a) => a.kind);
 
         return (
           <NewPanel

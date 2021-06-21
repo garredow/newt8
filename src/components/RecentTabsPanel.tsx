@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ChromeTab } from '../models/ChromeTab';
 import { getRecentTabs } from '../services/tabsService';
 import { Card } from '../ui-components/card';
-import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
+import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { switchToTab } from '../services/chromeService';
 import { ComponentBase } from '../models/ComponentBase';
+import { getPanelConfig, PanelOptions } from '../services/panels';
+import { PanelType } from '../enums/panelType';
 
 type RecentTabsPanelOptions = PanelOptions;
 
@@ -20,11 +22,7 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
   const [tabs, setTabs] = useState<ChromeTab[]>([]);
 
   const options: RecentTabsPanelOptions = Object.assign(
-    {
-      columns: 1,
-      width: 3,
-      title: 'Recent Tabs',
-    },
+    getPanelConfig(PanelType.RecentTabs).defaultOptions,
     props.options
   );
 

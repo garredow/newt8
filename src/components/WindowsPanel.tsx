@@ -1,20 +1,22 @@
 import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ButtonKind } from '../enums/buttonKind';
+import { PanelType } from '../enums/panelType';
 import { ChromeWindow } from '../models/ChromeWindow';
 import { ComponentBase } from '../models/ComponentBase';
 import { switchToTab } from '../services/chromeService';
+import { getPanelConfig, PanelOptions } from '../services/panels';
 import { getWindows } from '../services/windowsService';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardFooter, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
-import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
+import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './WindowsPanel.module.css';
 
 type WindowCardProps = ComponentBase & {
   window: ChromeWindow;
 };
-function WindowCard({ window }: WindowCardProps) {
+function WindowCard({ window, ...props }: WindowCardProps) {
   const [expanded, setExpanded] = useState(true);
 
   const title = window.focused ? 'This Window' : `Window ${window.id}`;
@@ -59,11 +61,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
   const [windows, setWindows] = useState<ChromeWindow[]>([]);
 
   const options: WindowsPanelOptions = Object.assign(
-    {
-      columns: 1,
-      width: 3,
-      title: 'Windows',
-    },
+    getPanelConfig(PanelType.Windows).defaultOptions,
     props.options
   );
 

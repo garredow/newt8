@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader } from '../ui-components/card';
-import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
+import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './DevicesPanel.module.css';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices } from '../services/sessionsService';
 import { openUrl } from '../services/chromeService';
 import { ComponentBase } from '../models/ComponentBase';
+import { getPanelConfig, PanelOptions } from '../services/panels';
+import { PanelType } from '../enums/panelType';
 
 type DevicesPanelOptions = PanelOptions;
 
@@ -20,11 +22,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
   const [devices, setDevices] = useState<chrome.sessions.Device[]>([]);
 
   const options: DevicesPanelOptions = Object.assign(
-    {
-      columns: 1,
-      width: 3,
-      title: 'Other Devices',
-    },
+    getPanelConfig(PanelType.Devices).defaultOptions,
     props.options
   );
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
+import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './NewPanel.module.css';
 import { PanelType } from '../enums/panelType';
 import { ButtonType } from '../enums/buttonType';
@@ -12,15 +12,7 @@ import {
   verifyPermissionsForPanel,
 } from '../services/permissions';
 import { ComponentBase } from '../models/ComponentBase';
-
-const panelNameMap = {
-  [PanelType.New]: 'New',
-  [PanelType.Bookmarks]: 'Bookmarks',
-  [PanelType.RecentTabs]: 'Recent Tabs',
-  [PanelType.Windows]: 'Windows',
-  [PanelType.RecentlyClosed]: 'Recently Closed Tabs',
-  [PanelType.Devices]: 'Other Devices',
-};
+import { getPanelConfig, PanelOptions } from '../services/panels';
 
 type NewPanelOptions = PanelOptions;
 
@@ -129,7 +121,7 @@ export function NewPanel(props: NewPanelProps) {
           {props.availablePanels.map((panel) => (
             <Button
               key={panel}
-              text={panelNameMap[panel]}
+              text={getPanelConfig(panel).name}
               type={ButtonType.Secondary}
               kind={ButtonKind.Panel}
               onClick={() => checkPermissions(panel)}
