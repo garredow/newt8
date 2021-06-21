@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Bookmark } from '../models/Bookmark';
+import { ComponentBase } from '../models/ComponentBase';
 import { getBookmarks, openUrl } from '../services/chromeService';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
@@ -7,7 +8,7 @@ import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
 
 type BookmarksPanelOptions = PanelOptions;
 
-type BookmarksPanelProps = {
+type BookmarksPanelProps = ComponentBase & {
   options?: BookmarksPanelOptions;
   onOptionsChanged: (options: BookmarksPanelOptions) => void;
   onDeletePanel: () => void;
@@ -38,6 +39,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       options={options as any}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
+      data-testid={props['data-testid']}
     >
       <PanelContent columns={options.columns}>
         {bookmarks.map((group) => (

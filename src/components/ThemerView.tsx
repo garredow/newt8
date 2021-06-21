@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { MdCheck, MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
+import { ComponentBase } from '../models/ComponentBase';
 import { Theme, ThemeColor, ThemeValues } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
 import { IconButton } from '../ui-components/button';
@@ -14,7 +15,7 @@ import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './ThemerView.module.css';
 
-export type ThemerViewProps = {};
+export type ThemerViewProps = ComponentBase & {};
 
 type Section = {
   title: string;
@@ -298,7 +299,7 @@ export function ThemerView(props: ThemerViewProps) {
   }
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-testid={props['data-testid']}>
       {showConfig ? (
         <div className={styles.configContainer}>
           <div className={styles.configureHeader}>

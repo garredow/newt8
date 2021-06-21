@@ -1,9 +1,10 @@
 import React from 'react';
 import { ButtonKind } from '../../enums/buttonKind';
 import { ButtonType } from '../../enums/buttonType';
+import { ComponentBase } from '../../models/ComponentBase';
 import styles from './Button.module.css';
 
-type ButtonProps = {
+type ButtonProps = ComponentBase & {
   text: string;
   type?: ButtonType;
   kind?: ButtonKind;
@@ -51,6 +52,7 @@ export function Button({
       className={getButtonClasses()}
       disabled={disabled}
       onClick={() => props.onClick?.()}
+      data-testid={props['data-testid']}
     >
       {props.text}
     </button>

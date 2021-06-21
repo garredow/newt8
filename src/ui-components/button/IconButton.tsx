@@ -52,7 +52,12 @@ export function IconButton({
     return iconClass.join(' ');
   }
   return (
-    <button className={styles.root} style={buttonStyle} onClick={props.onClick}>
+    <button
+      className={styles.root}
+      style={buttonStyle}
+      onClick={props.onClick}
+      data-testid={props['data-testid']}
+    >
       <IconContext.Provider
         value={{
           size: `${size - size * 0.2}px`,

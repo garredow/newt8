@@ -6,10 +6,11 @@ import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { switchToTab } from '../services/chromeService';
+import { ComponentBase } from '../models/ComponentBase';
 
 type RecentTabsPanelOptions = PanelOptions;
 
-type RecentTabsPanelProps = {
+type RecentTabsPanelProps = ComponentBase & {
   options: RecentTabsPanelOptions;
   onOptionsChanged: (options: RecentTabsPanelOptions) => void;
   onDeletePanel: () => void;
@@ -38,6 +39,7 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
+      data-testid={props['data-testid']}
     >
       <PanelContent columns={options.columns}>
         <Card>

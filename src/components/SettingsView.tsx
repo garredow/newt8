@@ -1,10 +1,13 @@
 import React from 'react';
 import { useContext } from 'react';
+import { ComponentBase } from '../models/ComponentBase';
 import { SettingsContext } from '../SettingsContext';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './SettingsView.module.css';
 
-export function SettingsView() {
+export type SettingsViewProps = ComponentBase;
+
+export function SettingsView(props: SettingsViewProps) {
   const { settings, setSettings } = useContext(SettingsContext);
 
   function setSettingValue(key: string, val: any) {
@@ -12,7 +15,7 @@ export function SettingsView() {
   }
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-testid={props['data-testid']}>
       <h1>Settings</h1>
       <SettingsRow
         label="Theme"

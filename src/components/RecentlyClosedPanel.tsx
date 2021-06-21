@@ -5,10 +5,11 @@ import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getRecentlyClosed } from '../services/sessionsService';
 import { openUrl } from '../services/chromeService';
+import { ComponentBase } from '../models/ComponentBase';
 
 type RecentlyClosedPanelOptions = PanelOptions;
 
-type RecentlyClosedPanelProps = {
+type RecentlyClosedPanelProps = ComponentBase & {
   options: RecentlyClosedPanelOptions;
   onOptionsChanged: (options: RecentlyClosedPanelOptions) => void;
   onDeletePanel: () => void;
@@ -35,6 +36,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
+      data-testid={props['data-testid']}
     >
       <PanelContent columns={options.columns}>
         <Card>

@@ -6,10 +6,11 @@ import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices } from '../services/sessionsService';
 import { openUrl } from '../services/chromeService';
+import { ComponentBase } from '../models/ComponentBase';
 
 type DevicesPanelOptions = PanelOptions;
 
-type DevicesPanelProps = {
+type DevicesPanelProps = ComponentBase & {
   options: DevicesPanelOptions;
   onOptionsChanged: (options: DevicesPanelOptions) => void;
   onDeletePanel: () => void;
@@ -36,6 +37,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
+      data-testid={props['data-testid']}
     >
       <PanelContent columns={options.columns}>
         {devices.map((device) => {

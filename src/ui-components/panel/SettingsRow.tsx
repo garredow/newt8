@@ -12,7 +12,7 @@ export function SettingsRow(props: SettingsRowProps) {
   const [showHelpText, setShowHelpText] = useState(false);
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-testid={props['data-testid']}>
       <div className={styles.row}>
         <div
           className={styles.label}

@@ -2,6 +2,7 @@ import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ButtonKind } from '../enums/buttonKind';
 import { ChromeWindow } from '../models/ChromeWindow';
+import { ComponentBase } from '../models/ComponentBase';
 import { switchToTab } from '../services/chromeService';
 import { getWindows } from '../services/windowsService';
 import { Button } from '../ui-components/button/Button';
@@ -10,7 +11,7 @@ import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent, PanelOptions } from '../ui-components/panel';
 import styles from './WindowsPanel.module.css';
 
-type WindowCardProps = {
+type WindowCardProps = ComponentBase & {
   window: ChromeWindow;
 };
 function WindowCard({ window }: WindowCardProps) {
@@ -20,7 +21,7 @@ function WindowCard({ window }: WindowCardProps) {
   const tabs = expanded ? window.tabs : window.tabs.slice(0, 3);
 
   return (
-    <Card>
+    <Card data-testid={props['data-testid']}>
       <CardHeader text={title} />
       {tabs.map((tab) => (
         <SiteRow
@@ -48,7 +49,7 @@ function WindowCard({ window }: WindowCardProps) {
 
 type WindowsPanelOptions = PanelOptions;
 
-type WindowsPanelProps = {
+type WindowsPanelProps = ComponentBase & {
   options: WindowsPanelOptions;
   onOptionsChanged: (options: WindowsPanelOptions) => void;
   onDeletePanel: () => void;
@@ -74,6 +75,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
     <div
       className={styles.root}
       style={{ gridColumn: `span ${options.width}` }}
+      data-testid={props['data-testid']}
     >
       <Panel
         options={options}

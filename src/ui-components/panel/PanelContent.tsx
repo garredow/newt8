@@ -4,7 +4,6 @@ import styles from './PanelContent.module.css';
 
 type PanelContentProps = ComponentBase & {
   columns?: number;
-  fullWidthCards?: boolean;
 };
 
 export function PanelContent(props: PanelContentProps) {
@@ -12,7 +11,11 @@ export function PanelContent(props: PanelContentProps) {
     ? { gridTemplateColumns: `repeat(${props.columns}, 1fr)` }
     : {};
   return (
-    <div className={styles.root} style={style}>
+    <div
+      className={styles.root}
+      style={style}
+      data-testid={props['data-testid']}
+    >
       {props.children}
     </div>
   );

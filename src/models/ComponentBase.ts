@@ -1,4 +1,5 @@
 export type ComponentBase = {
   className?: string;
-  children?: any;
+  children?: React.ReactNode;
+  'data-testid'?: string;
 };

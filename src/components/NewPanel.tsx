@@ -11,6 +11,7 @@ import {
   requestPermissions,
   verifyPermissionsForPanel,
 } from '../services/permissions';
+import { ComponentBase } from '../models/ComponentBase';
 
 const panelNameMap = {
   [PanelType.New]: 'New',
@@ -23,7 +24,7 @@ const panelNameMap = {
 
 type NewPanelOptions = PanelOptions;
 
-type NewPanelProps = {
+type NewPanelProps = ComponentBase & {
   availablePanels: PanelType[];
   options?: NewPanelOptions;
   onPanelTypeChanged: (panelType: PanelType) => void;
@@ -82,6 +83,7 @@ export function NewPanel(props: NewPanelProps) {
       enableSettings={false}
       onOptionsChanged={() => {}}
       onDeletePanel={props.onDeletePanel}
+      data-testid={props['data-testid']}
     >
       {showPermissions ? (
         <PanelContent columns={1}>

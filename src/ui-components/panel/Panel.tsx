@@ -19,8 +19,8 @@ export type PanelOptions = {
 type PanelProps = ComponentBase & {
   options: PanelOptions;
   enableSettings?: boolean;
-  onOptionsChanged: (options: PanelOptions) => void;
-  onDeletePanel: () => void;
+  onOptionsChanged?: (options: PanelOptions) => void;
+  onDeletePanel?: () => void;
 };
 
 Panel.defaultProps = {
@@ -43,13 +43,14 @@ export function Panel(props: PanelProps) {
 
   function setOptionValue(key: string, val: any) {
     const newOpts = { ...props.options, [key]: val };
-    props.onOptionsChanged(newOpts);
+    props.onOptionsChanged?.(newOpts);
   }
 
   return (
     <div
       className={styles.root}
       style={{ gridColumn: `span ${props.options.width}` }}
+      data-testid={props['data-testid']}
     >
       <PanelHeader
         text={props.options.title}
@@ -57,7 +58,10 @@ export function Panel(props: PanelProps) {
         onTitleChanged={(title) => setOptionValue('title', title)}
       >
         {props.enableSettings ? (
-          <IconButton onClick={() => setShowSettings(!showSettings)}>
+          <IconButton
+            onClick={() => setShowSettings(!showSettings)}
+            data-testid="btn-settings"
+          >
             <MdSettings />
           </IconButton>
         ) : null}

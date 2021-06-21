@@ -15,13 +15,17 @@ import { DevicesPanel } from './DevicesPanel';
 import { PanelOptions } from '../ui-components/panel';
 import { ButtonType } from '../enums/buttonType';
 import { Button } from '../ui-components/button/Button';
+import { ComponentBase } from '../models/ComponentBase';
 
 enum LoadingStatus {
   Init,
   Loading,
   Idle,
 }
-export function DashboardView() {
+
+export type DashboardViewProps = ComponentBase;
+
+export function DashboardView(props: DashboardViewProps) {
   const [panels, setPanels] = useState<Panel[]>([]);
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
 
@@ -159,7 +163,7 @@ export function DashboardView() {
   }
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-testid={props['data-testid']}>
       {panels.length === 0 && status === LoadingStatus.Idle ? (
         <div className={styles.empty}>
           <div className={styles.message}>

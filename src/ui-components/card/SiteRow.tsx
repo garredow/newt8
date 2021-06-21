@@ -1,7 +1,8 @@
 import React from 'react';
+import { ComponentBase } from '../../models/ComponentBase';
 import styles from './SiteRow.module.css';
 
-export type SiteRowProps = {
+export type SiteRowProps = ComponentBase & {
   title?: string;
   iconUrl?: string;
   url?: string;
@@ -9,20 +10,24 @@ export type SiteRowProps = {
   onClick?: () => void;
 };
 
-export function SiteRow(site: SiteRowProps) {
+export function SiteRow(props: SiteRowProps) {
   function isValidImageUrl() {
     return (
-      site.iconUrl &&
-      (site.iconUrl.startsWith('http') ||
-        site.iconUrl.startsWith('chrome://favicon'))
+      props.iconUrl &&
+      (props.iconUrl.startsWith('http') ||
+        props.iconUrl.startsWith('chrome://favicon'))
     );
   }
 
   return (
-    <div className={styles.root} onClick={site.onClick}>
+    <div
+      className={styles.root}
+      onClick={props.onClick}
+      data-testid={props['data-testid']}
+    >
       {isValidImageUrl() ? (
         <img
-          src={site.iconUrl}
+          src={props.iconUrl}
           alt=""
           className={styles.icon}
           data-testid="favicon"
@@ -32,16 +37,16 @@ export function SiteRow(site: SiteRowProps) {
       )}
       <div className={styles.details}>
         <div className={styles.line1} data-testid="line1">
-          {site.title}
+          {props.title}
         </div>
-        {site.url && (
+        {props.url && (
           <div className={styles.line2} data-testid="line2">
-            {site.url}
+            {props.url}
           </div>
         )}
-        {site.line3 && (
+        {props.line3 && (
           <div className={styles.line3} data-testid="line3">
-            {site.line3}
+            {props.line3}
           </div>
         )}
       </div>

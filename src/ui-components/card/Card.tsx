@@ -1,9 +1,13 @@
 import React from 'react';
+import { ComponentBase } from '../../models/ComponentBase';
 import styles from './Card.module.css';
-export type CardProps = {
-  children?: any;
-};
 
-export function Card({ children }: CardProps) {
-  return <div className={styles.root}>{children}</div>;
+export type CardProps = ComponentBase;
+
+export function Card({ children, ...props }: CardProps) {
+  return (
+    <div className={styles.root} data-testid={props['data-testid']}>
+      {children}
+    </div>
+  );
 }
