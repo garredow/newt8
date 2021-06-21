@@ -159,6 +159,28 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
+  [PanelType.TopSites]: {
+    id: '',
+    name: 'Top Sites',
+    kind: PanelType.TopSites,
+    permissions: [
+      { key: Permission.TopSites, reason: 'Access list of sites.' },
+      {
+        key: Permission.Tabs,
+        reason: 'Open sites in current tab and create new tabs.',
+      },
+      {
+        key: Permission.FavIcon,
+        reason: 'Display a high quality icon for each site.',
+      },
+    ],
+    defaultOptions: {
+      title: 'Top Sites',
+      columns: 1,
+      width: 3,
+    },
+    options: {},
+  },
   [PanelType.New]: {
     id: '',
     name: 'New',

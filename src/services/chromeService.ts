@@ -40,6 +40,12 @@ export function getRecentBookmarks(): Promise<
   });
 }
 
+export function getTopSites(): Promise<chrome.topSites.MostVisitedURL[]> {
+  return new Promise(async (resolve) => {
+    chrome.topSites.get(resolve);
+  });
+}
+
 export function openUrl(url: string, newTab = false) {
   newTab
     ? chrome.tabs.create({ url, active: true })

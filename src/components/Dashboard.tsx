@@ -17,6 +17,7 @@ import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfigs, PanelOptions } from '../services/panels';
 import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
+import { TopSitesPanel } from './TopSitesPanel';
 
 enum LoadingStatus {
   Init,
@@ -159,6 +160,17 @@ export function DashboardView(props: DashboardViewProps) {
       case PanelType.NewBookmarks:
         return (
           <NewBookmarksPanel
+            key={panel.id}
+            options={panel.options}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelType.TopSites:
+        return (
+          <TopSitesPanel
             key={panel.id}
             options={panel.options}
             onOptionsChanged={(options) =>

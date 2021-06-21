@@ -6,4 +6,5 @@ export enum PanelType {
   RecentlyClosed = 'recentlyClosed',
   Devices = 'devices',
   NewBookmarks = 'newBookmarks',
+  TopSites = 'topSites',
 }

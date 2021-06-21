@@ -27,7 +27,6 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
 
   useEffect(() => {
     getRecentBookmarks().then((res) => {
-      console.log('bookmarks', res);
       setBookmarks(res);
     });
   }, []);
