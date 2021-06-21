@@ -21,14 +21,29 @@ export function SiteRow(site: SiteRowProps) {
   return (
     <div className={styles.root} onClick={site.onClick}>
       {isValidImageUrl() ? (
-        <img src={site.iconUrl} alt="" className={styles.icon} />
+        <img
+          src={site.iconUrl}
+          alt=""
+          className={styles.icon}
+          data-testid="favicon"
+        />
       ) : (
         <div className={styles.icon}></div>
       )}
       <div className={styles.details}>
-        <div className={styles.line1}>{site.title}</div>
-        {site.url && <div className={styles.line2}>{site.url}</div>}
-        {site.line3 && <div className={styles.line3}>{site.line3}</div>}
+        <div className={styles.line1} data-testid="line1">
+          {site.title}
+        </div>
+        {site.url && (
+          <div className={styles.line2} data-testid="line2">
+            {site.url}
+          </div>
+        )}
+        {site.line3 && (
+          <div className={styles.line3} data-testid="line3">
+            {site.line3}
+          </div>
+        )}
       </div>
     </div>
   );
