@@ -1,0 +1,16 @@
+body {
+  background-color: #eaeaea;
+  font-size: 16px;
+}
+
+.main {
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+.theme-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
