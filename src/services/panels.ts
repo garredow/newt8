@@ -48,6 +48,28 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
+  [PanelType.Devices]: {
+    id: '',
+    name: 'Devices',
+    kind: PanelType.Devices,
+    permissions: [
+      { key: Permission.Sessions, reason: 'Access list of devices.' },
+      {
+        key: Permission.Tabs,
+        reason: 'Open sites in current tab and create new tabs.',
+      },
+      {
+        key: Permission.FavIcon,
+        reason: 'Display a high quality icon for each site.',
+      },
+    ],
+    defaultOptions: {
+      title: 'Devices',
+      columns: 1,
+      width: 3,
+    },
+    options: {},
+  },
   [PanelType.NewBookmarks]: {
     id: '',
     name: 'New Bookmarks',
@@ -116,49 +138,6 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.Windows]: {
-    id: '',
-    name: 'Windows',
-    kind: PanelType.Windows,
-    permissions: [
-      {
-        key: Permission.Tabs,
-        reason: 'Open sites in current tab and create new tabs.',
-      },
-      {
-        key: Permission.FavIcon,
-        reason: 'Display a high quality icon for each site.',
-      },
-    ],
-    defaultOptions: {
-      title: 'Windows',
-      columns: 1,
-      width: 3,
-    },
-    options: {},
-  },
-  [PanelType.Devices]: {
-    id: '',
-    name: 'Devices',
-    kind: PanelType.Devices,
-    permissions: [
-      { key: Permission.Sessions, reason: 'Access list of devices.' },
-      {
-        key: Permission.Tabs,
-        reason: 'Open sites in current tab and create new tabs.',
-      },
-      {
-        key: Permission.FavIcon,
-        reason: 'Display a high quality icon for each site.',
-      },
-    ],
-    defaultOptions: {
-      title: 'Devices',
-      columns: 1,
-      width: 3,
-    },
-    options: {},
-  },
   [PanelType.TopSites]: {
     id: '',
     name: 'Top Sites',
@@ -181,6 +160,28 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
+  [PanelType.Windows]: {
+    id: '',
+    name: 'Windows',
+    kind: PanelType.Windows,
+    permissions: [
+      {
+        key: Permission.Tabs,
+        reason: 'Open sites in current tab and create new tabs.',
+      },
+      {
+        key: Permission.FavIcon,
+        reason: 'Display a high quality icon for each site.',
+      },
+    ],
+    defaultOptions: {
+      title: 'Windows',
+      columns: 1,
+      width: 3,
+    },
+    options: {},
+  },
+
   [PanelType.New]: {
     id: '',
     name: 'New',
