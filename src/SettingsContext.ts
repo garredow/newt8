@@ -112,7 +112,7 @@ const defaultThemes: Theme[] = [
 
 export const defaultSettings = {
   themes: defaultThemes,
-  activeTheme: 'dark',
+  activeTheme: 'light',
   showSettingHelpText: false, // Display help text along with (under?) each settings item
 };
 
