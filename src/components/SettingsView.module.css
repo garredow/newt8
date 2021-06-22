@@ -1,4 +1,4 @@
 .root {
-  height: 100vh;
+  height: var(--full-height);
   padding: 0 20px;
 }

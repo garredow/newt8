@@ -73,17 +73,3 @@ export function switchToTab(windowId: number, tabId: number) {
   chrome.tabs.update(tabId, { active: true });
   window.close();
 }
-
-export function getNewtFolderId(): Promise<string> {
-  return new Promise((resolve) => {
-    chrome.bookmarks.search({ title: 'NewtData' }, (results) => {
-      if (results[0]) {
-        return resolve(results[0].id);
-      }
-
-      chrome.bookmarks.create({ title: 'NewtData' }, (createdBookmark) =>
-        resolve(createdBookmark.id)
-      );
-    });
-  });
-}

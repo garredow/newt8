@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { MemoryRouter, Switch, Route, Link } from 'react-router-dom';
+import { MemoryRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { DashboardView } from './components/Dashboard';
 import { defaultSettings, SettingsContext } from './SettingsContext';
 import { Settings } from './models/Settings';
 import { getItem, setItem, StorageKey } from './utilities/storage';
 import styles from './App.module.css';
 import { SettingsView } from './components/SettingsView';
-import { IconButton } from './ui-components/button';
-import { MdBrush, MdDashboard } from 'react-icons/md';
-import { ButtonType } from './enums/buttonType';
 import { ThemerView } from './components/ThemerView';
 import { Theme, ThemeValues } from './models/Theme';
+import { Sidebar } from './components/Sidebar';
+import { Page } from './services/panels';
+import { defaultPages, PagesContext } from './PagesContext';
 
 function App() {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);
+  const [pages, setPagesInternal] = useState<Page[]>([]);
   const [themeStyles, setThemeStyles] = useState<any>({});
 
   useEffect(() => {
@@ -22,6 +23,10 @@ function App() {
         res.themes.find((a) => a.id === res.activeTheme) || res.themes[0];
       applyTheme(theme);
       setSettingsInternal(res || defaultSettings);
+    });
+
+    getItem<Page[]>(StorageKey.Pages).then((res = defaultPages) => {
+      setPagesInternal(res || defaultPages);
     });
   }, []);
 
@@ -42,43 +47,45 @@ function App() {
     await setItem<Settings>(StorageKey.Settings, val);
   }
 
+  async function setPages(val: Page[]) {
+    setPagesInternal(val);
+    await setItem<Page[]>(StorageKey.Pages, val);
+  }
+
+  async function savePage(page: Page) {
+    const newPages = [...pages];
+    const index = newPages.findIndex((a) => a.id === page.id);
+    if (index === -1) {
+      newPages.push(page);
+    } else {
+      newPages[index] = page;
+    }
+    setPages(newPages);
+  }
+
   return (
     <MemoryRouter initialEntries={['/dashboard']}>
       <SettingsContext.Provider value={{ settings, setSettings }}>
-        <div className={styles.root} style={themeStyles}>
-          <div className={styles.sidebar}>
-            <Link to="/themer">
-              <IconButton
-                size={40}
-                type={ButtonType.Primary}
-                onClick={() => {}}
-              >
-                <MdBrush />
-              </IconButton>
-            </Link>
-            <Link to="/dashboard">
-              <IconButton
-                size={40}
-                type={ButtonType.Primary}
-                onClick={() => {}}
-              >
-                <MdDashboard />
-              </IconButton>
-            </Link>
+        <PagesContext.Provider value={{ pages, setPages, savePage }}>
+          <div className={styles.root} style={themeStyles}>
+            <Switch>
+              <Route path="/dashboard">
+                <DashboardView />
+              </Route>
+              <Route path="/settings">
+                <SettingsView />
+              </Route>
+              <Route path="/themer">
+                <ThemerView />
+              </Route>
+              <Route path="/about">About</Route>
+              <Route path="*">
+                <Redirect to="/dashboard" />
+              </Route>
+            </Switch>
+            <Sidebar />
           </div>
-          <Switch>
-            <Route path="/dashboard">
-              <DashboardView />
-            </Route>
-            <Route path="/settings">
-              <SettingsView />
-            </Route>
-            <Route path="/themer">
-              <ThemerView />
-            </Route>
-            <Route path="/about">About</Route>
-          </Switch>
-        </div>
+        </PagesContext.Provider>
       </SettingsContext.Provider>
     </MemoryRouter>
   );

@@ -4,7 +4,6 @@ import { RecentTabsPanel } from './RecentTabsPanel';
 import { WindowsPanel } from './WindowsPanel';
 import styles from './Dashboard.module.css';
 import { useEffect } from 'react';
-import { getItem, setItem, StorageKey } from '../utilities/storage';
 import { PanelType } from '../enums/panelType';
 import { IconButton } from '../ui-components/button';
 import { MdAdd } from 'react-icons/md';
@@ -14,10 +13,12 @@ import { DevicesPanel } from './DevicesPanel';
 import { ButtonType } from '../enums/buttonType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfigs, PanelOptions } from '../services/panels';
+import { Page, PanelOptions } from '../services/panels';
 import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
+import { useContext } from 'react';
+import { PagesContext } from '../PagesContext';
 
 enum LoadingStatus {
   Init,
@@ -30,14 +31,18 @@ export type DashboardViewProps = ComponentBase;
 export function DashboardView(props: DashboardViewProps) {
   const [panels, setPanels] = useState<Panel[]>([]);
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
+  const { pages, savePage } = useContext(PagesContext);
 
   useEffect(() => {
     setStatus(LoadingStatus.Loading);
-    getItem<Panel[]>(StorageKey.Panels).then((storedPanels: Panel[] = []) => {
-      setPanels(storedPanels);
+
+    const page = pages.find((a) => a.isActive === true);
+    setPanels(page?.panels || []);
+
+    if (page) {
       setStatus(LoadingStatus.Idle);
-    });
-  }, []);
+    }
+  }, [pages]);
 
   function addPanel(panel: Panel) {
     const index = panels.findIndex((a) => a.id === panel.id);
@@ -46,7 +51,10 @@ export function DashboardView(props: DashboardViewProps) {
     }
 
     const newPanels = [...panels, panel];
-    setItem(StorageKey.Panels, newPanels);
+    savePage({
+      ...pages.find((a) => a.isActive === true),
+      panels: newPanels,
+    } as Page);
     setPanels(newPanels);
   }
 
@@ -58,13 +66,19 @@ export function DashboardView(props: DashboardViewProps) {
 
     const newPanels = [...panels];
     newPanels[index] = panel;
-    setItem(StorageKey.Panels, newPanels);
+    savePage({
+      ...pages.find((a) => a.isActive === true),
+      panels: newPanels,
+    } as Page);
     setPanels(newPanels);
   }
 
   function deletePanel(panelId: string) {
     const newPanels = panels.filter((a) => a.id !== panelId);
-    setItem(StorageKey.Panels, newPanels);
+    savePage({
+      ...pages.find((a) => a.isActive === true),
+      panels: newPanels,
+    } as Page);
     setPanels(newPanels);
   }
 

@@ -1,5 +1,7 @@
 import { cloneDeep } from 'lodash';
 import { PanelType } from '../enums/panelType';
+import { Panel } from '../models/Panel';
+import { getItem, StorageKey } from '../utilities/storage';
 import { Permission, PermissionDetail } from './permissions';
 
 export type PanelConfigMap = {
@@ -212,4 +214,16 @@ export function getPanelConfigs(includeMetaPanels = false): PanelConfig[] {
   }
 
   return result;
+}
+
+export type Page = {
+  id: string;
+  name: string;
+  isActive: boolean;
+  panels: Panel[];
+};
+
+export async function getPages(): Promise<Page[]> {
+  const pages = await getItem<Page[]>(StorageKey.Pages);
+  return pages || [];
 }

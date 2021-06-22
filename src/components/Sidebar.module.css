@@ -1,0 +1,47 @@
+.root {
+  background-color: var(--card-bg-color);
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.pages {
+  display: flex;
+  height: 50px;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: var(--card-primary-button-text-color);
+  height: 50px;
+  cursor: pointer;
+}
+.page:hover {
+  backdrop-filter: brightness(var(--row-highlight));
+}
+.page:active {
+  backdrop-filter: brightness(var(--row-dim));
+}
+
+.highlight {
+  color: var(--card-accent-color);
+}
+
+/* .pages > div {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 1.2em;
+} */

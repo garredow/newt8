@@ -1,6 +1,7 @@
 export enum StorageKey {
   Settings = 'settings',
   Panels = 'panels',
+  Pages = 'pages',
   Themes = 'themes',
 }
 
