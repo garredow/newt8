@@ -9,6 +9,7 @@ type ButtonProps = ComponentBase & {
   type?: ButtonType;
   kind?: ButtonKind;
   disabled?: boolean;
+  fullWidth?: boolean;
   onClick?: Function;
 };
 
@@ -16,6 +17,7 @@ export function Button({
   type = ButtonType.Secondary,
   kind = ButtonKind.Default,
   disabled = false,
+  fullWidth = false,
   ...props
 }: ButtonProps) {
   function getButtonClasses() {
@@ -42,6 +44,10 @@ export function Button({
       case ButtonType.Danger:
         classes.push(styles.danger);
         break;
+    }
+
+    if (fullWidth) {
+      classes.push(styles.fullWidth);
     }
 
     return classes.join(' ');

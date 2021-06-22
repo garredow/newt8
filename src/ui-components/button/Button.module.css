@@ -90,3 +90,7 @@
   background-color: var(--card-danger-button-bg-color);
   color: var(--card-danger-button-text-color);
 }
+
+.fullWidth {
+  width: 100%;
+}
