@@ -1,5 +1,5 @@
 import { PanelType } from '../enums/panelType';
-import { PanelOptions } from '../ui-components/panel';
+import { PanelOptions } from '../services/panels';
 
 export type Panel = {
   id: PanelType;
