@@ -12,6 +12,14 @@ export function getCurrentTab(): Promise<chrome.tabs.Tab> {
   });
 }
 
+export function getCurrentWindow(): Promise<ChromeWindow> {
+  return new Promise((resolve) => {
+    chrome.windows.getCurrent({ windowTypes: ['normal'] }, (window) =>
+      resolve(window as ChromeWindow)
+    );
+  });
+}
+
 export function getAllWindows(): Promise<ChromeWindow[]> {
   return new Promise((resolve) => {
     chrome.windows.getAll(

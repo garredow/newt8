@@ -31,33 +31,28 @@ export function WindowsPanel(props: WindowsPanelProps) {
   }, []);
 
   return (
-    <div
-      className={styles.root}
-      style={{ gridColumn: `span ${options.width}` }}
+    <Panel
+      options={options}
+      onOptionsChanged={props.onOptionsChanged as any}
+      onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
     >
-      <Panel
-        options={options}
-        onOptionsChanged={props.onOptionsChanged as any}
-        onDeletePanel={props.onDeletePanel}
-      >
-        <PanelContent columns={options.columns}>
-          {windows.map((window) => (
-            <Card key={window.id}>
-              <CardHeader text={`Window ${window.id}`} />
-              {window.tabs.map((tab) => (
-                <SiteRow
-                  key={tab.id}
-                  title={tab.title}
-                  iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
-                  url={tab.url}
-                  onClick={() => switchToTab(tab.windowId, tab.id)}
-                />
-              ))}
-            </Card>
-          ))}
-        </PanelContent>
-      </Panel>
-    </div>
+      <PanelContent columns={options.columns}>
+        {windows.map((window) => (
+          <Card key={window.id}>
+            <CardHeader text={`Window ${window.id}`} />
+            {window.tabs.map((tab) => (
+              <SiteRow
+                key={tab.id}
+                title={tab.title}
+                iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
+                url={tab.url}
+                onClick={() => switchToTab(tab.windowId, tab.id)}
+              />
+            ))}
+          </Card>
+        ))}
+      </PanelContent>
+    </Panel>
   );
 }
