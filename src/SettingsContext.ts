@@ -44,7 +44,7 @@ const defaultThemes: Theme[] = [
 
       cardBgColor: {name: 'card-bg-color', variable: 'card-bg-color', value: '#12252f'},
       cardAccentColor: {name: 'card-accent-color', variable: 'card-accent-color', value: '#ffa500'},
-      cardDividerColor: {name: 'card-divider-color', variable: 'card-divider-color', value: 'rgba(255, 255, 255, 0.6)'},
+      cardDividerColor: {name: 'card-divider-color', variable: 'card-divider-color', value: 'rgba(255, 255, 255, 0.1)'},
       cardTitleTextColor: {name: 'card-title-text-color', variable: 'card-title-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       cardPrimaryTextColor: {name: 'card-primary-text-color', variable: 'card-primary-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       cardSecondaryTextColor: {name: 'card-secondary-text-color', variable: 'card-secondary-text-color', value: 'rgba(255, 255, 255, 0.6)'},
@@ -94,7 +94,7 @@ const defaultThemes: Theme[] = [
   
       cardBgColor: {name: 'card-bg-color', variable: 'card-bg-color', value: '#ffffff'},
       cardAccentColor: {name: 'card-accent-color', variable: 'card-accent-color', value: '#75abbc'},
-      cardDividerColor: {name: 'card-divider-color', variable: 'card-divider-color', value: 'rgba(0,0,0, 0.5)'},
+      cardDividerColor: {name: 'card-divider-color', variable: 'card-divider-color', value: 'rgba(0,0,0, 0.1)'},
       cardTitleTextColor: {name: 'card-title-text-color', variable: 'card-title-text-color', value: 'rgba(0,0,0, 0.88)'},
       cardPrimaryTextColor: {name: 'card-primary-text-color', variable: 'card-primary-text-color', value: 'rgba(0,0,0, 0.88)'},
       cardSecondaryTextColor: {name: 'card-secondary-text-color', variable: 'card-secondary-text-color', value: 'rgba(0,0,0, 0.5)'},
