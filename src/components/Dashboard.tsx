@@ -50,7 +50,7 @@ export function DashboardView(props: DashboardViewProps) {
     setPanels(newPanels);
   }
 
-  function updatePanel(panelId: PanelType, panel: Panel) {
+  function updatePanel(panelId: string, panel: Panel) {
     const index = panels.findIndex((a) => a.id === panelId);
     if (index === -1) {
       return;
@@ -62,13 +62,13 @@ export function DashboardView(props: DashboardViewProps) {
     setPanels(newPanels);
   }
 
-  function deletePanel(panelId: PanelType) {
+  function deletePanel(panelId: string) {
     const newPanels = panels.filter((a) => a.id !== panelId);
     setItem(StorageKey.Panels, newPanels);
     setPanels(newPanels);
   }
 
-  function handleOptionsChanged(panelId: PanelType, options: PanelOptions) {
+  function handleOptionsChanged(panelId: string, options: PanelOptions) {
     const panel = panels.find((a) => a.id === panelId);
     if (!panel) return;
 
@@ -76,25 +76,20 @@ export function DashboardView(props: DashboardViewProps) {
     updatePanel(panelId, panel);
   }
 
-  function handlePanelTypeChange(panelId: PanelType, newPanelId: PanelType) {
+  function handlePanelTypeChange(panelId: string, newPanelKind: PanelType) {
     updatePanel(panelId, {
-      id: newPanelId,
+      id: panelId,
+      kind: newPanelKind,
       options: {} as PanelOptions,
     });
   }
 
   function renderPanel(panel: Panel) {
-    switch (panel.id) {
+    switch (panel.kind) {
       case PanelType.New:
-        const currentPanels = panels.map((a) => a.id);
-        const availablePanels = getPanelConfigs()
-          .filter((a) => !currentPanels.includes(a.kind))
-          .map((a) => a.kind);
-
         return (
           <NewPanel
             key={panel.id}
-            availablePanels={availablePanels}
             options={{} as PanelOptions}
             onPanelTypeChanged={(panelType) =>
               handlePanelTypeChange(panel.id, panelType)
@@ -106,7 +101,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <BookmarksPanel
             key={panel.id}
-            options={panel.options}
+            options={panel.options as any}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -193,7 +188,8 @@ export function DashboardView(props: DashboardViewProps) {
               type={ButtonType.Primary}
               onClick={() =>
                 addPanel({
-                  id: PanelType.New,
+                  id: `panel_${new Date().valueOf()}`,
+                  kind: PanelType.New,
                   options: {} as PanelOptions,
                 })
               }
@@ -209,10 +205,11 @@ export function DashboardView(props: DashboardViewProps) {
         <IconButton
           onClick={() => {
             // Only allow one new panel at a time
-            if (panels.some((a) => a.id === PanelType.New)) return;
+            if (panels.some((a) => a.kind === PanelType.New)) return;
 
             addPanel({
-              id: PanelType.New,
+              id: `panel_${new Date().valueOf()}`,
+              kind: PanelType.New,
               options: {} as PanelOptions,
             });
           }}

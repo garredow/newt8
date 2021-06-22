@@ -12,12 +12,15 @@ import {
   verifyPermissionsForPanel,
 } from '../services/permissions';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import {
+  getPanelConfig,
+  getPanelConfigs,
+  PanelOptions,
+} from '../services/panels';
 
 type NewPanelOptions = PanelOptions;
 
 type NewPanelProps = ComponentBase & {
-  availablePanels: PanelType[];
   options?: NewPanelOptions;
   onPanelTypeChanged: (panelType: PanelType) => void;
   onDeletePanel: () => void;
@@ -37,6 +40,8 @@ export function NewPanel(props: NewPanelProps) {
     },
     props.options
   );
+
+  const availablePanels = getPanelConfigs().map((a) => a.kind);
 
   async function checkPermissions(panelType: PanelType) {
     const missingPermissions = await verifyPermissionsForPanel(panelType);
@@ -113,12 +118,7 @@ export function NewPanel(props: NewPanelProps) {
       ) : (
         <PanelContent columns={1}>
           What do you want to put in here?
-          {props.availablePanels.length === 0 && (
-            <div className={styles.message}>
-              You've already placed all the available panels.
-            </div>
-          )}
-          {props.availablePanels.map((panel) => (
+          {availablePanels.map((panel) => (
             <Button
               key={panel}
               text={getPanelConfig(panel).name}
