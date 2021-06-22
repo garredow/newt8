@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
+import { ButtonKind } from '../../enums/buttonKind';
 import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { PanelOptions } from '../../services/panels';
@@ -14,6 +15,7 @@ import { SettingsRow } from './SettingsRow';
 type PanelProps = ComponentBase & {
   options: PanelOptions;
   enableSettings?: boolean;
+  extraSettings?: React.ReactNode;
   onOptionsChanged?: (options: PanelOptions) => void;
   onDeletePanel?: () => void;
 };
@@ -100,9 +102,11 @@ export function Panel(props: PanelProps) {
               <option value={5}>Largest</option>
             </select>
           </SettingsRow>
+          {props.extraSettings}
           <Button
             text="Delete"
             type={ButtonType.Danger}
+            kind={ButtonKind.Panel}
             onClick={props.onDeletePanel}
           />
         </PanelSettings>

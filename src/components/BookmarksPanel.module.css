@@ -3,3 +3,22 @@
   display: flex;
   flex-direction: column;
 }
+
+.message {
+  padding: 0 10px;
+}
+
+.folderRoot {
+  padding: 0 10px;
+  cursor: pointer;
+}
+.folderTitle {
+  padding: 10px 0 10px 10px;
+  border-bottom: 1px solid var(--card-divider-color);
+}
+.folderTitle:hover {
+  backdrop-filter: brightness(var(--row-highlight));
+}
+.folderTitle:active {
+  backdrop-filter: brightness(var(--row-dim));
+}

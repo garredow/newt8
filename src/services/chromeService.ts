@@ -29,14 +29,22 @@ export function getAllWindows(): Promise<ChromeWindow[]> {
   });
 }
 
-export function getBookmarks(): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
+export function getBookmarks(
+  folderId: string
+): Promise<chrome.bookmarks.BookmarkTreeNode[]> {
   return new Promise(async (resolve) => {
-    const newtfolderId = await getNewtFolderId();
-
-    chrome.bookmarks.getSubTree(newtfolderId, (subTree) => {
+    chrome.bookmarks.getSubTree(folderId, (subTree) => {
       const folders = subTree[0].children || [];
       resolve(folders);
     });
+  });
+}
+
+export function getAllBookmarks(): Promise<
+  chrome.bookmarks.BookmarkTreeNode[]
+> {
+  return new Promise(async (resolve) => {
+    chrome.bookmarks.getTree((tree) => resolve(tree[0].children || []));
   });
 }
 
