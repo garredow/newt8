@@ -261,6 +261,8 @@ export function DashboardView(props: DashboardViewProps) {
       )}
       <div className={styles.sidebar}>
         <IconButton
+          icon={<MdAdd />}
+          title="Add a new panel"
           onClick={() => {
             // Only allow one new panel at a time
             if (panels.some((a) => a.kind === PanelType.New)) return;
@@ -271,9 +273,7 @@ export function DashboardView(props: DashboardViewProps) {
               options: {} as PanelOptions,
             });
           }}
-        >
-          <MdAdd />
-        </IconButton>
+        />
       </div>
     </div>
   );

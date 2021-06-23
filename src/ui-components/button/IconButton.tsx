@@ -9,6 +9,8 @@ type IconButtonProps = ComponentBase & {
   size?: number;
   type?: ButtonType;
   kind?: ButtonKind;
+  icon: React.ReactNode;
+  title: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -16,6 +18,8 @@ export function IconButton({
   size = 36,
   type = ButtonType.Secondary,
   kind = ButtonKind.Default,
+  icon,
+  title,
   onClick,
   ...props
 }: IconButtonProps) {
@@ -57,6 +61,7 @@ export function IconButton({
       className={styles.root}
       style={buttonStyle}
       onClick={onClick}
+      title={title}
       data-testid={props['data-testid']}
       {...props}
     >
@@ -66,7 +71,7 @@ export function IconButton({
           className: getIconClass(),
         }}
       >
-        {props.children}
+        {icon}
       </IconContext.Provider>
     </button>
   );

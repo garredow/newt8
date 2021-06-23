@@ -69,19 +69,19 @@ export function Panel(props: PanelProps) {
           >
             <div>
               <IconButton
+                icon={<MdCompareArrows />}
+                title="Drag to reorder"
                 onClick={() => {}}
                 data-testid="btn-drag"
                 {...provided.dragHandleProps}
-              >
-                <MdCompareArrows />
-              </IconButton>
+              />
               {props.enableSettings ? (
                 <IconButton
+                  icon={<MdSettings />}
+                  title="Edit panel settings"
                   onClick={() => setShowSettings(!showSettings)}
                   data-testid="btn-settings"
-                >
-                  <MdSettings />
-                </IconButton>
+                />
               ) : null}
             </div>
           </PanelHeader>

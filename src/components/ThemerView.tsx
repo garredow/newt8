@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { MdCheck, MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
@@ -306,13 +307,16 @@ export function ThemerView(props: ThemerViewProps) {
             <h1>Configure</h1>
             <IconButton
               type={ButtonType.Primary}
+              icon={<MdClose />}
+              title="Discard changes"
               onClick={cancelConfigureTheme}
-            >
-              <MdClose />
-            </IconButton>
-            <IconButton type={ButtonType.Primary} onClick={saveWorkingTheme}>
-              <MdCheck />
-            </IconButton>
+            />
+            <IconButton
+              type={ButtonType.Primary}
+              icon={<MdCheck />}
+              title="Save theme"
+              onClick={saveWorkingTheme}
+            />
           </div>
           <div className={styles.configure}>
             <h2>Name</h2>
@@ -356,10 +360,10 @@ export function ThemerView(props: ThemerViewProps) {
               <h2>Advanced</h2>
               <IconButton
                 type={ButtonType.Primary}
+                icon={showAdvanced ? <MdExpandLess /> : <MdExpandMore />}
+                title="Toggle advanced theme options"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-              >
-                {showAdvanced ? <MdExpandLess /> : <MdExpandMore />}
-              </IconButton>
+              />
             </div>
             {showAdvanced ? (
               <>
@@ -459,97 +463,111 @@ export function ThemerView(props: ThemerViewProps) {
                 onClick={() => {}}
               />
             </div>
-            <Panel
-              options={{
-                columns: 1,
-                width: 3,
-                title: 'Example Panel',
-              }}
-              onOptionsChanged={() => {}}
-              onDeletePanel={() => {}}
-            >
-              <PanelContent columns={1}>
-                Here's some primary panel text so you can get an idea how it
-                looks.
-                <div className={styles.panelSecondaryText}>
-                  Here's some secondary panel text so you can get an idea how it
-                  looks.
-                </div>
-                <div className={styles.panelAccent}>
-                  Here's some text so you can get an idea how the panel accent
-                  color looks.
-                </div>
-                <Button
-                  type={ButtonType.Primary}
-                  kind={ButtonKind.Panel}
-                  text="Primary Panel Button"
-                  onClick={() => {}}
-                />
-                <Button
-                  type={ButtonType.Secondary}
-                  kind={ButtonKind.Panel}
-                  text="Secondary Panel Button"
-                  onClick={() => {}}
-                />
-                <Button
-                  type={ButtonType.Warning}
-                  kind={ButtonKind.Panel}
-                  text="Warning Panel Button"
-                  onClick={() => {}}
-                />
-                <Button
-                  type={ButtonType.Danger}
-                  kind={ButtonKind.Panel}
-                  text="Danger Panel Button"
-                  onClick={() => {}}
-                />
-                <Card>
-                  <CardHeader text="Example Card" />
-                  <SiteRow
-                    title="Example Website 1"
-                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                    url={`https://developer.mozilla.org/en-US/`}
-                    line3="10 minutes ago"
-                  />
-                  <SiteRow
-                    title="Example Website 2"
-                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                    url={`https://developer.mozilla.org/en-US/`}
-                    line3="10 minutes ago"
-                  />
-                  <SiteRow
-                    title="Example Website 3"
-                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                    url={`https://developer.mozilla.org/en-US/`}
-                    line3="10 minutes ago"
-                  />
-                  <Button
-                    type={ButtonType.Primary}
-                    kind={ButtonKind.Card}
-                    text="Primary Card Button"
-                    onClick={() => {}}
-                  />
-                  <Button
-                    type={ButtonType.Secondary}
-                    kind={ButtonKind.Card}
-                    text="Secondary Card Button"
-                    onClick={() => {}}
-                  />
-                  <Button
-                    type={ButtonType.Warning}
-                    kind={ButtonKind.Card}
-                    text="Warning Card Button"
-                    onClick={() => {}}
-                  />
-                  <Button
-                    type={ButtonType.Danger}
-                    kind={ButtonKind.Card}
-                    text="Danger Card Button"
-                    onClick={() => {}}
-                  />
-                </Card>
-              </PanelContent>
-            </Panel>
+            <DragDropContext onDragEnd={() => {}}>
+              <Droppable droppableId="preview" direction="horizontal">
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    style={{ gridColumn: `span 3` }}
+                  >
+                    <Panel
+                      panelId="test"
+                      panelIndex={0}
+                      options={{
+                        columns: 1,
+                        width: 3,
+                        title: 'Example Panel',
+                      }}
+                      onOptionsChanged={() => {}}
+                      onDeletePanel={() => {}}
+                    >
+                      <PanelContent columns={1}>
+                        Here's some primary panel text so you can get an idea
+                        how it looks.
+                        <div className={styles.panelSecondaryText}>
+                          Here's some secondary panel text so you can get an
+                          idea how it looks.
+                        </div>
+                        <div className={styles.panelAccent}>
+                          Here's some text so you can get an idea how the panel
+                          accent color looks.
+                        </div>
+                        <Button
+                          type={ButtonType.Primary}
+                          kind={ButtonKind.Panel}
+                          text="Primary Panel Button"
+                          onClick={() => {}}
+                        />
+                        <Button
+                          type={ButtonType.Secondary}
+                          kind={ButtonKind.Panel}
+                          text="Secondary Panel Button"
+                          onClick={() => {}}
+                        />
+                        <Button
+                          type={ButtonType.Warning}
+                          kind={ButtonKind.Panel}
+                          text="Warning Panel Button"
+                          onClick={() => {}}
+                        />
+                        <Button
+                          type={ButtonType.Danger}
+                          kind={ButtonKind.Panel}
+                          text="Danger Panel Button"
+                          onClick={() => {}}
+                        />
+                        <Card>
+                          <CardHeader text="Example Card" />
+                          <SiteRow
+                            title="Example Website 1"
+                            iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                            url={`https://developer.mozilla.org/en-US/`}
+                            line3="10 minutes ago"
+                          />
+                          <SiteRow
+                            title="Example Website 2"
+                            iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                            url={`https://developer.mozilla.org/en-US/`}
+                            line3="10 minutes ago"
+                          />
+                          <SiteRow
+                            title="Example Website 3"
+                            iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                            url={`https://developer.mozilla.org/en-US/`}
+                            line3="10 minutes ago"
+                          />
+                          <Button
+                            type={ButtonType.Primary}
+                            kind={ButtonKind.Card}
+                            text="Primary Card Button"
+                            onClick={() => {}}
+                          />
+                          <Button
+                            type={ButtonType.Secondary}
+                            kind={ButtonKind.Card}
+                            text="Secondary Card Button"
+                            onClick={() => {}}
+                          />
+                          <Button
+                            type={ButtonType.Warning}
+                            kind={ButtonKind.Card}
+                            text="Warning Card Button"
+                            onClick={() => {}}
+                          />
+                          <Button
+                            type={ButtonType.Danger}
+                            kind={ButtonKind.Card}
+                            text="Danger Card Button"
+                            onClick={() => {}}
+                          />
+                        </Card>
+                      </PanelContent>
+                    </Panel>
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
         </div>
       </div>

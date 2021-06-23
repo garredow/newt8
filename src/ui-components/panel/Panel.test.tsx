@@ -107,7 +107,6 @@ describe('Panel', () => {
     };
 
     const { getByTestId, getByText } = renderWithContext(<Panel {...props} />);
-    screen.debug();
     fireEvent.click(getByTestId('btn-settings'));
 
     expect((getByText('1') as HTMLOptionElement).selected).toBeTruthy();

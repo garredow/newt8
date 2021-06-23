@@ -109,11 +109,11 @@ export function Sidebar(props: SidebarProps) {
                             size={32}
                             type={ButtonType.Secondary}
                             className={styles.draggable}
+                            icon={<MdCompareArrows />}
+                            title="Drag to reorder"
                             onClick={() => {}}
                             {...provided.dragHandleProps}
-                          >
-                            <MdCompareArrows />
-                          </IconButton>
+                          />
                           <div
                             suppressContentEditableWarning
                             contentEditable={true}
@@ -136,10 +136,10 @@ export function Sidebar(props: SidebarProps) {
                           <IconButton
                             size={32}
                             type={ButtonType.Danger}
+                            icon={<MdClose />}
+                            title="Delete"
                             onClick={() => deletePage(page.id)}
-                          >
-                            <MdClose />
-                          </IconButton>
+                          />
                         </div>
                       )}
                     </Draggable>
@@ -164,13 +164,15 @@ export function Sidebar(props: SidebarProps) {
         <IconButton
           size={40}
           type={ButtonType.Primary}
+          icon={<MdEdit />}
+          title="Edit Pages"
           onClick={() => setEditMode(!editMode)}
-        >
-          <MdEdit />
-        </IconButton>
+        />
         <IconButton
           size={40}
           type={ButtonType.Primary}
+          icon={<MdAdd />}
+          title="Add Page"
           onClick={() =>
             savePage({
               id: `page_${new Date().valueOf()}`,
@@ -179,13 +181,15 @@ export function Sidebar(props: SidebarProps) {
               panels: [],
             })
           }
-        >
-          <MdAdd />
-        </IconButton>
+        />
         <Link to="/themer">
-          <IconButton size={40} type={ButtonType.Primary} onClick={() => {}}>
-            <MdColorLens />
-          </IconButton>
+          <IconButton
+            size={40}
+            type={ButtonType.Primary}
+            icon={<MdColorLens />}
+            title="Themes"
+            onClick={() => {}}
+          />
         </Link>
       </div>
     </div>
