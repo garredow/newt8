@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PanelType } from '../enums/panelType';
 import { ChromeWindow } from '../models/ChromeWindow';
 import { ComponentBase } from '../models/ComponentBase';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { switchToTab } from '../services/chromeService';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { getWindows } from '../services/windowsService';
@@ -12,11 +13,12 @@ import styles from './WindowsPanel.module.css';
 
 type WindowsPanelOptions = PanelOptions;
 
-type WindowsPanelProps = ComponentBase & {
-  options: WindowsPanelOptions;
-  onOptionsChanged: (options: WindowsPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type WindowsPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: WindowsPanelOptions;
+    onOptionsChanged: (options: WindowsPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function WindowsPanel(props: WindowsPanelProps) {
   const [windows, setWindows] = useState<ChromeWindow[]>([]);
@@ -32,6 +34,8 @@ export function WindowsPanel(props: WindowsPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

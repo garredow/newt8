@@ -21,6 +21,7 @@
   text-transform: uppercase;
   font-size: 1.2em;
   color: var(--card-primary-button-text-color);
+  background-color: var(--card-bg-color);
   height: 50px;
 }
 
@@ -36,10 +37,11 @@
 }
 
 .pageEdit > button {
-  margin-left: 5px;
+  margin-left: 3px;
 }
 .pageEditTitle {
   border-bottom: 1px solid var(--card-accent-color);
+  margin-right: 5px;
 }
 .pageEditTitle:focus {
   outline: none;

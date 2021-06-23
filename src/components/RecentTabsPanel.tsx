@@ -9,14 +9,16 @@ import { switchToTab } from '../services/chromeService';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type RecentTabsPanelOptions = PanelOptions;
 
-type RecentTabsPanelProps = ComponentBase & {
-  options: RecentTabsPanelOptions;
-  onOptionsChanged: (options: RecentTabsPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type RecentTabsPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: RecentTabsPanelOptions;
+    onOptionsChanged: (options: RecentTabsPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function RecentTabsPanel(props: RecentTabsPanelProps) {
   const [tabs, setTabs] = useState<ChromeTab[]>([]);
@@ -34,6 +36,8 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

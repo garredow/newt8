@@ -6,6 +6,22 @@
   background-color: var(--panel-bg-color);
 }
 
+.span1 {
+  grid-column: span 1;
+}
+.span2 {
+  grid-column: span 2;
+}
+.span3 {
+  grid-column: span 3;
+}
+.span4 {
+  grid-column: span 4;
+}
+.span5 {
+  grid-column: span 5;
+}
+
 .header {
   margin: 10px 25px;
   font-weight: 300px;

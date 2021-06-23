@@ -16,6 +16,7 @@ export function IconButton({
   size = 36,
   type = ButtonType.Secondary,
   kind = ButtonKind.Default,
+  onClick,
   ...props
 }: IconButtonProps) {
   const buttonStyle = {
@@ -55,8 +56,9 @@ export function IconButton({
     <button
       className={styles.root}
       style={buttonStyle}
-      onClick={props.onClick}
+      onClick={onClick}
       data-testid={props['data-testid']}
+      {...props}
     >
       <IconContext.Provider
         value={{

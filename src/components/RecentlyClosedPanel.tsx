@@ -8,14 +8,16 @@ import { openUrl } from '../services/chromeService';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type RecentlyClosedPanelOptions = PanelOptions;
 
-type RecentlyClosedPanelProps = ComponentBase & {
-  options: RecentlyClosedPanelOptions;
-  onOptionsChanged: (options: RecentlyClosedPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type RecentlyClosedPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: RecentlyClosedPanelOptions;
+    onOptionsChanged: (options: RecentlyClosedPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
   const [sessions, setSessions] = useState<chrome.sessions.Session[]>([]);
@@ -31,6 +33,8 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

@@ -19,6 +19,8 @@ import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
 import { useContext } from 'react';
 import { PagesContext } from '../PagesContext';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { moveArrayItem } from '../utilities/moveArrayItem';
 
 enum LoadingStatus {
   Init,
@@ -98,12 +100,29 @@ export function DashboardView(props: DashboardViewProps) {
     });
   }
 
-  function renderPanel(panel: Panel) {
+  function handleDragEnd(ev: DropResult) {
+    const oldIndex = ev.source.index;
+    const newIndex = ev.destination?.index;
+
+    if (newIndex === undefined || newIndex === oldIndex) return;
+
+    const newPanels = moveArrayItem(panels, oldIndex, newIndex);
+
+    setPanels(newPanels);
+    savePage({
+      ...pages.find((a) => a.isActive === true),
+      panels: newPanels,
+    } as Page);
+  }
+
+  function renderPanel(panel: Panel, index: number) {
     switch (panel.kind) {
       case PanelType.New:
         return (
           <NewPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={{} as PanelOptions}
             onPanelTypeChanged={(panelType) =>
               handlePanelTypeChange(panel.id, panelType)
@@ -115,6 +134,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <BookmarksPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options as any}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -126,6 +147,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <RecentTabsPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -137,6 +160,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <WindowsPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -148,6 +173,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <RecentlyClosedPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -159,6 +186,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <DevicesPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -170,6 +199,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <NewBookmarksPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -181,6 +212,8 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <TopSitesPanel
             key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
             options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
@@ -211,9 +244,20 @@ export function DashboardView(props: DashboardViewProps) {
           </div>
         </div>
       ) : (
-        <div className={styles.panels}>
-          {panels.map((panel) => renderPanel(panel))}
-        </div>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="panels" direction="horizontal">
+            {(provided) => (
+              <div
+                className={styles.panels}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {panels.map((panel, i) => renderPanel(panel, i))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       )}
       <div className={styles.sidebar}>
         <IconButton

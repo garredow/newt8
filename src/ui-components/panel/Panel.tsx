@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { MdSettings } from 'react-icons/md';
+import { Draggable } from 'react-beautiful-dnd';
+import { MdCompareArrows, MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
 import { ButtonKind } from '../../enums/buttonKind';
 import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
+import { DraggablePanelProps } from '../../models/DraggablePanelProps';
 import { PanelOptions } from '../../services/panels';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
@@ -12,19 +14,22 @@ import styles from './Panel.module.css';
 import { PanelSettings } from './PanelSettings';
 import { SettingsRow } from './SettingsRow';
 
-type PanelProps = ComponentBase & {
-  options: PanelOptions;
-  enableSettings?: boolean;
-  extraSettings?: React.ReactNode;
-  onOptionsChanged?: (options: PanelOptions) => void;
-  onDeletePanel?: () => void;
-};
+type PanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: PanelOptions;
+    enableSettings?: boolean;
+    extraSettings?: React.ReactNode;
+    onOptionsChanged?: (options: PanelOptions) => void;
+    onDeletePanel?: () => void;
+  };
 
 Panel.defaultProps = {
   enableSettings: true,
 };
 
 export function Panel(props: PanelProps) {
+  // console.log('props', props);
+
   const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
@@ -43,75 +48,93 @@ export function Panel(props: PanelProps) {
     props.onOptionsChanged?.(newOpts);
   }
 
+  const classes = [styles.root];
+  classes.push(styles[`span${props.options.width}`]);
+
   return (
-    <div
-      className={styles.root}
-      style={{ gridColumn: `span ${props.options.width}` }}
-      data-testid={props['data-testid']}
-    >
-      <PanelHeader
-        text={props.options.title}
-        editable={showSettings}
-        onTitleChanged={(title) => setOptionValue('title', title)}
-        data-testid="panel-header"
-      >
-        {props.enableSettings ? (
-          <IconButton
-            onClick={() => setShowSettings(!showSettings)}
-            data-testid="btn-settings"
+    <Draggable draggableId={props.panelId} index={props.panelIndex}>
+      {(provided) => (
+        <div
+          className={classes.join(' ')}
+          style={{ gridColumn: `span ${props.options.width}` }}
+          data-testid={props['data-testid']}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+        >
+          <PanelHeader
+            text={props.options.title}
+            editable={showSettings}
+            onTitleChanged={(title) => setOptionValue('title', title)}
+            data-testid="panel-header"
           >
-            <MdSettings />
-          </IconButton>
-        ) : null}
-      </PanelHeader>
-      {showSettings ? (
-        <PanelSettings data-testid="settings">
-          <SettingsRow label="Columns">
-            <select
-              defaultValue={props.options.columns}
-              onChange={(ev) =>
-                setOptionValue('columns', parseInt(ev.target.value, 10))
-              }
-              data-testid="select-columns"
-            >
-              <option value={0}>Auto</option>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-            </select>
-          </SettingsRow>
-          <SettingsRow label="Width">
-            <select
-              defaultValue={props.options.width}
-              onChange={(ev) =>
-                setOptionValue('width', parseInt(ev.target.value, 10))
-              }
-              data-testid="select-width"
-            >
-              <option value={1}>Smallest</option>
-              <option value={2}>Small</option>
-              <option value={3}>Medium</option>
-              <option value={4}>Large</option>
-              <option value={5}>Largest</option>
-            </select>
-          </SettingsRow>
-          {props.extraSettings}
-          <Button
-            text="Delete"
-            type={ButtonType.Danger}
-            kind={ButtonKind.Panel}
-            onClick={props.onDeletePanel}
-          />
-        </PanelSettings>
-      ) : null}
-      {props.children}
-    </div>
+            <div>
+              <IconButton
+                onClick={() => {}}
+                data-testid="btn-drag"
+                {...provided.dragHandleProps}
+              >
+                <MdCompareArrows />
+              </IconButton>
+              {props.enableSettings ? (
+                <IconButton
+                  onClick={() => setShowSettings(!showSettings)}
+                  data-testid="btn-settings"
+                >
+                  <MdSettings />
+                </IconButton>
+              ) : null}
+            </div>
+          </PanelHeader>
+          {showSettings ? (
+            <PanelSettings data-testid="settings">
+              <SettingsRow label="Columns">
+                <select
+                  defaultValue={props.options.columns}
+                  onChange={(ev) =>
+                    setOptionValue('columns', parseInt(ev.target.value, 10))
+                  }
+                  data-testid="select-columns"
+                >
+                  <option value={0}>Auto</option>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={10}>10</option>
+                </select>
+              </SettingsRow>
+              <SettingsRow label="Width">
+                <select
+                  defaultValue={props.options.width}
+                  onChange={(ev) =>
+                    setOptionValue('width', parseInt(ev.target.value, 10))
+                  }
+                  data-testid="select-width"
+                >
+                  <option value={1}>Smallest</option>
+                  <option value={2}>Small</option>
+                  <option value={3}>Medium</option>
+                  <option value={4}>Large</option>
+                  <option value={5}>Largest</option>
+                </select>
+              </SettingsRow>
+              {props.extraSettings}
+              <Button
+                text="Delete"
+                type={ButtonType.Danger}
+                kind={ButtonKind.Panel}
+                onClick={props.onDeletePanel}
+              />
+            </PanelSettings>
+          ) : null}
+          {props.children}
+        </div>
+      )}
+    </Draggable>
   );
 }

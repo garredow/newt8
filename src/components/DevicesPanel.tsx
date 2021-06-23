@@ -9,14 +9,16 @@ import { openUrl } from '../services/chromeService';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type DevicesPanelOptions = PanelOptions;
 
-type DevicesPanelProps = ComponentBase & {
-  options: DevicesPanelOptions;
-  onOptionsChanged: (options: DevicesPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type DevicesPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: DevicesPanelOptions;
+    onOptionsChanged: (options: DevicesPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function DevicesPanel(props: DevicesPanelProps) {
   const [devices, setDevices] = useState<chrome.sessions.Device[]>([]);
@@ -32,6 +34,8 @@ export function DevicesPanel(props: DevicesPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

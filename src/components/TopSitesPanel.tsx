@@ -6,14 +6,16 @@ import { getTopSites, openUrl } from '../services/chromeService';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type TopSitesPanelOptions = PanelOptions;
 
-type TopSitesPanelProps = ComponentBase & {
-  options: TopSitesPanelOptions;
-  onOptionsChanged: (options: TopSitesPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type TopSitesPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: TopSitesPanelOptions;
+    onOptionsChanged: (options: TopSitesPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function TopSitesPanel(props: TopSitesPanelProps) {
   const [sites, setSites] = useState<chrome.topSites.MostVisitedURL[]>([]);
@@ -31,6 +33,8 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

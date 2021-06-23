@@ -1,7 +1,19 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { IconButton } from '../ui-components/button';
-import { MdAdd, MdClose, MdColorLens, MdEdit } from 'react-icons/md';
+import {
+  MdAdd,
+  MdClose,
+  MdColorLens,
+  MdCompareArrows,
+  MdEdit,
+} from 'react-icons/md';
 import { ButtonType } from '../enums/buttonType';
 import styles from './Sidebar.module.css';
 import { PagesContext } from '../PagesContext';
@@ -9,6 +21,7 @@ import { useEffect } from 'react';
 import { ComponentBase } from '../models/ComponentBase';
 import { useState } from 'react';
 import { Page } from '../services/panels';
+import { moveArrayItem } from '../utilities/moveArrayItem';
 
 export type SidebarProps = ComponentBase;
 
@@ -56,56 +69,96 @@ export function Sidebar(props: SidebarProps) {
     savePage(page);
   }
 
+  function handleDragEnd(ev: DropResult) {
+    const oldIndex = ev.source.index;
+    const newIndex = ev.destination?.index;
+
+    if (newIndex === undefined || newIndex === oldIndex) return;
+
+    setPages(moveArrayItem(pages, oldIndex, newIndex));
+  }
+
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
-      <div className={styles.pages}>
-        {pages.map((page) => {
-          const classes = [styles.page];
-          const editClasses = [styles.pageEdit];
-          if (page.isActive) {
-            classes.push(styles.highlight);
-            editClasses.push(styles.highlight);
-          }
-          return editMode ? (
-            <div className={editClasses.join(' ')} key={page.id}>
-              <div
-                suppressContentEditableWarning
-                contentEditable={true}
-                className={styles.pageEditTitle}
-                onKeyDown={(ev) => {
-                  if (ev.key !== 'Enter') {
-                    return;
-                  }
-
-                  ev.preventDefault();
-                  handlePageNameChange(
-                    page,
-                    (ev.target as HTMLHeadingElement).innerText
-                  );
-                }}
-              >
-                {page.name}
-              </div>
-              <IconButton
-                size={32}
-                type={ButtonType.Danger}
-                onClick={() => deletePage(page.id)}
-              >
-                <MdClose />
-              </IconButton>
-            </div>
-          ) : (
-            <Link
-              to={`/${page.id}/dashboard`}
-              key={page.id}
-              className={classes.join(' ')}
-              onClick={() => handlePageClick(page.id)}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="pages" direction="horizontal">
+          {(provided) => (
+            <div
+              className={styles.pages}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
             >
-              {page.name}
-            </Link>
-          );
-        })}
-      </div>
+              {pages.map((page, i) => {
+                const classes = [styles.page];
+                const editClasses = [styles.pageEdit];
+                if (page.isActive) {
+                  classes.push(styles.highlight);
+                  editClasses.push(styles.highlight);
+                }
+                return editMode ? (
+                  <div key={page.id}>
+                    <Draggable draggableId={page.id} index={i}>
+                      {(provided) => (
+                        <div
+                          className={editClasses.join(' ')}
+                          key={page.id}
+                          {...provided.draggableProps}
+                          ref={provided.innerRef}
+                        >
+                          <div
+                            suppressContentEditableWarning
+                            contentEditable={true}
+                            className={styles.pageEditTitle}
+                            onKeyDown={(ev) => {
+                              if (ev.key !== 'Enter') {
+                                return;
+                              }
+
+                              ev.preventDefault();
+                              handlePageNameChange(
+                                page,
+                                (ev.target as HTMLHeadingElement).innerText
+                              );
+                            }}
+                          >
+                            {page.name}
+                          </div>
+                          <IconButton
+                            size={32}
+                            type={ButtonType.Secondary}
+                            className={styles.draggable}
+                            onClick={() => {}}
+                            {...provided.dragHandleProps}
+                          >
+                            <MdCompareArrows />
+                          </IconButton>
+                          <IconButton
+                            size={32}
+                            type={ButtonType.Danger}
+                            onClick={() => deletePage(page.id)}
+                          >
+                            <MdClose />
+                          </IconButton>
+                        </div>
+                      )}
+                    </Draggable>
+                  </div>
+                ) : (
+                  <Link
+                    to={`/${page.id}/dashboard`}
+                    key={page.id}
+                    className={classes.join(' ')}
+                    onClick={() => handlePageClick(page.id)}
+                  >
+                    {page.name}
+                  </Link>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       <div>
         <IconButton
           size={40}

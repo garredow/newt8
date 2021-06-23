@@ -1,10 +1,20 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Panel } from '.';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
+function renderWithContext(element: any) {
+  return render(
+    <DragDropContext onDragEnd={() => {}}>
+      <Droppable droppableId="test">{(provided) => element}</Droppable>
+    </DragDropContext>
+  );
+}
 describe('Panel', () => {
   test('renders children', () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
@@ -12,10 +22,12 @@ describe('Panel', () => {
       },
     };
 
-    const { getByText } = render(
-      <Panel {...props}>
-        <div>child text</div>
-      </Panel>
+    const { getByText } = renderWithContext(
+      <DragDropContext onDragEnd={() => {}}>
+        <Panel {...props}>
+          <div>child text</div>
+        </Panel>
+      </DragDropContext>
     );
 
     expect(getByText('child text')).toBeVisible();
@@ -23,14 +35,17 @@ describe('Panel', () => {
 
   test('opens settings on button click', () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
         columns: 1,
+        options: {} as any,
       },
     };
 
-    const { getByTestId } = render(<Panel {...props} />);
+    const { getByTestId } = renderWithContext(<Panel {...props} />);
 
     fireEvent.click(getByTestId('btn-settings'));
 
@@ -39,14 +54,17 @@ describe('Panel', () => {
 
   test('closes settings on escape key press', () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
         columns: 1,
+        options: {} as any,
       },
     };
 
-    const { container, getByTestId, queryByTestId } = render(
+    const { container, getByTestId, queryByTestId } = renderWithContext(
       <Panel {...props} />
     );
 
@@ -59,31 +77,37 @@ describe('Panel', () => {
 
   test('hide settings button', () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
         columns: 1,
+        options: {} as any,
       },
       enableSettings: false,
     };
 
-    const { queryByTestId } = render(<Panel {...props} />);
+    const { queryByTestId } = renderWithContext(<Panel {...props} />);
 
     expect(queryByTestId('btn-settings')).toBeNull();
   });
 
   test('select correct settings for props', async () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
         columns: 1,
+        options: {} as any,
       },
       onOptionsChanged: jest.fn(),
     };
 
-    const { getByTestId, getByText } = render(<Panel {...props} />);
-
+    const { getByTestId, getByText } = renderWithContext(<Panel {...props} />);
+    screen.debug();
     fireEvent.click(getByTestId('btn-settings'));
 
     expect((getByText('1') as HTMLOptionElement).selected).toBeTruthy();
@@ -94,15 +118,18 @@ describe('Panel', () => {
 
   test('sets columns', async () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
         columns: 1,
+        options: {} as any,
       },
       onOptionsChanged: jest.fn(),
     };
 
-    const { getByTestId } = render(<Panel {...props} />);
+    const { getByTestId } = renderWithContext(<Panel {...props} />);
 
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.change(getByTestId('select-columns'), { target: { value: 5 } });
@@ -113,15 +140,18 @@ describe('Panel', () => {
 
   test('sets width', async () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
         columns: 1,
+        options: {} as any,
       },
-      onOptionsChanged: jest.fn(),
+      onOptionsChanged: jest.fn() as any,
     };
 
-    const { getByTestId } = render(<Panel {...props} />);
+    const { getByTestId } = renderWithContext(<Panel {...props} />);
 
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.change(getByTestId('select-width'), { target: { value: 1 } });
@@ -132,6 +162,8 @@ describe('Panel', () => {
 
   test('sets title', async () => {
     const props = {
+      panelId: '1',
+      panelIndex: 0,
       options: {
         title: 'panel title',
         width: 3,
@@ -140,7 +172,13 @@ describe('Panel', () => {
       onOptionsChanged: jest.fn(),
     };
 
-    const { getByTestId, getByText } = render(<Panel {...props} />);
+    const { getByTestId, getByText } = renderWithContext(
+      <DragDropContext onDragEnd={() => {}}>
+        <Droppable droppableId="test">
+          {(provided) => <Panel {...props} />}
+        </Droppable>
+      </DragDropContext>
+    );
 
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.keyDown(getByText(props.options.title), { key: 'Enter' });

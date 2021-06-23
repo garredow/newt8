@@ -4,6 +4,7 @@ import { PanelType } from '../enums/panelType';
 import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBase } from '../models/ComponentBase';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import {
   getAllBookmarks,
   getBookmarks,
@@ -48,11 +49,12 @@ type BookmarksPanelOptions = PanelOptions & {
   bookmarkFolderId: string;
 };
 
-type BookmarksPanelProps = ComponentBase & {
-  options?: BookmarksPanelOptions;
-  onOptionsChanged: (options: BookmarksPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type BookmarksPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options?: BookmarksPanelOptions;
+    onOptionsChanged: (options: BookmarksPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function BookmarksPanel(props: BookmarksPanelProps) {
   const [showFinder, setShowFinder] = useState(false);
@@ -96,6 +98,8 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options as any}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

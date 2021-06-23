@@ -17,14 +17,16 @@ import {
   getPanelConfigs,
   PanelOptions,
 } from '../services/panels';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type NewPanelOptions = PanelOptions;
 
-type NewPanelProps = ComponentBase & {
-  options?: NewPanelOptions;
-  onPanelTypeChanged: (panelType: PanelType) => void;
-  onDeletePanel: () => void;
-};
+type NewPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options?: NewPanelOptions;
+    onPanelTypeChanged: (panelType: PanelType) => void;
+    onDeletePanel: () => void;
+  };
 
 export function NewPanel(props: NewPanelProps) {
   const [showPermissions, setShowPermissions] = useState(false);
@@ -76,6 +78,8 @@ export function NewPanel(props: NewPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       enableSettings={false}
       onOptionsChanged={() => {}}

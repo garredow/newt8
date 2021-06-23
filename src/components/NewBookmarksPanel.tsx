@@ -8,14 +8,16 @@ import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
 import { Bookmark } from '../models/Bookmark';
+import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type NewBookmarksPanelOptions = PanelOptions;
 
-type NewBookmarksPanelProps = ComponentBase & {
-  options: NewBookmarksPanelOptions;
-  onOptionsChanged: (options: NewBookmarksPanelOptions) => void;
-  onDeletePanel: () => void;
-};
+type NewBookmarksPanelProps = ComponentBase &
+  DraggablePanelProps & {
+    options: NewBookmarksPanelOptions;
+    onOptionsChanged: (options: NewBookmarksPanelOptions) => void;
+    onDeletePanel: () => void;
+  };
 
 export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
@@ -33,6 +35,8 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
 
   return (
     <Panel
+      panelId={props.panelId}
+      panelIndex={props.panelIndex}
       options={options}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
