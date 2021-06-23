@@ -1,5 +1,5 @@
 :root {
-  --full-height: calc(100vh - 50px);
+  --full-height: calc(100vh - 53px);
 }
 .root {
   display: grid;
