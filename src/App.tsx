@@ -53,20 +53,45 @@ function App() {
   }
 
   async function savePage(page: Page) {
-    const newPages = [...pages];
+    let newPages = [...pages];
     const index = newPages.findIndex((a) => a.id === page.id);
     if (index === -1) {
       newPages.push(page);
     } else {
       newPages[index] = page;
     }
+
+    // New page gets to be active
+    if (index === -1) {
+      newPages = newPages.map((a, i) =>
+        i === newPages.length - 1
+          ? { ...a, isActive: true }
+          : { ...a, isActive: false }
+      );
+    }
+    setPages(newPages);
+  }
+
+  async function deletePage(pageId: string) {
+    if (pages.length === 1) {
+      console.warn('Cannot delete. There must always be one page.');
+      return;
+    }
+    const newPages = pages
+      .filter((a) => a.id !== pageId)
+      .map((a, i) =>
+        i === 0 ? { ...a, isActive: true } : { ...a, isActive: false }
+      );
+
     setPages(newPages);
   }
 
   return (
     <MemoryRouter initialEntries={['/dashboard']}>
       <SettingsContext.Provider value={{ settings, setSettings }}>
-        <PagesContext.Provider value={{ pages, setPages, savePage }}>
+        <PagesContext.Provider
+          value={{ pages, setPages, savePage, deletePage }}
+        >
           <div className={styles.root} style={themeStyles}>
             <Switch>
               <Route path="/dashboard">

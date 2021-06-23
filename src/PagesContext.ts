@@ -5,6 +5,7 @@ type PagesContextValue = {
   pages: Page[];
   setPages: (pages: Page[]) => Promise<void>;
   savePage: (page: Page) => Promise<void>;
+  deletePage: (pageId: string) => Promise<void>;
 };
 
 export const defaultPages: Page[] = [
@@ -26,6 +27,7 @@ const defaultValue: PagesContextValue = {
   pages: [],
   setPages: () => Promise.resolve(),
   savePage: () => Promise.resolve(),
+  deletePage: () => Promise.resolve(),
 };
 
 export const PagesContext =

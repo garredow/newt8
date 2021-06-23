@@ -13,15 +13,19 @@
   height: 50px;
 }
 
-.page {
+.page,
+.pageEdit {
   display: flex;
   align-items: center;
   padding: 0 10px;
   text-transform: uppercase;
   font-size: 1.2em;
-  text-decoration: none;
   color: var(--card-primary-button-text-color);
   height: 50px;
+}
+
+.page {
+  text-decoration: none;
   cursor: pointer;
 }
 .page:hover {
@@ -29,6 +33,16 @@
 }
 .page:active {
   backdrop-filter: brightness(var(--row-dim));
+}
+
+.pageEdit > button {
+  margin-left: 5px;
+}
+.pageEditTitle {
+  border-bottom: 1px solid var(--card-accent-color);
+}
+.pageEditTitle:focus {
+  outline: none;
 }
 
 .highlight {

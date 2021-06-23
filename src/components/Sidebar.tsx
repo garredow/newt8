@@ -7,11 +7,15 @@ import styles from './Sidebar.module.css';
 import { PagesContext } from '../PagesContext';
 import { useEffect } from 'react';
 import { ComponentBase } from '../models/ComponentBase';
+import { useState } from 'react';
+import { Page } from '../services/panels';
 
 export type SidebarProps = ComponentBase;
 
 export function Sidebar(props: SidebarProps) {
-  const { pages, setPages } = useContext(PagesContext);
+  const [editMode, setEditMode] = useState(false);
+
+  const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
 
   useEffect(() => {
     const handleShortcutKey = (ev: KeyboardEvent) => {
@@ -26,7 +30,7 @@ export function Sidebar(props: SidebarProps) {
         'Digit8',
         'Digit9',
       ];
-      if (!ev.altKey && !keys.includes(ev.code)) return;
+      if (!ev.altKey || !keys.includes(ev.code)) return;
 
       const foundPage = pages[parseInt(ev.code.charAt(5), 10) - 1];
       if (!foundPage) return;
@@ -47,15 +51,50 @@ export function Sidebar(props: SidebarProps) {
     setPages(newPages);
   }
 
+  function handlePageNameChange(page: Page, newName: string) {
+    page.name = newName;
+    savePage(page);
+  }
+
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
       <div className={styles.pages}>
         {pages.map((page) => {
           const classes = [styles.page];
+          const editClasses = [styles.pageEdit];
           if (page.isActive) {
             classes.push(styles.highlight);
+            editClasses.push(styles.highlight);
           }
-          return (
+          return editMode ? (
+            <div className={editClasses.join(' ')} key={page.id}>
+              <div
+                suppressContentEditableWarning
+                contentEditable={true}
+                className={styles.pageEditTitle}
+                onKeyDown={(ev) => {
+                  if (ev.key !== 'Enter') {
+                    return;
+                  }
+
+                  ev.preventDefault();
+                  handlePageNameChange(
+                    page,
+                    (ev.target as HTMLHeadingElement).innerText
+                  );
+                }}
+              >
+                {page.name}
+              </div>
+              <IconButton
+                size={32}
+                type={ButtonType.Danger}
+                onClick={() => deletePage(page.id)}
+              >
+                <MdClose />
+              </IconButton>
+            </div>
+          ) : (
             <Link
               to={`/${page.id}/dashboard`}
               key={page.id}
@@ -68,14 +107,26 @@ export function Sidebar(props: SidebarProps) {
         })}
       </div>
       <div>
-        <IconButton size={40} type={ButtonType.Primary} onClick={() => {}}>
+        <IconButton
+          size={40}
+          type={ButtonType.Primary}
+          onClick={() => setEditMode(!editMode)}
+        >
           <MdEdit />
         </IconButton>
-        <IconButton size={40} type={ButtonType.Primary} onClick={() => {}}>
+        <IconButton
+          size={40}
+          type={ButtonType.Primary}
+          onClick={() =>
+            savePage({
+              id: `page_${new Date().valueOf()}`,
+              name: 'New Page',
+              isActive: true,
+              panels: [],
+            })
+          }
+        >
           <MdAdd />
-        </IconButton>
-        <IconButton size={40} type={ButtonType.Primary} onClick={() => {}}>
-          <MdClose />
         </IconButton>
         <Link to="/themer">
           <IconButton size={40} type={ButtonType.Primary} onClick={() => {}}>
