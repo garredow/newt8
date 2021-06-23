@@ -36,12 +36,13 @@
   backdrop-filter: brightness(var(--row-dim));
 }
 
-.pageEdit > button {
-  margin-left: 3px;
+.pageEdit {
+  border-right: 1px solid var(--card-divider-color);
 }
+
 .pageEditTitle {
   border-bottom: 1px solid var(--card-accent-color);
-  margin-right: 5px;
+  margin: 0 5px;
 }
 .pageEditTitle:focus {
   outline: none;

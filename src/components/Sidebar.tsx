@@ -105,6 +105,15 @@ export function Sidebar(props: SidebarProps) {
                           {...provided.draggableProps}
                           ref={provided.innerRef}
                         >
+                          <IconButton
+                            size={32}
+                            type={ButtonType.Secondary}
+                            className={styles.draggable}
+                            onClick={() => {}}
+                            {...provided.dragHandleProps}
+                          >
+                            <MdCompareArrows />
+                          </IconButton>
                           <div
                             suppressContentEditableWarning
                             contentEditable={true}
@@ -123,15 +132,7 @@ export function Sidebar(props: SidebarProps) {
                           >
                             {page.name}
                           </div>
-                          <IconButton
-                            size={32}
-                            type={ButtonType.Secondary}
-                            className={styles.draggable}
-                            onClick={() => {}}
-                            {...provided.dragHandleProps}
-                          >
-                            <MdCompareArrows />
-                          </IconButton>
+
                           <IconButton
                             size={32}
                             type={ButtonType.Danger}
