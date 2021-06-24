@@ -1,4 +1,5 @@
-const template = {
+// Theme template
+export const template = {
     id: 'light',
     name: 'Light',
     values: {
@@ -48,4 +49,4 @@ const template = {
         cardDangerButtonBgColor: {name: 'card-danger-button-bg-color', variable: 'card-danger-button-bg-color', value: 'DANGERCOLOR'},
         cardDangerButtonTextColor: {name: 'card-danger-button-text-color', variable: 'card-danger-button-text-color', value: 'PRIMARYTEXTCOLOR'},
     }
-},
+}
