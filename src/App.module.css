@@ -33,13 +33,13 @@ select {
   padding: 8px 5px 8px 5px;
   background-color: transparent;
   color: var(--app-accent-color);
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   outline: none;
   border-radius: 5px;
   text-align-last: end;
 }
 select:focus {
-  border: 1px solid var(--app-accent-color);
+  border: 2px solid var(--app-accent-color);
 }
 
 input {
@@ -47,7 +47,7 @@ input {
   color: var(--primary-text-color);
   border: none;
   outline: none;
-  border-bottom: 1px solid var(--app-accent-color);
+  border-bottom: 2px solid var(--app-accent-color);
 }
 
 input[type='checkbox'] {

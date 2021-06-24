@@ -13,5 +13,5 @@
   outline: none;
 }
 .title[contentEditable='true'] {
-  border-bottom: 1px solid var(--panel-accent-color);
+  border-bottom: 2px solid var(--panel-accent-color);
 }

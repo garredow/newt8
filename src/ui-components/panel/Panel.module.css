@@ -37,9 +37,9 @@
   color: var(--panel-accent-color);
 }
 .root select:focus {
-  border: 1px solid var(--panel-accent-color);
+  border: 2px solid var(--panel-accent-color);
 }
 .root input {
   color: var(--panel-primary-text-color);
-  border-bottom: 1px solid var(--panel-accent-color);
+  border-bottom: 2px solid var(--panel-accent-color);
 }
