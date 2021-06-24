@@ -13,6 +13,7 @@ import {
   MdColorLens,
   MdCompareArrows,
   MdEdit,
+  MdSettings,
 } from 'react-icons/md';
 import { ButtonType } from '../enums/buttonType';
 import styles from './Sidebar.module.css';
@@ -80,97 +81,90 @@ export function Sidebar(props: SidebarProps) {
 
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="pages" direction="horizontal">
-          {(provided) => (
-            <div
-              className={styles.pages}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {pages.map((page, i) => {
-                const classes = [styles.page];
-                const editClasses = [styles.pageEdit];
-                if (page.isActive) {
-                  classes.push(styles.highlight);
-                  editClasses.push(styles.highlight);
-                }
-                return editMode ? (
-                  <div key={page.id}>
-                    <Draggable draggableId={page.id} index={i}>
-                      {(provided) => (
-                        <div
-                          className={editClasses.join(' ')}
-                          key={page.id}
-                          {...provided.draggableProps}
-                          ref={provided.innerRef}
-                        >
-                          <IconButton
-                            size={32}
-                            type={ButtonType.Secondary}
-                            className={styles.draggable}
-                            icon={<MdCompareArrows />}
-                            title="Drag to reorder"
-                            onClick={() => {}}
-                            {...provided.dragHandleProps}
-                          />
+      <div className={styles.pagesContainer}>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="pages" direction="horizontal">
+            {(provided) => (
+              <div
+                className={styles.pages}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {pages.map((page, i) => {
+                  const classes = [styles.page];
+                  const editClasses = [styles.pageEdit];
+                  if (page.isActive) {
+                    classes.push(styles.highlight);
+                    editClasses.push(styles.highlight);
+                  }
+                  return editMode ? (
+                    <div key={page.id}>
+                      <Draggable draggableId={page.id} index={i}>
+                        {(provided) => (
                           <div
-                            suppressContentEditableWarning
-                            contentEditable={true}
-                            className={styles.pageEditTitle}
-                            onKeyDown={(ev) => {
-                              if (ev.key !== 'Enter') {
-                                return;
-                              }
-
-                              ev.preventDefault();
-                              handlePageNameChange(
-                                page,
-                                (ev.target as HTMLHeadingElement).innerText
-                              );
-                            }}
+                            className={editClasses.join(' ')}
+                            key={page.id}
+                            {...provided.draggableProps}
+                            ref={provided.innerRef}
                           >
-                            {page.name}
-                          </div>
+                            <IconButton
+                              size={32}
+                              type={ButtonType.Secondary}
+                              className={styles.draggable}
+                              icon={<MdCompareArrows />}
+                              title="Drag to reorder"
+                              onClick={() => {}}
+                              {...provided.dragHandleProps}
+                            />
+                            <div
+                              suppressContentEditableWarning
+                              contentEditable={true}
+                              className={styles.pageEditTitle}
+                              onKeyDown={(ev) => {
+                                if (ev.key !== 'Enter') {
+                                  return;
+                                }
 
-                          <IconButton
-                            size={32}
-                            type={ButtonType.Danger}
-                            icon={<MdClose />}
-                            title="Delete"
-                            onClick={() => deletePage(page.id)}
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  </div>
-                ) : (
-                  <Link
-                    to={`/${page.id}/dashboard`}
-                    key={page.id}
-                    className={classes.join(' ')}
-                    onClick={() => handlePageClick(page.id)}
-                  >
-                    {page.name}
-                  </Link>
-                );
-              })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      <div>
+                                ev.preventDefault();
+                                handlePageNameChange(
+                                  page,
+                                  (ev.target as HTMLHeadingElement).innerText
+                                );
+                              }}
+                            >
+                              {page.name}
+                            </div>
+
+                            <IconButton
+                              size={32}
+                              type={ButtonType.Danger}
+                              icon={<MdClose />}
+                              title="Delete"
+                              onClick={() => deletePage(page.id)}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    </div>
+                  ) : (
+                    <Link
+                      to={`/dashboard`}
+                      key={page.id}
+                      className={classes.join(' ')}
+                      onClick={() => handlePageClick(page.id)}
+                    >
+                      {page.name}
+                    </Link>
+                  );
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
         <IconButton
           size={40}
-          type={ButtonType.Primary}
-          icon={<MdEdit />}
-          title="Edit Pages"
-          onClick={() => setEditMode(!editMode)}
-        />
-        <IconButton
-          size={40}
-          type={ButtonType.Primary}
+          type={ButtonType.Secondary}
           icon={<MdAdd />}
           title="Add Page"
           onClick={() =>
@@ -182,11 +176,29 @@ export function Sidebar(props: SidebarProps) {
             })
           }
         />
+        <IconButton
+          size={40}
+          type={ButtonType.Secondary}
+          icon={<MdEdit />}
+          title="Edit Pages"
+          onClick={() => setEditMode(!editMode)}
+        />
+      </div>
+      <div>
         <Link to="/themer">
           <IconButton
-            size={40}
+            size={48}
             type={ButtonType.Primary}
             icon={<MdColorLens />}
+            title="Themes"
+            onClick={() => {}}
+          />
+        </Link>
+        <Link to="/settings">
+          <IconButton
+            size={48}
+            type={ButtonType.Primary}
+            icon={<MdSettings />}
             title="Themes"
             onClick={() => {}}
           />
