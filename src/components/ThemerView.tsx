@@ -14,6 +14,7 @@ import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
+import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './ThemerView.module.css';
 
 export type ThemerViewProps = ComponentBase & {};
@@ -120,11 +121,14 @@ export function ThemerView(props: ThemerViewProps) {
   const { settings, setSettings } = useContext(SettingsContext);
 
   useEffect(() => {
-    const currentTheme =
-      settings.themes.find((a) => a.id === settings.activeTheme) ||
-      settings.themes[0];
+    const currentTheme = getCurrentTheme();
     setWorkingTheme(currentTheme);
-  }, [settings.activeTheme]);
+  }, [
+    settings.activeTheme,
+    settings.lightTheme,
+    settings.darkTheme,
+    settings.dynamicThemes,
+  ]);
 
   useEffect(() => {
     if (!workingTheme) return;
@@ -141,15 +145,21 @@ export function ThemerView(props: ThemerViewProps) {
     setSettings({ ...settings, [key]: val });
   }
 
-  function createNewTheme() {
-    const currentTheme =
-      settings.themes.find((a) => a.id === settings.activeTheme) ||
-      settings.themes[0];
+  function getCurrentTheme() {
+    const theme = settings.dynamicThemes
+      ? isDarkMode()
+        ? settings.themes.find((a) => a.id === settings.darkTheme)
+        : settings.themes.find((a) => a.id === settings.lightTheme)
+      : settings.themes.find((a) => a.id === settings.activeTheme);
 
+    return theme || settings.themes[0];
+  }
+
+  function createNewTheme() {
     const newTheme: Theme = {
       id: `custom_${new Date().toISOString()}`,
       name: 'My Custom Theme',
-      values: { ...currentTheme.values },
+      values: { ...getCurrentTheme().values },
     };
 
     setWorkingTheme(newTheme);
@@ -273,9 +283,7 @@ export function ThemerView(props: ThemerViewProps) {
   }
 
   function cancelConfigureTheme() {
-    const theme =
-      settings.themes.find((a) => a.id === settings.activeTheme) ||
-      settings.themes[0];
+    const theme = getCurrentTheme();
 
     setWorkingTheme(theme);
     setShowconfig(false);
@@ -291,10 +299,16 @@ export function ThemerView(props: ThemerViewProps) {
       newThemes.push(workingTheme);
     }
 
+    const themeKey = settings.dynamicThemes
+      ? isDarkMode()
+        ? 'darkTheme'
+        : 'lightTheme'
+      : 'activeTheme';
+
     setShowconfig(false);
     setSettings({
       ...settings,
-      activeTheme: workingTheme.id,
+      [themeKey]: workingTheme.id,
       themes: newThemes,
     });
   }
@@ -395,20 +409,73 @@ export function ThemerView(props: ThemerViewProps) {
         <div className={styles.settingsContainer}>
           <h1>Choose a Theme</h1>
           <SettingsRow
-            label="Theme"
-            helpText="Choose which theme you'd like applied."
+            label="Dynamic themes"
+            helpText="Theme will change depending on your device's dark mode setting."
           >
-            <select
-              value={settings.activeTheme}
-              onChange={(ev) => setSettingValue('activeTheme', ev.target.value)}
-            >
-              {settings.themes.map((theme) => (
-                <option key={theme.id} value={theme.id}>
-                  {theme.name}
-                </option>
-              ))}
-            </select>
+            <input
+              type="checkbox"
+              checked={settings.dynamicThemes}
+              onChange={(ev) =>
+                setSettingValue('dynamicThemes', ev.target.checked)
+              }
+            />
           </SettingsRow>
+          {settings.dynamicThemes ? (
+            <>
+              <SettingsRow
+                label="Light Theme"
+                helpText="Choose which theme you'd like applied."
+              >
+                <select
+                  value={settings.lightTheme}
+                  onChange={(ev) =>
+                    setSettingValue('lightTheme', ev.target.value)
+                  }
+                >
+                  {settings.themes.map((theme) => (
+                    <option key={theme.id} value={theme.id}>
+                      {theme.name}
+                    </option>
+                  ))}
+                </select>
+              </SettingsRow>
+              <SettingsRow
+                label="Dark Theme"
+                helpText="Choose which theme you'd like applied."
+              >
+                <select
+                  value={settings.darkTheme}
+                  onChange={(ev) =>
+                    setSettingValue('darkTheme', ev.target.value)
+                  }
+                >
+                  {settings.themes.map((theme) => (
+                    <option key={theme.id} value={theme.id}>
+                      {theme.name}
+                    </option>
+                  ))}
+                </select>
+              </SettingsRow>
+            </>
+          ) : (
+            <SettingsRow
+              label="Theme"
+              helpText="Choose which theme you'd like applied."
+            >
+              <select
+                value={settings.activeTheme}
+                onChange={(ev) =>
+                  setSettingValue('activeTheme', ev.target.value)
+                }
+              >
+                {settings.themes.map((theme) => (
+                  <option key={theme.id} value={theme.id}>
+                    {theme.name}
+                  </option>
+                ))}
+              </select>
+            </SettingsRow>
+          )}
           <Button text="New Theme" onClick={createNewTheme} />
           <Button
             text="Customize Theme"

@@ -16,19 +16,54 @@ function App() {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);
   const [pages, setPagesInternal] = useState<Page[]>([]);
   const [themeStyles, setThemeStyles] = useState<any>({});
+  const [darkMode, setDarkMode] = useState(
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
 
   useEffect(() => {
     getItem<Settings>(StorageKey.Settings).then((res = defaultSettings) => {
-      const theme =
-        res.themes.find((a) => a.id === res.activeTheme) || res.themes[0];
-      applyTheme(theme);
-      setSettingsInternal(res || defaultSettings);
+      const isDarkMode = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
+      changeTheme({ ...defaultSettings, ...res }, isDarkMode);
+      setSettingsInternal({ ...defaultSettings, ...res });
     });
 
     getItem<Page[]>(StorageKey.Pages).then((res = defaultPages) => {
       setPagesInternal(res || defaultPages);
     });
   }, []);
+
+  useEffect(() => {
+    function handleColorScheme(ev: MediaQueryListEvent) {
+      setDarkMode(ev.matches);
+    }
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', handleColorScheme);
+
+    return () =>
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .removeEventListener('change', handleColorScheme);
+  }, []);
+
+  useEffect(() => changeTheme(settings, darkMode), [darkMode, settings]);
+
+  function changeTheme(sett: Settings, dark?: boolean) {
+    let theme;
+
+    if (sett.dynamicThemes) {
+      theme = sett.themes.find(
+        (a) => a.id === (dark ? sett.darkTheme : sett.lightTheme)
+      );
+    } else {
+      theme = sett.themes.find((a) => a.id === sett.activeTheme);
+    }
+
+    applyTheme(theme || sett.themes[0]);
+  }
 
   function applyTheme(theme: Theme) {
     const styles: any = {};
@@ -41,9 +76,6 @@ function App() {
 
   async function setSettings(val: Settings) {
     setSettingsInternal(val);
-    const theme =
-      val.themes.find((a) => a.id === val.activeTheme) || val.themes[0];
-    applyTheme(theme);
     await setItem<Settings>(StorageKey.Settings, val);
   }
 
