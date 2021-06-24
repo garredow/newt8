@@ -7,6 +7,7 @@ export type ThemeColor = {
 export type ThemeValues = {
   appBgColor: ThemeColor;
   appAccentColor: ThemeColor;
+  dividerColor: ThemeColor;
   primaryTextColor: ThemeColor;
   secondaryTextColor: ThemeColor;
   warningTextColor: ThemeColor;
