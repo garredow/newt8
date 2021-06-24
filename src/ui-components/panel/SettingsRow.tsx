@@ -1,6 +1,8 @@
 import React from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
 import { ComponentBase } from '../../models/ComponentBase';
+import { SettingsContext } from '../../SettingsContext';
 import styles from './SettingsRow.module.css';
 
 type SettingsRowProps = ComponentBase & {
@@ -10,6 +12,7 @@ type SettingsRowProps = ComponentBase & {
 
 export function SettingsRow(props: SettingsRowProps) {
   const [showHelpText, setShowHelpText] = useState(false);
+  const { settings } = useContext(SettingsContext);
 
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
@@ -22,7 +25,7 @@ export function SettingsRow(props: SettingsRowProps) {
         </div>
         {props.children}
       </div>
-      {showHelpText && props.helpText ? (
+      {(showHelpText || settings.showSettingHelpText) && props.helpText ? (
         <div className={styles.helptext}>{props.helpText}</div>
       ) : null}
     </div>

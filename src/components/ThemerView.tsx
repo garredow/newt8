@@ -410,7 +410,7 @@ export function ThemerView(props: ThemerViewProps) {
           <h1>Choose a Theme</h1>
           <SettingsRow
             label="Dynamic themes"
-            helpText="Theme will change depending on your device's dark mode setting."
+            helpText="When you turn on dark mode for your device, Newt's theme will change to match it."
           >
             <input
               type="checkbox"
@@ -424,7 +424,7 @@ export function ThemerView(props: ThemerViewProps) {
             <>
               <SettingsRow
                 label="Light Theme"
-                helpText="Choose which theme you'd like applied."
+                helpText="This theme will be applied when dark mode is turned off."
               >
                 <select
                   value={settings.lightTheme}
@@ -441,7 +441,7 @@ export function ThemerView(props: ThemerViewProps) {
               </SettingsRow>
               <SettingsRow
                 label="Dark Theme"
-                helpText="Choose which theme you'd like applied."
+                helpText="This theme will be applied when dark mode is on."
               >
                 <select
                   value={settings.darkTheme}

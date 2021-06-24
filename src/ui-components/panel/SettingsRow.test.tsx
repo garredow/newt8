@@ -1,7 +1,23 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { SettingsRow } from './SettingsRow';
+import { defaultSettings, SettingsContext } from '../../SettingsContext';
 
+function renderWithContext(element: any) {
+  return render(
+    <SettingsContext.Provider
+      value={{
+        settings: {
+          ...defaultSettings,
+          showSettingHelpText: false,
+        },
+        setSettings: jest.fn(),
+      }}
+    >
+      {element}
+    </SettingsContext.Provider>
+  );
+}
 describe('SettingsRow', () => {
   test('renders label and not help text', () => {
     const props = {
@@ -9,7 +25,9 @@ describe('SettingsRow', () => {
       helpText: 'help text',
     };
 
-    const { getByText, queryByText } = render(<SettingsRow {...props} />);
+    const { getByText, queryByText } = renderWithContext(
+      <SettingsRow {...props} />
+    );
 
     expect(getByText(props.label)).toBeVisible();
     expect(queryByText(props.helpText)).toBeNull();
@@ -21,7 +39,7 @@ describe('SettingsRow', () => {
       helpText: 'help text',
     };
 
-    const { getByText } = render(<SettingsRow {...props} />);
+    const { getByText } = renderWithContext(<SettingsRow {...props} />);
 
     fireEvent.click(getByText(props.label));
 
@@ -35,7 +53,7 @@ describe('SettingsRow', () => {
       helpText: 'help text',
     };
 
-    const { getByText } = render(
+    const { getByText } = renderWithContext(
       <SettingsRow {...props}>
         <div>child text</div>
       </SettingsRow>

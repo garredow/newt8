@@ -29,7 +29,7 @@ const defaultThemes: Theme[] = [
 
       panelBgColor: {name: 'panel-bg-color', variable: 'panel-bg-color', value: '#0c1920'},
       panelAccentColor: {name: 'panel-accent-color', variable: 'panel-accent-color', value: '#ffa500'},
-      panelDividerColor: {name: 'panel-divider-color', variable: 'panel-divider-color', value: 'rgba(255, 255, 255, 0.6)'},
+      panelDividerColor: {name: 'panel-divider-color', variable: 'panel-divider-color', value: 'rgba(255, 255, 255, 0.2)'},
       panelTitleTextColor: {name: 'panel-title-text-color', variable: 'panel-title-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       panelPrimaryTextColor: {name: 'panel-primary-text-color', variable: 'panel-primary-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       panelSecondaryTextColor: {name: 'panel-secondary-text-color', variable: 'panel-secondary-text-color', value: 'rgba(255, 255, 255, 0.6)'},
@@ -79,7 +79,7 @@ const defaultThemes: Theme[] = [
   
       panelBgColor: {name: 'panel-bg-color', variable: 'panel-bg-color', value: '#f4f5f5'},
       panelAccentColor: {name: 'panel-accent-color', variable: 'panel-accent-color', value: '#75abbc'},
-      panelDividerColor: {name: 'panel-divider-color', variable: 'panel-divider-color', value: 'rgba(0,0,0, 0.5)'},
+      panelDividerColor: {name: 'panel-divider-color', variable: 'panel-divider-color', value: 'rgba(0,0,0, 0.2)'},
       panelTitleTextColor: {name: 'panel-title-text-color', variable: 'panel-title-text-color', value: 'rgba(0,0,0, 0.88)'},
       panelPrimaryTextColor: {name: 'panel-primary-text-color', variable: 'panel-primary-text-color', value: 'rgba(0,0,0, 0.88)'},
       panelSecondaryTextColor: {name: 'panel-secondary-text-color', variable: 'panel-secondary-text-color', value: 'rgba(0,0,0, 0.5)'},
@@ -116,7 +116,7 @@ export const defaultSettings = {
   dynamicThemes: false,
   lightTheme: 'light',
   darkTheme: 'dark',
-  showSettingHelpText: false, // Display help text along with (under?) each settings item
+  showSettingHelpText: true,
 };
 
 const defaultValue = {

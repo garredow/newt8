@@ -2,3 +2,8 @@
   height: var(--full-height);
   padding: 0 20px;
 }
+
+.content {
+  max-width: 700px;
+  margin: 0 auto;
+}

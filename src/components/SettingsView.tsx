@@ -16,22 +16,22 @@ export function SettingsView(props: SettingsViewProps) {
 
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
-      <h1>Settings</h1>
-      <SettingsRow
-        label="Theme"
-        helpText="Choose which theme you'd like applied."
-      >
-        <select
-          value={settings.activeTheme}
-          onChange={(ev) => setSettingValue('activeTheme', ev.target.value)}
+      <div className={styles.content}>
+        <h1>Settings</h1>
+        <SettingsRow
+          label="Show help text"
+          helpText="When turned on, each setting throughout Newt will have a short description
+           displayed beneath it. If off, you can still view this text by clicking on the label."
         >
-          {settings.themes.map((theme) => (
-            <option key={theme.id} value={theme.id}>
-              {theme.name}
-            </option>
-          ))}
-        </select>
-      </SettingsRow>
+          <input
+            type="checkbox"
+            checked={settings.showSettingHelpText}
+            onChange={(ev) =>
+              setSettingValue('showSettingHelpText', ev.target.checked)
+            }
+          />
+        </SettingsRow>
+      </div>
     </div>
   );
 }

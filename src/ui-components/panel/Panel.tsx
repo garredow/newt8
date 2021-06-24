@@ -87,7 +87,10 @@ export function Panel(props: PanelProps) {
           </PanelHeader>
           {showSettings ? (
             <PanelSettings data-testid="settings">
-              <SettingsRow label="Columns">
+              <SettingsRow
+                label="Columns"
+                helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
+              >
                 <select
                   defaultValue={props.options.columns}
                   onChange={(ev) =>
@@ -108,7 +111,10 @@ export function Panel(props: PanelProps) {
                   <option value={10}>10</option>
                 </select>
               </SettingsRow>
-              <SettingsRow label="Width">
+              <SettingsRow
+                label="Width"
+                helpText="How wide this column is in relation to the others in the dashboard."
+              >
                 <select
                   defaultValue={props.options.width}
                   onChange={(ev) =>
