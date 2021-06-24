@@ -183,7 +183,18 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-
+  [PanelType.Empty]: {
+    id: '',
+    name: 'Empty',
+    kind: PanelType.Empty,
+    permissions: [],
+    defaultOptions: {
+      title: '',
+      columns: 1,
+      width: 3,
+    },
+    options: {},
+  },
   [PanelType.New]: {
     id: '',
     name: 'New',

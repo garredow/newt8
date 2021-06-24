@@ -21,6 +21,7 @@ import { useContext } from 'react';
 import { PagesContext } from '../PagesContext';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { moveArrayItem } from '../utilities/moveArrayItem';
+import { EmptyPanel } from './EmptyPanel';
 
 enum LoadingStatus {
   Init,
@@ -126,6 +127,19 @@ export function DashboardView(props: DashboardViewProps) {
             options={{} as PanelOptions}
             onPanelTypeChanged={(panelType) =>
               handlePanelTypeChange(panel.id, panelType)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelType.Empty:
+        return (
+          <EmptyPanel
+            key={panel.id}
+            panelId={panel.id}
+            panelIndex={index}
+            options={panel.options as PanelOptions}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
             }
             onDeletePanel={() => deletePanel(panel.id)}
           />

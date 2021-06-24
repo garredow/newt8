@@ -7,4 +7,5 @@ export enum PanelType {
   Devices = 'devices',
   NewBookmarks = 'newBookmarks',
   TopSites = 'topSites',
+  Empty = 'empty',
 }
