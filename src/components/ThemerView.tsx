@@ -388,8 +388,8 @@ export function ThemerView(props: ThemerViewProps) {
             <p>
               You can click on a color block to bring up a color picker, or type
               in your values manually. Each field accepts all color formats
-              (hex, rgb, hsl, etc), but only hex values will display in the
-              color block. I highly recommend a site like{' '}
+              (hex, rgb, hsl, etc). Colors with transpanency may not display
+              100% correctly in the color block. I highly recommend a site like{' '}
               <a
                 href="https://coolors.co/"
                 target="_blank"
@@ -749,12 +749,18 @@ function ColorChooser({ id, color, onChange }: ColorChooserProps) {
         onChange={handleColorChange}
         readOnly={false}
       />
-      <input
-        type="color"
-        className={styles.colorPreview}
-        value={isHex ? color.value : '#000000'}
-        onInput={handleColorChange}
-      ></input>
+      <div className={styles.colorPreviewContainer}>
+        <input
+          type="color"
+          className={styles.colorPreviewInput}
+          value={isHex ? color.value : '#000000'} // It complains if the value isn't hex
+          onInput={handleColorChange}
+        ></input>
+        <div
+          className={styles.colorPreview}
+          style={{ backgroundColor: color.value }}
+        ></div>
+      </div>
     </div>
   );
 }

@@ -134,6 +134,18 @@
   width: 100%;
 }
 
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: var(--full-height);
+}
+
+.settingsContainer > button {
+  margin-bottom: 10px;
+}
+
+/* Color Chooser */
+
 .colorChooser {
   display: grid;
   grid-template-columns: 1fr 38px;
@@ -149,18 +161,29 @@
   margin-right: 10px;
 }
 
-.colorPreview {
+.colorPreviewContainer {
+  position: relative;
   height: 36px;
   width: 36px;
-  border: none;
 }
 
-.settingsContainer {
-  display: flex;
-  flex-direction: column;
-  max-height: var(--full-height);
+.colorPreviewInput,
+.colorPreview {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  height: 36px;
+  width: 36px;
 }
 
-.settingsContainer > button {
-  margin-bottom: 10px;
+.colorPreviewInput {
+  opacity: 0;
+}
+
+.colorPreview {
+  pointer-events: none;
+  border: 1px solid var(--secondary-text-color);
+  border-radius: 4px;
 }
