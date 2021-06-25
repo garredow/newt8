@@ -2,7 +2,13 @@ import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { MdCheck, MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md';
+import {
+  MdCheck,
+  MdClose,
+  MdExpandLess,
+  MdExpandMore,
+  MdSettings,
+} from 'react-icons/md';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
 import { ComponentBase } from '../models/ComponentBase';
@@ -27,7 +33,13 @@ type Section = {
 const basicSections: Section[] = [
   {
     title: 'Base',
-    colors: ['appBgColor', 'appAccentColor', 'panelBgColor', 'cardBgColor'],
+    colors: [
+      'appBgColor',
+      'appAccentColor',
+      'panelBgColor',
+      'cardBgColor',
+      'sidebarBgColor',
+    ],
   },
   {
     title: 'Text',
@@ -109,6 +121,25 @@ const sections: Section[] = [
       'cardWarningButtonTextColor',
       'cardDangerButtonBgColor',
       'cardDangerButtonTextColor',
+    ],
+  },
+  {
+    title: 'Sidebar',
+    colors: [
+      'sidebarBgColor',
+      'sidebarAccentColor',
+      'sidebarDividerColor',
+      'sidebarTitleTextColor',
+      'sidebarPrimaryTextColor',
+      'sidebarSecondaryTextColor',
+      'sidebarPrimaryButtonBgColor',
+      'sidebarPrimaryButtonTextColor',
+      'sidebarSecondaryButtonBgColor',
+      'sidebarSecondaryButtonTextColor',
+      'sidebarWarningButtonBgColor',
+      'sidebarWarningButtonTextColor',
+      'sidebarDangerButtonBgColor',
+      'sidebarDangerButtonTextColor',
     ],
   },
 ];
@@ -200,6 +231,7 @@ export function ThemerView(props: ThemerViewProps) {
         newTheme.values.appAccentColor.value = val;
         newTheme.values.panelAccentColor.value = val;
         newTheme.values.cardAccentColor.value = val;
+        newTheme.values.sidebarAccentColor.value = val;
         break;
       case 'panelBgColor':
         newTheme.values.panelBgColor.value = val;
@@ -207,12 +239,16 @@ export function ThemerView(props: ThemerViewProps) {
       case 'cardBgColor':
         newTheme.values.cardBgColor.value = val;
         break;
+      case 'sidebarBgColor':
+        newTheme.values.sidebarBgColor.value = val;
+        break;
       case 'primaryTextColor':
         newTheme.values.primaryTextColor.value = val;
         newTheme.values.panelTitleTextColor.value = val;
         newTheme.values.panelPrimaryTextColor.value = val;
         newTheme.values.cardTitleTextColor.value = val;
         newTheme.values.cardPrimaryTextColor.value = val;
+        newTheme.values.sidebarPrimaryTextColor.value = val;
         break;
       case 'secondaryTextColor':
         newTheme.values.secondaryTextColor.value = val;
@@ -220,6 +256,7 @@ export function ThemerView(props: ThemerViewProps) {
         newTheme.values.panelSecondaryTextColor.value = val;
         newTheme.values.cardDividerColor.value = val;
         newTheme.values.cardSecondaryTextColor.value = val;
+        newTheme.values.sidebarSecondaryTextColor.value = val;
         break;
       case 'warningTextColor':
         newTheme.values.warningTextColor.value = val;
@@ -231,41 +268,49 @@ export function ThemerView(props: ThemerViewProps) {
         newTheme.values.primaryButtonBgColor.value = val;
         newTheme.values.panelPrimaryButtonBgColor.value = val;
         newTheme.values.cardPrimaryButtonBgColor.value = val;
+        newTheme.values.sidebarPrimaryButtonBgColor.value = val;
         break;
       case 'primaryButtonTextColor':
         newTheme.values.primaryButtonTextColor.value = val;
         newTheme.values.panelPrimaryButtonTextColor.value = val;
         newTheme.values.cardPrimaryButtonTextColor.value = val;
+        newTheme.values.sidebarPrimaryButtonTextColor.value = val;
         break;
       case 'secondaryButtonBgColor':
         newTheme.values.secondaryButtonBgColor.value = val;
         newTheme.values.panelSecondaryButtonBgColor.value = val;
         newTheme.values.cardSecondaryButtonBgColor.value = val;
+        newTheme.values.sidebarSecondaryButtonBgColor.value = val;
         break;
       case 'secondaryButtonTextColor':
         newTheme.values.secondaryButtonTextColor.value = val;
         newTheme.values.panelSecondaryButtonTextColor.value = val;
         newTheme.values.cardSecondaryButtonTextColor.value = val;
+        newTheme.values.sidebarSecondaryButtonTextColor.value = val;
         break;
       case 'warningButtonBgColor':
         newTheme.values.warningButtonBgColor.value = val;
         newTheme.values.panelWarningButtonBgColor.value = val;
         newTheme.values.cardWarningButtonBgColor.value = val;
+        newTheme.values.sidebarWarningButtonBgColor.value = val;
         break;
       case 'warningButtonTextColor':
         newTheme.values.warningButtonTextColor.value = val;
         newTheme.values.panelWarningButtonTextColor.value = val;
         newTheme.values.cardWarningButtonTextColor.value = val;
+        newTheme.values.sidebarWarningButtonTextColor.value = val;
         break;
       case 'dangerButtonBgColor':
         newTheme.values.dangerButtonBgColor.value = val;
         newTheme.values.panelDangerButtonBgColor.value = val;
         newTheme.values.cardDangerButtonBgColor.value = val;
+        newTheme.values.sidebarDangerButtonBgColor.value = val;
         break;
       case 'dangerButtonTextColor':
         newTheme.values.dangerButtonTextColor.value = val;
         newTheme.values.panelDangerButtonTextColor.value = val;
         newTheme.values.cardDangerButtonTextColor.value = val;
+        newTheme.values.sidebarDangerButtonTextColor.value = val;
         break;
     }
 
@@ -635,6 +680,46 @@ export function ThemerView(props: ThemerViewProps) {
                 )}
               </Droppable>
             </DragDropContext>
+            <div className={styles.sidebar}>
+              <div className={styles.sidebarPages}>
+                <div className={styles.sidebarAccentText}>ACTIVE PAGE</div>
+                <div className={styles.sidebarPrimaryText}>INACTIVE PAGE</div>
+              </div>
+              <div>
+                <IconButton
+                  size={48}
+                  title="Example"
+                  type={ButtonType.Primary}
+                  kind={ButtonKind.SideBar}
+                  icon={<MdSettings />}
+                  onClick={() => {}}
+                />
+                <IconButton
+                  size={48}
+                  title="Example"
+                  type={ButtonType.Secondary}
+                  kind={ButtonKind.SideBar}
+                  icon={<MdSettings />}
+                  onClick={() => {}}
+                />
+                <IconButton
+                  size={48}
+                  title="Example"
+                  type={ButtonType.Warning}
+                  kind={ButtonKind.SideBar}
+                  icon={<MdSettings />}
+                  onClick={() => {}}
+                />
+                <IconButton
+                  size={48}
+                  title="Example"
+                  type={ButtonType.Danger}
+                  kind={ButtonKind.SideBar}
+                  icon={<MdSettings />}
+                  onClick={() => {}}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

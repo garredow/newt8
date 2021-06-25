@@ -38,6 +38,9 @@ export function IconButton({
       case ButtonKind.Card:
         iconClass.push(styles.card);
         break;
+      case ButtonKind.SideBar:
+        iconClass.push(styles.sidebar);
+        break;
     }
     switch (type) {
       case ButtonType.Primary:

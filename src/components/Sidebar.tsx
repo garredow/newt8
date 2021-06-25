@@ -110,7 +110,7 @@ export function Sidebar(props: SidebarProps) {
                           >
                             <IconButton
                               size={32}
-                              kind={ButtonKind.Card}
+                              kind={ButtonKind.SideBar}
                               type={ButtonType.Secondary}
                               className={styles.draggable}
                               icon={<MdCompareArrows />}
@@ -139,7 +139,7 @@ export function Sidebar(props: SidebarProps) {
 
                             <IconButton
                               size={32}
-                              kind={ButtonKind.Card}
+                              kind={ButtonKind.SideBar}
                               type={ButtonType.Danger}
                               icon={<MdClose />}
                               title="Delete"
@@ -167,7 +167,7 @@ export function Sidebar(props: SidebarProps) {
         </DragDropContext>
         <IconButton
           size={40}
-          kind={ButtonKind.Card}
+          kind={ButtonKind.SideBar}
           type={ButtonType.Secondary}
           icon={<MdAdd />}
           title="Add Page"
@@ -182,7 +182,7 @@ export function Sidebar(props: SidebarProps) {
         />
         <IconButton
           size={40}
-          kind={ButtonKind.Card}
+          kind={ButtonKind.SideBar}
           type={ButtonType.Secondary}
           icon={<MdEdit />}
           title="Edit Pages"
@@ -193,7 +193,7 @@ export function Sidebar(props: SidebarProps) {
         <Link to="/themer">
           <IconButton
             size={48}
-            kind={ButtonKind.Card}
+            kind={ButtonKind.SideBar}
             type={ButtonType.Primary}
             icon={<MdColorLens />}
             title="Themes"
@@ -203,7 +203,7 @@ export function Sidebar(props: SidebarProps) {
         <Link to="/settings">
           <IconButton
             size={48}
-            kind={ButtonKind.Card}
+            kind={ButtonKind.SideBar}
             type={ButtonType.Primary}
             icon={<MdSettings />}
             title="Themes"

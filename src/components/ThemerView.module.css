@@ -59,6 +59,39 @@
   color: var(--panel-accent-color);
 }
 
+.sidebar {
+  height: 50px;
+  background-color: var(--sidebar-bg-color);
+  grid-column: span 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.sidebarPages {
+  display: flex;
+  height: 50px;
+}
+
+.sidebarAccentText {
+  color: var(--sidebar-accent-color);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+.sidebarPrimaryText {
+  color: var(--sidebar-primary-text-color);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  text-transform: uppercase;
+  font-size: 1.2em;
+}
+
 .configContainer {
   display: flex;
   flex-direction: column;

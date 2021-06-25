@@ -1,5 +1,5 @@
 .root {
-  background-color: var(--card-bg-color);
+  background-color: var(--sidebar-bg-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,8 +24,8 @@
   padding: 0 10px;
   text-transform: uppercase;
   font-size: 1.2em;
-  color: var(--card-primary-text-color);
-  background-color: var(--card-bg-color);
+  color: var(--sidebar-primary-text-color);
+  background-color: var(--sidebar-bg-color);
   height: 50px;
 }
 
@@ -41,11 +41,11 @@
 }
 
 .pageEdit {
-  border-right: 1px solid var(--card-divider-color);
+  border-right: 1px solid var(--sidebar-divider-color);
 }
 
 .pageEditTitle {
-  border-bottom: 2px solid var(--card-accent-color);
+  border-bottom: 2px solid var(--sidebar-accent-color);
   margin: 0 5px;
 }
 .pageEditTitle:focus {
@@ -53,7 +53,7 @@
 }
 
 .highlight {
-  color: var(--card-accent-color);
+  color: var(--sidebar-accent-color);
 }
 
 /* .pages > div {

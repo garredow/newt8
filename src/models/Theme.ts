@@ -50,6 +50,21 @@ export type ThemeValues = {
   cardWarningButtonTextColor: ThemeColor;
   cardDangerButtonBgColor: ThemeColor;
   cardDangerButtonTextColor: ThemeColor;
+
+  sidebarBgColor: ThemeColor;
+  sidebarAccentColor: ThemeColor;
+  sidebarDividerColor: ThemeColor;
+  sidebarTitleTextColor: ThemeColor;
+  sidebarPrimaryTextColor: ThemeColor;
+  sidebarSecondaryTextColor: ThemeColor;
+  sidebarPrimaryButtonBgColor: ThemeColor;
+  sidebarPrimaryButtonTextColor: ThemeColor;
+  sidebarSecondaryButtonBgColor: ThemeColor;
+  sidebarSecondaryButtonTextColor: ThemeColor;
+  sidebarWarningButtonBgColor: ThemeColor;
+  sidebarWarningButtonTextColor: ThemeColor;
+  sidebarDangerButtonBgColor: ThemeColor;
+  sidebarDangerButtonTextColor: ThemeColor;
 };
 
 export type Theme = {

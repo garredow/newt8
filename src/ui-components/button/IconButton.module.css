@@ -52,3 +52,16 @@
 .card.danger {
   fill: var(--card-danger-button-bg-color);
 }
+
+.sidebar.primary {
+  fill: var(--sidebar-primary-button-bg-color);
+}
+.sidebar.secondary {
+  fill: var(--sidebar-secondary-button-bg-color);
+}
+.sidebar.warning {
+  fill: var(--sidebar-warning-button-bg-color);
+}
+.sidebar.danger {
+  fill: var(--sidebar-danger-button-bg-color);
+}
