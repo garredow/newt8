@@ -190,7 +190,7 @@ export function Sidebar(props: SidebarProps) {
         />
       </div>
       <div>
-        <Link to="/themer">
+        <Link to="/theme">
           <IconButton
             size={48}
             kind={ButtonKind.SideBar}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
-import styles from './DevicesPanel.module.css';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices } from '../services/sessionsService';

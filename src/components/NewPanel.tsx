@@ -90,7 +90,7 @@ export function NewPanel(props: NewPanelProps) {
         <PanelContent columns={1}>
           <p>
             Before we can add this panel, Newt needs some extra permissions. If
-            everything below looks ok to you, click the 'Request Permissons'
+            everything below looks ok to you, click the 'Request Permissions'
             button to finish setting up this panel.
           </p>
           <ul className={styles.permissionsList}>

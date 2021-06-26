@@ -9,7 +9,6 @@ import { getWindows } from '../services/windowsService';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
-import styles from './WindowsPanel.module.css';
 
 type WindowsPanelOptions = PanelOptions;
 

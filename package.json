@@ -10,6 +10,8 @@
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --watchAll=false --coverage",
+    "test:ci": "react-scripts test --watchAll=false --silent",
+    "lint": "eslint src",
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },

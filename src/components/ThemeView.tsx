@@ -21,9 +21,9 @@ import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import { isDarkMode } from '../utilities/isDarkMode';
-import styles from './ThemerView.module.css';
+import styles from './ThemeView.module.css';
 
-export type ThemerViewProps = ComponentBase & {};
+export type ThemeViewProps = ComponentBase & {};
 
 type Section = {
   title: string;
@@ -144,9 +144,9 @@ const sections: Section[] = [
   },
 ];
 
-export function ThemerView(props: ThemerViewProps) {
+export function ThemeView(props: ThemeViewProps) {
   const [workingTheme, setWorkingTheme] = useState<Theme>(null as any);
-  const [showConfig, setShowconfig] = useState(false);
+  const [showConfig, setShowConfig] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [themePreviewStyles, setThemePreviewStyles] = useState<any>({});
   const { settings, setSettings } = useContext(SettingsContext);
@@ -154,6 +154,7 @@ export function ThemerView(props: ThemerViewProps) {
   useEffect(() => {
     const currentTheme = getCurrentTheme();
     setWorkingTheme(currentTheme);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     settings.activeTheme,
     settings.lightTheme,
@@ -194,11 +195,11 @@ export function ThemerView(props: ThemerViewProps) {
     };
 
     setWorkingTheme(newTheme);
-    setShowconfig(true);
+    setShowConfig(true);
   }
 
   function editTheme() {
-    setShowconfig(true);
+    setShowConfig(true);
   }
 
   function deleteTheme() {
@@ -214,7 +215,6 @@ export function ThemerView(props: ThemerViewProps) {
   function updateWorkingThemeColor(id: string, val: string) {
     const newTheme: Theme = JSON.parse(JSON.stringify(workingTheme));
     newTheme.values[id as keyof ThemeValues].value = val;
-    console.log('newtheme', newTheme);
 
     setWorkingTheme(newTheme);
   }
@@ -331,7 +331,7 @@ export function ThemerView(props: ThemerViewProps) {
     const theme = getCurrentTheme();
 
     setWorkingTheme(theme);
-    setShowconfig(false);
+    setShowConfig(false);
   }
 
   function saveWorkingTheme() {
@@ -350,7 +350,7 @@ export function ThemerView(props: ThemerViewProps) {
         : 'lightTheme'
       : 'activeTheme';
 
-    setShowconfig(false);
+    setShowConfig(false);
     setSettings({
       ...settings,
       [themeKey]: workingTheme.id,
@@ -388,7 +388,7 @@ export function ThemerView(props: ThemerViewProps) {
             <p>
               You can click on a color block to bring up a color picker, or type
               in your values manually. Each field accepts all color formats
-              (hex, rgb, hsl, etc). Colors with transpanency may not display
+              (hex, rgb, hsl, etc). Colors with transparency may not display
               100% correctly in the color block. I highly recommend a site like{' '}
               <a
                 href="https://coolors.co/"

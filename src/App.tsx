@@ -6,7 +6,7 @@ import { Settings } from './models/Settings';
 import { getItem, setItem, StorageKey } from './utilities/storage';
 import styles from './App.module.css';
 import { SettingsView } from './components/SettingsView';
-import { ThemerView } from './components/ThemerView';
+import { ThemeView } from './components/ThemeView';
 import { Theme, ThemeValues } from './models/Theme';
 import { Sidebar } from './components/Sidebar';
 import { Page } from './services/panels';
@@ -32,6 +32,7 @@ function App() {
     getItem<Page[]>(StorageKey.Pages).then((res = defaultPages) => {
       setPagesInternal(res || defaultPages);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function App() {
         .removeEventListener('change', handleColorScheme);
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => changeTheme(settings, darkMode), [darkMode, settings]);
 
   function changeTheme(sett: Settings, dark?: boolean) {
@@ -132,8 +134,8 @@ function App() {
               <Route path="/settings">
                 <SettingsView />
               </Route>
-              <Route path="/themer">
-                <ThemerView />
+              <Route path="/theme">
+                <ThemeView />
               </Route>
               <Route path="/about">About</Route>
               <Route path="*">
