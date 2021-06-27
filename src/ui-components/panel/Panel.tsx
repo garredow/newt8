@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { MdCompareArrows, MdSettings } from 'react-icons/md';
@@ -8,8 +9,10 @@ import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { DraggablePanelProps } from '../../models/DraggablePanelProps';
 import { PanelOptions } from '../../services/panels';
+import { SettingsContext } from '../../SettingsContext';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
+import { ConfirmDialog } from '../ConfirmDialog';
 import styles from './Panel.module.css';
 import { PanelSettings } from './PanelSettings';
 import { SettingsRow } from './SettingsRow';
@@ -19,8 +22,8 @@ type PanelProps = ComponentBase &
     options: PanelOptions;
     enableSettings?: boolean;
     extraSettings?: React.ReactNode;
-    onOptionsChanged?: (options: PanelOptions) => void;
-    onDeletePanel?: () => void;
+    onOptionsChanged: (options: PanelOptions) => void;
+    onDeletePanel: () => void;
   };
 
 Panel.defaultProps = {
@@ -28,9 +31,10 @@ Panel.defaultProps = {
 };
 
 export function Panel(props: PanelProps) {
-  // console.log('props', props);
-
   const [showSettings, setShowSettings] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const { settings } = useContext(SettingsContext);
 
   useEffect(() => {
     const handleEscapeKey = (ev: KeyboardEvent) => {
@@ -46,6 +50,15 @@ export function Panel(props: PanelProps) {
   function setOptionValue(key: string, val: any) {
     const newOpts = { ...props.options, [key]: val };
     props.onOptionsChanged?.(newOpts);
+  }
+
+  function handleRequestDelete() {
+    if (settings.confirmBeforeDelete) {
+      setShowConfirm(true);
+      return;
+    }
+
+    props.onDeletePanel();
   }
 
   const classes = [styles.root];
@@ -134,11 +147,20 @@ export function Panel(props: PanelProps) {
                 text="Delete"
                 type={ButtonType.Danger}
                 kind={ButtonKind.Panel}
-                onClick={props.onDeletePanel}
+                onClick={handleRequestDelete}
               />
             </PanelSettings>
           ) : null}
           {props.children}
+          {showConfirm && (
+            <ConfirmDialog
+              title="Confirm"
+              message="Are you sure you want to delete this?"
+              danger
+              onCancel={() => setShowConfirm(false)}
+              onConfirm={props.onDeletePanel}
+            />
+          )}
         </div>
       )}
     </Draggable>

@@ -7,4 +7,5 @@ export type Settings = {
   lightTheme: string;
   darkTheme: string;
   showSettingHelpText: boolean;
+  confirmBeforeDelete: boolean;
 };

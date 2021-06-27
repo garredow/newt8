@@ -31,6 +31,18 @@ export function SettingsView(props: SettingsViewProps) {
             }
           />
         </SettingsRow>
+        <SettingsRow
+          label="Confirm before delete"
+          helpText="When turned on, you'll be asked to confirm any action that would result in something being deleted. Ex: A panel or page."
+        >
+          <input
+            type="checkbox"
+            checked={settings.confirmBeforeDelete}
+            onChange={(ev) =>
+              setSettingValue('confirmBeforeDelete', ev.target.checked)
+            }
+          />
+        </SettingsRow>
       </div>
     </div>
   );

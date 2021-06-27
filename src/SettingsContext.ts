@@ -215,6 +215,7 @@ export const defaultSettings = {
   lightTheme: 'light',
   darkTheme: 'dark',
   showSettingHelpText: true,
+  confirmBeforeDelete: true
 };
 
 const defaultValue = {

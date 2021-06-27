@@ -11,6 +11,7 @@ import { Theme, ThemeValues } from './models/Theme';
 import { Sidebar } from './components/Sidebar';
 import { Page } from './services/panels';
 import { defaultPages, PagesContext } from './PagesContext';
+import '@reach/dialog/styles.css';
 
 function App() {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);

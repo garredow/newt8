@@ -24,12 +24,17 @@ import { useState } from 'react';
 import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ButtonKind } from '../enums/buttonKind';
+import { ConfirmDialog } from '../ui-components/ConfirmDialog';
+import { SettingsContext } from '../SettingsContext';
 
 export type SidebarProps = ComponentBase;
 
 export function Sidebar(props: SidebarProps) {
   const [editMode, setEditMode] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [pageToDelete, setPageToDelete] = useState<string>();
 
+  const { settings } = useContext(SettingsContext);
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
 
   useEffect(() => {
@@ -78,6 +83,21 @@ export function Sidebar(props: SidebarProps) {
     if (newIndex === undefined || newIndex === oldIndex) return;
 
     setPages(moveArrayItem(pages, oldIndex, newIndex));
+  }
+
+  function handleRequestDelete(pageId: string) {
+    if (settings.confirmBeforeDelete) {
+      setPageToDelete(pageId);
+      setShowConfirm(true);
+      return;
+    }
+
+    deletePage(pageId);
+  }
+
+  function handleDeletePage() {
+    setShowConfirm(false);
+    deletePage(pageToDelete!);
   }
 
   return (
@@ -143,7 +163,7 @@ export function Sidebar(props: SidebarProps) {
                               type={ButtonType.Danger}
                               icon={<MdClose />}
                               title="Delete"
-                              onClick={() => deletePage(page.id)}
+                              onClick={() => handleRequestDelete(page.id)}
                             />
                           </div>
                         )}
@@ -211,6 +231,15 @@ export function Sidebar(props: SidebarProps) {
           />
         </Link>
       </div>
+      {showConfirm && (
+        <ConfirmDialog
+          title="Confirm"
+          message="Are you sure you want to delete this?"
+          danger
+          onCancel={() => setShowConfirm(false)}
+          onConfirm={handleDeletePage}
+        />
+      )}
     </div>
   );
 }
