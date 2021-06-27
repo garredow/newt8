@@ -44,7 +44,8 @@
     "archiver": "^5.3.0",
     "cra-build-watch": "^3.4.0",
     "eslint-config-prettier": "^6.15.0",
-    "husky": "^6.0.0"
+    "husky": "^6.0.0",
+    "jest-chrome": "^0.7.1"
   },
   "eslintConfig": {
     "extends": [
