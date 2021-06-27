@@ -15,6 +15,7 @@ describe('IconButton', () => {
 
     expect(getByTestId('icon')).toBeVisible();
   });
+
   test('defaults to secondary button', () => {
     const props = {
       icon: <MdMenu data-testid="icon" />,
@@ -92,6 +93,7 @@ describe('IconButton', () => {
     const { getByTestId } = render(<IconButton {...props} />);
 
     expect(getByTestId('icon')).toHaveClass('panel');
+    expect(getByTestId('icon')).toHaveClass('primary');
   });
 
   test('is card button', () => {
@@ -115,5 +117,30 @@ describe('IconButton', () => {
     const { getByTestId } = render(<IconButton {...props} />);
 
     expect(getByTestId('icon')).toHaveClass('card');
+    expect(getByTestId('icon')).toHaveClass('primary');
+  });
+
+  test('is sidebar button', () => {
+    const props = {
+      kind: ButtonKind.SideBar,
+      icon: <MdMenu data-testid="icon" />,
+      title: 'test',
+    };
+    const { getByTestId } = render(<IconButton {...props} />);
+
+    expect(getByTestId('icon')).toHaveClass('sidebar');
+  });
+
+  test('is sidebar primary button', () => {
+    const props = {
+      kind: ButtonKind.SideBar,
+      type: ButtonType.Primary,
+      icon: <MdMenu data-testid="icon" />,
+      title: 'test',
+    };
+    const { getByTestId } = render(<IconButton {...props} />);
+
+    expect(getByTestId('icon')).toHaveClass('sidebar');
+    expect(getByTestId('icon')).toHaveClass('primary');
   });
 });

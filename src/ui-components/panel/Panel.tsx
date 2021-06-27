@@ -84,7 +84,6 @@ export function Panel(props: PanelProps) {
               <IconButton
                 icon={<MdCompareArrows />}
                 title="Drag to reorder"
-                onClick={() => {}}
                 data-testid="btn-drag"
                 {...provided.dragHandleProps}
               />
@@ -159,6 +158,7 @@ export function Panel(props: PanelProps) {
               danger
               onCancel={() => setShowConfirm(false)}
               onConfirm={props.onDeletePanel}
+              data-testid="confirm-delete-panel"
             />
           )}
         </div>

@@ -2,14 +2,25 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { Panel } from '.';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { defaultSettings, SettingsContext } from '../../SettingsContext';
+import { Settings } from '../../models/Settings';
 
-function renderWithContext(element: any) {
+function renderWithContext(element: any, settings?: Settings) {
+  const settingsContextVal = {
+    setSettings: () => Promise.resolve(),
+    settings: {
+      ...defaultSettings,
+      ...settings,
+    },
+  };
   return render(
-    <DragDropContext onDragEnd={() => {}}>
-      <Droppable droppableId="test">
-        {(provided) => <div ref={provided.innerRef}>{element}</div>}
-      </Droppable>
-    </DragDropContext>
+    <SettingsContext.Provider value={settingsContextVal}>
+      <DragDropContext onDragEnd={() => {}}>
+        <Droppable droppableId="test">
+          {(provided) => <div ref={provided.innerRef}>{element}</div>}
+        </Droppable>
+      </DragDropContext>
+    </SettingsContext.Provider>
   );
 }
 describe('Panel', () => {
@@ -189,5 +200,79 @@ describe('Panel', () => {
     fireEvent.keyDown(getByText(props.options.title), { key: 'Enter' });
 
     expect(props.onOptionsChanged).toBeCalledTimes(1);
+  });
+
+  test('renders confirm dialog', () => {
+    const props = {
+      panelId: '1',
+      panelIndex: 0,
+      options: {
+        title: 'panel title',
+        width: 3,
+        columns: 1,
+      },
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
+    };
+
+    const { getByText, getByTestId } = renderWithContext(<Panel {...props} />);
+
+    fireEvent.click(getByTestId('btn-settings'));
+    fireEvent.click(getByText('Delete'));
+
+    expect(getByTestId('confirm-delete-panel')).toBeVisible();
+  });
+
+  test('not render confirm dialog when setting is false', () => {
+    const props = {
+      panelId: '1',
+      panelIndex: 0,
+      options: {
+        title: 'panel title',
+        width: 3,
+        columns: 1,
+      },
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
+    };
+
+    const { getByText, getByTestId, queryByTestId } = renderWithContext(
+      <Panel {...props} />,
+      {
+        confirmBeforeDelete: false,
+      } as any
+    );
+
+    fireEvent.click(getByTestId('btn-settings'));
+    fireEvent.click(getByText('Delete'));
+
+    expect(queryByTestId('confirm-delete-panel')).toBeNull();
+    expect(props.onDeletePanel).toBeCalledTimes(1);
+  });
+
+  test('closes the confirm dialog', () => {
+    const props = {
+      panelId: '1',
+      panelIndex: 0,
+      options: {
+        title: 'panel title',
+        width: 3,
+        columns: 1,
+      },
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
+    };
+
+    const { getByText, getByTestId, queryByTestId } = renderWithContext(
+      <Panel {...props} />
+    );
+
+    fireEvent.click(getByTestId('btn-settings'));
+
+    fireEvent.click(getByText('Delete'));
+    expect(queryByTestId('confirm-delete-panel')).toBeTruthy();
+
+    fireEvent.click(getByText('Cancel'));
+    expect(queryByTestId('confirm-delete-panel')).toBeNull();
   });
 });

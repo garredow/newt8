@@ -93,4 +93,11 @@ describe('Button', () => {
 
     expect(getByText(props.text)).toHaveClass('card');
   });
+
+  test('is full width', () => {
+    const props = { text: 'button text', fullWidth: true };
+    const { getByText } = render(<Button {...props} />);
+
+    expect(getByText(props.text)).toHaveClass('fullWidth');
+  });
 });

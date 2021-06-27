@@ -19,9 +19,15 @@ export function ConfirmDialog({
   danger = false,
   onConfirm,
   onCancel,
+  ...props
 }: ConfirmDialogProps) {
   return (
-    <Dialog onDismiss={onCancel} aria-label="confirm" className={styles.root}>
+    <Dialog
+      onDismiss={onCancel}
+      aria-label="confirm"
+      className={styles.root}
+      data-testid={props['data-testid']}
+    >
       <h2 className={styles.title}>{title}</h2>
       <p className={styles.message}>{message}</p>
       <div className={styles.actions}>
