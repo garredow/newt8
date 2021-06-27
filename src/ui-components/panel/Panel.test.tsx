@@ -6,7 +6,9 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 function renderWithContext(element: any) {
   return render(
     <DragDropContext onDragEnd={() => {}}>
-      <Droppable droppableId="test">{(provided) => element}</Droppable>
+      <Droppable droppableId="test">
+        {(provided) => <div ref={provided.innerRef}>{element}</div>}
+      </Droppable>
     </DragDropContext>
   );
 }
@@ -20,14 +22,14 @@ describe('Panel', () => {
         width: 3,
         columns: 1,
       },
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
     };
 
     const { getByText } = renderWithContext(
-      <DragDropContext onDragEnd={() => {}}>
-        <Panel {...props}>
-          <div>child text</div>
-        </Panel>
-      </DragDropContext>
+      <Panel {...props}>
+        <div>child text</div>
+      </Panel>
     );
 
     expect(getByText('child text')).toBeVisible();
@@ -43,6 +45,8 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
     };
 
     const { getByTestId } = renderWithContext(<Panel {...props} />);
@@ -62,6 +66,8 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
     };
 
     const { container, getByTestId, queryByTestId } = renderWithContext(
@@ -86,6 +92,8 @@ describe('Panel', () => {
         options: {} as any,
       },
       enableSettings: false,
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
     };
 
     const { queryByTestId } = renderWithContext(<Panel {...props} />);
@@ -103,6 +111,7 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
+      onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
 
@@ -125,6 +134,7 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
+      onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
 
@@ -147,7 +157,8 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
-      onOptionsChanged: jest.fn() as any,
+      onDeletePanel: jest.fn(),
+      onOptionsChanged: jest.fn(),
     };
 
     const { getByTestId } = renderWithContext(<Panel {...props} />);
@@ -168,16 +179,11 @@ describe('Panel', () => {
         width: 3,
         columns: 1,
       },
+      onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
 
-    const { getByTestId, getByText } = renderWithContext(
-      <DragDropContext onDragEnd={() => {}}>
-        <Droppable droppableId="test">
-          {(provided) => <Panel {...props} />}
-        </Droppable>
-      </DragDropContext>
-    );
+    const { getByTestId, getByText } = renderWithContext(<Panel {...props} />);
 
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.keyDown(getByText(props.options.title), { key: 'Enter' });
