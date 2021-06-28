@@ -22,10 +22,10 @@ export function saveMetadata(metadata: TabMetadata[]) {
   });
 }
 
-export function applyMetadataToTabs(
-  metadata: MetadataMap,
+export async function getMetadataForTabs(
   tabs: chrome.tabs.Tab[]
-): Tab[] {
+): Promise<Tab[]> {
+  const metadata = await getMetadata();
   let result = tabs.map((tab) => {
     const meta = metadata[tab.id!];
     return Object.assign(tab, {

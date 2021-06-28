@@ -7,7 +7,7 @@ import {
   Window,
 } from '../models/Browser';
 import { promisify } from '../utilities/promisify';
-import { applyMetadataToTabs, getMetadata } from './metadata';
+import { getMetadataForTabs } from './metadata';
 
 export enum SortOrder {
   Original = 'original',
@@ -22,15 +22,13 @@ type GetTabsOptions = {
 };
 export async function getTabs({
   sortOrder = SortOrder.Original,
-  limit = 30,
+  limit = -1,
 }: GetTabsOptions): Promise<Tab[]> {
-  let rawTabs = await promisify<chrome.tabs.Tab[]>(chrome.tabs.query, {});
-
-  const metadata = await getMetadata();
-  let tabs = applyMetadataToTabs(metadata, rawTabs);
+  let tabs = await promisify<chrome.tabs.Tab[]>(chrome.tabs.query, {});
+  let tabsWithMetadata = await getMetadataForTabs(tabs);
 
   if (sortOrder !== SortOrder.Original) {
-    tabs = tabs.sort((a: Tab, b: Tab) => {
+    tabsWithMetadata = tabsWithMetadata.sort((a: Tab, b: Tab) => {
       if (a.accessedAt < b.accessedAt) return 1;
       else if (b.accessedAt < a.accessedAt) return -1;
       else return 0;
@@ -38,10 +36,10 @@ export async function getTabs({
   }
 
   if (limit > 0) {
-    tabs = tabs.slice(0, limit);
+    tabsWithMetadata = tabsWithMetadata.slice(0, limit);
   }
 
-  return tabs;
+  return tabsWithMetadata;
 }
 
 export function getCurrentTab(): Promise<chrome.tabs.Tab> {
@@ -84,7 +82,6 @@ export function getAllWindows(): Promise<Window[]> {
 export async function getWindows(
   excludeCurrentWindow = true
 ): Promise<Window[]> {
-  const metadata = await getMetadata();
   let windows = await getAllWindows();
 
   if (excludeCurrentWindow) {
@@ -92,10 +89,11 @@ export async function getWindows(
     windows = windows.filter((a) => a.id !== currentWindow.id);
   }
 
-  const result = windows.map((window) => {
-    window.tabs = applyMetadataToTabs(metadata, window.tabs);
-    return window;
-  });
+  const result = [];
+  for (const window of windows) {
+    window.tabs = await getMetadataForTabs(window.tabs);
+    result.push(window);
+  }
 
   return result;
 }
