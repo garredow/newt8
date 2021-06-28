@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/card/SiteRow';
-import { getTopSites, openUrl } from '../services/chromeService';
+import { getTopSites, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';

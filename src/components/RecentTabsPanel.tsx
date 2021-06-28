@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ChromeTab } from '../models/ChromeTab';
-import { getRecentTabs } from '../services/tabsService';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { formatDistance } from 'date-fns';
-import { switchToTab } from '../services/chromeService';
+import { getTabs, SortOrder, switchToTab } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { Tab } from '../models/Browser';
 
 type RecentTabsPanelOptions = PanelOptions;
 
@@ -21,7 +20,7 @@ type RecentTabsPanelProps = ComponentBase &
   };
 
 export function RecentTabsPanel(props: RecentTabsPanelProps) {
-  const [tabs, setTabs] = useState<ChromeTab[]>([]);
+  const [tabs, setTabs] = useState<Tab[]>([]);
 
   const options: RecentTabsPanelOptions = Object.assign(
     getPanelConfig(PanelType.RecentTabs).defaultOptions,
@@ -29,7 +28,7 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
   );
 
   useEffect(() => {
-    getRecentTabs(true).then((tabs) => {
+    getTabs({ sortOrder: SortOrder.MostRecent }).then((tabs) => {
       setTabs(tabs);
     });
   }, []);

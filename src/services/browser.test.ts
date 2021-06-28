@@ -1,6 +1,8 @@
-import { getDevices, getRecentlyClosed } from './sessionsService';
+import { getDevices, getRecentlyClosed } from './browser';
 
-describe('sessionsService', () => {
+describe('browser', () => {
+  // Sessions
+
   test('getRecentlyClosed returns only tabs', async () => {
     const spy = jest
       .spyOn(chrome.sessions, 'getRecentlyClosed')

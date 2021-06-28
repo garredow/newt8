@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { PanelType } from '../enums/panelType';
-import { ChromeWindow } from '../models/ChromeWindow';
+import { Window } from '../models/Browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
-import { switchToTab } from '../services/chromeService';
+import { getWindows, switchToTab } from '../services/browser';
 import { getPanelConfig, PanelOptions } from '../services/panels';
-import { getWindows } from '../services/windowsService';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
@@ -20,7 +19,7 @@ type WindowsPanelProps = ComponentBase &
   };
 
 export function WindowsPanel(props: WindowsPanelProps) {
-  const [windows, setWindows] = useState<ChromeWindow[]>([]);
+  const [windows, setWindows] = useState<Window[]>([]);
 
   const options: WindowsPanelOptions = Object.assign(
     getPanelConfig(PanelType.Windows).defaultOptions,

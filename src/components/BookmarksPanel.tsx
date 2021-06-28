@@ -5,11 +5,7 @@ import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBase } from '../models/ComponentBase';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
-import {
-  getAllBookmarks,
-  getBookmarks,
-  openUrl,
-} from '../services/chromeService';
+import { getAllBookmarks, getBookmarks, openUrl } from '../services/browser';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
