@@ -212,7 +212,7 @@ export function Sidebar(props: SidebarProps) {
       <div>
         <Link to="/theme">
           <IconButton
-            size={48}
+            size={42}
             kind={ButtonKind.SideBar}
             type={ButtonType.Primary}
             icon={<MdColorLens />}
@@ -222,7 +222,7 @@ export function Sidebar(props: SidebarProps) {
         </Link>
         <Link to="/settings">
           <IconButton
-            size={48}
+            size={42}
             kind={ButtonKind.SideBar}
             type={ButtonType.Primary}
             icon={<MdSettings />}
