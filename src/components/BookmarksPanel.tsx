@@ -92,6 +92,10 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
     });
   }
 
+  function editBookmarks() {
+    openSite(`chrome://bookmarks/?id=${options.bookmarkFolderId}`);
+  }
+
   return (
     <Panel
       panelId={props.panelId}
@@ -101,11 +105,18 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
       extraSettings={
-        <Button
-          text="Choose New Folder"
-          kind={ButtonKind.Panel}
-          onClick={showFolderPicker}
-        />
+        <>
+          <Button
+            text="Edit Bookmarks"
+            kind={ButtonKind.Panel}
+            onClick={editBookmarks}
+          />
+          <Button
+            text="Choose New Folder"
+            kind={ButtonKind.Panel}
+            onClick={showFolderPicker}
+          />
+        </>
       }
     >
       {showFinder ? (
