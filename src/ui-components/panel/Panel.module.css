@@ -22,9 +22,14 @@
   grid-column: span 5;
 }
 
-.header {
-  margin: 10px 25px;
-  font-weight: 300px;
+.headerActions {
+  transition: opacity 200ms;
+}
+.headerActionsHidden {
+  opacity: 0;
+}
+.header:hover .headerActions {
+  opacity: 1;
 }
 
 .content {

@@ -26,6 +26,7 @@ import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ButtonKind } from '../enums/buttonKind';
 import { ConfirmDialog } from '../ui-components/ConfirmDialog';
 import { SettingsContext } from '../SettingsContext';
+import { mixin } from '../utilities/mixin';
 
 export type SidebarProps = ComponentBase;
 
@@ -185,29 +186,36 @@ export function Sidebar(props: SidebarProps) {
             )}
           </Droppable>
         </DragDropContext>
-        <IconButton
-          size={40}
-          kind={ButtonKind.SideBar}
-          type={ButtonType.Secondary}
-          icon={<MdAdd />}
-          title="Add Page"
-          onClick={() =>
-            savePage({
-              id: `page_${new Date().valueOf()}`,
-              name: 'New Page',
-              isActive: true,
-              panels: [],
-            })
-          }
-        />
-        <IconButton
-          size={40}
-          kind={ButtonKind.SideBar}
-          type={ButtonType.Secondary}
-          icon={<MdEdit />}
-          title="Edit Pages"
-          onClick={() => setEditMode(!editMode)}
-        />
+        <div
+          className={mixin(
+            styles.pageActions,
+            settings.showActionsOnHover ? styles.pageActionsHidden : ''
+          )}
+        >
+          <IconButton
+            size={40}
+            kind={ButtonKind.SideBar}
+            type={ButtonType.Secondary}
+            icon={<MdAdd />}
+            title="Add Page"
+            onClick={() =>
+              savePage({
+                id: `page_${new Date().valueOf()}`,
+                name: 'New Page',
+                isActive: true,
+                panels: [],
+              })
+            }
+          />
+          <IconButton
+            size={40}
+            kind={ButtonKind.SideBar}
+            type={ButtonType.Secondary}
+            icon={<MdEdit />}
+            title="Edit Pages"
+            onClick={() => setEditMode(!editMode)}
+          />
+        </div>
       </div>
       <div>
         <Link to="/theme">

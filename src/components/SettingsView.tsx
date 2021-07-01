@@ -33,13 +33,27 @@ export function SettingsView(props: SettingsViewProps) {
         </SettingsRow>
         <SettingsRow
           label="Confirm before delete"
-          helpText="When turned on, you'll be asked to confirm any action that would result in something being deleted. Ex: A panel or page."
+          helpText="When turned on, you'll be asked to confirm any action that would result in
+           something being deleted. Ex: A panel or page."
         >
           <input
             type="checkbox"
             checked={settings.confirmBeforeDelete}
             onChange={(ev) =>
               setSettingValue('confirmBeforeDelete', ev.target.checked)
+            }
+          />
+        </SettingsRow>
+        <SettingsRow
+          label="Show actions on hover"
+          helpText="When turned on, action buttons (add page, edit page, panel settings, etc) will 
+          be hidden by default. They will only show when you hover the mouse over them."
+        >
+          <input
+            type="checkbox"
+            checked={settings.showActionsOnHover}
+            onChange={(ev) =>
+              setSettingValue('showActionsOnHover', ev.target.checked)
             }
           />
         </SettingsRow>

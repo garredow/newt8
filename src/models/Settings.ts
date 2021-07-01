@@ -8,4 +8,5 @@ export type Settings = {
   darkTheme: string;
   showSettingHelpText: boolean;
   confirmBeforeDelete: boolean;
+  showActionsOnHover: boolean;
 };

@@ -10,6 +10,7 @@ import { ComponentBase } from '../../models/ComponentBase';
 import { DraggablePanelProps } from '../../models/DraggablePanelProps';
 import { PanelOptions } from '../../services/panels';
 import { SettingsContext } from '../../SettingsContext';
+import { mixin } from '../../utilities/mixin';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
 import { ConfirmDialog } from '../ConfirmDialog';
@@ -75,12 +76,18 @@ export function Panel(props: PanelProps) {
           {...provided.draggableProps}
         >
           <PanelHeader
+            className={styles.header}
             text={props.options.title}
             editable={showSettings}
             onTitleChanged={(title) => setOptionValue('title', title)}
             data-testid="panel-header"
           >
-            <div>
+            <div
+              className={mixin(
+                styles.headerActions,
+                settings.showActionsOnHover ? styles.headerActionsHidden : ''
+              )}
+            >
               <IconButton
                 icon={<MdCompareArrows />}
                 title="Drag to reorder"

@@ -13,6 +13,16 @@
   align-items: center;
 }
 
+.pageActions {
+  transition: opacity 200ms;
+}
+.pageActionsHidden {
+  opacity: 0;
+}
+.pagesContainer:hover .pageActions {
+  opacity: 1;
+}
+
 .pages {
   display: flex;
   height: 50px;
