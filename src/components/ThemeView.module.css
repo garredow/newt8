@@ -130,6 +130,21 @@
   align-items: center;
 }
 
+.importExportTheme {
+}
+
+.importExportTheme > button {
+  margin: 10px 10px 0 0;
+}
+
+.themeJson {
+  width: 100%;
+}
+
+.importError {
+  color: var(--error-text-color);
+}
+
 .themeName {
   width: 100%;
 }

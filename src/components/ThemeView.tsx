@@ -5,6 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import {
   MdCheck,
   MdClose,
+  MdCode,
   MdExpandLess,
   MdExpandMore,
   MdSettings,
@@ -148,12 +149,15 @@ export function ThemeView(props: ThemeViewProps) {
   const [workingTheme, setWorkingTheme] = useState<Theme>(null as any);
   const [showConfig, setShowConfig] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [themeJson, setThemeJson] = useState<string>('');
+  const [showJson, setShowJson] = useState(false);
+  const [themeImportError, setThemeImportError] = useState(false);
   const [themePreviewStyles, setThemePreviewStyles] = useState<any>({});
   const { settings, setSettings } = useContext(SettingsContext);
 
   useEffect(() => {
     const currentTheme = getCurrentTheme();
-    setWorkingTheme(currentTheme);
+    setTheme(currentTheme);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     settings.activeTheme,
@@ -172,6 +176,11 @@ export function ThemeView(props: ThemeViewProps) {
     }
     setThemePreviewStyles(styles);
   }, [workingTheme]);
+
+  function setTheme(theme: Theme) {
+    setWorkingTheme(theme);
+    setThemeJson(JSON.stringify(theme));
+  }
 
   function setSettingValue(key: string, val: any) {
     setSettings({ ...settings, [key]: val });
@@ -194,7 +203,7 @@ export function ThemeView(props: ThemeViewProps) {
       values: { ...getCurrentTheme().values },
     };
 
-    setWorkingTheme(newTheme);
+    setTheme(newTheme);
     setShowConfig(true);
   }
 
@@ -216,7 +225,7 @@ export function ThemeView(props: ThemeViewProps) {
     const newTheme: Theme = JSON.parse(JSON.stringify(workingTheme));
     newTheme.values[id as keyof ThemeValues].value = val;
 
-    setWorkingTheme(newTheme);
+    setTheme(newTheme);
   }
 
   function updateBasicWorkingThemeColor(id: keyof ThemeValues, val: string) {
@@ -314,7 +323,7 @@ export function ThemeView(props: ThemeViewProps) {
         break;
     }
 
-    setWorkingTheme(newTheme);
+    setTheme(newTheme);
   }
 
   function updateWorkingThemeName(name: string) {
@@ -324,14 +333,15 @@ export function ThemeView(props: ThemeViewProps) {
       values: { ...workingTheme.values },
     };
 
-    setWorkingTheme(newTheme);
+    setTheme(newTheme);
   }
 
   function cancelConfigureTheme() {
     const theme = getCurrentTheme();
 
-    setWorkingTheme(theme);
+    setTheme(theme);
     setShowConfig(false);
+    setShowJson(false);
   }
 
   function saveWorkingTheme() {
@@ -356,6 +366,31 @@ export function ThemeView(props: ThemeViewProps) {
       [themeKey]: workingTheme.id,
       themes: newThemes,
     });
+    setShowJson(false);
+  }
+
+  function exportTheme(json: string) {
+    navigator.clipboard.writeText(json).catch(() => {});
+  }
+
+  function importTheme(json: string) {
+    try {
+      setThemeImportError(false);
+      const importedTheme: Theme = JSON.parse(json);
+      const newTheme: Theme = {
+        id: `custom_${new Date().toISOString()}`,
+        name: importedTheme.name,
+        values: {
+          ...settings.themes[0].values,
+          ...importedTheme.values,
+        },
+      };
+
+      setTheme(newTheme);
+    } catch (err) {
+      console.error('Failed to import theme', err);
+      setThemeImportError(true);
+    }
   }
 
   return (
@@ -364,6 +399,15 @@ export function ThemeView(props: ThemeViewProps) {
         <div className={styles.configContainer}>
           <div className={styles.configureHeader}>
             <h1>Configure</h1>
+            <IconButton
+              type={ButtonType.Primary}
+              icon={<MdCode />}
+              title="Import/export theme"
+              onClick={() => {
+                setThemeImportError(false);
+                setShowJson(!showJson);
+              }}
+            />
             <IconButton
               type={ButtonType.Primary}
               icon={<MdClose />}
@@ -378,10 +422,32 @@ export function ThemeView(props: ThemeViewProps) {
             />
           </div>
           <div className={styles.configure}>
+            {showJson ? (
+              <div className={styles.importExportTheme}>
+                <p>
+                  You can use this text field to import/export a custom theme.
+                  To import, just drop in your JSON and click apply.
+                </p>
+                <textarea
+                  className={styles.themeJson}
+                  value={themeJson}
+                  onChange={(ev) => setThemeJson(ev.target.value)}
+                  rows={5}
+                />
+                <Button text="Apply" onClick={() => importTheme(themeJson)} />
+                <Button
+                  text="Copy to clipboard"
+                  onClick={() => exportTheme(themeJson)}
+                />
+                {themeImportError ? (
+                  <p className={styles.importError}>Failed to import theme.</p>
+                ) : null}
+              </div>
+            ) : null}
             <h2>Name</h2>
             <input
               className={styles.themeName}
-              defaultValue={workingTheme.name}
+              value={workingTheme.name}
               onInput={(ev) => updateWorkingThemeName((ev.target as any).value)}
             />
             <h2>Basic</h2>
@@ -525,13 +591,13 @@ export function ThemeView(props: ThemeViewProps) {
           <Button
             text="Customize Theme"
             onClick={editTheme}
-            disabled={!settings.activeTheme.startsWith('custom')}
+            disabled={!getCurrentTheme().id.startsWith('custom')}
           />
           <Button
             text="Delete Theme"
             type={ButtonType.Danger}
             onClick={deleteTheme}
-            disabled={!settings.activeTheme.startsWith('custom')}
+            disabled={!getCurrentTheme().id.startsWith('custom')}
           />
         </div>
       )}
