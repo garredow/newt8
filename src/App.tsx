@@ -16,7 +16,6 @@ import '@reach/dialog/styles.css';
 function App() {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);
   const [pages, setPagesInternal] = useState<Page[]>([]);
-  const [themeStyles, setThemeStyles] = useState<any>({});
   const [darkMode, setDarkMode] = useState(
     window.matchMedia('(prefers-color-scheme: dark)').matches
   );
@@ -69,12 +68,13 @@ function App() {
   }
 
   function applyTheme(theme: Theme) {
-    const styles: any = {};
+    // Apply theme directly to body to style elements like modals
     for (const id in theme.values) {
-      styles[`--${theme.values[id as keyof ThemeValues].variable}`] =
-        theme.values[id as keyof ThemeValues].value;
+      document.body.style.setProperty(
+        `--${theme.values[id as keyof ThemeValues].variable}`,
+        theme.values[id as keyof ThemeValues].value
+      );
     }
-    setThemeStyles(styles);
   }
 
   async function setSettings(val: Settings) {
@@ -127,7 +127,7 @@ function App() {
         <PagesContext.Provider
           value={{ pages, setPages, savePage, deletePage }}
         >
-          <div className={styles.root} style={themeStyles}>
+          <div className={styles.root}>
             <Switch>
               <Route path="/dashboard">
                 <DashboardView />

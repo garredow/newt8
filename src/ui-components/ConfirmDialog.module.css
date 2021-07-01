@@ -4,6 +4,8 @@
   padding: 15px !important;
   margin: 0 !important;
   border-radius: 5px;
+  background-color: var(--card-bg-color) !important;
+  color: var(--card-primary-text-color) !important;
 }
 
 [data-reach-dialog-overlay] {
