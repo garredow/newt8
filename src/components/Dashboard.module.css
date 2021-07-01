@@ -36,3 +36,14 @@
   align-items: center;
   justify-content: center;
 }
+.sidebar:hover {
+  transition: opacity 200ms;
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}
+.notHidden {
+  opacity: 1;
+}

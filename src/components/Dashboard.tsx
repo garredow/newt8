@@ -22,6 +22,8 @@ import { PagesContext } from '../PagesContext';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { moveArrayItem } from '../utilities/moveArrayItem';
 import { EmptyPanel } from './EmptyPanel';
+import { mixin } from '../utilities/mixin';
+import { SettingsContext } from '../SettingsContext';
 
 enum LoadingStatus {
   Init,
@@ -35,6 +37,7 @@ export function DashboardView(props: DashboardViewProps) {
   const [panels, setPanels] = useState<Panel[]>([]);
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
   const { pages, savePage } = useContext(PagesContext);
+  const { settings } = useContext(SettingsContext);
 
   useEffect(() => {
     setStatus(LoadingStatus.Loading);
@@ -273,7 +276,12 @@ export function DashboardView(props: DashboardViewProps) {
           </Droppable>
         </DragDropContext>
       )}
-      <div className={styles.sidebar}>
+      <div
+        className={mixin(
+          styles.sidebar,
+          settings.showActionsOnHover ? styles.hidden : styles.notHidden
+        )}
+      >
         <IconButton
           icon={<MdAdd />}
           title="Add a new panel"

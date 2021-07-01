@@ -189,7 +189,7 @@ export function Sidebar(props: SidebarProps) {
         <div
           className={mixin(
             styles.pageActions,
-            settings.showActionsOnHover ? styles.pageActionsHidden : ''
+            settings.showActionsOnHover ? styles.hidden : styles.notHidden
           )}
         >
           <IconButton

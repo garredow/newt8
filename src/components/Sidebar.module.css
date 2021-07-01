@@ -14,12 +14,16 @@
 }
 
 .pageActions {
-  transition: opacity 200ms;
 }
-.pageActionsHidden {
+
+.hidden {
   opacity: 0;
 }
+.notHidden {
+  opacity: 1;
+}
 .pagesContainer:hover .pageActions {
+  transition: opacity 200ms;
   opacity: 1;
 }
 
