@@ -1,6 +1,6 @@
 # Newt 8
 
-[![Node.js CI](https://github.com/garredow/newt8/actions/workflows/node.js.yml/badge.svg)](https://github.com/garredow/newt8/actions/workflows/node.js.yml)
+[![Build](https://github.com/garredow/newt8/actions/workflows/build.yml/badge.svg)](https://github.com/garredow/newt8/actions/workflows/build.yml) [![Tests](https://github.com/garredow/newt8/actions/workflows/test.yml/badge.svg)](https://github.com/garredow/newt8/actions/workflows/test.yml)
 
 Newt is a replacement for your browser's new tab page.
 
