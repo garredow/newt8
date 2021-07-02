@@ -179,7 +179,7 @@ export function DashboardView(props: DashboardViewProps) {
             key={panel.id}
             panelId={panel.id}
             panelIndex={index}
-            options={panel.options}
+            options={panel.options as any}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
