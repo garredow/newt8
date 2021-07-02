@@ -14,3 +14,11 @@
   padding-bottom: 15px;
   overflow-y: auto;
 }
+
+.windowPickerContainer {
+  padding: 15px 15px 0 15px;
+}
+
+.windowPickerContainer > div {
+  margin-bottom: 20px;
+}
