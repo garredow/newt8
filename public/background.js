@@ -14,14 +14,15 @@ async function initialize() {
           id: tab.id,
           windowId: tab.windowId,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
           accessedAt: new Date().toISOString(),
         },
         storedTabsMap[tab.id]
       );
     });
 
-    console.log(`Initialized with ${tabs.length} tabs`);
+    console.log(
+      `Initialized with ${tabs.length} tabs at ${new Date().toLocaleString()}`
+    );
     setStoredTabs(tabs);
   });
 }
@@ -58,23 +59,24 @@ async function updateTab(tab) {
   setStoredTabs(tabs);
 }
 
-async function upsertTab(chromeTab) {
+async function upsertTab({ tabId, windowId }) {
   const storedTabs = await getStoredTabs();
-  const index = storedTabs.findIndex((a) => a.id === chromeTab.id);
+  const index = storedTabs.findIndex((a) => a.id === tabId);
 
   const tab = Object.assign(
     {
       createdAt: new Date().toISOString(),
       accessedAt: new Date().toISOString(),
-      id: chromeTab.id,
     },
     storedTabs[index],
     {
-      updatedAt: new Date().toISOString(),
       accessedAt: new Date().toISOString(),
-      windowId: chromeTab.windowId,
+      windowId: windowId,
+      id: tabId,
     }
   );
+
+  console.log('Upserted tab: ', tab);
 
   if (index === -1) storedTabs.push(tab);
   else storedTabs[index] = tab;
@@ -99,30 +101,31 @@ async function cleanup() {
 
 chrome.tabs.onCreated.addListener((tab) => {
   console.log(`Tab Created: ${tab.id}`, tab);
-  upsertTab(tab);
+  upsertTab({
+    tabId: tab.id,
+    windowId: tab.windowId,
+  });
 });
 
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log(`Tab Updated: ${tabId}`, changeInfo, tab);
-  upsertTab(tab);
+  upsertTab({
+    tabId: tab.id,
+    windowId: tab.windowId,
+  });
 });
 
-chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
   console.log(`Tab Removed: ${tabId}`, removeInfo);
-
-  await deleteTab(tabId);
+  deleteTab(tabId);
 });
 
-chrome.tabs.onActivated.addListener(async (activeInfo) => {
+chrome.tabs.onActivated.addListener((activeInfo) => {
   console.log(`Tab Activated:`, activeInfo);
-
-  const storedTab = await getTab(activeInfo.tabId);
-
-  if (!storedTab) return;
-
-  storedTab.accessedAt = new Date().toISOString();
-
-  updateTab(storedTab);
+  upsertTab({
+    tabId: activeInfo.tabId,
+    windowId: activeInfo.windowId,
+  });
 });
 
 chrome.windows.onRemoved.addListener((windowId) => {

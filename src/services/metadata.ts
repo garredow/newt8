@@ -31,7 +31,6 @@ export async function getMetadataForTabs(
     return Object.assign(tab, {
       id: tab.id as number,
       createdAt: meta?.createdAt || new Date().toISOString(),
-      updatedAt: meta?.updatedAt || new Date().toISOString(),
       accessedAt: meta?.accessedAt || new Date().toISOString(),
     });
   });
