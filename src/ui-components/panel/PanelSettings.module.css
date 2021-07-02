@@ -11,3 +11,7 @@
 .root > * {
   margin-bottom: 10px;
 }
+
+.root button {
+  margin-bottom: 10px;
+}

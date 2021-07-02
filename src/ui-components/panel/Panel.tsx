@@ -148,7 +148,15 @@ export function Panel(props: PanelProps) {
                   <option value={5}>Largest</option>
                 </select>
               </SettingsRow>
-              {props.extraSettings}
+              <div
+                onClick={(ev) => {
+                  if ((ev.target as HTMLDivElement).tagName === 'BUTTON') {
+                    setShowSettings(false);
+                  }
+                }}
+              >
+                {props.extraSettings}
+              </div>
               <Button
                 text="Delete"
                 type={ButtonType.Danger}

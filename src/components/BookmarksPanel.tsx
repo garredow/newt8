@@ -109,11 +109,13 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
           <Button
             text="Edit Bookmarks"
             kind={ButtonKind.Panel}
+            fullWidth
             onClick={editBookmarks}
           />
           <Button
             text="Choose New Folder"
             kind={ButtonKind.Panel}
+            fullWidth
             onClick={showFolderPicker}
           />
         </>
