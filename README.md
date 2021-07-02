@@ -1,5 +1,7 @@
 # Newt 8
 
+[![Node.js CI](https://github.com/garredow/newt8/actions/workflows/node.js.yml/badge.svg)](https://github.com/garredow/newt8/actions/workflows/node.js.yml)
+
 Newt is a replacement for your browser's new tab page.
 
 ## Where can I get it?
