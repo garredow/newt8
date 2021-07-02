@@ -1,3 +1,4 @@
+import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
@@ -11,11 +12,13 @@ import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
+import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './WindowsPanel.module.css';
 
 type WindowsPanelOptions = PanelOptions & {
   showCardTitles: boolean;
   windowId: number;
+  showTabAccessedTime: boolean;
 };
 
 type WindowsPanelProps = ComponentBase &
@@ -53,6 +56,14 @@ export function WindowsPanel(props: WindowsPanelProps) {
     setShowWindowPicker(false);
   }
 
+  function handleOptionChanged(key: string, val: any) {
+    const newOpts: WindowsPanelOptions = {
+      ...options,
+      [key]: val,
+    };
+    props.onOptionsChanged(newOpts);
+  }
+
   return (
     <Panel
       panelId={props.panelId}
@@ -62,12 +73,26 @@ export function WindowsPanel(props: WindowsPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
       extraSettings={
-        <Button
-          text="Choose New Window"
-          kind={ButtonKind.Panel}
-          fullWidth
-          onClick={() => setShowWindowPicker(true)}
-        />
+        <>
+          <SettingsRow
+            label="Show when tab last accessed"
+            helpText="Display when each tab was last accessed, in relative time."
+          >
+            <input
+              type="checkbox"
+              checked={options.showTabAccessedTime}
+              onChange={(ev) =>
+                handleOptionChanged('showTabAccessedTime', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+          <Button
+            text="Choose New Window"
+            kind={ButtonKind.Panel}
+            fullWidth
+            onClick={() => setShowWindowPicker(true)}
+          />
+        </>
       }
     >
       {showWindowPicker ? (
@@ -122,6 +147,14 @@ export function WindowsPanel(props: WindowsPanelProps) {
                     title={tab.title}
                     iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
                     url={tab.url}
+                    line3={
+                      options.showTabAccessedTime
+                        ? formatDistance(new Date(tab.accessedAt), new Date(), {
+                            addSuffix: true,
+                            includeSeconds: true,
+                          })
+                        : ''
+                    }
                     onClick={() => switchToTab(tab.windowId, tab.id)}
                   />
                 ))}

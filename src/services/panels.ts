@@ -180,6 +180,7 @@ const panelConfigs: PanelConfigMap = {
       title: 'Windows',
       columns: 1,
       width: 3,
+      showTabAccessedTime: false,
     },
     options: {},
   },
