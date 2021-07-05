@@ -9,7 +9,7 @@
 }
 
 .folderRoot {
-  padding: 0 10px;
+  padding-left: 20px;
   cursor: pointer;
 }
 .folderTitle {

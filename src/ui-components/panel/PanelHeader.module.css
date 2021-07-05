@@ -1,7 +1,7 @@
 .root {
   padding: 10px 15px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -9,10 +9,21 @@
   margin: 0;
   min-width: 50px;
   color: var(--panel-title-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .title:focus {
   outline: none;
 }
 .title[contentEditable='true'] {
   border-bottom: 2px solid var(--panel-accent-color);
+}
+
+.message {
+  margin-left: 10px;
+  color: var(--panel-secondary-text-color);
+}
+
+.flex {
+  flex: 1;
 }

@@ -24,6 +24,7 @@
 
 .headerActions {
   transition: opacity 200ms;
+  white-space: nowrap;
 }
 .headerActionsHidden {
   opacity: 0;
