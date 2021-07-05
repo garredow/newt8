@@ -11,6 +11,7 @@ import {
   getTopSites,
   getWindows,
   openUrl,
+  OpenSiteOption,
   SortOrder,
   switchToTab,
 } from './browser';
@@ -98,10 +99,21 @@ describe('browser', () => {
   test('openUrl opens in new tab', async () => {
     const spy = jest.spyOn(chrome.tabs, 'create');
 
-    openUrl('https', true);
+    openUrl('https', OpenSiteOption.NewTab);
 
     expect(chrome.tabs.create).toBeCalledTimes(1);
     expect(chrome.tabs.create).toBeCalledWith({ url: 'https', active: true });
+
+    spy.mockRestore();
+  });
+
+  test('openUrl opens in new background tab', async () => {
+    const spy = jest.spyOn(chrome.tabs, 'create');
+
+    openUrl('https', OpenSiteOption.NewBackgroundTab);
+
+    expect(chrome.tabs.create).toBeCalledTimes(1);
+    expect(chrome.tabs.create).toBeCalledWith({ url: 'https', active: false });
 
     spy.mockRestore();
   });

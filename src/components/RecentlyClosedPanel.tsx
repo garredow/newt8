@@ -55,7 +55,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
                   includeSeconds: true,
                 }
               )}
-              onClick={() => openUrl(session.tab!.url as string)}
+              onClick={openUrl}
             />
           ))}
         </Card>

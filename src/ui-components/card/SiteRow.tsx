@@ -1,5 +1,6 @@
 import React from 'react';
 import { ComponentBase } from '../../models/ComponentBase';
+import { OpenSiteOption } from '../../services/browser';
 import styles from './SiteRow.module.css';
 
 export type SiteRowProps = ComponentBase & {
@@ -7,10 +8,16 @@ export type SiteRowProps = ComponentBase & {
   iconUrl?: string;
   url?: string;
   line3?: string;
-  onClick?: () => void;
+  showUrl?: boolean;
+  showLine3?: boolean;
+  onClick?: (url: string, action: OpenSiteOption) => void;
 };
 
-export function SiteRow(props: SiteRowProps) {
+export function SiteRow({
+  showUrl = true,
+  showLine3 = true,
+  ...props
+}: SiteRowProps) {
   function isValidImageUrl() {
     return (
       props.iconUrl &&
@@ -19,10 +26,21 @@ export function SiteRow(props: SiteRowProps) {
     );
   }
 
+  function handleClick(ev: any) {
+    const action =
+      ev.metaKey || ev.optionKey
+        ? ev.shiftKey
+          ? OpenSiteOption.NewBackgroundTab
+          : OpenSiteOption.NewTab
+        : OpenSiteOption.SameTab;
+
+    props.onClick?.(props.url!, action);
+  }
+
   return (
     <div
       className={styles.root}
-      onClick={props.onClick}
+      onClick={handleClick}
       data-testid={props['data-testid']}
     >
       {isValidImageUrl() ? (
@@ -39,12 +57,12 @@ export function SiteRow(props: SiteRowProps) {
         <div className={styles.line1} data-testid="line1">
           {props.title}
         </div>
-        {props.url && (
+        {showUrl && props.url && (
           <div className={styles.line2} data-testid="line2">
             {props.url}
           </div>
         )}
-        {props.line3 && (
+        {showLine3 && props.line3 && (
           <div className={styles.line3} data-testid="line3">
             {props.line3}
           </div>

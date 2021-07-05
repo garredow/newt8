@@ -5,7 +5,12 @@ import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBase } from '../models/ComponentBase';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
-import { getAllBookmarks, getBookmarks, openUrl } from '../services/browser';
+import {
+  getAllBookmarks,
+  getBookmarks,
+  openUrl,
+  OpenSiteOption,
+} from '../services/browser';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
@@ -75,12 +80,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
     });
   }, [options.bookmarkFolderId]);
 
-  function openSite(url: string) {
-    openUrl(url, false);
-  }
-
   function handleChooseFolder(id: string) {
-    console.log('folder', id);
     const newOpts: BookmarksPanelOptions = { ...options, bookmarkFolderId: id };
     props.onOptionsChanged(newOpts);
   }
@@ -93,7 +93,10 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   }
 
   function editBookmarks() {
-    openSite(`chrome://bookmarks/?id=${options.bookmarkFolderId}`);
+    openUrl(
+      `chrome://bookmarks/?id=${options.bookmarkFolderId}`,
+      OpenSiteOption.NewTab
+    );
   }
 
   return (
@@ -163,8 +166,10 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                   <SiteRow
                     key={site.id}
                     title={site.title}
+                    url={site.url}
+                    showUrl={false}
                     iconUrl={`chrome://favicon/size/32@1x/${site.url}`}
-                    onClick={() => openSite(site.url as string)}
+                    onClick={openUrl}
                   />
                 ))}
             </Card>

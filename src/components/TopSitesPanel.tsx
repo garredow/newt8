@@ -48,7 +48,7 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
               title={site.title}
               iconUrl={`chrome://favicon/size/32@1x/${site.url}`}
               url={site.url}
-              onClick={() => openUrl(site.url as string)}
+              onClick={openUrl}
             />
           ))}
         </Card>

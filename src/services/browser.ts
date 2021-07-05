@@ -14,6 +14,12 @@ export enum SortOrder {
   MostRecent = 'mostRecent',
 }
 
+export enum OpenSiteOption {
+  SameTab = 'sameTab',
+  NewTab = 'newTab',
+  NewBackgroundTab = 'newBackgroundTab',
+}
+
 // Tabs
 
 type GetTabsOptions = {
@@ -48,10 +54,18 @@ export function getCurrentTab(): Promise<chrome.tabs.Tab> {
   });
 }
 
-export function openUrl(url: string, newTab = false) {
-  newTab
-    ? chrome.tabs.create({ url, active: true })
-    : chrome.tabs.update({ url });
+export function openUrl(url: string, option = OpenSiteOption.SameTab) {
+  switch (option) {
+    case OpenSiteOption.SameTab:
+      chrome.tabs.update({ url });
+      break;
+    case OpenSiteOption.NewTab:
+      chrome.tabs.create({ url, active: true });
+      break;
+    case OpenSiteOption.NewBackgroundTab:
+      chrome.tabs.create({ url, active: false });
+      break;
+  }
 }
 
 export function switchToTab(windowId: number, tabId: number) {

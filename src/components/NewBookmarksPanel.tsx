@@ -58,7 +58,7 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
                   includeSeconds: true,
                 }
               )}
-              onClick={() => openUrl(bookmark.url as string)}
+              onClick={openUrl}
             />
           ))}
         </Card>

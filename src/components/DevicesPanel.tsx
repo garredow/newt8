@@ -58,7 +58,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
                       includeSeconds: true,
                     }
                   )}
-                  onClick={() => openUrl(tab.url!)}
+                  onClick={openUrl}
                 />
               ))}
             </Card>
