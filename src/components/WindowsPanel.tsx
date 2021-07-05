@@ -29,7 +29,7 @@ type WindowsPanelProps = ComponentBase &
   };
 
 export function WindowsPanel(props: WindowsPanelProps) {
-  const [windows, setWindows] = useState<Window[]>([]);
+  const [windows, setWindows] = useState<Window[] | undefined>();
   const [showWindowPicker, setShowWindowPicker] = useState(false);
 
   const options: WindowsPanelOptions = Object.assign(
@@ -62,6 +62,44 @@ export function WindowsPanel(props: WindowsPanelProps) {
       [key]: val,
     };
     props.onOptionsChanged(newOpts);
+  }
+
+  function renderWindows() {
+    if (!windows) return null;
+
+    const result = windows
+      .filter(
+        (window) => options.windowId === window.id || options.windowId === 0
+      )
+      .map((window) => (
+        <Card key={window.id}>
+          <CardHeader text={`Window ${window.id}`} />
+          {window.tabs.map((tab) => (
+            <SiteRow
+              key={tab.id}
+              title={tab.title}
+              iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
+              url={tab.url}
+              line3={
+                options.showTabAccessedTime
+                  ? formatDistance(new Date(tab.accessedAt), new Date(), {
+                      addSuffix: true,
+                      includeSeconds: true,
+                    })
+                  : ''
+              }
+              onClick={() => switchToTab(tab.windowId, tab.id)}
+            />
+          ))}
+        </Card>
+      ));
+
+    if (result.length === 0) {
+      setShowWindowPicker(true);
+      return null;
+    }
+
+    return result;
   }
 
   return (
@@ -110,7 +148,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
                 />
                 <p>Each window will be its own card.</p>
               </div>
-              {windows.map((window) => (
+              {windows?.map((window) => (
                 <div key={window.id}>
                   <Button
                     text={`Window ${window.id}`}
@@ -132,35 +170,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent columns={options.columns}>
-          {windows
-            .filter(
-              (window) =>
-                options.windowId === window.id || options.windowId === 0
-            )
-            .map((window) => (
-              <Card key={window.id}>
-                <CardHeader text={`Window ${window.id}`} />
-                {window.tabs.map((tab) => (
-                  <SiteRow
-                    key={tab.id}
-                    title={tab.title}
-                    iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
-                    url={tab.url}
-                    line3={
-                      options.showTabAccessedTime
-                        ? formatDistance(new Date(tab.accessedAt), new Date(), {
-                            addSuffix: true,
-                            includeSeconds: true,
-                          })
-                        : ''
-                    }
-                    onClick={() => switchToTab(tab.windowId, tab.id)}
-                  />
-                ))}
-              </Card>
-            ))}
-        </PanelContent>
+        <PanelContent columns={options.columns}>{renderWindows()}</PanelContent>
       )}
     </Panel>
   );
