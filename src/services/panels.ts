@@ -105,7 +105,7 @@ const panelConfigs: PanelConfigMap = {
     name: 'Recent Tabs',
     kind: PanelType.RecentTabs,
     description:
-      'A list of your tabs in the order in which you have accessed them, starting with the latest.',
+      'A list of your tabs in the order in which you have accessed them, starting with the latest. After approving permissions, you may have to restart your browser to get this panel to work correctly.',
     permissions: [
       {
         key: Permission.Tabs,
