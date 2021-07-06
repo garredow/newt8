@@ -21,3 +21,7 @@ li > b {
 .error {
   color: var(--error-text-color);
 }
+
+.description {
+  margin: 5px 0 10px 0;
+}

@@ -123,20 +123,32 @@ export function NewPanel(props: NewPanelProps) {
         <PanelContent columns={1}>
           What do you want to put in here?
           {availablePanels.map((panel) => (
-            <Button
-              key={panel}
-              text={getPanelConfig(panel).name}
-              type={ButtonType.Secondary}
-              kind={ButtonKind.Panel}
-              onClick={() => checkPermissions(panel)}
-            />
+            <div key={panel}>
+              <Button
+                key={panel}
+                text={getPanelConfig(panel).name}
+                type={ButtonType.Secondary}
+                kind={ButtonKind.Panel}
+                fullWidth
+                onClick={() => checkPermissions(panel)}
+              />
+              <div className={styles.description}>
+                {getPanelConfig(panel).description}
+              </div>
+            </div>
           ))}
-          <Button
-            text="Delete"
-            type={ButtonType.Danger}
-            kind={ButtonKind.Panel}
-            onClick={props.onDeletePanel}
-          />
+          <div>
+            <Button
+              text="Delete"
+              type={ButtonType.Danger}
+              kind={ButtonKind.Panel}
+              fullWidth
+              onClick={props.onDeletePanel}
+            />
+            <div className={styles.description}>
+              Changed your mind? No problem.
+            </div>
+          </div>
         </PanelContent>
       )}
     </Panel>

@@ -14,12 +14,12 @@ Newt will be available for Chrome, Firefox, and more in the near future. You can
 
 The main screen is the dashboard. Here you can add as many different panels as you'd like. Each panel generally contains a card or list of cards containing websites.
 
-- **Bookmarks**: Choose a folder in your bookmarks. A card will be created for each sub folder that will list each site inside of it.
-- **Devices**: A card for each browser window open on any other device signed into your Chrome account.
+- **Bookmarks**: Choose a folder in your bookmarks and a card will be created for each sub folder, which will list each site inside of it.
+- **Devices**: A card for each browser window open on any other devices signed into your Chrome account.
 - **New Bookmarks**: A list of your 20 most recently added bookmarks.
 - **Recent Tabs**: Newt keeps track of when you look at each tab (if you give it permission). Doing so lets it show you a chronological list of the tabs you've recently viewed.
 - **Recently Closed Tabs**: A list of tabs you've recently closed. This allows you to easily find and reopen something you may have closed by accident.
-- **Top Sites**: Just like the standard Chrome new tab page, this shows your most visited sites.
+- **Top Sites**: Just like the standard Chrome new tab page, this shows your 10 most visited sites.
 - **Windows**: A card for each open browser window on your computer, excluding the window you're currently looking at. Clicking a site will focus that tab and window.
 - **Empty**: Just want some extra whitespace? Throw one (or more) of these in there.
 

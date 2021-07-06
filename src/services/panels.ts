@@ -18,6 +18,7 @@ export type PanelConfig = {
   id: string;
   kind: PanelType;
   name: string;
+  description: string;
   permissions: PermissionDetail[];
   defaultOptions: {
     [key: string]: string | number | boolean;
@@ -32,6 +33,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Bookmarks',
     kind: PanelType.Bookmarks,
+    description:
+      'Choose a folder in your bookmarks and a card will be created for each sub folder, which will list each site inside of it.',
     permissions: [
       { key: Permission.Bookmarks, reason: 'Access list of bookmarks.' },
       {
@@ -54,6 +57,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Devices',
     kind: PanelType.Devices,
+    description:
+      'A card for each browser window open on any other devices signed into your Chrome account.',
     permissions: [
       { key: Permission.Sessions, reason: 'Access list of devices.' },
       {
@@ -76,6 +81,7 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'New Bookmarks',
     kind: PanelType.NewBookmarks,
+    description: 'A list of your 20 most recently added bookmarks.',
     permissions: [
       { key: Permission.Bookmarks, reason: 'Access list of bookmarks.' },
       {
@@ -98,6 +104,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Recent Tabs',
     kind: PanelType.RecentTabs,
+    description:
+      'A list of your tabs in the order in which you have accessed them, starting with the latest.',
     permissions: [
       {
         key: Permission.Tabs,
@@ -119,6 +127,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Recently Closed',
     kind: PanelType.RecentlyClosed,
+    description:
+      "A list of tabs you've recently closed. This allows you to easily find and reopen something you may have closed by accident.",
     permissions: [
       {
         key: Permission.Sessions,
@@ -144,6 +154,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Top Sites',
     kind: PanelType.TopSites,
+    description:
+      'Just like the standard Chrome new tab page, this shows your 10 most visited sites.',
     permissions: [
       { key: Permission.TopSites, reason: 'Access list of sites.' },
       {
@@ -166,6 +178,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Windows',
     kind: PanelType.Windows,
+    description:
+      "A card for each open browser window on your computer, excluding the window you're currently looking at. Clicking a site will focus that tab and window.",
     permissions: [
       {
         key: Permission.Tabs,
@@ -188,6 +202,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'Empty',
     kind: PanelType.Empty,
+    description:
+      'Just want some extra whitespace? Throw one (or more) of these in there.',
     permissions: [],
     defaultOptions: {
       title: '',
@@ -200,6 +216,8 @@ const panelConfigs: PanelConfigMap = {
     id: '',
     name: 'New',
     kind: PanelType.New,
+    description:
+      'A brand new panel where you can choose what you want displayed.',
     permissions: [],
     defaultOptions: {},
     options: {},
