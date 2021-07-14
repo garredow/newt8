@@ -22,7 +22,7 @@ export function PanelHeader(props: PanelHeaderProps) {
         contentEditable={props.editable}
         suppressContentEditableWarning
         onKeyDown={(ev) => {
-          if (ev.key !== 'Enter') {
+          if (ev.key !== 'Enter' && ev.key !== 'Escape') {
             setChanged(true);
             return;
           }
