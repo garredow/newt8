@@ -10,7 +10,7 @@ import { PanelType } from '../enums/panelType';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 
-type DevicesPanelOptions = PanelOptions & {
+export type DevicesPanelOptions = PanelOptions & {
   showTabAccessedTime: boolean;
   showUrl: boolean;
 };

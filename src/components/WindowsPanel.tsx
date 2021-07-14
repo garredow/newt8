@@ -15,7 +15,7 @@ import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import styles from './WindowsPanel.module.css';
 
-type WindowsPanelOptions = PanelOptions & {
+export type WindowsPanelOptions = PanelOptions & {
   showCardTitles: boolean;
   windowId: number;
   showTabAccessedTime: boolean;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BookmarksPanel } from './BookmarksPanel';
 import { RecentTabsPanel } from './RecentTabsPanel';
-import { WindowsPanel } from './WindowsPanel';
+import { WindowsPanel, WindowsPanelOptions } from './WindowsPanel';
 import styles from './Dashboard.module.css';
 import { useEffect } from 'react';
 import { PanelType } from '../enums/panelType';
@@ -9,7 +9,7 @@ import { IconButton } from '../ui-components/button';
 import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
-import { DevicesPanel } from './DevicesPanel';
+import { DevicesPanel, DevicesPanelOptions } from './DevicesPanel';
 import { ButtonType } from '../enums/buttonType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
@@ -179,7 +179,7 @@ export function DashboardView(props: DashboardViewProps) {
             key={panel.id}
             panelId={panel.id}
             panelIndex={index}
-            options={panel.options as any}
+            options={panel.options as WindowsPanelOptions}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -205,7 +205,7 @@ export function DashboardView(props: DashboardViewProps) {
             key={panel.id}
             panelId={panel.id}
             panelIndex={index}
-            options={panel.options}
+            options={panel.options as DevicesPanelOptions}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
