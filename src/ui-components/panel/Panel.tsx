@@ -62,123 +62,127 @@ export function Panel(props: PanelProps) {
     props.onDeletePanel();
   }
 
-  const classes = [styles.root];
-  classes.push(styles[`span${props.options.width}`]);
-
   return (
     <Draggable draggableId={props.panelId} index={props.panelIndex}>
-      {(provided) => (
-        <div
-          className={classes.join(' ')}
-          style={{ gridColumn: `span ${props.options.width}` }}
-          data-testid={props['data-testid']}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-        >
-          <PanelHeader
-            className={styles.header}
-            text={props.options.title}
-            editable={showSettings}
-            onTitleChanged={(title) => setOptionValue('title', title)}
-            data-testid="panel-header"
+      {(provided, data) => {
+        const classes = [styles.root];
+        classes.push(styles[`span${props.options.width}`]);
+        if (provided.draggableProps.style?.transform && !data.isDragging) {
+          classes.push(styles.draggableMargin);
+        }
+        return (
+          <div
+            className={classes.join(' ')}
+            style={{ gridColumn: `span ${props.options.width}` }}
+            data-testid={props['data-testid']}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
           >
-            <div
-              className={mixin(
-                styles.headerActions,
-                settings.showActionsOnHover ? styles.headerActionsHidden : ''
-              )}
+            <PanelHeader
+              className={styles.header}
+              text={props.options.title}
+              editable={showSettings}
+              onTitleChanged={(title) => setOptionValue('title', title)}
+              data-testid="panel-header"
             >
-              <IconButton
-                className={styles.btnMove}
-                icon={<MdCompareArrows />}
-                title="Drag to reorder"
-                data-testid="btn-drag"
-                {...provided.dragHandleProps}
-              />
-              {props.enableSettings ? (
-                <IconButton
-                  icon={<MdSettings />}
-                  title="Edit panel settings"
-                  onClick={() => setShowSettings(!showSettings)}
-                  data-testid="btn-settings"
-                />
-              ) : null}
-            </div>
-          </PanelHeader>
-          {showSettings ? (
-            <PanelSettings data-testid="settings">
-              <SettingsRow
-                label="Columns"
-                helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
-              >
-                <select
-                  defaultValue={props.options.columns}
-                  onChange={(ev) =>
-                    setOptionValue('columns', parseInt(ev.target.value, 10))
-                  }
-                  data-testid="select-columns"
-                >
-                  <option value={0}>Auto</option>
-                  <option value={1}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                  <option value={5}>5</option>
-                  <option value={6}>6</option>
-                  <option value={7}>7</option>
-                  <option value={8}>8</option>
-                  <option value={9}>9</option>
-                  <option value={10}>10</option>
-                </select>
-              </SettingsRow>
-              <SettingsRow
-                label="Width"
-                helpText="How wide this column is in relation to the others in the dashboard."
-              >
-                <select
-                  defaultValue={props.options.width}
-                  onChange={(ev) =>
-                    setOptionValue('width', parseInt(ev.target.value, 10))
-                  }
-                  data-testid="select-width"
-                >
-                  <option value={1}>Smallest</option>
-                  <option value={2}>Small</option>
-                  <option value={3}>Medium</option>
-                  <option value={4}>Large</option>
-                  <option value={5}>Largest</option>
-                </select>
-              </SettingsRow>
               <div
-                onClick={(ev) => {
-                  if ((ev.target as HTMLDivElement).tagName === 'BUTTON') {
-                    setShowSettings(false);
-                  }
-                }}
+                className={mixin(
+                  styles.headerActions,
+                  settings.showActionsOnHover ? styles.headerActionsHidden : ''
+                )}
               >
-                {props.extraSettings}
+                <IconButton
+                  className={styles.btnMove}
+                  icon={<MdCompareArrows />}
+                  title="Drag to reorder"
+                  data-testid="btn-drag"
+                  {...provided.dragHandleProps}
+                />
+                {props.enableSettings ? (
+                  <IconButton
+                    icon={<MdSettings />}
+                    title="Edit panel settings"
+                    onClick={() => setShowSettings(!showSettings)}
+                    data-testid="btn-settings"
+                  />
+                ) : null}
               </div>
-              <Button
-                text="Delete"
-                type={ButtonType.Danger}
-                kind={ButtonKind.Panel}
-                onClick={handleRequestDelete}
+            </PanelHeader>
+            {showSettings ? (
+              <PanelSettings data-testid="settings">
+                <SettingsRow
+                  label="Columns"
+                  helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
+                >
+                  <select
+                    defaultValue={props.options.columns}
+                    onChange={(ev) =>
+                      setOptionValue('columns', parseInt(ev.target.value, 10))
+                    }
+                    data-testid="select-columns"
+                  >
+                    <option value={0}>Auto</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
+                  </select>
+                </SettingsRow>
+                <SettingsRow
+                  label="Width"
+                  helpText="How wide this column is in relation to the others in the dashboard."
+                >
+                  <select
+                    defaultValue={props.options.width}
+                    onChange={(ev) =>
+                      setOptionValue('width', parseInt(ev.target.value, 10))
+                    }
+                    data-testid="select-width"
+                  >
+                    <option value={1}>Smallest</option>
+                    <option value={2}>Small</option>
+                    <option value={3}>Medium</option>
+                    <option value={4}>Large</option>
+                    <option value={5}>Largest</option>
+                  </select>
+                </SettingsRow>
+                <div
+                  onClick={(ev) => {
+                    if ((ev.target as HTMLDivElement).tagName === 'BUTTON') {
+                      setShowSettings(false);
+                    }
+                  }}
+                >
+                  {props.extraSettings}
+                </div>
+                <Button
+                  text="Delete"
+                  type={ButtonType.Danger}
+                  kind={ButtonKind.Panel}
+                  onClick={handleRequestDelete}
+                />
+              </PanelSettings>
+            ) : null}
+            {props.children}
+            {showConfirm && (
+              <ConfirmDialog
+                title="Confirm"
+                message="Are you sure you want to delete this?"
+                danger
+                onCancel={() => setShowConfirm(false)}
+                onConfirm={props.onDeletePanel}
+                data-testid="confirm-delete-panel"
               />
-            </PanelSettings>
-          ) : null}
-          {props.children}
-          {showConfirm && (
-            <ConfirmDialog
-              title="Confirm"
-              message="Are you sure you want to delete this?"
-              danger
-              onCancel={() => setShowConfirm(false)}
-              onConfirm={props.onDeletePanel}
-              data-testid="confirm-delete-panel"
-            />
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        );
+      }}
     </Draggable>
   );
 }

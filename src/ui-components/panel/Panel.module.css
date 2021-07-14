@@ -22,6 +22,10 @@
   grid-column: span 5;
 }
 
+.draggableMargin {
+  margin: 0 -10px 0 10px;
+}
+
 .headerActions {
   transition: opacity 200ms;
   white-space: nowrap;
