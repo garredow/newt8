@@ -59,6 +59,10 @@
   border-right: 1px solid var(--sidebar-divider-color);
 }
 
+.btnMove {
+  cursor: move !important;
+}
+
 .pageEditTitle {
   border-bottom: 2px solid var(--sidebar-accent-color);
   margin: 0 5px;

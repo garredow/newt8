@@ -89,6 +89,7 @@ export function Panel(props: PanelProps) {
               )}
             >
               <IconButton
+                className={styles.btnMove}
                 icon={<MdCompareArrows />}
                 title="Drag to reorder"
                 data-testid="btn-drag"

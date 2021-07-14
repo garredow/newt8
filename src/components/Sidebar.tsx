@@ -133,7 +133,7 @@ export function Sidebar(props: SidebarProps) {
                               size={32}
                               kind={ButtonKind.SideBar}
                               type={ButtonType.Secondary}
-                              className={styles.draggable}
+                              className={styles.btnMove}
                               icon={<MdCompareArrows />}
                               title="Drag to reorder"
                               onClick={() => {}}

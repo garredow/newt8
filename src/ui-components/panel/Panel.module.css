@@ -33,6 +33,10 @@
   opacity: 1;
 }
 
+.btnMove {
+  cursor: move !important;
+}
+
 .content {
   flex: 1;
   padding-bottom: 15px;
