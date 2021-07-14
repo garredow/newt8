@@ -1,9 +1,10 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { Panel } from '.';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { defaultSettings, SettingsContext } from '../../SettingsContext';
 import { Settings } from '../../models/Settings';
+import { delay } from '../../utilities/delay';
 
 function renderWithContext(element: any, settings?: Settings) {
   const settingsContextVal = {
@@ -46,7 +47,7 @@ describe('Panel', () => {
     expect(getByText('child text')).toBeVisible();
   });
 
-  test('opens settings on button click', () => {
+  test('opens settings on button click', async () => {
     const props = {
       panelId: '1',
       panelIndex: 0,
@@ -62,12 +63,15 @@ describe('Panel', () => {
 
     const { getByTestId } = renderWithContext(<Panel {...props} />);
 
-    fireEvent.click(getByTestId('btn-settings'));
+    await act(async () => {
+      fireEvent.click(getByTestId('btn-settings'));
+      await delay(500);
+    });
 
     expect(getByTestId('settings')).toBeVisible();
   });
 
-  test('closes settings on escape key press', () => {
+  test('closes settings on escape key press', async () => {
     const props = {
       panelId: '1',
       panelIndex: 0,
@@ -85,10 +89,14 @@ describe('Panel', () => {
       <Panel {...props} />
     );
 
-    fireEvent.click(getByTestId('btn-settings'));
+    await act(async () => {
+      fireEvent.click(getByTestId('btn-settings'));
+      await delay(500);
+    });
     expect(getByTestId('settings')).toBeVisible();
 
     fireEvent.keyDown(container, { key: 'Escape' });
+    await delay(500);
     expect(queryByTestId('settings')).toBeNull();
   });
 
