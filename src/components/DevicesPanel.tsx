@@ -8,8 +8,12 @@ import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { SettingsRow } from '../ui-components/panel/SettingsRow';
 
-type DevicesPanelOptions = PanelOptions;
+type DevicesPanelOptions = PanelOptions & {
+  showTabAccessedTime: boolean;
+  showUrl: boolean;
+};
 
 type DevicesPanelProps = ComponentBase &
   DraggablePanelProps & {
@@ -30,6 +34,14 @@ export function DevicesPanel(props: DevicesPanelProps) {
     getDevices().then((sessions) => setDevices(sessions));
   }, []);
 
+  function handleOptionChanged(key: string, val: any) {
+    const newOpts: DevicesPanelOptions = {
+      ...options,
+      [key]: val,
+    };
+    props.onOptionsChanged(newOpts);
+  }
+
   return (
     <Panel
       panelId={props.panelId}
@@ -38,6 +50,34 @@ export function DevicesPanel(props: DevicesPanelProps) {
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
+      extraSettings={
+        <>
+          <SettingsRow
+            label="Show when tab last accessed"
+            helpText="Display when each tab was last accessed, in relative time."
+          >
+            <input
+              type="checkbox"
+              checked={options.showTabAccessedTime}
+              onChange={(ev) =>
+                handleOptionChanged('showTabAccessedTime', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show URL"
+            helpText="Display the URL for each tab."
+          >
+            <input
+              type="checkbox"
+              checked={options.showUrl}
+              onChange={(ev) =>
+                handleOptionChanged('showUrl', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+        </>
+      }
     >
       <PanelContent columns={options.columns}>
         {devices.map((device) => {
@@ -58,6 +98,8 @@ export function DevicesPanel(props: DevicesPanelProps) {
                       includeSeconds: true,
                     }
                   )}
+                  showUrl={options.showUrl}
+                  showLine3={options.showTabAccessedTime}
                   onClick={openUrl}
                 />
               ))}

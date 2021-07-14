@@ -19,6 +19,7 @@ type WindowsPanelOptions = PanelOptions & {
   showCardTitles: boolean;
   windowId: number;
   showTabAccessedTime: boolean;
+  showUrl: boolean;
 };
 
 type WindowsPanelProps = ComponentBase &
@@ -80,14 +81,12 @@ export function WindowsPanel(props: WindowsPanelProps) {
               title={tab.title}
               iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
               url={tab.url}
-              line3={
-                options.showTabAccessedTime
-                  ? formatDistance(new Date(tab.accessedAt), new Date(), {
-                      addSuffix: true,
-                      includeSeconds: true,
-                    })
-                  : ''
-              }
+              line3={formatDistance(new Date(tab.accessedAt), new Date(), {
+                addSuffix: true,
+                includeSeconds: true,
+              })}
+              showUrl={options.showUrl}
+              showLine3={options.showTabAccessedTime}
               onClick={() => switchToTab(tab.windowId, tab.id)}
             />
           ))}
@@ -121,6 +120,18 @@ export function WindowsPanel(props: WindowsPanelProps) {
               checked={options.showTabAccessedTime}
               onChange={(ev) =>
                 handleOptionChanged('showTabAccessedTime', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show URL"
+            helpText="Display the URL for each tab."
+          >
+            <input
+              type="checkbox"
+              checked={options.showUrl}
+              onChange={(ev) =>
+                handleOptionChanged('showUrl', ev.target.checked)
               }
             />
           </SettingsRow>
