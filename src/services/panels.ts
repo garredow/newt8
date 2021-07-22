@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { PanelType } from '../enums/panelType';
+import { GridLayout } from '../models/GridLayout';
 import { Panel } from '../models/Panel';
 import { getItem, StorageKey } from '../utilities/storage';
 import { Permission, PermissionDetail } from './permissions';
@@ -209,7 +210,7 @@ const panelConfigs: PanelConfigMap = {
       'Just want some extra whitespace? Throw one (or more) of these in there.',
     permissions: [],
     defaultOptions: {
-      title: '',
+      title: 'Empty',
       columns: 1,
       width: 3,
     },
@@ -222,7 +223,7 @@ const panelConfigs: PanelConfigMap = {
     description:
       'A brand new panel where you can choose what you want displayed.',
     permissions: [],
-    defaultOptions: {},
+    defaultOptions: { title: 'New Panel', width: 3 },
     options: {},
   },
 };
@@ -254,6 +255,7 @@ export type Page = {
   name: string;
   isActive: boolean;
   panels: Panel[];
+  grid: GridLayout;
 };
 
 export async function getPages(): Promise<Page[]> {

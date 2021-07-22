@@ -66,6 +66,7 @@ export function IconButton({
       style={buttonStyle}
       onClick={onClick}
       title={title}
+      type="button"
       data-testid={props['data-testid']}
       {...props}
     >

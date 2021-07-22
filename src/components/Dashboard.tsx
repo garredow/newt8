@@ -6,24 +6,25 @@ import styles from './Dashboard.module.css';
 import { useEffect } from 'react';
 import { PanelType } from '../enums/panelType';
 import { IconButton } from '../ui-components/button';
-import { MdAdd } from 'react-icons/md';
+import { MdAdd, MdDashboard } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel, DevicesPanelOptions } from './DevicesPanel';
 import { ButtonType } from '../enums/buttonType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
-import { Page, PanelOptions } from '../services/panels';
+import { getPanelConfig, Page, PanelOptions } from '../services/panels';
 import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
 import { useContext } from 'react';
 import { PagesContext } from '../PagesContext';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { moveArrayItem } from '../utilities/moveArrayItem';
 import { EmptyPanel } from './EmptyPanel';
 import { mixin } from '../utilities/mixin';
 import { SettingsContext } from '../SettingsContext';
+import { ConfigureGridDialog } from './ConfigureGridDialog';
+import { GridLayout } from '../models/GridLayout';
+import { cloneDeep } from 'lodash';
 
 enum LoadingStatus {
   Init,
@@ -34,8 +35,19 @@ enum LoadingStatus {
 export type DashboardViewProps = ComponentBase;
 
 export function DashboardView(props: DashboardViewProps) {
-  const [panels, setPanels] = useState<Panel[]>([]);
+  const [page, setPage] = useState<Page>({
+    id: 'default',
+    name: 'Default',
+    isActive: true,
+    panels: [],
+    grid: {
+      rowSizes: [],
+      colSizes: [],
+      layout: [],
+    },
+  });
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
+  const [showGridConfig, setShowGridConfig] = useState(false);
   const { pages, savePage } = useContext(PagesContext);
   const { settings } = useContext(SettingsContext);
 
@@ -43,53 +55,63 @@ export function DashboardView(props: DashboardViewProps) {
     setStatus(LoadingStatus.Loading);
 
     const page = pages.find((a) => a.isActive === true);
-    setPanels(page?.panels || []);
+    if (!page) return;
 
-    if (page) {
-      setStatus(LoadingStatus.Idle);
-    }
+    setPage(page);
+    setStatus(LoadingStatus.Idle);
   }, [pages]);
 
   function addPanel(panel: Panel) {
-    const index = panels.findIndex((a) => a.id === panel.id);
+    const index = page.panels.findIndex((a) => a.id === panel.id);
     if (index >= 0) {
       return;
     }
 
-    const newPanels = [...panels, panel];
-    savePage({
-      ...pages.find((a) => a.isActive === true),
-      panels: newPanels,
-    } as Page);
-    setPanels(newPanels);
+    const newPage = cloneDeep(page);
+    newPage.panels.push(panel);
+
+    // Handle first panel
+    if (newPage.grid.rowSizes.length === 0) {
+      newPage.grid.rowSizes = ['1fr'];
+    }
+    newPage.grid.colSizes.push('1fr');
+    newPage.grid.layout =
+      newPage.grid.layout.length === 0
+        ? [[panel.id]]
+        : newPage.grid.layout.map((row) => [...row, panel.id]);
+    console.log('new page', newPage);
+    savePage(newPage);
   }
 
   function updatePanel(panelId: string, panel: Panel) {
-    const index = panels.findIndex((a) => a.id === panelId);
+    const index = page.panels.findIndex((a) => a.id === panelId);
     if (index === -1) {
       return;
     }
 
-    const newPanels = [...panels];
+    const newPanels = [...page.panels];
     newPanels[index] = panel;
     savePage({
-      ...pages.find((a) => a.isActive === true),
+      ...page,
       panels: newPanels,
     } as Page);
-    setPanels(newPanels);
   }
 
   function deletePanel(panelId: string) {
-    const newPanels = panels.filter((a) => a.id !== panelId);
-    savePage({
-      ...pages.find((a) => a.isActive === true),
-      panels: newPanels,
-    } as Page);
-    setPanels(newPanels);
+    const newPage = cloneDeep(page);
+    newPage.panels = newPage.panels.filter((a) => a.id !== panelId);
+
+    newPage.grid.layout = page.grid.layout.map((row, ri) => {
+      return row.map((col, ci) => {
+        return col === panelId ? '.' : col;
+      });
+    });
+
+    savePage(newPage);
   }
 
   function handleOptionsChanged(panelId: string, options: PanelOptions) {
-    const panel = panels.find((a) => a.id === panelId);
+    const panel = page.panels.find((a) => a.id === panelId);
     if (!panel) return;
 
     panel.options = options;
@@ -100,23 +122,15 @@ export function DashboardView(props: DashboardViewProps) {
     updatePanel(panelId, {
       id: panelId,
       kind: newPanelKind,
-      options: {} as PanelOptions,
+      options: getPanelConfig(newPanelKind).defaultOptions as PanelOptions,
     });
   }
 
-  function handleDragEnd(ev: DropResult) {
-    const oldIndex = ev.source.index;
-    const newIndex = ev.destination?.index;
-
-    if (newIndex === undefined || newIndex === oldIndex) return;
-
-    const newPanels = moveArrayItem(panels, oldIndex, newIndex);
-
-    setPanels(newPanels);
+  function handleSaveGrid(grid: GridLayout) {
     savePage({
-      ...pages.find((a) => a.isActive === true),
-      panels: newPanels,
-    } as Page);
+      ...page,
+      grid,
+    });
   }
 
   function renderPanel(panel: Panel, index: number) {
@@ -127,7 +141,7 @@ export function DashboardView(props: DashboardViewProps) {
             key={panel.id}
             panelId={panel.id}
             panelIndex={index}
-            options={{} as PanelOptions}
+            options={panel.options}
             onPanelTypeChanged={(panelType) =>
               handlePanelTypeChange(panel.id, panelType)
             }
@@ -140,7 +154,7 @@ export function DashboardView(props: DashboardViewProps) {
             key={panel.id}
             panelId={panel.id}
             panelIndex={index}
-            options={panel.options as PanelOptions}
+            options={panel.options}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -241,9 +255,38 @@ export function DashboardView(props: DashboardViewProps) {
     }
   }
 
+  if (!page) return null;
+
+  // We need to manually handle grid gap if using percentages
+  const panelsStyle = {
+    gridTemplateColumns: page.grid.colSizes
+      .map((a) =>
+        a === '1fr'
+          ? a
+          : `calc(${a} - ${
+              ((page.grid.layout[0].length - 1) * 10) /
+              page.grid.layout[0].length
+            }px)`
+      )
+      .join(' '),
+    gridTemplateRows: page.grid.rowSizes
+      .map((a) =>
+        a === '1fr'
+          ? a
+          : `calc(${a} - ${
+              ((page.grid.layout.length - 1) * 10) / page.grid.layout.length
+            }px)`
+      )
+      .join(' '),
+    gridTemplateAreas: page.grid.layout.reduce((acc, val) => {
+      acc += `'${val.join(' ')}'`;
+      return acc;
+    }, ''),
+  };
+
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
-      {panels.length === 0 && status === LoadingStatus.Idle ? (
+      {page.panels.length === 0 && status === LoadingStatus.Idle ? (
         <div className={styles.empty}>
           <div className={styles.message}>
             Looks like there aren't any panels here yet. Want to add one?
@@ -254,27 +297,17 @@ export function DashboardView(props: DashboardViewProps) {
                 addPanel({
                   id: `panel_${new Date().valueOf()}`,
                   kind: PanelType.New,
-                  options: {} as PanelOptions,
+                  options: getPanelConfig(PanelType.New)
+                    .defaultOptions as PanelOptions,
                 })
               }
             />
           </div>
         </div>
       ) : (
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId="panels" direction="horizontal">
-            {(provided) => (
-              <div
-                className={styles.panels}
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {panels.map((panel, i) => renderPanel(panel, i))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <div className={styles.panels} style={panelsStyle}>
+          {page.panels.map((panel, i) => renderPanel(panel, i))}
+        </div>
       )}
       <div
         className={mixin(
@@ -287,16 +320,35 @@ export function DashboardView(props: DashboardViewProps) {
           title="Add a new panel"
           onClick={() => {
             // Only allow one new panel at a time
-            if (panels.some((a) => a.kind === PanelType.New)) return;
+            if (page.panels.some((a) => a.kind === PanelType.New)) return;
 
             addPanel({
               id: `panel_${new Date().valueOf()}`,
               kind: PanelType.New,
-              options: {} as PanelOptions,
+              options: getPanelConfig(PanelType.New)
+                .defaultOptions as PanelOptions,
             });
           }}
         />
+        <IconButton
+          icon={<MdDashboard />}
+          title="Configure dashboard grid"
+          onClick={() => setShowGridConfig(true)}
+        />
       </div>
+      {showGridConfig && (
+        <ConfigureGridDialog
+          gridLayout={page.grid}
+          panels={page.panels}
+          onCancel={(newGridLayout) => {}}
+          onSave={(newGridLayout, closeDialog) => {
+            handleSaveGrid(newGridLayout);
+            if (closeDialog) {
+              setShowGridConfig(false);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

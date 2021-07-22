@@ -10,6 +10,7 @@ type ButtonProps = ComponentBase & {
   kind?: ButtonKind;
   disabled?: boolean;
   fullWidth?: boolean;
+  htmlType?: 'submit' | 'reset' | 'button';
   onClick?: Function;
 };
 
@@ -18,6 +19,7 @@ export function Button({
   kind = ButtonKind.Default,
   disabled = false,
   fullWidth = false,
+  htmlType = 'button',
   ...props
 }: ButtonProps) {
   function getButtonClasses() {
@@ -56,7 +58,9 @@ export function Button({
   return (
     <button
       className={getButtonClasses()}
+      style={props.style}
       disabled={disabled}
+      type={htmlType}
       onClick={() => props.onClick?.()}
       data-testid={props['data-testid']}
     >

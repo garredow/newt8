@@ -139,8 +139,6 @@ describe('Panel', () => {
 
     expect((getByText('1') as HTMLOptionElement).selected).toBeTruthy();
     expect((getByText('5') as HTMLOptionElement).selected).toBeFalsy();
-    expect((getByText('Medium') as HTMLOptionElement).selected).toBeTruthy();
-    expect((getByText('Largest') as HTMLOptionElement).selected).toBeFalsy();
   });
 
   test('sets columns', async () => {
@@ -164,29 +162,6 @@ describe('Panel', () => {
 
     expect(props.onOptionsChanged).toBeCalledTimes(1);
     expect(props.onOptionsChanged.mock.calls[0][0].columns).toEqual(5);
-  });
-
-  test('sets width', async () => {
-    const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        options: {} as any,
-      },
-      onDeletePanel: jest.fn(),
-      onOptionsChanged: jest.fn(),
-    };
-
-    const { getByTestId } = renderWithContext(<Panel {...props} />);
-
-    fireEvent.click(getByTestId('btn-settings'));
-    fireEvent.change(getByTestId('select-width'), { target: { value: 1 } });
-
-    expect(props.onOptionsChanged).toBeCalledTimes(1);
-    expect(props.onOptionsChanged.mock.calls[0][0].width).toBe(1);
   });
 
   test('sets title', async () => {

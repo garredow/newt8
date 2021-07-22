@@ -204,6 +204,11 @@ export function Sidebar(props: SidebarProps) {
                 name: 'New Page',
                 isActive: true,
                 panels: [],
+                grid: {
+                  rowSizes: [],
+                  colSizes: [],
+                  layout: [],
+                },
               })
             }
           />

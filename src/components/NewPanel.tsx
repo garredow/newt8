@@ -92,90 +92,87 @@ export function NewPanel(props: NewPanelProps) {
       nodeRef={nodeRef}
     >
       {(state) => (
-        <div
+        <Panel
+          panelId={props.panelId}
+          panelIndex={props.panelIndex}
+          options={options}
+          enableSettings={false}
+          onOptionsChanged={() => {}}
+          onDeletePanel={props.onDeletePanel}
           ref={nodeRef}
           style={{
-            gridColumn: 'span 3',
+            gridArea: props.panelId,
             ...animateSlideLeft.defaultStyles,
             ...animateSlideLeft.transitionStyles[state],
           }}
+          data-testid={props['data-testid']}
         >
-          <Panel
-            panelId={props.panelId}
-            panelIndex={props.panelIndex}
-            options={options}
-            enableSettings={false}
-            onOptionsChanged={() => {}}
-            onDeletePanel={props.onDeletePanel}
-            data-testid={props['data-testid']}
-          >
-            {showPermissions ? (
-              <PanelContent columns={1}>
-                <p>
-                  Before we can add this panel, Newt needs some extra
-                  permissions. If everything below looks ok to you, click the
-                  'Request Permissions' button to finish setting up this panel.
-                </p>
-                <ul className={styles.permissionsList}>
-                  {permissions.map((a) => (
-                    <li key={a.key}>
-                      <b>{(permissionNameMap as any)[a.key]}</b>
-                      <div>{a.reason}</div>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  text="Request Permissions"
-                  onClick={request}
-                  type={ButtonType.Primary}
-                  kind={ButtonKind.Panel}
-                />
-                <Button
-                  text="Cancel"
-                  onClick={cancelRequest}
-                  type={ButtonType.Secondary}
-                  kind={ButtonKind.Panel}
-                />
-                {permissionsError ? (
-                  <p className={styles.error}>
-                    Failed to get permissions. Please try again.
-                  </p>
-                ) : null}
-              </PanelContent>
-            ) : (
-              <PanelContent columns={1}>
-                What do you want to put in here?
-                {availablePanels.map((panel) => (
-                  <div key={panel}>
-                    <Button
-                      key={panel}
-                      text={getPanelConfig(panel).name}
-                      type={ButtonType.Secondary}
-                      kind={ButtonKind.Panel}
-                      fullWidth
-                      onClick={() => checkPermissions(panel)}
-                    />
-                    <div className={styles.description}>
-                      {getPanelConfig(panel).description}
-                    </div>
-                  </div>
+          {showPermissions ? (
+            <PanelContent columns={1}>
+              <p>
+                Before we can add this panel, Newt needs some extra permissions.
+                If everything below looks ok to you, click the 'Request
+                Permissions' button to finish setting up this panel.
+              </p>
+              <ul className={styles.permissionsList}>
+                {permissions.map((a) => (
+                  <li key={a.key}>
+                    <b>{(permissionNameMap as any)[a.key]}</b>
+                    <div>{a.reason}</div>
+                  </li>
                 ))}
-                <div>
+              </ul>
+              <Button
+                text="Request Permissions"
+                onClick={request}
+                type={ButtonType.Primary}
+                kind={ButtonKind.Panel}
+              />
+              <Button
+                text="Cancel"
+                onClick={cancelRequest}
+                type={ButtonType.Secondary}
+                kind={ButtonKind.Panel}
+              />
+              {permissionsError ? (
+                <p className={styles.error}>
+                  Failed to get permissions. Please try again.
+                </p>
+              ) : null}
+            </PanelContent>
+          ) : (
+            <PanelContent columns={1}>
+              What do you want to put in here?
+              {availablePanels.map((panel) => (
+                <div key={panel}>
                   <Button
-                    text="Delete"
-                    type={ButtonType.Danger}
+                    key={panel}
+                    text={getPanelConfig(panel).name}
+                    type={ButtonType.Secondary}
                     kind={ButtonKind.Panel}
                     fullWidth
-                    onClick={props.onDeletePanel}
+                    onClick={() => checkPermissions(panel)}
                   />
                   <div className={styles.description}>
-                    Changed your mind? No problem.
+                    {getPanelConfig(panel).description}
                   </div>
                 </div>
-              </PanelContent>
-            )}
-          </Panel>
-        </div>
+              ))}
+              <div>
+                <Button
+                  text="Delete"
+                  type={ButtonType.Danger}
+                  kind={ButtonKind.Panel}
+                  fullWidth
+                  onClick={props.onDeletePanel}
+                />
+                <div className={styles.description}>
+                  Changed your mind? No problem.
+                </div>
+              </div>
+            </PanelContent>
+          )}
+        </Panel>
       )}
     </Transition>
   );

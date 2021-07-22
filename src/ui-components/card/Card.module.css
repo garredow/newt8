@@ -3,7 +3,8 @@
   color: var(--card-primary-text-color);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  border-radius: 5px;
+  border-bottom: 1px solid var(--card-divider-color);
+  border-radius: 3px;
   overflow: hidden;
   padding: 10px 0;
 }

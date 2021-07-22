@@ -14,12 +14,22 @@ export const defaultPages: Page[] = [
     name: 'Home',
     isActive: true,
     panels: [],
+    grid: {
+      rowSizes: [],
+      colSizes: [],
+      layout: [],
+    },
   },
   {
     id: 'page_1',
     name: 'Work',
     isActive: false,
     panels: [],
+    grid: {
+      rowSizes: [],
+      colSizes: [],
+      layout: [],
+    },
   },
 ];
 

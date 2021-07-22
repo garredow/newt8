@@ -5,11 +5,10 @@
 
 .panels {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
   flex: 1;
   max-height: var(--full-height);
   column-gap: 10px;
+  row-gap: 10px;
 }
 
 .panels > div {

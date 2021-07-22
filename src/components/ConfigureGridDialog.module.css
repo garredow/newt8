@@ -1,0 +1,107 @@
+.root {
+  width: 100vw !important;
+  max-width: 900px;
+  padding: 15px !important;
+  margin: 0 !important;
+  border-radius: 5px;
+  background-color: var(--card-bg-color) !important;
+  color: var(--card-primary-text-color) !important;
+}
+
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.5) !important;
+  backdrop-filter: blur(1px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin: 0 0 20px 0;
+}
+
+.message {
+  padding: 10px 0;
+}
+
+.gridActions {
+  margin: 10px 0;
+
+  padding-left: 85px;
+  padding-right: 35px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  margin-top: 30px;
+  border-top: 1px solid var(--card-divider-color);
+  padding-top: 15px;
+}
+.actions > button {
+  margin-left: 10px;
+}
+
+.layoutRow {
+  display: flex;
+}
+.layoutRow > div {
+  flex: 1;
+  text-align: center;
+}
+
+.actionRow {
+  padding-left: 85px;
+  padding-right: 35px;
+}
+
+.layoutCol {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  border: 1px solid black;
+}
+
+.layoutCol > select {
+  width: 100%;
+  text-align-last: start;
+}
+
+.deleteRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: unset !important;
+}
+
+.sizeRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: unset !important;
+  margin-left: 10px;
+}
+
+.sizeCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.size {
+  min-width: 35px;
+  text-align: center;
+}
+
+.size:invalid {
+  border-bottom: 2px solid var(--error-text-color);
+  color: var(--error-text-color);
+}
+
+.errorMessage {
+  color: var(--error-text-color);
+}
