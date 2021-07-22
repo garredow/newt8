@@ -210,7 +210,7 @@ const panelConfigs: PanelConfigMap = {
       'Just want some extra whitespace? Throw one (or more) of these in there.',
     permissions: [],
     defaultOptions: {
-      title: 'Empty',
+      title: '',
       columns: 1,
       width: 3,
     },

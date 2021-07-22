@@ -24,7 +24,7 @@ import { mixin } from '../utilities/mixin';
 import { SettingsContext } from '../SettingsContext';
 import { ConfigureGridDialog } from './ConfigureGridDialog';
 import { GridLayout } from '../models/GridLayout';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, zip } from 'lodash';
 
 enum LoadingStatus {
   Init,
@@ -99,9 +99,36 @@ export function DashboardView(props: DashboardViewProps) {
 
   function deletePanel(panelId: string) {
     const newPage = cloneDeep(page);
-    newPage.panels = newPage.panels.filter((a) => a.id !== panelId);
+    const newPanels = newPage.panels.filter((a) => a.id !== panelId);
+    newPage.panels = newPanels;
 
-    newPage.grid.layout = page.grid.layout.map((row, ri) => {
+    if (newPanels.length === 0) {
+      newPage.grid.layout = [];
+      newPage.grid.rowSizes = [];
+      newPage.grid.colSizes = [];
+
+      return savePage(newPage);
+    }
+
+    let wholeRowIndex = page.grid.layout.findIndex(
+      (row, i) =>
+        row.filter((a) => a === panelId || a === '.').length === row.length
+    );
+    if (wholeRowIndex >= 0) {
+      newPage.grid.layout.splice(wholeRowIndex, 1);
+      newPage.grid.rowSizes.splice(wholeRowIndex, 1);
+    }
+
+    let wholeColumnIndex = zip(...page.grid.layout).findIndex(
+      (row, i) =>
+        row.filter((a) => a === panelId || a === '.').length === row.length
+    );
+    if (wholeColumnIndex >= 0) {
+      newPage.grid.layout.forEach((row) => row.splice(wholeColumnIndex, 1));
+      newPage.grid.colSizes.splice(wholeColumnIndex, 1);
+    }
+
+    newPage.grid.layout = newPage.grid.layout.map((row, ri) => {
       return row.map((col, ci) => {
         return col === panelId ? '.' : col;
       });

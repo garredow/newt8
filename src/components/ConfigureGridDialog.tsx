@@ -83,7 +83,7 @@ export function ConfigureGridDialog({
       acc[val.id] = val.options.title;
       return acc;
     },
-    { '.': 'Empty' }
+    { '.': 'Blank' }
   );
 
   function findUnassignedPanels() {
