@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:watch": "cra-build-watch",
+    "build:watch": "cra-build-watch -b dev",
     "build:package": "react-scripts build && node deploy.js",
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
