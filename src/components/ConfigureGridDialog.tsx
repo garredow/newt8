@@ -75,8 +75,7 @@ export function ConfigureGridDialog({
   useEffect(() => {
     setOriginalGrid(gridLayout);
     setGrid(gridLayout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [gridLayout]);
 
   const panelNameMap = panels.reduce(
     (acc: any, val) => {
@@ -220,14 +219,8 @@ export function ConfigureGridDialog({
       <form onSubmit={handleSubmit}>
         <div>
           <div className={mixin(styles.layoutRow, styles.actionRow)}>
-            {grid.layout[0].map((col, i) => (
+            {grid.layout[0]?.map((col, i) => (
               <div key={i} className={styles.sizeCol}>
-                {/* <IconButton
-                  icon={<MdClose />}
-                  title="Delete column"
-                  type={ButtonType.Danger}
-                  onClick={() => deleteCol(i)}
-                /> */}
                 <SizeSelect
                   val={grid.colSizes[i]}
                   onChange={(data) => handleSizeChange('col', i, data)}
@@ -243,12 +236,6 @@ export function ConfigureGridDialog({
                     val={grid.rowSizes[ri]}
                     onChange={(data) => handleSizeChange('row', ri, data)}
                   />
-                  {/* <IconButton
-                    icon={<MdClose />}
-                    title="Delete row"
-                    type={ButtonType.Danger}
-                    onClick={() => deleteRow(ri)}
-                  /> */}
                 </div>
                 {row.map((col, ci) => {
                   return (
@@ -276,7 +263,7 @@ export function ConfigureGridDialog({
             );
           })}
           <div className={mixin(styles.layoutRow, styles.actionRow)}>
-            {grid.layout[0].map((col, i) => (
+            {grid.layout[0]?.map((col, i) => (
               <div key={i} className={styles.sizeCol}>
                 <IconButton
                   icon={<MdClose />}

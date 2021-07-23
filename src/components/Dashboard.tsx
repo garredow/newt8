@@ -79,7 +79,6 @@ export function DashboardView(props: DashboardViewProps) {
       newPage.grid.layout.length === 0
         ? [[panel.id]]
         : newPage.grid.layout.map((row) => [...row, panel.id]);
-    console.log('new page', newPage);
     savePage(newPage);
   }
 

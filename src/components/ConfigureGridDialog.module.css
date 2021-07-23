@@ -48,6 +48,7 @@
 
 .layoutRow {
   display: flex;
+  align-items: center;
 }
 .layoutRow > div {
   flex: 1;
@@ -65,6 +66,23 @@
   text-overflow: ellipsis;
   flex: 1;
   border: 1px solid black;
+  padding: 3px;
+}
+
+.layoutRow:nth-of-type(2) .layoutCol:nth-of-type(2) {
+  border-start-start-radius: 5px;
+}
+
+.layoutRow:nth-of-type(2) .layoutCol:nth-last-of-type(1) {
+  border-start-end-radius: 5px;
+}
+
+.layoutRow:nth-last-of-type(2) .layoutCol:nth-of-type(2) {
+  border-end-start-radius: 5px;
+}
+
+.layoutRow:nth-last-of-type(2) .layoutCol:nth-last-of-type(1) {
+  border-end-end-radius: 5px;
 }
 
 .layoutCol > select {

@@ -11,7 +11,6 @@ export type PanelConfigMap = {
 
 export type PanelOptions = {
   title: string;
-  width: number;
   columns: number;
 };
 
@@ -50,7 +49,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'Bookmarks',
       columns: 0,
-      width: 3,
     },
     options: {},
   },
@@ -74,7 +72,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'Devices',
       columns: 1,
-      width: 3,
       showTabAccessedTime: false,
       showUrl: true,
     },
@@ -99,7 +96,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'New Bookmarks',
       columns: 1,
-      width: 3,
     },
     options: {},
   },
@@ -122,7 +118,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'Recent Tabs',
       columns: 1,
-      width: 3,
     },
     options: {},
   },
@@ -149,7 +144,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'Recently Closed',
       columns: 1,
-      width: 3,
     },
     options: {},
   },
@@ -173,7 +167,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'Top Sites',
       columns: 1,
-      width: 3,
     },
     options: {},
   },
@@ -196,7 +189,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: 'Windows',
       columns: 1,
-      width: 3,
       showTabAccessedTime: false,
       showUrl: true,
     },
@@ -212,7 +204,6 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       title: '',
       columns: 1,
-      width: 3,
     },
     options: {},
   },
@@ -223,7 +214,7 @@ const panelConfigs: PanelConfigMap = {
     description:
       'A brand new panel where you can choose what you want displayed.',
     permissions: [],
-    defaultOptions: { title: 'New Panel', width: 3 },
+    defaultOptions: { title: 'New Panel' },
     options: {},
   },
 };
