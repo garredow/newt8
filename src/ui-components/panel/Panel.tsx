@@ -24,13 +24,17 @@ type PanelProps = ComponentBase &
   DraggablePanelProps & {
     options: PanelOptions;
     enableSettings?: boolean;
+    enableColumns?: boolean;
     extraSettings?: React.ReactNode;
     onOptionsChanged: (options: PanelOptions) => void;
     onDeletePanel: () => void;
   };
 
 export const Panel = React.forwardRef(
-  ({ enableSettings = true, ...props }: PanelProps, ref: any) => {
+  (
+    { enableSettings = true, enableColumns = false, ...props }: PanelProps,
+    ref: any
+  ) => {
     const [showSettings, setShowSettings] = useState(false);
     const [animateSettings, setAnimateSettings] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
@@ -125,48 +129,35 @@ export const Panel = React.forwardRef(
                   }}
                   data-testid="settings"
                 >
-                  <SettingsRow
-                    label="Columns"
-                    helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
-                  >
-                    <select
-                      defaultValue={props.options.columns}
-                      onChange={(ev) =>
-                        setOptionValue('columns', parseInt(ev.target.value, 10))
-                      }
-                      data-testid="select-columns"
+                  {enableColumns ? (
+                    <SettingsRow
+                      label="Columns"
+                      helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
                     >
-                      <option value={0}>Auto</option>
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
-                      <option value={4}>4</option>
-                      <option value={5}>5</option>
-                      <option value={6}>6</option>
-                      <option value={7}>7</option>
-                      <option value={8}>8</option>
-                      <option value={9}>9</option>
-                      <option value={10}>10</option>
-                    </select>
-                  </SettingsRow>
-                  {/* <SettingsRow
-                    label="Width"
-                    helpText="How wide this column is in relation to the others in the dashboard."
-                  >
-                    <select
-                      defaultValue={props.options.width}
-                      onChange={(ev) =>
-                        setOptionValue('width', parseInt(ev.target.value, 10))
-                      }
-                      data-testid="select-width"
-                    >
-                      <option value={1}>Smallest</option>
-                      <option value={2}>Small</option>
-                      <option value={3}>Medium</option>
-                      <option value={4}>Large</option>
-                      <option value={5}>Largest</option>
-                    </select>
-                  </SettingsRow> */}
+                      <select
+                        defaultValue={props.options.columns}
+                        onChange={(ev) =>
+                          setOptionValue(
+                            'columns',
+                            parseInt(ev.target.value, 10)
+                          )
+                        }
+                        data-testid="select-columns"
+                      >
+                        <option value={0}>Auto</option>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                        <option value={6}>6</option>
+                        <option value={7}>7</option>
+                        <option value={8}>8</option>
+                        <option value={9}>9</option>
+                        <option value={10}>10</option>
+                      </select>
+                    </SettingsRow>
+                  ) : null}
                   <div
                     onClick={(ev) => {
                       if ((ev.target as HTMLDivElement).tagName === 'BUTTON') {

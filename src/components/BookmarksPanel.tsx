@@ -104,6 +104,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       panelId={props.panelId}
       panelIndex={props.panelIndex}
       options={options as any}
+      enableColumns={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}

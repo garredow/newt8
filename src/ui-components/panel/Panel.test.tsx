@@ -130,6 +130,7 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
+      enableColumns: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -151,6 +152,7 @@ describe('Panel', () => {
         columns: 1,
         options: {} as any,
       },
+      enableColumns: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };

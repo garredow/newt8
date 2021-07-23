@@ -106,6 +106,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
       panelId={props.panelId}
       panelIndex={props.panelIndex}
       options={options}
+      enableColumns={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
