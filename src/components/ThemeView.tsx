@@ -654,7 +654,6 @@ export function ThemeView(props: ThemeViewProps) {
                       panelIndex={0}
                       options={{
                         columns: 1,
-                        width: 3,
                         title: 'Example Panel',
                       }}
                       onOptionsChanged={() => {}}
