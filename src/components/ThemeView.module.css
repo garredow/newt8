@@ -9,7 +9,6 @@
 }
 
 .basePreview {
-  grid-column: span 3;
 }
 .basePreview > button {
   width: 100%;
@@ -18,6 +17,14 @@
 
 .secondaryText {
   color: var(--secondary-text-color);
+}
+
+.warningText {
+  color: var(--warning-text-color);
+}
+
+.errorText {
+  color: var(--error-text-color);
 }
 
 .accent {
@@ -38,17 +45,14 @@
   padding: 20px 20px 30px 20px;
   overflow-y: auto;
   flex: 1;
+  font-size: calc(var(--base-text-size) * 1px);
 }
 
 .panels {
-  display: grid;
-  grid-auto-flow: row;
-  grid-auto-columns: 1fr;
-  grid-template-rows: min-content;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   max-height: var(--full-height);
-  padding: 0 15px;
-  grid-gap: 30px;
 }
 
 .panelSecondaryText {
@@ -59,10 +63,17 @@
   color: var(--panel-accent-color);
 }
 
+.cardTextContainer {
+  padding: 0 15px;
+}
+.cardTextContainer div:first-child {
+  margin-bottom: 10px;
+}
+
 .sidebar {
   height: 50px;
+  font-size: var(--sidebar-title-text-size);
   background-color: var(--sidebar-bg-color);
-  grid-column: span 3;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,21 +86,23 @@
   height: 50px;
 }
 
-.sidebarAccentText {
+.sidebarButtons {
+  white-space: nowrap;
+}
+
+.sidebarActivePage {
   color: var(--sidebar-accent-color);
   display: flex;
   align-items: center;
   padding: 0 10px;
   text-transform: uppercase;
-  font-size: 1.2em;
 }
-.sidebarPrimaryText {
-  color: var(--sidebar-primary-text-color);
+.sidebarPage {
+  color: var(--sidebar-title-text-color);
   display: flex;
   align-items: center;
   padding: 0 10px;
   text-transform: uppercase;
-  font-size: 1.2em;
 }
 
 .configContainer {
@@ -106,7 +119,7 @@
   flex: 1;
 }
 
-.colorList {
+.themeValueList {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 20px;
@@ -174,6 +187,7 @@
 .colorInput {
   border-bottom: 1px solid var(--primary-text-color);
   margin-right: 10px;
+  height: 36px;
 }
 
 .colorPreviewContainer {

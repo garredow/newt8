@@ -11,6 +11,7 @@ body {
   --secondary-text-color: rgba(0, 0, 0, 0.5);
   --warning-text-color: #f6f862;
   --error-text-color: #f45d52;
+  --base-text-size: 16px;
 
   --primary-button-bg-color: var(--app-accent-color);
   --primary-button-text-color: var(--primary-text-color);
@@ -26,6 +27,7 @@ body {
   --panel-accent-color: var(--app-accent-color);
   --panel-divider-color: var(--secondary-text-color);
   --panel-title-text-color: var(--primary-text-color);
+  --panel-title-text-size: 2rem;
   --panel-primary-text-color: var(--primary-text-color);
   --panel-secondary-text-color: var(--secondary-text-color);
 
@@ -43,6 +45,7 @@ body {
   --card-accent-color: var(--app-accent-color);
   --card-divider-color: var(--primary-text-color);
   --card-title-text-color: var(--primary-text-color);
+  --card-title-text-size: 1.5rem;
   --card-primary-text-color: var(--primary-text-color);
   --card-secondary-text-color: var(--secondary-text-color);
 
@@ -54,10 +57,27 @@ body {
   --card-warning-button-text-color: var(--warning-button-text-color);
   --card-danger-button-bg-color: var(--danger-button-bg-color);
   --card-danger-button-text-color: var(--danger-button-text-color);
-}
 
-body {
-  font-size: 16px;
+  /* Sidebar */
+  --sidebar-bg-color: #ffffff;
+  --sidebar-accent-color: var(--app-accent-color);
+  --sidebar-divider-color: var(--primary-text-color);
+  --sidebar-title-text-color: var(--primary-text-color);
+  --sidebar-title-text-size: 1.2rem;
+  --sidebar-primary-text-color: var(--primary-text-color);
+  --sidebar-secondary-text-color: var(--secondary-text-color);
+
+  --sidebar-primary-button-bg-color: var(--primary-button-bg-color);
+  --sidebar-primary-button-text-color: var(--primary-button-text-color);
+  --sidebar-secondary-button-bg-color: var(--secondary-button-bg-color);
+  --sidebar-secondary-button-text-color: var(--secondary-button-text-color);
+  --sidebar-warning-button-bg-color: var(--warning-button-bg-color);
+  --sidebar-warning-button-text-color: var(--warning-button-text-color);
+  --sidebar-danger-button-bg-color: var(--danger-button-bg-color);
+  --sidebar-danger-button-text-color: var(--danger-button-text-color);
+
+  /* Actual Styles */
+  font-size: calc(var(--base-text-size) * 1px);
 }
 
 * {

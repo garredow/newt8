@@ -343,6 +343,7 @@ export function DashboardView(props: DashboardViewProps) {
       >
         <IconButton
           icon={<MdAdd />}
+          type={ButtonType.Primary}
           title="Add a new panel"
           onClick={() => {
             // Only allow one new panel at a time
@@ -358,6 +359,7 @@ export function DashboardView(props: DashboardViewProps) {
         />
         <IconButton
           icon={<MdDashboard />}
+          type={ButtonType.Primary}
           title="Configure dashboard grid"
           onClick={() => setShowGridConfig(true)}
         />

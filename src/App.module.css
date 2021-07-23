@@ -49,14 +49,3 @@ input {
   outline: none;
   border-bottom: 2px solid var(--app-accent-color);
 }
-
-input[type='checkbox'] {
-}
-
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
-}

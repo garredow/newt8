@@ -37,12 +37,12 @@
 
 .line2 {
   color: var(--card-secondary-text-color);
-  font-size: 0.9rem;
+  font-size: 0.9em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .line3 {
   color: var(--card-accent-color);
-  font-size: 0.9rem;
+  font-size: 0.9em;
 }

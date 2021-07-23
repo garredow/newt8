@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import {
   MdCheck,
   MdClose,
@@ -13,7 +12,7 @@ import {
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
 import { ComponentBase } from '../models/ComponentBase';
-import { Theme, ThemeColor, ThemeValues } from '../models/Theme';
+import { Theme, ThemeValue, ThemeValues } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
@@ -29,6 +28,7 @@ export type ThemeViewProps = ComponentBase & {};
 type Section = {
   title: string;
   colors: (keyof ThemeValues)[];
+  sizes: (keyof ThemeValues)[];
 };
 
 const basicSections: Section[] = [
@@ -41,6 +41,7 @@ const basicSections: Section[] = [
       'cardBgColor',
       'sidebarBgColor',
     ],
+    sizes: [],
   },
   {
     title: 'Text',
@@ -50,6 +51,7 @@ const basicSections: Section[] = [
       'warningTextColor',
       'errorTextColor',
     ],
+    sizes: ['baseTextSize'],
   },
   {
     title: 'Buttons',
@@ -63,6 +65,7 @@ const basicSections: Section[] = [
       'dangerButtonBgColor',
       'dangerButtonTextColor',
     ],
+    sizes: [],
   },
 ];
 
@@ -85,6 +88,7 @@ const sections: Section[] = [
       'dangerButtonBgColor',
       'dangerButtonTextColor',
     ],
+    sizes: [],
   },
   {
     title: 'Panels',
@@ -104,6 +108,7 @@ const sections: Section[] = [
       'panelDangerButtonBgColor',
       'panelDangerButtonTextColor',
     ],
+    sizes: ['panelTitleTextSize'],
   },
   {
     title: 'Cards',
@@ -123,6 +128,7 @@ const sections: Section[] = [
       'cardDangerButtonBgColor',
       'cardDangerButtonTextColor',
     ],
+    sizes: ['cardTitleTextSize'],
   },
   {
     title: 'Sidebar',
@@ -142,6 +148,7 @@ const sections: Section[] = [
       'sidebarDangerButtonBgColor',
       'sidebarDangerButtonTextColor',
     ],
+    sizes: ['sidebarTitleTextSize'],
   },
 ];
 
@@ -321,6 +328,9 @@ export function ThemeView(props: ThemeViewProps) {
         newTheme.values.cardDangerButtonTextColor.value = val;
         newTheme.values.sidebarDangerButtonTextColor.value = val;
         break;
+      case 'baseTextSize':
+        newTheme.values.baseTextSize.value = val;
+        break;
     }
 
     setTheme(newTheme);
@@ -469,12 +479,28 @@ export function ThemeView(props: ThemeViewProps) {
             {basicSections.map((section) => (
               <div key={section.title}>
                 <h3>{section.title}</h3>
-                <div className={styles.colorList}>
-                  {section.colors.map((colorKey) => (
-                    <ColorChooser
-                      key={colorKey}
-                      id={colorKey}
-                      color={workingTheme.values[colorKey]}
+                {section.sizes.length > 0 ? (
+                  <>
+                    <h4>Sizes</h4>
+                    <div className={styles.themeValueList}>
+                      {section.sizes.map((key) => (
+                        <ThemeValueChooser
+                          key={key}
+                          id={key}
+                          data={workingTheme.values[key]}
+                          onChange={updateBasicWorkingThemeColor}
+                        />
+                      ))}
+                    </div>
+                  </>
+                ) : null}
+                <h4>Colors</h4>
+                <div className={styles.themeValueList}>
+                  {section.colors.map((key) => (
+                    <ThemeValueChooser
+                      key={key}
+                      id={key}
+                      data={workingTheme.values[key]}
                       onChange={updateBasicWorkingThemeColor}
                     />
                   ))}
@@ -500,12 +526,29 @@ export function ThemeView(props: ThemeViewProps) {
                 {sections.map((section) => (
                   <div key={section.title}>
                     <h3>{section.title}</h3>
-                    <div className={styles.colorList}>
+                    {section.sizes.length > 0 ? (
+                      <>
+                        <h4>Sizes</h4>
+                        <div className={styles.themeValueList}>
+                          {section.sizes.map((key) => (
+                            <ThemeValueChooser
+                              key={key}
+                              id={key}
+                              data={workingTheme.values[key]}
+                              onChange={updateWorkingThemeColor}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    ) : null}
+
+                    <h4>Colors</h4>
+                    <div className={styles.themeValueList}>
                       {section.colors.map((colorKey) => (
-                        <ColorChooser
+                        <ThemeValueChooser
                           key={colorKey}
                           id={colorKey}
-                          color={workingTheme.values[colorKey]}
+                          data={workingTheme.values[colorKey]}
                           onChange={updateWorkingThemeColor}
                         />
                       ))}
@@ -613,8 +656,13 @@ export function ThemeView(props: ThemeViewProps) {
                 Here's some secondary text so you can get an idea how it looks.
               </p>
               <p className={styles.accent}>
-                Here's some text so you can get an idea how the accent color
-                looks.
+                Here's some accent text so you can get an idea how it looks.
+              </p>
+              <p className={styles.warningText}>
+                Here's some warning text so you can get an idea how it looks.
+              </p>
+              <p className={styles.errorText}>
+                Here's some error text so you can get an idea how it looks.
               </p>
               <Button
                 type={ButtonType.Primary}
@@ -641,116 +689,123 @@ export function ThemeView(props: ThemeViewProps) {
                 onClick={() => {}}
               />
             </div>
-            <DragDropContext onDragEnd={() => {}}>
-              <Droppable droppableId="preview" direction="horizontal">
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    style={{ gridColumn: `span 3` }}
-                  >
-                    <Panel
-                      panelId="test"
-                      panelIndex={0}
-                      options={{
-                        columns: 1,
-                        title: 'Example Panel',
-                      }}
-                      onOptionsChanged={() => {}}
-                      onDeletePanel={() => {}}
-                    >
-                      <PanelContent columns={1}>
-                        Here's some primary panel text so you can get an idea
-                        how it looks.
-                        <div className={styles.panelSecondaryText}>
-                          Here's some secondary panel text so you can get an
-                          idea how it looks.
-                        </div>
-                        <div className={styles.panelAccent}>
-                          Here's some text so you can get an idea how the panel
-                          accent color looks.
-                        </div>
-                        <Button
-                          type={ButtonType.Primary}
-                          kind={ButtonKind.Panel}
-                          text="Primary Panel Button"
-                          onClick={() => {}}
-                        />
-                        <Button
-                          type={ButtonType.Secondary}
-                          kind={ButtonKind.Panel}
-                          text="Secondary Panel Button"
-                          onClick={() => {}}
-                        />
-                        <Button
-                          type={ButtonType.Warning}
-                          kind={ButtonKind.Panel}
-                          text="Warning Panel Button"
-                          onClick={() => {}}
-                        />
-                        <Button
-                          type={ButtonType.Danger}
-                          kind={ButtonKind.Panel}
-                          text="Danger Panel Button"
-                          onClick={() => {}}
-                        />
-                        <Card>
-                          <CardHeader text="Example Card" />
-                          <SiteRow
-                            title="Example Website 1"
-                            iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                            url={`https://developer.mozilla.org/en-US/`}
-                            line3="10 minutes ago"
-                          />
-                          <SiteRow
-                            title="Example Website 2"
-                            iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                            url={`https://developer.mozilla.org/en-US/`}
-                            line3="10 minutes ago"
-                          />
-                          <SiteRow
-                            title="Example Website 3"
-                            iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                            url={`https://developer.mozilla.org/en-US/`}
-                            line3="10 minutes ago"
-                          />
-                          <Button
-                            type={ButtonType.Primary}
-                            kind={ButtonKind.Card}
-                            text="Primary Card Button"
-                            onClick={() => {}}
-                          />
-                          <Button
-                            type={ButtonType.Secondary}
-                            kind={ButtonKind.Card}
-                            text="Secondary Card Button"
-                            onClick={() => {}}
-                          />
-                          <Button
-                            type={ButtonType.Warning}
-                            kind={ButtonKind.Card}
-                            text="Warning Card Button"
-                            onClick={() => {}}
-                          />
-                          <Button
-                            type={ButtonType.Danger}
-                            kind={ButtonKind.Card}
-                            text="Danger Card Button"
-                            onClick={() => {}}
-                          />
-                        </Card>
-                      </PanelContent>
-                    </Panel>
+
+            <Panel
+              panelId="test"
+              panelIndex={0}
+              options={{
+                columns: 1,
+                title: 'Example Panel',
+              }}
+              onOptionsChanged={() => {}}
+              onDeletePanel={() => {}}
+            >
+              <PanelContent columns={1}>
+                Here's some primary panel text so you can get an idea how it
+                looks.
+                <div className={styles.panelSecondaryText}>
+                  Here's some secondary panel text so you can get an idea how it
+                  looks.
+                </div>
+                <div className={styles.panelAccent}>
+                  Here's some accent panel text so you can get an idea how it
+                  looks.
+                </div>
+                <div className={styles.warningText}>
+                  Here's some warning panel text so you can get an idea how it
+                  looks.
+                </div>
+                <div className={styles.errorText}>
+                  Here's some error panel text so you can get an idea how it
+                  looks.
+                </div>
+                <Button
+                  type={ButtonType.Primary}
+                  kind={ButtonKind.Panel}
+                  text="Primary Panel Button"
+                  onClick={() => {}}
+                />
+                <Button
+                  type={ButtonType.Secondary}
+                  kind={ButtonKind.Panel}
+                  text="Secondary Panel Button"
+                  onClick={() => {}}
+                />
+                <Button
+                  type={ButtonType.Warning}
+                  kind={ButtonKind.Panel}
+                  text="Warning Panel Button"
+                  onClick={() => {}}
+                />
+                <Button
+                  type={ButtonType.Danger}
+                  kind={ButtonKind.Panel}
+                  text="Danger Panel Button"
+                  onClick={() => {}}
+                />
+                <Card>
+                  <CardHeader text="Example Card" />
+                  <div className={styles.cardTextContainer}>
+                    <div className={styles.warningText}>
+                      Here's some warning panel text so you can get an idea how
+                      it looks.
+                    </div>
+                    <div className={styles.errorText}>
+                      Here's some error panel text so you can get an idea how it
+                      looks.
+                    </div>
                   </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+                  <SiteRow
+                    title="Example Website 1"
+                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                    url={`https://developer.mozilla.org/en-US/`}
+                    line3="10 minutes ago"
+                  />
+                  <SiteRow
+                    title="Example Website 2"
+                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                    url={`https://developer.mozilla.org/en-US/`}
+                    line3="10 minutes ago"
+                  />
+                  <SiteRow
+                    title="Example Website 3"
+                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                    url={`https://developer.mozilla.org/en-US/`}
+                    line3="10 minutes ago"
+                  />
+                  <Button
+                    type={ButtonType.Primary}
+                    kind={ButtonKind.Card}
+                    text="Primary Card Button"
+                    onClick={() => {}}
+                  />
+                  <Button
+                    type={ButtonType.Secondary}
+                    kind={ButtonKind.Card}
+                    text="Secondary Card Button"
+                    onClick={() => {}}
+                  />
+                  <Button
+                    type={ButtonType.Warning}
+                    kind={ButtonKind.Card}
+                    text="Warning Card Button"
+                    onClick={() => {}}
+                  />
+                  <Button
+                    type={ButtonType.Danger}
+                    kind={ButtonKind.Card}
+                    text="Danger Card Button"
+                    onClick={() => {}}
+                  />
+                </Card>
+              </PanelContent>
+            </Panel>
             <div className={styles.sidebar}>
               <div className={styles.sidebarPages}>
-                <div className={styles.sidebarAccentText}>ACTIVE PAGE</div>
-                <div className={styles.sidebarPrimaryText}>INACTIVE PAGE</div>
+                <div className={styles.sidebarActivePage}>ACTIVE PAGE</div>
+                <div className={styles.sidebarPage}>INACTIVE PAGE</div>
               </div>
-              <div>
+              <div className={styles.sidebarButtons}>
                 <IconButton
                   size={48}
                   title="Example"
@@ -792,40 +847,45 @@ export function ThemeView(props: ThemeViewProps) {
   );
 }
 
-type ColorChooserProps = {
+type ThemeValueChooserProps = {
   id: keyof ThemeValues;
-  color: ThemeColor;
+  data: ThemeValue;
   onChange: (id: keyof ThemeValues, newVal: string) => void;
 };
 
-function ColorChooser({ id, color, onChange }: ColorChooserProps) {
+function ThemeValueChooser({ id, data, onChange }: ThemeValueChooserProps) {
   function handleColorChange(ev: any) {
     onChange(id, ev.target.value);
   }
 
-  const isHex = new RegExp(/#[0-9a-fA-F]{6}/).test(color.value);
-
   return (
     <div className={styles.colorChooser}>
-      <div className={styles.colorName}>{color.name}</div>
+      <div className={styles.colorName}>{data.name}</div>
       <input
         className={styles.colorInput}
-        value={color.value}
+        value={data.value}
         onChange={handleColorChange}
         readOnly={false}
+        type={data.type === 'number' ? 'number' : undefined}
       />
-      <div className={styles.colorPreviewContainer}>
-        <input
-          type="color"
-          className={styles.colorPreviewInput}
-          value={isHex ? color.value : '#000000'} // It complains if the value isn't hex
-          onInput={handleColorChange}
-        ></input>
-        <div
-          className={styles.colorPreview}
-          style={{ backgroundColor: color.value }}
-        ></div>
-      </div>
+      {data.type === 'color' ? (
+        <div className={styles.colorPreviewContainer}>
+          <input
+            type="color"
+            className={styles.colorPreviewInput}
+            value={
+              new RegExp(/#[0-9a-fA-F]{6}/).test(data.value)
+                ? data.value
+                : '#000000'
+            } // It complains if the value isn't hex
+            onInput={handleColorChange}
+          ></input>
+          <div
+            className={styles.colorPreview}
+            style={{ backgroundColor: data.value }}
+          ></div>
+        </div>
+      ) : null}
     </div>
   );
 }
