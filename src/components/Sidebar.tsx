@@ -10,7 +10,6 @@ import { IconButton } from '../ui-components/button';
 import {
   MdAdd,
   MdClose,
-  MdColorLens,
   MdCompareArrows,
   MdEdit,
   MdSettings,
@@ -193,7 +192,7 @@ export function Sidebar(props: SidebarProps) {
           )}
         >
           <IconButton
-            size={40}
+            size={32}
             kind={ButtonKind.SideBar}
             type={ButtonType.Secondary}
             icon={<MdAdd />}
@@ -213,7 +212,7 @@ export function Sidebar(props: SidebarProps) {
             }
           />
           <IconButton
-            size={40}
+            size={32}
             kind={ButtonKind.SideBar}
             type={ButtonType.Secondary}
             icon={<MdEdit />}
@@ -223,19 +222,9 @@ export function Sidebar(props: SidebarProps) {
         </div>
       </div>
       <div>
-        <Link to="/theme">
-          <IconButton
-            size={42}
-            kind={ButtonKind.SideBar}
-            type={ButtonType.Primary}
-            icon={<MdColorLens />}
-            title="Themes"
-            onClick={() => {}}
-          />
-        </Link>
         <Link to="/settings">
           <IconButton
-            size={42}
+            size={40}
             kind={ButtonKind.SideBar}
             type={ButtonType.Primary}
             icon={<MdSettings />}

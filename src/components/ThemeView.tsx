@@ -9,6 +9,7 @@ import {
   MdExpandMore,
   MdSettings,
 } from 'react-icons/md';
+import { useHistory, useLocation } from 'react-router-dom';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
 import { ComponentBase } from '../models/ComponentBase';
@@ -19,7 +20,6 @@ import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/card/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './ThemeView.module.css';
 
@@ -154,24 +154,19 @@ const sections: Section[] = [
 
 export function ThemeView(props: ThemeViewProps) {
   const [workingTheme, setWorkingTheme] = useState<Theme>(null as any);
-  const [showConfig, setShowConfig] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [themeJson, setThemeJson] = useState<string>('');
   const [showJson, setShowJson] = useState(false);
   const [themeImportError, setThemeImportError] = useState(false);
   const [themePreviewStyles, setThemePreviewStyles] = useState<any>({});
   const { settings, setSettings } = useContext(SettingsContext);
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
-    const currentTheme = getCurrentTheme();
-    setTheme(currentTheme);
+    setTheme((location.state as any).theme);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    settings.activeTheme,
-    settings.lightTheme,
-    settings.darkTheme,
-    settings.dynamicThemes,
-  ]);
+  }, [location.state]);
 
   useEffect(() => {
     if (!workingTheme) return;
@@ -187,45 +182,6 @@ export function ThemeView(props: ThemeViewProps) {
   function setTheme(theme: Theme) {
     setWorkingTheme(theme);
     setThemeJson(JSON.stringify(theme));
-  }
-
-  function setSettingValue(key: string, val: any) {
-    setSettings({ ...settings, [key]: val });
-  }
-
-  function getCurrentTheme() {
-    const theme = settings.dynamicThemes
-      ? isDarkMode()
-        ? settings.themes.find((a) => a.id === settings.darkTheme)
-        : settings.themes.find((a) => a.id === settings.lightTheme)
-      : settings.themes.find((a) => a.id === settings.activeTheme);
-
-    return theme || settings.themes[0];
-  }
-
-  function createNewTheme() {
-    const newTheme: Theme = {
-      id: `custom_${new Date().toISOString()}`,
-      name: 'My Custom Theme',
-      values: { ...getCurrentTheme().values },
-    };
-
-    setTheme(newTheme);
-    setShowConfig(true);
-  }
-
-  function editTheme() {
-    setShowConfig(true);
-  }
-
-  function deleteTheme() {
-    const newThemes = settings.themes.filter((a) => a.id !== workingTheme.id);
-
-    setSettings({
-      ...settings,
-      activeTheme: settings.themes[0].id,
-      themes: newThemes,
-    });
   }
 
   function updateWorkingThemeColor(id: string, val: string) {
@@ -347,11 +303,7 @@ export function ThemeView(props: ThemeViewProps) {
   }
 
   function cancelConfigureTheme() {
-    const theme = getCurrentTheme();
-
-    setTheme(theme);
-    setShowConfig(false);
-    setShowJson(false);
+    history.goBack();
   }
 
   function saveWorkingTheme() {
@@ -370,13 +322,13 @@ export function ThemeView(props: ThemeViewProps) {
         : 'lightTheme'
       : 'activeTheme';
 
-    setShowConfig(false);
     setSettings({
       ...settings,
       [themeKey]: workingTheme.id,
       themes: newThemes,
     });
-    setShowJson(false);
+
+    history.goBack();
   }
 
   function exportTheme(json: string) {
@@ -403,247 +355,163 @@ export function ThemeView(props: ThemeViewProps) {
     }
   }
 
+  if (!workingTheme) return null;
+
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
-      {showConfig ? (
-        <div className={styles.configContainer}>
-          <div className={styles.configureHeader}>
-            <h1>Configure</h1>
-            <IconButton
-              type={ButtonType.Primary}
-              icon={<MdCode />}
-              title="Import/export theme"
-              onClick={() => {
-                setThemeImportError(false);
-                setShowJson(!showJson);
-              }}
-            />
-            <IconButton
-              type={ButtonType.Primary}
-              icon={<MdClose />}
-              title="Discard changes"
-              onClick={cancelConfigureTheme}
-            />
-            <IconButton
-              type={ButtonType.Primary}
-              icon={<MdCheck />}
-              title="Save theme"
-              onClick={saveWorkingTheme}
-            />
-          </div>
-          <div className={styles.configure}>
-            {showJson ? (
-              <div className={styles.importExportTheme}>
-                <p>
-                  You can use this text field to import/export a custom theme.
-                  To import, just drop in your JSON and click apply.
-                </p>
-                <textarea
-                  className={styles.themeJson}
-                  value={themeJson}
-                  onChange={(ev) => setThemeJson(ev.target.value)}
-                  rows={5}
-                />
-                <Button text="Apply" onClick={() => importTheme(themeJson)} />
-                <Button
-                  text="Copy to clipboard"
-                  onClick={() => exportTheme(themeJson)}
-                />
-                {themeImportError ? (
-                  <p className={styles.importError}>Failed to import theme.</p>
-                ) : null}
-              </div>
-            ) : null}
-            <h2>Name</h2>
-            <input
-              className={styles.themeName}
-              value={workingTheme.name}
-              onInput={(ev) => updateWorkingThemeName((ev.target as any).value)}
-            />
-            <h2>Basic</h2>
-            <p>
-              You can click on a color block to bring up a color picker, or type
-              in your values manually. Each field accepts all color formats
-              (hex, rgb, hsl, etc). Colors with transparency may not display
-              100% correctly in the color block. I highly recommend a site like{' '}
-              <a
-                href="https://coolors.co/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Coolors
-              </a>{' '}
-              for palette ideas and experimentation.
-            </p>
-            <p>Need more control? Head down to the advanced section.</p>
-            {basicSections.map((section) => (
-              <div key={section.title}>
-                <h3>{section.title}</h3>
-                {section.sizes.length > 0 ? (
-                  <>
-                    <h4>Sizes</h4>
-                    <div className={styles.themeValueList}>
-                      {section.sizes.map((key) => (
-                        <ThemeValueChooser
-                          key={key}
-                          id={key}
-                          data={workingTheme.values[key]}
-                          onChange={updateBasicWorkingThemeColor}
-                        />
-                      ))}
-                    </div>
-                  </>
-                ) : null}
-                <h4>Colors</h4>
-                <div className={styles.themeValueList}>
-                  {section.colors.map((key) => (
-                    <ThemeValueChooser
-                      key={key}
-                      id={key}
-                      data={workingTheme.values[key]}
-                      onChange={updateBasicWorkingThemeColor}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div className={styles.mainSectionHeader}>
-              <h2>Advanced</h2>
-              <IconButton
-                type={ButtonType.Primary}
-                icon={showAdvanced ? <MdExpandLess /> : <MdExpandMore />}
-                title="Toggle advanced theme options"
-                onClick={() => setShowAdvanced(!showAdvanced)}
+      <div className={styles.configContainer}>
+        <div className={styles.configureHeader}>
+          <h1>Configure</h1>
+          <IconButton
+            type={ButtonType.Primary}
+            icon={<MdCode />}
+            title="Import/export theme"
+            onClick={() => {
+              setThemeImportError(false);
+              setShowJson(!showJson);
+            }}
+          />
+          <IconButton
+            type={ButtonType.Primary}
+            icon={<MdClose />}
+            title="Discard changes"
+            onClick={cancelConfigureTheme}
+          />
+          <IconButton
+            type={ButtonType.Primary}
+            icon={<MdCheck />}
+            title="Save theme"
+            onClick={saveWorkingTheme}
+          />
+        </div>
+        <div className={styles.configure}>
+          {showJson ? (
+            <div className={styles.importExportTheme}>
+              <p>
+                You can use this text field to import/export a custom theme. To
+                import, just drop in your JSON and click apply.
+              </p>
+              <textarea
+                className={styles.themeJson}
+                value={themeJson}
+                onChange={(ev) => setThemeJson(ev.target.value)}
+                rows={5}
               />
+              <Button text="Apply" onClick={() => importTheme(themeJson)} />
+              <Button
+                text="Copy to clipboard"
+                onClick={() => exportTheme(themeJson)}
+              />
+              {themeImportError ? (
+                <p className={styles.importError}>Failed to import theme.</p>
+              ) : null}
             </div>
-            {showAdvanced ? (
-              <>
-                <p>
-                  Here you can individually customize the colors for the general
-                  app, panels, cards, and anything else. These are the values
-                  that will get saved as your theme.
-                </p>
-                {sections.map((section) => (
-                  <div key={section.title}>
-                    <h3>{section.title}</h3>
-                    {section.sizes.length > 0 ? (
-                      <>
-                        <h4>Sizes</h4>
-                        <div className={styles.themeValueList}>
-                          {section.sizes.map((key) => (
-                            <ThemeValueChooser
-                              key={key}
-                              id={key}
-                              data={workingTheme.values[key]}
-                              onChange={updateWorkingThemeColor}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    ) : null}
-
-                    <h4>Colors</h4>
-                    <div className={styles.themeValueList}>
-                      {section.colors.map((colorKey) => (
-                        <ThemeValueChooser
-                          key={colorKey}
-                          id={colorKey}
-                          data={workingTheme.values[colorKey]}
-                          onChange={updateWorkingThemeColor}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </>
-            ) : null}
-          </div>
-        </div>
-      ) : (
-        <div className={styles.settingsContainer}>
-          <h1>Choose a Theme</h1>
-          <SettingsRow
-            label="Dynamic themes"
-            helpText="When you turn on dark mode for your device, Newt's theme will change to match it."
-          >
-            <input
-              type="checkbox"
-              checked={settings.dynamicThemes}
-              onChange={(ev) =>
-                setSettingValue('dynamicThemes', ev.target.checked)
-              }
-            />
-          </SettingsRow>
-          {settings.dynamicThemes ? (
-            <>
-              <SettingsRow
-                label="Light Theme"
-                helpText="This theme will be applied when dark mode is turned off."
-              >
-                <select
-                  value={settings.lightTheme}
-                  onChange={(ev) =>
-                    setSettingValue('lightTheme', ev.target.value)
-                  }
-                >
-                  {settings.themes.map((theme) => (
-                    <option key={theme.id} value={theme.id}>
-                      {theme.name}
-                    </option>
-                  ))}
-                </select>
-              </SettingsRow>
-              <SettingsRow
-                label="Dark Theme"
-                helpText="This theme will be applied when dark mode is on."
-              >
-                <select
-                  value={settings.darkTheme}
-                  onChange={(ev) =>
-                    setSettingValue('darkTheme', ev.target.value)
-                  }
-                >
-                  {settings.themes.map((theme) => (
-                    <option key={theme.id} value={theme.id}>
-                      {theme.name}
-                    </option>
-                  ))}
-                </select>
-              </SettingsRow>
-            </>
-          ) : (
-            <SettingsRow
-              label="Theme"
-              helpText="Choose which theme you'd like applied."
+          ) : null}
+          <h2>Name</h2>
+          <input
+            className={styles.themeName}
+            value={workingTheme.name}
+            onInput={(ev) => updateWorkingThemeName((ev.target as any).value)}
+          />
+          <h2>Basic</h2>
+          <p>
+            You can click on a color block to bring up a color picker, or type
+            in your values manually. Each field accepts all color formats (hex,
+            rgb, hsl, etc). Colors with transparency may not display 100%
+            correctly in the color block. I highly recommend a site like{' '}
+            <a
+              href="https://coolors.co/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <select
-                value={settings.activeTheme}
-                onChange={(ev) =>
-                  setSettingValue('activeTheme', ev.target.value)
-                }
-              >
-                {settings.themes.map((theme) => (
-                  <option key={theme.id} value={theme.id}>
-                    {theme.name}
-                  </option>
+              Coolors
+            </a>{' '}
+            for palette ideas and experimentation.
+          </p>
+          <p>Need more control? Head down to the advanced section.</p>
+          {basicSections.map((section) => (
+            <div key={section.title}>
+              <h3>{section.title}</h3>
+              {section.sizes.length > 0 ? (
+                <>
+                  <h4>Sizes</h4>
+                  <div className={styles.themeValueList}>
+                    {section.sizes.map((key) => (
+                      <ThemeValueChooser
+                        key={key}
+                        id={key}
+                        data={workingTheme.values[key]}
+                        onChange={updateBasicWorkingThemeColor}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : null}
+              <h4>Colors</h4>
+              <div className={styles.themeValueList}>
+                {section.colors.map((key) => (
+                  <ThemeValueChooser
+                    key={key}
+                    id={key}
+                    data={workingTheme.values[key]}
+                    onChange={updateBasicWorkingThemeColor}
+                  />
                 ))}
-              </select>
-            </SettingsRow>
-          )}
-          <Button text="New Theme" onClick={createNewTheme} />
-          <Button
-            text="Customize Theme"
-            onClick={editTheme}
-            disabled={!getCurrentTheme().id.startsWith('custom')}
-          />
-          <Button
-            text="Delete Theme"
-            type={ButtonType.Danger}
-            onClick={deleteTheme}
-            disabled={!getCurrentTheme().id.startsWith('custom')}
-          />
+              </div>
+            </div>
+          ))}
+          <div className={styles.mainSectionHeader}>
+            <h2>Advanced</h2>
+            <IconButton
+              type={ButtonType.Primary}
+              icon={showAdvanced ? <MdExpandLess /> : <MdExpandMore />}
+              title="Toggle advanced theme options"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+            />
+          </div>
+          {showAdvanced ? (
+            <>
+              <p>
+                Here you can individually customize the colors for the general
+                app, panels, cards, and anything else. These are the values that
+                will get saved as your theme.
+              </p>
+              {sections.map((section) => (
+                <div key={section.title}>
+                  <h3>{section.title}</h3>
+                  {section.sizes.length > 0 ? (
+                    <>
+                      <h4>Sizes</h4>
+                      <div className={styles.themeValueList}>
+                        {section.sizes.map((key) => (
+                          <ThemeValueChooser
+                            key={key}
+                            id={key}
+                            data={workingTheme.values[key]}
+                            onChange={updateWorkingThemeColor}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  ) : null}
+
+                  <h4>Colors</h4>
+                  <div className={styles.themeValueList}>
+                    {section.colors.map((colorKey) => (
+                      <ThemeValueChooser
+                        key={colorKey}
+                        id={colorKey}
+                        data={workingTheme.values[colorKey]}
+                        onChange={updateWorkingThemeColor}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : null}
         </div>
-      )}
+      </div>
       <div className={styles.previewContainer}>
         <h1>Preview</h1>
         <div className={styles.preview} style={themePreviewStyles}>
@@ -807,7 +675,7 @@ export function ThemeView(props: ThemeViewProps) {
               </div>
               <div className={styles.sidebarButtons}>
                 <IconButton
-                  size={48}
+                  size={32}
                   title="Example"
                   type={ButtonType.Primary}
                   kind={ButtonKind.SideBar}
@@ -815,7 +683,7 @@ export function ThemeView(props: ThemeViewProps) {
                   onClick={() => {}}
                 />
                 <IconButton
-                  size={48}
+                  size={32}
                   title="Example"
                   type={ButtonType.Secondary}
                   kind={ButtonKind.SideBar}
@@ -823,7 +691,7 @@ export function ThemeView(props: ThemeViewProps) {
                   onClick={() => {}}
                 />
                 <IconButton
-                  size={48}
+                  size={32}
                   title="Example"
                   type={ButtonType.Warning}
                   kind={ButtonKind.SideBar}
@@ -831,7 +699,7 @@ export function ThemeView(props: ThemeViewProps) {
                   onClick={() => {}}
                 />
                 <IconButton
-                  size={48}
+                  size={32}
                   title="Example"
                   type={ButtonType.Danger}
                   kind={ButtonKind.SideBar}
@@ -861,31 +729,33 @@ function ThemeValueChooser({ id, data, onChange }: ThemeValueChooserProps) {
   return (
     <div className={styles.colorChooser}>
       <div className={styles.colorName}>{data.name}</div>
-      <input
-        className={styles.colorInput}
-        value={data.value}
-        onChange={handleColorChange}
-        readOnly={false}
-        type={data.type === 'number' ? 'number' : undefined}
-      />
-      {data.type === 'color' ? (
-        <div className={styles.colorPreviewContainer}>
-          <input
-            type="color"
-            className={styles.colorPreviewInput}
-            value={
-              new RegExp(/#[0-9a-fA-F]{6}/).test(data.value)
-                ? data.value
-                : '#000000'
-            } // It complains if the value isn't hex
-            onInput={handleColorChange}
-          ></input>
-          <div
-            className={styles.colorPreview}
-            style={{ backgroundColor: data.value }}
-          ></div>
-        </div>
-      ) : null}
+      <div className={styles.colorRow}>
+        <input
+          className={styles.colorInput}
+          value={data.value}
+          onChange={handleColorChange}
+          readOnly={false}
+          type={data.type === 'number' ? 'number' : undefined}
+        />
+        {data.type === 'color' ? (
+          <div className={styles.colorPreviewContainer}>
+            <input
+              type="color"
+              className={styles.colorPreviewInput}
+              value={
+                new RegExp(/#[0-9a-fA-F]{6}/).test(data.value)
+                  ? data.value
+                  : '#000000'
+              } // It complains if the value isn't hex
+              onInput={handleColorChange}
+            ></input>
+            <div
+              className={styles.colorPreview}
+              style={{ backgroundColor: data.value }}
+            ></div>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

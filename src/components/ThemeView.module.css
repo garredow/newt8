@@ -2,10 +2,8 @@
   height: var(--full-height);
   padding: 0 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto minmax(350px, 500px);
   grid-gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .basePreview {
@@ -72,6 +70,7 @@
 
 .sidebar {
   height: 50px;
+  margin: 0 -20px;
   font-size: var(--sidebar-title-text-size);
   background-color: var(--sidebar-bg-color);
   display: flex;
@@ -121,9 +120,9 @@
 
 .themeValueList {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   column-gap: 20px;
-  row-gap: 10px;
+  row-gap: 20px;
 }
 
 .configureHeader {
@@ -166,34 +165,44 @@
   display: flex;
   flex-direction: column;
   max-height: var(--full-height);
+  max-width: 500px;
+  justify-self: center;
 }
 
 .settingsContainer > button {
   margin-bottom: 10px;
 }
 
+.themeActions {
+  display: flex;
+}
+.themeActions > button {
+  margin-left: 10px;
+}
+
 /* Color Chooser */
 
 .colorChooser {
-  display: grid;
-  grid-template-columns: 1fr 38px;
-  margin-bottom: 20px;
 }
 
 .colorName {
-  grid-column: span 2;
+}
+
+.colorRow {
+  display: flex;
 }
 
 .colorInput {
   border-bottom: 1px solid var(--primary-text-color);
-  margin-right: 10px;
   height: 36px;
+  flex: 1;
 }
 
 .colorPreviewContainer {
   position: relative;
   height: 36px;
   width: 36px;
+  margin-left: 10px;
 }
 
 .colorPreviewInput,
