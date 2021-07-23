@@ -293,7 +293,7 @@ export function ConfigureGridDialog({
         </div>
         <div className={styles.compactSizes}>
           {grid.layout.map((row, i) => (
-            <div>
+            <div key={i}>
               <span>Row {i + 1}:</span>
               <SizeSelect
                 val={grid.rowSizes[i]}
@@ -309,7 +309,7 @@ export function ConfigureGridDialog({
             </div>
           ))}
           {grid.layout[0]?.map((col, i) => (
-            <div>
+            <div key={i}>
               <span>Column {i + 1}:</span>
               <SizeSelect
                 val={grid.colSizes[i]}
