@@ -6,6 +6,8 @@
   border-radius: 5px;
   background-color: var(--card-bg-color) !important;
   color: var(--card-primary-text-color) !important;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 [data-reach-dialog-overlay] {
@@ -32,6 +34,16 @@
   padding-right: 35px;
   display: flex;
   justify-content: space-between;
+}
+
+.gridActions button {
+  margin: 5px;
+}
+
+.rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .actions {
@@ -122,4 +134,58 @@
 
 .errorMessage {
   color: var(--error-text-color);
+}
+
+.compactSizes {
+  display: none;
+  margin: 10px 0;
+}
+
+.compactSizes > div {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--card-divider-color);
+}
+
+@media screen and (max-width: 700px) {
+  .rowActions > button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .actionRow,
+  .sizeRow,
+  .layoutRow > button {
+    display: none;
+  }
+
+  .actions {
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .actions > button {
+    margin-left: 0;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  .gridActions {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .rowActions > button {
+    width: 100%;
+  }
+
+  .compactSizes {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .gridActions {
+    flex-direction: column;
+  }
 }

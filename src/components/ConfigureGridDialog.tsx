@@ -75,7 +75,8 @@ export function ConfigureGridDialog({
   useEffect(() => {
     setOriginalGrid(gridLayout);
     setGrid(gridLayout);
-  }, [gridLayout]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const panelNameMap = panels.reduce(
     (acc: any, val) => {
@@ -196,6 +197,21 @@ export function ConfigureGridDialog({
     onSave(grid, true);
   }
 
+  function resetToDefault() {
+    const newGrid: GridLayout = {
+      rowSizes: ['1fr'],
+      colSizes: [],
+      layout: [[]],
+    };
+
+    panels.forEach((panel) => {
+      newGrid.colSizes.push('1fr');
+      newGrid.layout[0].push(panel.id);
+    });
+
+    setGrid(newGrid);
+  }
+
   const unassignedPanels = findUnassignedPanels();
 
   return (
@@ -275,6 +291,40 @@ export function ConfigureGridDialog({
             ))}
           </div>
         </div>
+        <div className={styles.compactSizes}>
+          {grid.layout.map((row, i) => (
+            <div>
+              <span>Row {i + 1}:</span>
+              <SizeSelect
+                val={grid.rowSizes[i]}
+                onChange={(data) => handleSizeChange('row', i, data)}
+              />
+              <div style={{ flex: 1 }} />
+              <IconButton
+                icon={<MdClose />}
+                title="Delete row"
+                type={ButtonType.Danger}
+                onClick={() => deleteRow(i)}
+              />
+            </div>
+          ))}
+          {grid.layout[0]?.map((col, i) => (
+            <div>
+              <span>Column {i + 1}:</span>
+              <SizeSelect
+                val={grid.colSizes[i]}
+                onChange={(data) => handleSizeChange('col', i, data)}
+              />
+              <div style={{ flex: 1 }} />
+              <IconButton
+                icon={<MdClose />}
+                title="Delete column"
+                type={ButtonType.Danger}
+                onClick={() => deleteCol(i)}
+              />
+            </div>
+          ))}
+        </div>
         <div className={styles.gridActions}>
           <Button
             kind={ButtonKind.Card}
@@ -282,12 +332,11 @@ export function ConfigureGridDialog({
             text="Add Column Left"
             onClick={() => addCol('left')}
           />
-          <div>
+          <div className={styles.rowActions}>
             <Button
               kind={ButtonKind.Card}
               type={ButtonType.Secondary}
               text="Add Row Top"
-              style={{ marginRight: '10px' }}
               onClick={() => addRow('top')}
             />
             <Button
@@ -307,20 +356,31 @@ export function ConfigureGridDialog({
         <div className={styles.actions}>
           <Button
             kind={ButtonKind.Card}
+            type={ButtonType.Danger}
+            text="Reset"
+            title="Reset grid to a default safe layout"
+            onClick={resetToDefault}
+          />
+          <div style={{ flex: 1 }} />
+          <Button
+            kind={ButtonKind.Card}
             type={ButtonType.Secondary}
             text="Cancel"
+            title="Restore original grid layout"
             onClick={() => onSave(originalGrid, true)}
           />
           <Button
             kind={ButtonKind.Card}
             type={ButtonType.Secondary}
             text="Preview"
+            title="Apply changes without permanently saving them"
             onClick={() => onSave(grid, false)}
           />
           <Button
             kind={ButtonKind.Card}
             type={ButtonType.Primary}
             text="Save"
+            title="Save grid layout"
             disabled={unassignedPanels.length > 0}
             htmlType="submit"
           />

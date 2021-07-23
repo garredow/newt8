@@ -61,6 +61,7 @@ export function Button({
       style={props.style}
       disabled={disabled}
       type={htmlType}
+      title={props.title}
       onClick={() => props.onClick?.()}
       data-testid={props['data-testid']}
     >
