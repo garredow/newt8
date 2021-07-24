@@ -1,0 +1,8 @@
+.root {
+  padding: 10px 15px;
+  flex: 1;
+}
+
+.fullWidth {
+  padding: 10px 0;
+}

@@ -21,6 +21,12 @@ import {
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { useEffect } from 'react';
 import { animateSlideLeft } from '../ui-components/animations';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '../ui-components/card';
 
 type NewPanelOptions = PanelOptions;
 
@@ -141,35 +147,36 @@ export function NewPanel(props: NewPanelProps) {
               ) : null}
             </PanelContent>
           ) : (
-            <PanelContent columns={1}>
-              What do you want to put in here?
+            <PanelContent columns={0}>
               {availablePanels.map((panel) => (
-                <div key={panel}>
+                <Card key={panel}>
+                  <CardHeader text={getPanelConfig(panel).name} />
+                  <CardContent>{getPanelConfig(panel).description}</CardContent>
+                  <CardFooter>
+                    <Button
+                      key={panel}
+                      text="Add Panel"
+                      type={ButtonType.Secondary}
+                      kind={ButtonKind.Panel}
+                      fullWidth
+                      onClick={() => checkPermissions(panel)}
+                    />
+                  </CardFooter>
+                </Card>
+              ))}
+              <Card>
+                <CardHeader text="Cancel" />
+                <CardContent>Changed your mind? No problem.</CardContent>
+                <CardFooter>
                   <Button
-                    key={panel}
-                    text={getPanelConfig(panel).name}
-                    type={ButtonType.Secondary}
+                    text="Delete"
+                    type={ButtonType.Danger}
                     kind={ButtonKind.Panel}
                     fullWidth
-                    onClick={() => checkPermissions(panel)}
+                    onClick={props.onDeletePanel}
                   />
-                  <div className={styles.description}>
-                    {getPanelConfig(panel).description}
-                  </div>
-                </div>
-              ))}
-              <div>
-                <Button
-                  text="Delete"
-                  type={ButtonType.Danger}
-                  kind={ButtonKind.Panel}
-                  fullWidth
-                  onClick={props.onDeletePanel}
-                />
-                <div className={styles.description}>
-                  Changed your mind? No problem.
-                </div>
-              </div>
+                </CardFooter>
+              </Card>
             </PanelContent>
           )}
         </Panel>
