@@ -1,3 +1,4 @@
+import { DisplayDensity } from '../enums/displayDensity';
 import { Theme } from './Theme';
 
 export type Settings = {
@@ -9,4 +10,8 @@ export type Settings = {
   showSettingHelpText: boolean;
   confirmBeforeDelete: boolean;
   showActionsOnHover: boolean;
+  showSiteDividers: boolean;
+  showCardDividers: boolean;
+  showCardShadow: boolean;
+  displayDensity: DisplayDensity;
 };

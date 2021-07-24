@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBase } from '../../models/ComponentBase';
 import { OpenSiteOption } from '../../services/browser';
+import { SettingsContext } from '../../SettingsContext';
+import { mixin } from '../../utilities/mixin';
 import styles from './SiteRow.module.css';
 
 export type SiteRowProps = ComponentBase & {
@@ -18,6 +21,24 @@ export function SiteRow({
   showLine3 = true,
   ...props
 }: SiteRowProps) {
+  const [classes, setClasses] = useState([styles.root]);
+  const { settings } = useContext(SettingsContext);
+
+  useEffect(() => {
+    const newClasses = [styles.root];
+    if (settings.showSiteDividers) {
+      newClasses.push(styles.divider);
+    }
+    if (settings.displayDensity === DisplayDensity.Compact) {
+      newClasses.push(styles.compact);
+    }
+    if (settings.displayDensity === DisplayDensity.Spacious) {
+      newClasses.push(styles.spacious);
+    }
+
+    setClasses(newClasses);
+  }, [settings.showSiteDividers, settings.displayDensity]);
+
   function isValidImageUrl() {
     return (
       props.iconUrl &&
@@ -39,7 +60,7 @@ export function SiteRow({
 
   return (
     <div
-      className={styles.root}
+      className={mixin(...classes)}
       onClick={handleClick}
       data-testid={props['data-testid']}
     >

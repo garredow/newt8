@@ -1,4 +1,5 @@
 import React from 'react';
+import { DisplayDensity } from './enums/displayDensity';
 import { Settings } from './models/Settings';
 import { Theme } from './models/Theme';
 
@@ -220,7 +221,7 @@ const defaultThemes: Theme[] = [
   },
 ];
 
-export const defaultSettings = {
+export const defaultSettings: Settings = {
   themes: defaultThemes,
   activeTheme: 'light',
   dynamicThemes: false,
@@ -228,7 +229,11 @@ export const defaultSettings = {
   darkTheme: 'dark',
   showSettingHelpText: true,
   confirmBeforeDelete: true,
-  showActionsOnHover: false
+  showActionsOnHover: false,
+  showSiteDividers: false,
+  showCardDividers: false,
+  showCardShadow: true,
+  displayDensity: DisplayDensity.Normal
 };
 
 const defaultValue = {

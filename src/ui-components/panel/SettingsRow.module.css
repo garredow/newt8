@@ -7,6 +7,16 @@
   margin-bottom: 15px;
 }
 
+.root.compact {
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.root.spacious {
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -20,6 +30,7 @@
 
 .helptext {
   color: var(--panel-secondary-text-color);
+  margin-bottom: 10px;
 }
 
 .row > input[type='checkbox'] {

@@ -10,6 +10,20 @@
 .root:active {
   backdrop-filter: brightness(var(--row-dim));
 }
+.root:last-of-type {
+  border: none;
+}
+
+.root.compact {
+  padding: 5px 15px;
+}
+.root.spacious {
+  padding: 12px 15px;
+}
+
+.divider {
+  border-bottom: 1px solid var(--card-divider-color);
+}
 
 .icon {
   height: 20px;

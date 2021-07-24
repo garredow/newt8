@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ButtonType } from '../enums/buttonType';
+import { DisplayDensity } from '../enums/displayDensity';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
@@ -75,7 +76,7 @@ export function SettingsView(props: SettingsViewProps) {
         <section>
           <h2>General</h2>
           <SettingsRow
-            label="Show help text"
+            label="Show Help Text"
             helpText="When turned on, each setting throughout Newt will have a short description
            displayed beneath it. If off, you can still view this text by clicking on the label."
           >
@@ -88,7 +89,7 @@ export function SettingsView(props: SettingsViewProps) {
             />
           </SettingsRow>
           <SettingsRow
-            label="Confirm before delete"
+            label="Confirm Before Delete"
             helpText="When turned on, you'll be asked to confirm any action that would result in
            something being deleted. Ex: A panel or page."
           >
@@ -100,8 +101,26 @@ export function SettingsView(props: SettingsViewProps) {
               }
             />
           </SettingsRow>
+        </section>
+        <section>
+          <h2>Display</h2>
           <SettingsRow
-            label="Show actions on hover"
+            label="Display Density"
+            helpText="Changes the general information density of the app (spacing, padding, etc). You can also just adjust font size in the theme builder."
+          >
+            <select
+              value={settings.displayDensity}
+              onChange={(ev) =>
+                setSettingValue('displayDensity', ev.target.value)
+              }
+            >
+              <option value={DisplayDensity.Compact}>Compact</option>
+              <option value={DisplayDensity.Normal}>Normal</option>
+              <option value={DisplayDensity.Spacious}>Spacious</option>
+            </select>
+          </SettingsRow>
+          <SettingsRow
+            label="Show Actions On Hover"
             helpText="When turned on, action buttons (add page, edit page, panel settings, etc) will 
           be hidden by default. They will only show when you hover the mouse over them."
           >
@@ -110,6 +129,42 @@ export function SettingsView(props: SettingsViewProps) {
               checked={settings.showActionsOnHover}
               onChange={(ev) =>
                 setSettingValue('showActionsOnHover', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show Card Dividers"
+            helpText="Show a divider between each card in a panel."
+          >
+            <input
+              type="checkbox"
+              checked={settings.showCardDividers}
+              onChange={(ev) =>
+                setSettingValue('showCardDividers', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show Card Shadows"
+            helpText="Show a shadow under each card."
+          >
+            <input
+              type="checkbox"
+              checked={settings.showCardShadow}
+              onChange={(ev) =>
+                setSettingValue('showCardShadow', ev.target.checked)
+              }
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show Site Dividers"
+            helpText="Show a divider between each row in a card."
+          >
+            <input
+              type="checkbox"
+              checked={settings.showSiteDividers}
+              onChange={(ev) =>
+                setSettingValue('showSiteDividers', ev.target.checked)
               }
             />
           </SettingsRow>

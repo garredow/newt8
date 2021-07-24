@@ -26,6 +26,7 @@ import { ButtonKind } from '../enums/buttonKind';
 import { ConfirmDialog } from '../ui-components/ConfirmDialog';
 import { SettingsContext } from '../SettingsContext';
 import { mixin } from '../utilities/mixin';
+import { DisplayDensity } from '../enums/displayDensity';
 
 export type SidebarProps = ComponentBase;
 
@@ -33,6 +34,7 @@ export function Sidebar(props: SidebarProps) {
   const [editMode, setEditMode] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<string>();
+  const [pageClasses, setPageClasses] = useState([styles.page]);
 
   const { settings } = useContext(SettingsContext);
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
@@ -61,6 +63,15 @@ export function Sidebar(props: SidebarProps) {
 
     return () => window.removeEventListener('keypress', handleShortcutKey);
   });
+
+  useEffect(() => {
+    const newClasses = [styles.page];
+    if (settings.displayDensity === DisplayDensity.Spacious) {
+      newClasses.push(styles.spacious);
+    }
+
+    setPageClasses(newClasses);
+  }, [settings.displayDensity]);
 
   function handlePageClick(pageId: string) {
     const newPages = pages.map((page) =>
@@ -112,7 +123,7 @@ export function Sidebar(props: SidebarProps) {
                 {...provided.droppableProps}
               >
                 {pages.map((page, i) => {
-                  const classes = [styles.page];
+                  const classes = [...pageClasses];
                   const editClasses = [styles.pageEdit];
                   if (page.isActive) {
                     classes.push(styles.highlight);

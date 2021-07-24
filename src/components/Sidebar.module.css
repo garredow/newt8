@@ -55,6 +55,10 @@
   backdrop-filter: brightness(var(--row-dim));
 }
 
+.page.spacious {
+  padding: 0 15px;
+}
+
 .pageEdit {
   border-right: 1px solid var(--sidebar-divider-color);
 }
