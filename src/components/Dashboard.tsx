@@ -4,13 +4,13 @@ import { RecentTabsPanel } from './RecentTabsPanel';
 import { WindowsPanel, WindowsPanelOptions } from './WindowsPanel';
 import styles from './Dashboard.module.css';
 import { useEffect } from 'react';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { IconButton } from '../ui-components/button';
 import { MdAdd, MdDashboard } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel, DevicesPanelOptions } from './DevicesPanel';
-import { ButtonType } from '../enums/buttonType';
+import { ControlType } from '../enums/controlType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, Page, PanelOptions } from '../services/panels';
@@ -144,7 +144,7 @@ export function DashboardView(props: DashboardViewProps) {
     updatePanel(panelId, panel);
   }
 
-  function handlePanelTypeChange(panelId: string, newPanelKind: PanelType) {
+  function handlePanelKindChange(panelId: string, newPanelKind: PanelKind) {
     updatePanel(panelId, {
       id: panelId,
       kind: newPanelKind,
@@ -161,20 +161,20 @@ export function DashboardView(props: DashboardViewProps) {
 
   function renderPanel(panel: Panel, index: number) {
     switch (panel.kind) {
-      case PanelType.New:
+      case PanelKind.New:
         return (
           <NewPanel
             key={panel.id}
             panelId={panel.id}
             panelIndex={index}
             options={panel.options}
-            onPanelTypeChanged={(panelType) =>
-              handlePanelTypeChange(panel.id, panelType)
+            onPanelKindChanged={(panelKind) =>
+              handlePanelKindChange(panel.id, panelKind)
             }
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.Empty:
+      case PanelKind.Empty:
         return (
           <EmptyPanel
             key={panel.id}
@@ -187,7 +187,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.Bookmarks:
+      case PanelKind.Bookmarks:
         return (
           <BookmarksPanel
             key={panel.id}
@@ -200,7 +200,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.RecentTabs:
+      case PanelKind.RecentTabs:
         return (
           <RecentTabsPanel
             key={panel.id}
@@ -213,7 +213,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.Windows:
+      case PanelKind.Windows:
         return (
           <WindowsPanel
             key={panel.id}
@@ -226,7 +226,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.RecentlyClosed:
+      case PanelKind.RecentlyClosed:
         return (
           <RecentlyClosedPanel
             key={panel.id}
@@ -239,7 +239,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.Devices:
+      case PanelKind.Devices:
         return (
           <DevicesPanel
             key={panel.id}
@@ -252,7 +252,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.NewBookmarks:
+      case PanelKind.NewBookmarks:
         return (
           <NewBookmarksPanel
             key={panel.id}
@@ -265,7 +265,7 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      case PanelType.TopSites:
+      case PanelKind.TopSites:
         return (
           <TopSitesPanel
             key={panel.id}
@@ -318,12 +318,12 @@ export function DashboardView(props: DashboardViewProps) {
             Looks like there aren't any panels here yet. Want to add one?
             <Button
               text="New Panel"
-              type={ButtonType.Primary}
+              type={ControlType.Primary}
               onClick={() =>
                 addPanel({
                   id: `panel_${new Date().valueOf()}`,
-                  kind: PanelType.New,
-                  options: getPanelConfig(PanelType.New)
+                  kind: PanelKind.New,
+                  options: getPanelConfig(PanelKind.New)
                     .defaultOptions as PanelOptions,
                 })
               }
@@ -343,23 +343,23 @@ export function DashboardView(props: DashboardViewProps) {
       >
         <IconButton
           icon={<MdAdd />}
-          type={ButtonType.Primary}
+          type={ControlType.Primary}
           title="Add a new panel"
           onClick={() => {
             // Only allow one new panel at a time
-            if (page.panels.some((a) => a.kind === PanelType.New)) return;
+            if (page.panels.some((a) => a.kind === PanelKind.New)) return;
 
             addPanel({
               id: `panel_${new Date().valueOf()}`,
-              kind: PanelType.New,
-              options: getPanelConfig(PanelType.New)
+              kind: PanelKind.New,
+              options: getPanelConfig(PanelKind.New)
                 .defaultOptions as PanelOptions,
             });
           }}
         />
         <IconButton
           icon={<MdDashboard />}
-          type={ButtonType.Primary}
+          type={ControlType.Primary}
           title="Configure dashboard grid"
           onClick={() => setShowGridConfig(true)}
         />

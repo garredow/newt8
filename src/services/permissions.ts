@@ -1,4 +1,4 @@
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { getPanelConfig } from './panels';
 
 export enum Permission {
@@ -43,7 +43,7 @@ export async function verifyPermissions(
 }
 
 export async function verifyPermissionsForPanel(
-  panel: PanelType
+  panel: PanelKind
 ): Promise<PermissionDetail[]> {
   const existing = await getAllPermissions();
   const missing = getPanelConfig(panel).permissions.filter(

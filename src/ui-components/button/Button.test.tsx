@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { ControlKind } from '../../enums/controlKind';
-import { ButtonType } from '../../enums/buttonType';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
 import { Button } from './Button';
 
 describe('Button', () => {
@@ -31,35 +31,35 @@ describe('Button', () => {
   });
 
   test('is primary button', () => {
-    const props = { text: 'button text', type: ButtonType.Primary };
+    const props = { text: 'button text', type: ControlType.Primary };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('primary');
   });
 
   test('is secondary button', () => {
-    const props = { text: 'button text', type: ButtonType.Secondary };
+    const props = { text: 'button text', type: ControlType.Secondary };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('secondary');
   });
 
   test('is warning button', () => {
-    const props = { text: 'button text', type: ButtonType.Warning };
+    const props = { text: 'button text', type: ControlType.Warning };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('warning');
   });
 
   test('is danger button', () => {
-    const props = { text: 'button text', type: ButtonType.Danger };
+    const props = { text: 'button text', type: ControlType.Danger };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('danger');
   });
 
   test('is panel button', () => {
-    const props = { text: 'button text', kind: ControlKind.Panel };
+    const props = { text: 'button text', location: ControlLocation.Panel };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('panel');
@@ -68,8 +68,8 @@ describe('Button', () => {
   test('is panel primary button', () => {
     const props = {
       text: 'button text',
-      kind: ControlKind.Panel,
-      type: ButtonType.Primary,
+      location: ControlLocation.Panel,
+      type: ControlType.Primary,
     };
     const { getByText } = render(<Button {...props} />);
 
@@ -77,7 +77,7 @@ describe('Button', () => {
   });
 
   test('is card button', () => {
-    const props = { text: 'button text', kind: ControlKind.Card };
+    const props = { text: 'button text', location: ControlLocation.Card };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('card');
@@ -86,8 +86,8 @@ describe('Button', () => {
   test('is card primary button', () => {
     const props = {
       text: 'button text',
-      kind: ControlKind.Card,
-      type: ButtonType.Primary,
+      location: ControlLocation.Card,
+      type: ControlType.Primary,
     };
     const { getByText } = render(<Button {...props} />);
 

@@ -1,4 +1,4 @@
-export enum PanelType {
+export enum PanelKind {
   New = 'new',
   Bookmarks = 'bookmarks',
   RecentTabs = 'recentTabs',

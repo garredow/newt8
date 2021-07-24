@@ -1,13 +1,13 @@
 import React from 'react';
-import { ControlKind } from '../../enums/controlKind';
-import { ButtonType } from '../../enums/buttonType';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
 import { ComponentBase } from '../../models/ComponentBase';
 import styles from './Button.module.css';
 
 type ButtonProps = ComponentBase & {
   text: string;
-  type?: ButtonType;
-  kind?: ControlKind;
+  type?: ControlType;
+  location?: ControlLocation;
   disabled?: boolean;
   fullWidth?: boolean;
   htmlType?: 'submit' | 'reset' | 'button';
@@ -15,8 +15,8 @@ type ButtonProps = ComponentBase & {
 };
 
 export function Button({
-  type = ButtonType.Secondary,
-  kind = ControlKind.Default,
+  type = ControlType.Secondary,
+  location = ControlLocation.Default,
   disabled = false,
   fullWidth = false,
   htmlType = 'button',
@@ -25,25 +25,25 @@ export function Button({
   function getButtonClasses() {
     let classes = [styles.root];
 
-    switch (kind) {
-      case ControlKind.Panel:
+    switch (location) {
+      case ControlLocation.Panel:
         classes.push(styles.panel);
         break;
-      case ControlKind.Card:
+      case ControlLocation.Card:
         classes.push(styles.card);
         break;
     }
     switch (type) {
-      case ButtonType.Primary:
+      case ControlType.Primary:
         classes.push(styles.primary);
         break;
-      case ButtonType.Secondary:
+      case ControlType.Secondary:
         classes.push(styles.secondary);
         break;
-      case ButtonType.Warning:
+      case ControlType.Warning:
         classes.push(styles.warning);
         break;
-      case ButtonType.Danger:
+      case ControlType.Danger:
         classes.push(styles.danger);
         break;
     }

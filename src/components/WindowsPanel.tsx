@@ -1,8 +1,8 @@
 import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { ControlKind } from '../enums/controlKind';
-import { ButtonType } from '../enums/buttonType';
-import { PanelType } from '../enums/panelType';
+import { ControlLocation } from '../enums/controlLocation';
+import { ControlType } from '../enums/controlType';
+import { PanelKind } from '../enums/panelKind';
 import { Window } from '../models/Browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
@@ -10,10 +10,10 @@ import { getWindows, switchToTab } from '../services/browser';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { SettingsRow } from '../ui-components/panel/SettingsRow';
+import { SettingsRow } from '../ui-components/list/SettingsRow';
 import styles from './WindowsPanel.module.css';
 
 export type WindowsPanelOptions = PanelOptions & {
@@ -35,7 +35,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
   const [showWindowPicker, setShowWindowPicker] = useState(false);
 
   const options: WindowsPanelOptions = Object.assign(
-    getPanelConfig(PanelType.Windows).defaultOptions,
+    getPanelConfig(PanelKind.Windows).defaultOptions,
     props.options
   );
 
@@ -118,7 +118,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
             helpText="Display when each tab was last accessed, in relative time."
           >
             <Checkbox
-              kind={ControlKind.Panel}
+              location={ControlLocation.Panel}
               checked={options.showTabAccessedTime}
               onChange={(checked) =>
                 handleOptionChanged('showTabAccessedTime', checked)
@@ -130,14 +130,14 @@ export function WindowsPanel(props: WindowsPanelProps) {
             helpText="Display the URL for each tab."
           >
             <Checkbox
-              kind={ControlKind.Panel}
+              location={ControlLocation.Panel}
               checked={options.showUrl}
               onChange={(checked) => handleOptionChanged('showUrl', checked)}
             />
           </SettingsRow>
           <Button
             text="Choose New Window"
-            kind={ControlKind.Panel}
+            location={ControlLocation.Panel}
             fullWidth
             onClick={() => setShowWindowPicker(true)}
           />
@@ -152,8 +152,8 @@ export function WindowsPanel(props: WindowsPanelProps) {
               <div>
                 <Button
                   text="All Windows"
-                  kind={ControlKind.Card}
-                  type={ButtonType.Primary}
+                  location={ControlLocation.Card}
+                  type={ControlType.Primary}
                   fullWidth
                   onClick={() => handleChooseWindow(0)}
                 />
@@ -163,8 +163,8 @@ export function WindowsPanel(props: WindowsPanelProps) {
                 <div key={window.id}>
                   <Button
                     text={`Window ${window.id}`}
-                    kind={ControlKind.Card}
-                    type={ButtonType.Secondary}
+                    location={ControlLocation.Card}
+                    type={ControlType.Secondary}
                     fullWidth
                     onClick={() => handleChooseWindow(window.id!)}
                   />

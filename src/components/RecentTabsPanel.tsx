@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getTabs, SortOrder, switchToTab } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { Tab } from '../models/Browser';
 
@@ -23,7 +23,7 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
   const [tabs, setTabs] = useState<Tab[]>([]);
 
   const options: RecentTabsPanelOptions = Object.assign(
-    getPanelConfig(PanelType.RecentTabs).defaultOptions,
+    getPanelConfig(PanelKind.RecentTabs).defaultOptions,
     props.options
   );
 

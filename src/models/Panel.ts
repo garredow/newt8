@@ -1,9 +1,9 @@
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { PanelOptions } from '../services/panels';
 
 export type Panel = {
   id: string;
-  kind: PanelType;
+  kind: PanelKind;
   order?: number;
   options: PanelOptions;
 };

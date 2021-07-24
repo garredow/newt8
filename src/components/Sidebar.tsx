@@ -14,7 +14,7 @@ import {
   MdEdit,
   MdSettings,
 } from 'react-icons/md';
-import { ButtonType } from '../enums/buttonType';
+import { ControlType } from '../enums/controlType';
 import styles from './Sidebar.module.css';
 import { PagesContext } from '../PagesContext';
 import { useEffect } from 'react';
@@ -22,7 +22,7 @@ import { ComponentBase } from '../models/ComponentBase';
 import { useState } from 'react';
 import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
-import { ControlKind } from '../enums/controlKind';
+import { ControlLocation } from '../enums/controlLocation';
 import { ConfirmDialog } from '../ui-components/ConfirmDialog';
 import { SettingsContext } from '../SettingsContext';
 import { mixin } from '../utilities/mixin';
@@ -141,8 +141,8 @@ export function Sidebar(props: SidebarProps) {
                           >
                             <IconButton
                               size={32}
-                              kind={ControlKind.SideBar}
-                              type={ButtonType.Secondary}
+                              location={ControlLocation.SideBar}
+                              type={ControlType.Secondary}
                               className={styles.btnMove}
                               icon={<MdCompareArrows />}
                               title="Drag to reorder"
@@ -170,8 +170,8 @@ export function Sidebar(props: SidebarProps) {
 
                             <IconButton
                               size={32}
-                              kind={ControlKind.SideBar}
-                              type={ButtonType.Danger}
+                              location={ControlLocation.SideBar}
+                              type={ControlType.Danger}
                               icon={<MdClose />}
                               title="Delete"
                               onClick={() => handleRequestDelete(page.id)}
@@ -204,8 +204,8 @@ export function Sidebar(props: SidebarProps) {
         >
           <IconButton
             size={32}
-            kind={ControlKind.SideBar}
-            type={ButtonType.Secondary}
+            location={ControlLocation.SideBar}
+            type={ControlType.Secondary}
             icon={<MdAdd />}
             title="Add Page"
             onClick={() =>
@@ -224,8 +224,8 @@ export function Sidebar(props: SidebarProps) {
           />
           <IconButton
             size={32}
-            kind={ControlKind.SideBar}
-            type={ButtonType.Secondary}
+            location={ControlLocation.SideBar}
+            type={ControlType.Secondary}
             icon={<MdEdit />}
             title="Edit Pages"
             onClick={() => setEditMode(!editMode)}
@@ -236,8 +236,8 @@ export function Sidebar(props: SidebarProps) {
         <Link to="/settings">
           <IconButton
             size={40}
-            kind={ControlKind.SideBar}
-            type={ButtonType.Primary}
+            location={ControlLocation.SideBar}
+            type={ControlType.Primary}
             icon={<MdSettings />}
             title="Themes"
             onClick={() => {}}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ControlKind } from '../enums/controlKind';
-import { PanelType } from '../enums/panelType';
+import { ControlLocation } from '../enums/controlLocation';
+import { PanelKind } from '../enums/panelKind';
 import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBase } from '../models/ComponentBase';
@@ -14,7 +14,7 @@ import {
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './BookmarksPanel.module.css';
 
@@ -64,7 +64,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   const [status, setStatus] = useState<Status>(Status.Idle);
 
   const options: BookmarksPanelOptions = Object.assign(
-    getPanelConfig(PanelType.Bookmarks).defaultOptions,
+    getPanelConfig(PanelKind.Bookmarks).defaultOptions,
     props.options
   );
 
@@ -112,13 +112,13 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
         <>
           <Button
             text="Edit Bookmarks"
-            kind={ControlKind.Panel}
+            location={ControlLocation.Panel}
             fullWidth
             onClick={editBookmarks}
           />
           <Button
             text="Choose New Folder"
-            kind={ControlKind.Panel}
+            location={ControlLocation.Panel}
             fullWidth
             onClick={showFolderPicker}
           />
@@ -151,7 +151,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                 folder?
               </p>
               <Button
-                kind={ControlKind.Card}
+                location={ControlLocation.Card}
                 text="Sure"
                 fullWidth={true}
                 onClick={showFolderPicker}

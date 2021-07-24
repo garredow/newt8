@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { ButtonType } from '../enums/buttonType';
+import { ControlType } from '../enums/controlType';
 import { DisplayDensity } from '../enums/displayDensity';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
@@ -11,7 +11,7 @@ import { SettingsContext } from '../SettingsContext';
 import { Button } from '../ui-components/button/Button';
 import { ConfirmDialog } from '../ui-components/ConfirmDialog';
 import { Checkbox } from '../ui-components/input/Checkbox';
-import { SettingsRow } from '../ui-components/panel/SettingsRow';
+import { SettingsRow } from '../ui-components/list/SettingsRow';
 import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './SettingsView.module.css';
 
@@ -147,23 +147,14 @@ export function SettingsView(props: SettingsViewProps) {
             </select>
           </SettingsRow>
           <SettingsRow
-            label="Show Card Dividers"
-            helpText="Show a divider between each card in a panel."
+            label="Show Card/List Dividers"
+            helpText="Show a divider between each card or list in a panel."
           >
             <Checkbox
               checked={settings.showCardDividers}
               onChange={(checked) =>
                 setSettingValue('showCardDividers', checked)
               }
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Show Card Shadows"
-            helpText="Show a shadow under each card."
-          >
-            <Checkbox
-              checked={settings.showCardShadow}
-              onChange={(checked) => setSettingValue('showCardShadow', checked)}
             />
           </SettingsRow>
           <h3>Cards</h3>
@@ -176,6 +167,15 @@ export function SettingsView(props: SettingsViewProps) {
               onChange={(checked) =>
                 setSettingValue('showSiteDividers', checked)
               }
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show Card Shadows"
+            helpText="Show a shadow under each card."
+          >
+            <Checkbox
+              checked={settings.showCardShadow}
+              onChange={(checked) => setSettingValue('showCardShadow', checked)}
             />
           </SettingsRow>
         </section>
@@ -255,7 +255,7 @@ export function SettingsView(props: SettingsViewProps) {
             />
             <Button
               text="Delete Theme"
-              type={ButtonType.Danger}
+              type={ControlType.Danger}
               onClick={requestDeleteTheme}
               disabled={!getCurrentTheme().id.startsWith('custom')}
             />

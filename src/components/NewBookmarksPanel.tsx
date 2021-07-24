@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getRecentBookmarks, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { Bookmark } from '../models/Bookmark';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
@@ -23,7 +23,7 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
   const options: NewBookmarksPanelOptions = Object.assign(
-    getPanelConfig(PanelType.NewBookmarks).defaultOptions,
+    getPanelConfig(PanelKind.NewBookmarks).defaultOptions,
     props.options
   );
 

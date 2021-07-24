@@ -1,4 +1,4 @@
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import {
   getAllPermissions,
   Permission,
@@ -76,7 +76,7 @@ describe('permissions service', () => {
             permissions: [Permission.Bookmarks, Permission.FavIcon],
           })
         );
-      const result = await verifyPermissionsForPanel(PanelType.Bookmarks);
+      const result = await verifyPermissionsForPanel(PanelKind.Bookmarks);
 
       expect(result.length).toEqual(2);
       expect(result[0]).toEqual(Permission.Bookmarks);

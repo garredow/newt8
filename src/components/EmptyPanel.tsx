@@ -1,6 +1,6 @@
 import React from 'react';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
@@ -17,7 +17,7 @@ type EmptyPanelProps = ComponentBase &
 
 export function EmptyPanel(props: EmptyPanelProps) {
   const options: EmptyPanelOptions = Object.assign(
-    getPanelConfig(PanelType.Empty).defaultOptions,
+    getPanelConfig(PanelKind.Empty).defaultOptions,
     props.options
   );
 

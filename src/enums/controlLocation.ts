@@ -1,4 +1,4 @@
-export enum ControlKind {
+export enum ControlLocation {
   Default = 'default',
   Panel = 'panel',
   Card = 'card',

@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { MdMenu } from 'react-icons/md';
-import { ControlKind } from '../../enums/controlKind';
-import { ButtonType } from '../../enums/buttonType';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
 import { IconButton } from './IconButton';
 
 describe('IconButton', () => {
@@ -30,7 +30,7 @@ describe('IconButton', () => {
 
   test('is primary button', () => {
     const props = {
-      type: ButtonType.Primary,
+      type: ControlType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -41,7 +41,7 @@ describe('IconButton', () => {
 
   test('is secondary button', () => {
     const props = {
-      type: ButtonType.Secondary,
+      type: ControlType.Secondary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -52,7 +52,7 @@ describe('IconButton', () => {
 
   test('is warning button', () => {
     const props = {
-      type: ButtonType.Warning,
+      type: ControlType.Warning,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -63,7 +63,7 @@ describe('IconButton', () => {
 
   test('is danger button', () => {
     const props = {
-      type: ButtonType.Danger,
+      type: ControlType.Danger,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -74,7 +74,7 @@ describe('IconButton', () => {
 
   test('is panel button', () => {
     const props = {
-      kind: ControlKind.Panel,
+      location: ControlLocation.Panel,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -85,8 +85,8 @@ describe('IconButton', () => {
 
   test('is panel primary button', () => {
     const props = {
-      kind: ControlKind.Panel,
-      type: ButtonType.Primary,
+      location: ControlLocation.Panel,
+      type: ControlType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -98,7 +98,7 @@ describe('IconButton', () => {
 
   test('is card button', () => {
     const props = {
-      kind: ControlKind.Card,
+      location: ControlLocation.Card,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -109,8 +109,8 @@ describe('IconButton', () => {
 
   test('is card primary button', () => {
     const props = {
-      kind: ControlKind.Card,
-      type: ButtonType.Primary,
+      location: ControlLocation.Card,
+      type: ControlType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -122,7 +122,7 @@ describe('IconButton', () => {
 
   test('is sidebar button', () => {
     const props = {
-      kind: ControlKind.SideBar,
+      location: ControlLocation.SideBar,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -133,8 +133,8 @@ describe('IconButton', () => {
 
   test('is sidebar primary button', () => {
     const props = {
-      kind: ControlKind.SideBar,
-      type: ButtonType.Primary,
+      location: ControlLocation.SideBar,
+      type: ControlType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };

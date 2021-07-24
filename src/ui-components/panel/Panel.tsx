@@ -4,8 +4,8 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
-import { ControlKind } from '../../enums/controlKind';
-import { ButtonType } from '../../enums/buttonType';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { DraggablePanelProps } from '../../models/DraggablePanelProps';
 import { PanelOptions } from '../../services/panels';
@@ -16,7 +16,7 @@ import { Button } from '../button/Button';
 import { ConfirmDialog } from '../ConfirmDialog';
 import styles from './Panel.module.css';
 import { PanelSettings } from './PanelSettings';
-import { SettingsRow } from './SettingsRow';
+import { SettingsRow } from '../list/SettingsRow';
 import { animateFade } from '../animations';
 import { delay } from '../../utilities/delay';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
@@ -187,8 +187,8 @@ export const Panel = React.forwardRef(
                   </div>
                   <Button
                     text="Delete"
-                    type={ButtonType.Danger}
-                    kind={ControlKind.Panel}
+                    type={ControlType.Danger}
+                    location={ControlLocation.Panel}
                     onClick={handleRequestDelete}
                   />
                 </PanelSettings>

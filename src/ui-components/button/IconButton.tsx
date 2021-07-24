@@ -1,15 +1,15 @@
 import React, { MouseEventHandler } from 'react';
 import { IconContext } from 'react-icons/lib';
-import { ControlKind } from '../../enums/controlKind';
-import { ButtonType } from '../../enums/buttonType';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { mixin } from '../../utilities/mixin';
 import styles from './IconButton.module.css';
 
 type IconButtonProps = ComponentBase & {
   size?: number;
-  type?: ButtonType;
-  kind?: ControlKind;
+  type?: ControlType;
+  location?: ControlLocation;
   icon: React.ReactNode;
   title: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -17,8 +17,8 @@ type IconButtonProps = ComponentBase & {
 
 export function IconButton({
   size = 36,
-  type = ButtonType.Secondary,
-  kind = ControlKind.Default,
+  type = ControlType.Secondary,
+  location = ControlLocation.Default,
   icon,
   title,
   onClick,
@@ -32,28 +32,28 @@ export function IconButton({
   function getIconClass() {
     let iconClass = [];
 
-    switch (kind) {
-      case ControlKind.Panel:
+    switch (location) {
+      case ControlLocation.Panel:
         iconClass.push(styles.panel);
         break;
-      case ControlKind.Card:
+      case ControlLocation.Card:
         iconClass.push(styles.card);
         break;
-      case ControlKind.SideBar:
+      case ControlLocation.SideBar:
         iconClass.push(styles.sidebar);
         break;
     }
     switch (type) {
-      case ButtonType.Primary:
+      case ControlType.Primary:
         iconClass.push(styles.primary);
         break;
-      case ButtonType.Secondary:
+      case ControlType.Secondary:
         iconClass.push(styles.secondary);
         break;
-      case ButtonType.Warning:
+      case ControlType.Warning:
         iconClass.push(styles.warning);
         break;
-      case ButtonType.Danger:
+      case ControlType.Danger:
         iconClass.push(styles.danger);
         break;
     }

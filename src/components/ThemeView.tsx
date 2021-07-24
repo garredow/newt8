@@ -10,8 +10,8 @@ import {
   MdSettings,
 } from 'react-icons/md';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ControlKind } from '../enums/controlKind';
-import { ButtonType } from '../enums/buttonType';
+import { ControlLocation } from '../enums/controlLocation';
+import { ControlType } from '../enums/controlType';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme, ThemeValue, ThemeValues } from '../models/Theme';
@@ -19,7 +19,7 @@ import { SettingsContext } from '../SettingsContext';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './ThemeView.module.css';
@@ -364,7 +364,7 @@ export function ThemeView(props: ThemeViewProps) {
         <div className={styles.configureHeader}>
           <h1>Configure</h1>
           <IconButton
-            type={ButtonType.Primary}
+            type={ControlType.Primary}
             icon={<MdCode />}
             title="Import/export theme"
             onClick={() => {
@@ -373,13 +373,13 @@ export function ThemeView(props: ThemeViewProps) {
             }}
           />
           <IconButton
-            type={ButtonType.Primary}
+            type={ControlType.Primary}
             icon={<MdClose />}
             title="Discard changes"
             onClick={cancelConfigureTheme}
           />
           <IconButton
-            type={ButtonType.Primary}
+            type={ControlType.Primary}
             icon={<MdCheck />}
             title="Save theme"
             onClick={saveWorkingTheme}
@@ -464,7 +464,7 @@ export function ThemeView(props: ThemeViewProps) {
           <div className={styles.mainSectionHeader}>
             <h2>Advanced</h2>
             <IconButton
-              type={ButtonType.Primary}
+              type={ControlType.Primary}
               icon={showAdvanced ? <MdExpandLess /> : <MdExpandMore />}
               title="Toggle advanced theme options"
               onClick={() => setShowAdvanced(!showAdvanced)}
@@ -534,26 +534,26 @@ export function ThemeView(props: ThemeViewProps) {
                 Here's some error text so you can get an idea how it looks.
               </p>
               <Button
-                type={ButtonType.Primary}
-                kind={ControlKind.Default}
+                type={ControlType.Primary}
+                location={ControlLocation.Default}
                 text="Primary Button"
                 onClick={() => {}}
               />
               <Button
-                type={ButtonType.Secondary}
-                kind={ControlKind.Default}
+                type={ControlType.Secondary}
+                location={ControlLocation.Default}
                 text="Secondary Button"
                 onClick={() => {}}
               />
               <Button
-                type={ButtonType.Warning}
-                kind={ControlKind.Default}
+                type={ControlType.Warning}
+                location={ControlLocation.Default}
                 text="Warning Button"
                 onClick={() => {}}
               />
               <Button
-                type={ButtonType.Danger}
-                kind={ControlKind.Default}
+                type={ControlType.Danger}
+                location={ControlLocation.Default}
                 text="Danger Button"
                 onClick={() => {}}
               />
@@ -590,26 +590,26 @@ export function ThemeView(props: ThemeViewProps) {
                   looks.
                 </div>
                 <Button
-                  type={ButtonType.Primary}
-                  kind={ControlKind.Panel}
+                  type={ControlType.Primary}
+                  location={ControlLocation.Panel}
                   text="Primary Panel Button"
                   onClick={() => {}}
                 />
                 <Button
-                  type={ButtonType.Secondary}
-                  kind={ControlKind.Panel}
+                  type={ControlType.Secondary}
+                  location={ControlLocation.Panel}
                   text="Secondary Panel Button"
                   onClick={() => {}}
                 />
                 <Button
-                  type={ButtonType.Warning}
-                  kind={ControlKind.Panel}
+                  type={ControlType.Warning}
+                  location={ControlLocation.Panel}
                   text="Warning Panel Button"
                   onClick={() => {}}
                 />
                 <Button
-                  type={ButtonType.Danger}
-                  kind={ControlKind.Panel}
+                  type={ControlType.Danger}
+                  location={ControlLocation.Panel}
                   text="Danger Panel Button"
                   onClick={() => {}}
                 />
@@ -644,26 +644,26 @@ export function ThemeView(props: ThemeViewProps) {
                     line3="10 minutes ago"
                   />
                   <Button
-                    type={ButtonType.Primary}
-                    kind={ControlKind.Card}
+                    type={ControlType.Primary}
+                    location={ControlLocation.Card}
                     text="Primary Card Button"
                     onClick={() => {}}
                   />
                   <Button
-                    type={ButtonType.Secondary}
-                    kind={ControlKind.Card}
+                    type={ControlType.Secondary}
+                    location={ControlLocation.Card}
                     text="Secondary Card Button"
                     onClick={() => {}}
                   />
                   <Button
-                    type={ButtonType.Warning}
-                    kind={ControlKind.Card}
+                    type={ControlType.Warning}
+                    location={ControlLocation.Card}
                     text="Warning Card Button"
                     onClick={() => {}}
                   />
                   <Button
-                    type={ButtonType.Danger}
-                    kind={ControlKind.Card}
+                    type={ControlType.Danger}
+                    location={ControlLocation.Card}
                     text="Danger Card Button"
                     onClick={() => {}}
                   />
@@ -679,32 +679,32 @@ export function ThemeView(props: ThemeViewProps) {
                 <IconButton
                   size={32}
                   title="Example"
-                  type={ButtonType.Primary}
-                  kind={ControlKind.SideBar}
+                  type={ControlType.Primary}
+                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
                 <IconButton
                   size={32}
                   title="Example"
-                  type={ButtonType.Secondary}
-                  kind={ControlKind.SideBar}
+                  type={ControlType.Secondary}
+                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
                 <IconButton
                   size={32}
                   title="Example"
-                  type={ButtonType.Warning}
-                  kind={ControlKind.SideBar}
+                  type={ControlType.Warning}
+                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
                 <IconButton
                   size={32}
                   title="Example"
-                  type={ButtonType.Danger}
-                  kind={ControlKind.SideBar}
+                  type={ControlType.Danger}
+                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />

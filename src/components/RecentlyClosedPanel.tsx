@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getRecentlyClosed, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 
 type RecentlyClosedPanelOptions = PanelOptions;
@@ -22,7 +22,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
   const [sessions, setSessions] = useState<chrome.sessions.Session[]>([]);
 
   const options: RecentlyClosedPanelOptions = Object.assign(
-    getPanelConfig(PanelType.RecentlyClosed).defaultOptions,
+    getPanelConfig(PanelKind.RecentlyClosed).defaultOptions,
     props.options
   );
 

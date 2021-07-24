@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './NewPanel.module.css';
-import { PanelType } from '../enums/panelType';
-import { ButtonType } from '../enums/buttonType';
-import { ControlKind } from '../enums/controlKind';
+import { PanelKind } from '../enums/panelKind';
+import { ControlType } from '../enums/controlType';
+import { ControlLocation } from '../enums/controlLocation';
 import { Button } from '../ui-components/button/Button';
 import {
   PermissionDetail,
@@ -33,14 +33,14 @@ type NewPanelOptions = PanelOptions;
 type NewPanelProps = ComponentBase &
   DraggablePanelProps & {
     options?: NewPanelOptions;
-    onPanelTypeChanged: (panelType: PanelType) => void;
+    onPanelKindChanged: (panelKind: PanelKind) => void;
     onDeletePanel: () => void;
   };
 
 export function NewPanel(props: NewPanelProps) {
   const [showPermissions, setShowPermissions] = useState(false);
   const [permissions, setPermissions] = useState<PermissionDetail[]>([]);
-  const [panelType, setPanelType] = useState<PanelType | undefined>();
+  const [panelKind, setPanelKind] = useState<PanelKind | undefined>();
   const [permissionsError, setPermissionsError] = useState(false);
   const [animate, setAnimate] = useState(false);
   const nodeRef = useRef(null);
@@ -60,17 +60,17 @@ export function NewPanel(props: NewPanelProps) {
     setAnimate(true);
   }, []);
 
-  async function checkPermissions(panelType: PanelType) {
-    const missingPermissions = await verifyPermissionsForPanel(panelType);
+  async function checkPermissions(panelKind: PanelKind) {
+    const missingPermissions = await verifyPermissionsForPanel(panelKind);
 
     if (missingPermissions.length > 0) {
-      setPanelType(panelType);
+      setPanelKind(panelKind);
       setPermissions(missingPermissions);
       setShowPermissions(true);
       return;
     }
 
-    props.onPanelTypeChanged(panelType);
+    props.onPanelKindChanged(panelKind);
   }
 
   async function request() {
@@ -81,13 +81,13 @@ export function NewPanel(props: NewPanelProps) {
       return;
     }
 
-    props.onPanelTypeChanged(panelType!);
+    props.onPanelKindChanged(panelKind!);
   }
 
   function cancelRequest() {
     setShowPermissions(false);
     setPermissions([]);
-    setPanelType(undefined);
+    setPanelKind(undefined);
     setPermissionsError(false);
   }
 
@@ -131,14 +131,14 @@ export function NewPanel(props: NewPanelProps) {
               <Button
                 text="Request Permissions"
                 onClick={request}
-                type={ButtonType.Primary}
-                kind={ControlKind.Panel}
+                type={ControlType.Primary}
+                location={ControlLocation.Panel}
               />
               <Button
                 text="Cancel"
                 onClick={cancelRequest}
-                type={ButtonType.Secondary}
-                kind={ControlKind.Panel}
+                type={ControlType.Secondary}
+                location={ControlLocation.Panel}
               />
               {permissionsError ? (
                 <p className={styles.error}>
@@ -156,8 +156,8 @@ export function NewPanel(props: NewPanelProps) {
                     <Button
                       key={panel}
                       text="Add Panel"
-                      type={ButtonType.Secondary}
-                      kind={ControlKind.Panel}
+                      type={ControlType.Secondary}
+                      location={ControlLocation.Panel}
                       fullWidth
                       onClick={() => checkPermissions(panel)}
                     />
@@ -170,8 +170,8 @@ export function NewPanel(props: NewPanelProps) {
                 <CardFooter>
                   <Button
                     text="Delete"
-                    type={ButtonType.Danger}
-                    kind={ControlKind.Panel}
+                    type={ControlType.Danger}
+                    location={ControlLocation.Panel}
                     fullWidth
                     onClick={props.onDeletePanel}
                   />

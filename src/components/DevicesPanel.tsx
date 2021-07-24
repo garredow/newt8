@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/card/SiteRow';
+import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig, PanelOptions } from '../services/panels';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
-import { SettingsRow } from '../ui-components/panel/SettingsRow';
+import { SettingsRow } from '../ui-components/list/SettingsRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
-import { ControlKind } from '../enums/controlKind';
+import { ControlLocation } from '../enums/controlLocation';
 
 export type DevicesPanelOptions = PanelOptions & {
   showTabAccessedTime: boolean;
@@ -28,7 +28,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
   const [devices, setDevices] = useState<chrome.sessions.Device[]>([]);
 
   const options: DevicesPanelOptions = Object.assign(
-    getPanelConfig(PanelType.Devices).defaultOptions,
+    getPanelConfig(PanelKind.Devices).defaultOptions,
     props.options
   );
 
@@ -60,7 +60,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
             helpText="Display the URL for each tab."
           >
             <Checkbox
-              kind={ControlKind.Panel}
+              location={ControlLocation.Panel}
               checked={options.showUrl}
               onChange={(checked) => handleOptionChanged('showUrl', checked)}
             />
@@ -70,7 +70,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
             helpText="Display when each tab was last accessed, in relative time."
           >
             <Checkbox
-              kind={ControlKind.Panel}
+              location={ControlLocation.Panel}
               checked={options.showTabAccessedTime}
               onChange={(checked) =>
                 handleOptionChanged('showTabAccessedTime', checked)

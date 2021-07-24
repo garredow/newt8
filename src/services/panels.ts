@@ -1,13 +1,13 @@
 import { cloneDeep } from 'lodash';
 import { PanelDisplayType } from '../enums/panelDisplayType';
-import { PanelType } from '../enums/panelType';
+import { PanelKind } from '../enums/panelKind';
 import { GridLayout } from '../models/GridLayout';
 import { Panel } from '../models/Panel';
 import { getItem, StorageKey } from '../utilities/storage';
 import { Permission, PermissionDetail } from './permissions';
 
 export type PanelConfigMap = {
-  [key in PanelType]: PanelConfig;
+  [key in PanelKind]: PanelConfig;
 };
 
 export type PanelOptions = {
@@ -18,7 +18,7 @@ export type PanelOptions = {
 
 export type PanelConfig = {
   id: string;
-  kind: PanelType;
+  kind: PanelKind;
   name: string;
   description: string;
   permissions: PermissionDetail[];
@@ -37,10 +37,10 @@ const defaultPanelOptions = {
 };
 
 const panelConfigs: PanelConfigMap = {
-  [PanelType.Bookmarks]: {
+  [PanelKind.Bookmarks]: {
     id: '',
     name: 'Bookmarks',
-    kind: PanelType.Bookmarks,
+    kind: PanelKind.Bookmarks,
     description:
       'Choose a folder in your bookmarks and a card will be created for each sub folder, which will list each site inside of it.',
     permissions: [
@@ -61,10 +61,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.Devices]: {
+  [PanelKind.Devices]: {
     id: '',
     name: 'Devices',
-    kind: PanelType.Devices,
+    kind: PanelKind.Devices,
     description:
       'A card for each browser window open on any other devices signed into your Chrome account.',
     permissions: [
@@ -86,10 +86,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.NewBookmarks]: {
+  [PanelKind.NewBookmarks]: {
     id: '',
     name: 'New Bookmarks',
-    kind: PanelType.NewBookmarks,
+    kind: PanelKind.NewBookmarks,
     description: 'A list of your 20 most recently added bookmarks.',
     permissions: [
       { key: Permission.Bookmarks, reason: 'Access list of bookmarks.' },
@@ -108,10 +108,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.RecentTabs]: {
+  [PanelKind.RecentTabs]: {
     id: '',
     name: 'Recent Tabs',
-    kind: PanelType.RecentTabs,
+    kind: PanelKind.RecentTabs,
     description:
       'A list of your tabs in the order in which you have accessed them, starting with the latest. After approving permissions, you may have to restart your browser to get this panel to work correctly.',
     permissions: [
@@ -130,10 +130,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.RecentlyClosed]: {
+  [PanelKind.RecentlyClosed]: {
     id: '',
     name: 'Recently Closed',
-    kind: PanelType.RecentlyClosed,
+    kind: PanelKind.RecentlyClosed,
     description:
       "A list of tabs you've recently closed. This allows you to easily find and reopen something you may have closed by accident.",
     permissions: [
@@ -156,10 +156,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.TopSites]: {
+  [PanelKind.TopSites]: {
     id: '',
     name: 'Top Sites',
-    kind: PanelType.TopSites,
+    kind: PanelKind.TopSites,
     description:
       'Just like the standard Chrome new tab page, this shows your 10 most visited sites.',
     permissions: [
@@ -179,10 +179,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.Windows]: {
+  [PanelKind.Windows]: {
     id: '',
     name: 'Windows',
-    kind: PanelType.Windows,
+    kind: PanelKind.Windows,
     description:
       "A card for each open browser window on your computer, excluding the window you're currently looking at. Clicking a site will focus that tab and window.",
     permissions: [
@@ -203,10 +203,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.Empty]: {
+  [PanelKind.Empty]: {
     id: '',
     name: 'Empty',
-    kind: PanelType.Empty,
+    kind: PanelKind.Empty,
     description:
       'Just want some extra whitespace? Throw one (or more) of these in there.',
     permissions: [],
@@ -216,10 +216,10 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
-  [PanelType.New]: {
+  [PanelKind.New]: {
     id: '',
     name: 'New',
-    kind: PanelType.New,
+    kind: PanelKind.New,
     description:
       'A brand new panel where you can choose what you want displayed.',
     permissions: [],
@@ -232,14 +232,14 @@ const panelConfigs: PanelConfigMap = {
 };
 
 type PanelNameMap = {
-  [key in PanelType]: string;
+  [key in PanelKind]: string;
 };
 export const panelNameMap = Object.values(panelConfigs).reduce((acc, val) => {
   acc[val.kind] = val.name;
   return acc;
 }, {} as PanelNameMap);
 
-export function getPanelConfig(panel: PanelType): PanelConfig {
+export function getPanelConfig(panel: PanelKind): PanelConfig {
   return cloneDeep(panelConfigs[panel]);
 }
 
@@ -247,7 +247,7 @@ export function getPanelConfigs(includeMetaPanels = false): PanelConfig[] {
   let result = Object.values(panelConfigs);
 
   if (!includeMetaPanels) {
-    result = result.filter((a) => a.kind !== PanelType.New);
+    result = result.filter((a) => a.kind !== PanelKind.New);
   }
 
   return result;

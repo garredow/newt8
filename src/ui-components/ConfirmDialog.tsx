@@ -1,7 +1,7 @@
 import { Dialog } from '@reach/dialog';
 import React from 'react';
-import { ControlKind } from '../enums/controlKind';
-import { ButtonType } from '../enums/buttonType';
+import { ControlLocation } from '../enums/controlLocation';
+import { ControlType } from '../enums/controlType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Button } from './button/Button';
 import styles from './ConfirmDialog.module.css';
@@ -32,14 +32,14 @@ export function ConfirmDialog({
       <p className={styles.message}>{message}</p>
       <div className={styles.actions}>
         <Button
-          kind={ControlKind.Card}
-          type={ButtonType.Secondary}
+          location={ControlLocation.Card}
+          type={ControlType.Secondary}
           text="Cancel"
           onClick={onCancel}
         />
         <Button
-          kind={ControlKind.Card}
-          type={danger ? ButtonType.Danger : ButtonType.Primary}
+          location={ControlLocation.Card}
+          type={danger ? ControlType.Danger : ControlType.Primary}
           text="Yes"
           onClick={onConfirm}
         />
