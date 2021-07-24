@@ -12,6 +12,7 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import { ButtonKind } from '../enums/buttonKind';
 import { ButtonType } from '../enums/buttonType';
+import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme, ThemeValue, ThemeValues } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
@@ -563,6 +564,7 @@ export function ThemeView(props: ThemeViewProps) {
               panelIndex={0}
               options={{
                 columns: 1,
+                display: PanelDisplayType.Default,
                 title: 'Example Panel',
               }}
               onOptionsChanged={() => {}}
