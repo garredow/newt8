@@ -1,8 +1,14 @@
+export type ThemeValueOption = {
+  key: string;
+  name: string;
+};
+
 export type ThemeValue = {
   name: string;
   type: 'color' | 'number' | 'string';
   variable: string;
   value: string;
+  options?: ThemeValueOption[];
 };
 
 export type ThemeValues = {
@@ -14,6 +20,7 @@ export type ThemeValues = {
   warningTextColor: ThemeValue;
   errorTextColor: ThemeValue;
   baseTextSize: ThemeValue;
+  baseTextWeight: ThemeValue;
   primaryButtonBgColor: ThemeValue;
   primaryButtonTextColor: ThemeValue;
   secondaryButtonBgColor: ThemeValue;
@@ -28,6 +35,7 @@ export type ThemeValues = {
   panelDividerColor: ThemeValue;
   panelTitleTextColor: ThemeValue;
   panelTitleTextSize: ThemeValue;
+  panelTitleTextWeight: ThemeValue;
   panelPrimaryTextColor: ThemeValue;
   panelSecondaryTextColor: ThemeValue;
   panelPrimaryButtonBgColor: ThemeValue;
@@ -44,6 +52,7 @@ export type ThemeValues = {
   cardDividerColor: ThemeValue;
   cardTitleTextColor: ThemeValue;
   cardTitleTextSize: ThemeValue;
+  cardTitleTextWeight: ThemeValue;
   cardPrimaryTextColor: ThemeValue;
   cardSecondaryTextColor: ThemeValue;
   cardPrimaryButtonBgColor: ThemeValue;

@@ -44,6 +44,7 @@
   overflow-y: auto;
   flex: 1;
   font-size: calc(var(--base-text-size) * 1px);
+  font-weight: var(--base-text-weight);
 }
 
 .panels {

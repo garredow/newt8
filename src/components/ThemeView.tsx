@@ -52,7 +52,7 @@ const basicSections: Section[] = [
       'warningTextColor',
       'errorTextColor',
     ],
-    sizes: ['baseTextSize'],
+    sizes: [],
   },
   {
     title: 'Buttons',
@@ -89,7 +89,7 @@ const sections: Section[] = [
       'dangerButtonBgColor',
       'dangerButtonTextColor',
     ],
-    sizes: [],
+    sizes: ['baseTextSize', 'baseTextWeight'],
   },
   {
     title: 'Panels',
@@ -109,7 +109,7 @@ const sections: Section[] = [
       'panelDangerButtonBgColor',
       'panelDangerButtonTextColor',
     ],
-    sizes: ['panelTitleTextSize'],
+    sizes: ['panelTitleTextSize', 'panelTitleTextWeight'],
   },
   {
     title: 'Cards',
@@ -129,7 +129,7 @@ const sections: Section[] = [
       'cardDangerButtonBgColor',
       'cardDangerButtonTextColor',
     ],
-    sizes: ['cardTitleTextSize'],
+    sizes: ['cardTitleTextSize', 'cardTitleTextWeight'],
   },
   {
     title: 'Sidebar',
@@ -732,13 +732,23 @@ function ThemeValueChooser({ id, data, onChange }: ThemeValueChooserProps) {
     <div className={styles.colorChooser}>
       <div className={styles.colorName}>{data.name}</div>
       <div className={styles.colorRow}>
-        <input
-          className={styles.colorInput}
-          value={data.value}
-          onChange={handleColorChange}
-          readOnly={false}
-          type={data.type === 'number' ? 'number' : undefined}
-        />
+        {data.options ? (
+          <select value={data.value} onChange={handleColorChange}>
+            {data.options.map((a) => (
+              <option key={a.key} value={a.key}>
+                {a.name}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            className={styles.colorInput}
+            value={data.value}
+            onChange={handleColorChange}
+            readOnly={false}
+            type={data.type === 'number' ? 'number' : undefined}
+          />
+        )}
         {data.type === 'color' ? (
           <div className={styles.colorPreviewContainer}>
             <input

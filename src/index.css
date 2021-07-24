@@ -12,6 +12,7 @@ body {
   --warning-text-color: #f6f862;
   --error-text-color: #f45d52;
   --base-text-size: 16px;
+  --base-text-weight: 400;
 
   --primary-button-bg-color: var(--app-accent-color);
   --primary-button-text-color: var(--primary-text-color);
@@ -28,6 +29,7 @@ body {
   --panel-divider-color: var(--secondary-text-color);
   --panel-title-text-color: var(--primary-text-color);
   --panel-title-text-size: 2rem;
+  --panel-title-text-weight: 600;
   --panel-primary-text-color: var(--primary-text-color);
   --panel-secondary-text-color: var(--secondary-text-color);
 
@@ -46,6 +48,7 @@ body {
   --card-divider-color: var(--primary-text-color);
   --card-title-text-color: var(--primary-text-color);
   --card-title-text-size: 1.5rem;
+  --card-title-text-weight: 500;
   --card-primary-text-color: var(--primary-text-color);
   --card-secondary-text-color: var(--secondary-text-color);
 
@@ -78,6 +81,7 @@ body {
 
   /* Actual Styles */
   font-size: calc(var(--base-text-size) * 1px);
+  font-weight: var(--base-text-weight);
 }
 
 * {

@@ -9,6 +9,18 @@ type SettingsContextValue = {
   setSettings: (settings: Settings) => Promise<void>;
 };
 
+const fontWeightOptions = [
+  { key: '100', name: '100' },
+  { key: '200', name: '200' },
+  { key: '300', name: '300' },
+  { key: '400', name: '400' },
+  { key: '500', name: '500' },
+  { key: '600', name: '600' },
+  { key: '700', name: '700' },
+  { key: '800', name: '800' },
+  { key: '900', name: '900' },
+];
+
 const defaultThemes: Theme[] = [
   {
     id: 'light',
@@ -22,6 +34,7 @@ const defaultThemes: Theme[] = [
       warningTextColor: {name: 'warning-text-color', type:'color', variable: 'warning-text-color', value: '#D3D60A'},
       errorTextColor: {name: 'error-text-color', type:'color', variable: 'error-text-color', value: '#f45d52'},
       baseTextSize: {name: 'base-text-size', type:'number', variable: 'base-text-size', value: '16'},
+      baseTextWeight: {name: 'base-text-weight', type:'string', variable: 'base-text-weight', value: '400', options: fontWeightOptions},
       primaryButtonBgColor: {name: 'primary-button-bg-color', type:'color', variable: 'primary-button-bg-color', value: '#75abbc'},
       primaryButtonTextColor: {name: 'primary-button-text-color', type:'color', variable: 'primary-button-text-color', value: 'rgba(0,0,0, 0.88)'},
       secondaryButtonBgColor: {name: 'secondary-button-bg-color', type:'color', variable: 'secondary-button-bg-color', value: '#d0d6dd'},
@@ -36,6 +49,7 @@ const defaultThemes: Theme[] = [
       panelDividerColor: {name: 'panel-divider-color', type:'color', variable: 'panel-divider-color', value: 'rgba(0,0,0, 0.2)'},
       panelTitleTextColor: {name: 'panel-title-text-color', type:'color', variable: 'panel-title-text-color', value: 'rgba(0,0,0, 0.88)'},
       panelTitleTextSize: {name: 'panel-title-text-size', type:'string', variable: 'panel-title-text-size', value: '2em'},
+      panelTitleTextWeight: {name: 'panel-title-text-weight', type:'string', variable: 'panel-title-text-weight', value: '600', options: fontWeightOptions},
       panelPrimaryTextColor: {name: 'panel-primary-text-color', type:'color', variable: 'panel-primary-text-color', value: 'rgba(0,0,0, 0.88)'},
       panelSecondaryTextColor: {name: 'panel-secondary-text-color', type:'color', variable: 'panel-secondary-text-color', value: 'rgba(0,0,0, 0.5)'},
       panelPrimaryButtonBgColor: {name: 'panel-primary-button-bg-color', type:'color', variable: 'panel-primary-button-bg-color', value: '#75abbc'},
@@ -52,6 +66,7 @@ const defaultThemes: Theme[] = [
       cardDividerColor: {name: 'card-divider-color', type:'color', variable: 'card-divider-color', value: 'rgba(0,0,0, 0.1)'},
       cardTitleTextColor: {name: 'card-title-text-color', type:'color', variable: 'card-title-text-color', value: 'rgba(0,0,0, 0.88)'},
       cardTitleTextSize: {name: 'card-title-text-size', type:'string', variable: 'card-title-text-size', value: '1.5em'},
+      cardTitleTextWeight: {name: 'card-title-text-weight', type:'string', variable: 'card-title-text-weight', value: '500', options: fontWeightOptions},
       cardPrimaryTextColor: {name: 'card-primary-text-color', type:'color', variable: 'card-primary-text-color', value: 'rgba(0,0,0, 0.88)'},
       cardSecondaryTextColor: {name: 'card-secondary-text-color', type:'color', variable: 'card-secondary-text-color', value: 'rgba(0,0,0, 0.5)'},
       cardPrimaryButtonBgColor: {name: 'card-primary-button-bg-color', type:'color', variable: 'card-primary-button-bg-color', value: '#75abbc'},
@@ -92,6 +107,7 @@ const defaultThemes: Theme[] = [
       warningTextColor: {name: 'warning-text-color', type:'color', variable: 'warning-text-color', value: '#EAB948'},
       errorTextColor: {name: 'error-text-color', type:'color', variable: 'error-text-color', value: '#A52422'},
       baseTextSize: {name: 'base-text-size', type:'number', variable: 'base-text-size', value: '16'},
+      baseTextWeight: {name: 'base-text-weight', type:'string', variable: 'base-text-weight', value: '400', options: fontWeightOptions},
       primaryButtonBgColor: {name: 'primary-button-bg-color', type:'color', variable: 'primary-button-bg-color', value: '#6A8D92'},
       primaryButtonTextColor: {name: 'primary-button-text-color', type:'color', variable: 'primary-button-text-color', value: 'rgba(255, 255, 255, 0.84)'},
       secondaryButtonBgColor: {name: 'secondary-button-bg-color', type:'color', variable: 'secondary-button-bg-color', value: '#222E2F'},
@@ -106,6 +122,7 @@ const defaultThemes: Theme[] = [
       panelDividerColor: {name: 'panel-divider-color', type:'color', variable: 'panel-divider-color', value: 'rgba(255,255,255,.2'},
       panelTitleTextColor: {name: 'panel-title-text-color', type:'color', variable: 'panel-title-text-color', value: 'rgba(255, 255, 255, 0.84)'},
       panelTitleTextSize: {name: 'panel-title-text-size', type:'string', variable: 'panel-title-text-size', value: '2em'},
+      panelTitleTextWeight: {name: 'panel-title-text-weight', type:'string', variable: 'panel-title-text-weight', value: '600', options: fontWeightOptions},
       panelPrimaryTextColor: {name: 'panel-primary-text-color', type:'color', variable: 'panel-primary-text-color', value: 'rgba(255, 255, 255, 0.84)'},
       panelSecondaryTextColor: {name: 'panel-secondary-text-color', type:'color', variable: 'panel-secondary-text-color', value: 'rgba(255, 255, 255, 0.6)'},
       panelPrimaryButtonBgColor: {name: 'panel-primary-button-bg-color', type:'color', variable: 'panel-primary-button-bg-color', value: '#6A8D92'},
@@ -122,6 +139,7 @@ const defaultThemes: Theme[] = [
       cardDividerColor: {name: 'card-divider-color', type:'color', variable: 'card-divider-color', value: 'rgba(255,255,255,.2'},
       cardTitleTextColor: {name: 'card-title-text-color', type:'color', variable: 'card-title-text-color', value: 'rgba(255, 255, 255, 0.84)'},
       cardTitleTextSize: {name: 'card-title-text-size', type:'string', variable: 'card-title-text-size', value: '1.5em'},
+      cardTitleTextWeight: {name: 'card-title-text-weight', type:'string', variable: 'card-title-text-weight', value: '500', options: fontWeightOptions},
       cardPrimaryTextColor: {name: 'card-primary-text-color', type:'color', variable: 'card-primary-text-color', value: 'rgba(255, 255, 255, 0.84)'},
       cardSecondaryTextColor: {name: 'card-secondary-text-color', type:'color', variable: 'card-secondary-text-color', value: 'rgba(255, 255, 255, 0.6)'},
       cardPrimaryButtonBgColor: {name: 'card-primary-button-bg-color', type:'color', variable: 'card-primary-button-bg-color', value: '#6A8D92'},
@@ -162,6 +180,7 @@ const defaultThemes: Theme[] = [
       warningTextColor: {name: 'warning-text-color', type:'color', variable: 'warning-text-color', value: '#f5f749'},
       errorTextColor: {name: 'error-text-color', type:'color', variable: 'error-text-color', value: '#A52422'},
       baseTextSize: {name: 'base-text-size', type:'number', variable: 'base-text-size', value: '16'},
+      baseTextWeight: {name: 'base-text-weight', type:'string', variable: 'base-text-weight', value: '400', options: fontWeightOptions},
       primaryButtonBgColor: {name: 'primary-button-bg-color', type:'color', variable: 'primary-button-bg-color', value: '#ffc600'},
       primaryButtonTextColor: {name: 'primary-button-text-color', type:'color', variable: 'primary-button-text-color', value: 'rgba(0,0,0, 0.88)'},
       secondaryButtonBgColor: {name: 'secondary-button-bg-color', type:'color', variable: 'secondary-button-bg-color', value: '#0d3a58'},
@@ -176,6 +195,7 @@ const defaultThemes: Theme[] = [
       panelDividerColor: {name: 'panel-divider-color', type:'color', variable: 'panel-divider-color', value: 'rgba(255, 255, 255, 0.2)'},
       panelTitleTextColor: {name: 'panel-title-text-color', type:'color', variable: 'panel-title-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       panelTitleTextSize: {name: 'panel-title-text-size', type:'string', variable: 'panel-title-text-size', value: '2em'},
+      panelTitleTextWeight: {name: 'panel-title-text-weight', type:'string', variable: 'panel-title-text-weight', value: '600', options: fontWeightOptions},
       panelPrimaryTextColor: {name: 'panel-primary-text-color', type:'color', variable: 'panel-primary-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       panelSecondaryTextColor: {name: 'panel-secondary-text-color', type:'color', variable: 'panel-secondary-text-color', value: 'rgba(255, 255, 255, 0.6)'},
       panelPrimaryButtonBgColor: {name: 'panel-primary-button-bg-color', type:'color', variable: 'panel-primary-button-bg-color', value: '#ffc600'},
@@ -192,6 +212,7 @@ const defaultThemes: Theme[] = [
       cardDividerColor: {name: 'card-divider-color', type:'color', variable: 'card-divider-color', value: 'rgba(255, 255, 255, 0.2)'},
       cardTitleTextColor: {name: 'card-title-text-color', type:'color', variable: 'card-title-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       cardTitleTextSize: {name: 'card-title-text-size', type:'string', variable: 'card-title-text-size', value: '1.5em'},
+      cardTitleTextWeight: {name: 'card-title-text-weight', type:'string', variable: 'card-title-text-weight', value: '500', options: fontWeightOptions},
       cardPrimaryTextColor: {name: 'card-primary-text-color', type:'color', variable: 'card-primary-text-color', value: 'rgba(255, 255, 255, 0.88)'},
       cardSecondaryTextColor: {name: 'card-secondary-text-color', type:'color', variable: 'card-secondary-text-color', value: 'rgba(255, 255, 255, 0.6)'},
       cardPrimaryButtonBgColor: {name: 'card-primary-button-bg-color', type:'color', variable: 'card-primary-button-bg-color', value: '#ffc600'},

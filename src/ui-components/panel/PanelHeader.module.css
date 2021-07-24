@@ -6,6 +6,7 @@
 
 .title {
   font-size: var(--panel-title-text-size);
+  font-weight: var(--panel-title-text-weight);
   margin: 0;
   min-width: 50px;
   color: var(--panel-title-text-color);
