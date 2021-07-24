@@ -126,7 +126,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       }
     >
       {showFinder ? (
-        <PanelContent columns={1}>
+        <PanelContent columns={1} display={options.display}>
           <Card>
             <CardHeader text="Choose a folder" />
             <p className={styles.message}>
@@ -143,7 +143,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent columns={options.columns}>
+        <PanelContent columns={options.columns} display={options.display}>
           {status === Status.Loaded && bookmarks.length === 0 ? (
             <div>
               <p>
@@ -159,7 +159,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
             </div>
           ) : null}
           {bookmarks.map((group) => (
-            <Card key={group.id}>
+            <Card key={group.id} display={options.display}>
               <CardHeader text={group.title} />
               {group
                 .children!.filter((a) => !a.children)

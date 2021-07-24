@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { PanelDisplayType } from '../enums/panelDisplayType';
 import { PanelType } from '../enums/panelType';
 import { GridLayout } from '../models/GridLayout';
 import { Panel } from '../models/Panel';
@@ -12,6 +13,7 @@ export type PanelConfigMap = {
 export type PanelOptions = {
   title: string;
   columns: number;
+  display: PanelDisplayType;
 };
 
 export type PanelConfig = {
@@ -26,6 +28,12 @@ export type PanelConfig = {
   options: {
     [key: string]: string | number | boolean;
   };
+};
+
+const defaultPanelOptions = {
+  title: 'Panel',
+  columns: 1,
+  display: PanelDisplayType.Default,
 };
 
 const panelConfigs: PanelConfigMap = {
@@ -47,6 +55,7 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'Bookmarks',
       columns: 0,
     },
@@ -70,8 +79,8 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'Devices',
-      columns: 1,
       showTabAccessedTime: false,
       showUrl: true,
     },
@@ -94,8 +103,8 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'New Bookmarks',
-      columns: 1,
     },
     options: {},
   },
@@ -116,8 +125,8 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'Recent Tabs',
-      columns: 1,
     },
     options: {},
   },
@@ -142,8 +151,8 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'Recently Closed',
-      columns: 1,
     },
     options: {},
   },
@@ -165,8 +174,8 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'Top Sites',
-      columns: 1,
     },
     options: {},
   },
@@ -187,8 +196,8 @@ const panelConfigs: PanelConfigMap = {
       },
     ],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: 'Windows',
-      columns: 1,
       showTabAccessedTime: false,
       showUrl: true,
     },
@@ -202,8 +211,8 @@ const panelConfigs: PanelConfigMap = {
       'Just want some extra whitespace? Throw one (or more) of these in there.',
     permissions: [],
     defaultOptions: {
+      ...defaultPanelOptions,
       title: '',
-      columns: 1,
     },
     options: {},
   },
@@ -214,7 +223,10 @@ const panelConfigs: PanelConfigMap = {
     description:
       'A brand new panel where you can choose what you want displayed.',
     permissions: [],
-    defaultOptions: { title: 'New Panel' },
+    defaultOptions: {
+      ...defaultPanelOptions,
+      title: 'New Panel',
+    },
     options: {},
   },
 };

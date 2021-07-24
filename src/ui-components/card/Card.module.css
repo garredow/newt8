@@ -8,6 +8,24 @@
   padding: 10px 0;
 }
 
+.root.shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.root.divider {
+  border-bottom: 1px solid var(--panel-divider-color);
+}
+
+.root:last-of-type {
+  border-bottom: none;
+}
+
+.root.list {
+  box-shadow: none;
+  background: none;
+}
+
 .root select {
   color: var(--card-accent-color);
 }
@@ -22,13 +40,4 @@
 .root > button {
   width: calc(100% - 20px);
   margin: 10px 10px 0px 10px;
-}
-
-.shadow {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-}
-
-.divider {
-  border-bottom: 1px solid var(--panel-divider-color);
 }

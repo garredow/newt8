@@ -80,10 +80,10 @@ export function DevicesPanel(props: DevicesPanelProps) {
         </>
       }
     >
-      <PanelContent columns={options.columns}>
+      <PanelContent columns={options.columns} display={options.display}>
         {devices.map((device) => {
           return device.sessions.map((session) => (
-            <Card key={session.window?.sessionId}>
+            <Card key={session.window?.sessionId} display={options.display}>
               <CardHeader text={device.deviceName} />
               {session?.window?.tabs?.map((tab) => (
                 <SiteRow

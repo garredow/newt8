@@ -19,6 +19,7 @@ import { PanelSettings } from './PanelSettings';
 import { SettingsRow } from './SettingsRow';
 import { animateFade } from '../animations';
 import { delay } from '../../utilities/delay';
+import { PanelDisplayType } from '../../enums/panelDisplayType';
 
 type PanelProps = ComponentBase &
   DraggablePanelProps & {
@@ -129,6 +130,22 @@ export const Panel = React.forwardRef(
                   }}
                   data-testid="settings"
                 >
+                  <SettingsRow
+                    label="Display"
+                    helpText="Choose how you want information in this panel displayed."
+                  >
+                    <select
+                      value={props.options.display}
+                      onChange={(ev) =>
+                        setOptionValue('display', ev.target.value)
+                      }
+                      data-testid="select-display"
+                    >
+                      <option value={PanelDisplayType.Default}>Default</option>
+                      <option value={PanelDisplayType.Cards}>Cards</option>
+                      <option value={PanelDisplayType.Lists}>Lists</option>
+                    </select>
+                  </SettingsRow>
                   {enableColumns ? (
                     <SettingsRow
                       label="Columns"

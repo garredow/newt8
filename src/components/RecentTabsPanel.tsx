@@ -42,8 +42,8 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
     >
-      <PanelContent columns={options.columns}>
-        <Card>
+      <PanelContent columns={options.columns} display={options.display}>
+        <Card display={options.display}>
           {tabs.map((tab) => (
             <SiteRow
               key={tab.id}

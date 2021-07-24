@@ -1,5 +1,6 @@
 import React from 'react';
 import { DisplayDensity } from './enums/displayDensity';
+import { PanelDisplayType } from './enums/panelDisplayType';
 import { Settings } from './models/Settings';
 import { Theme } from './models/Theme';
 
@@ -233,7 +234,8 @@ export const defaultSettings: Settings = {
   showSiteDividers: false,
   showCardDividers: false,
   showCardShadow: true,
-  displayDensity: DisplayDensity.Normal
+  displayDensity: DisplayDensity.Normal,
+  defaultPanelDisplay: PanelDisplayType.Cards
 };
 
 const defaultValue = {

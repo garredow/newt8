@@ -1,4 +1,5 @@
 import { DisplayDensity } from '../enums/displayDensity';
+import { PanelDisplayType } from '../enums/panelDisplayType';
 import { Theme } from './Theme';
 
 export type Settings = {
@@ -14,4 +15,5 @@ export type Settings = {
   showCardDividers: boolean;
   showCardShadow: boolean;
   displayDensity: DisplayDensity;
+  defaultPanelDisplay: PanelDisplayType;
 };

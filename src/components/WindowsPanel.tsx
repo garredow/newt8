@@ -73,7 +73,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
         (window) => options.windowId === window.id || options.windowId === 0
       )
       .map((window) => (
-        <Card key={window.id}>
+        <Card key={window.id} display={options.display}>
           <CardHeader text={`Window ${window.id}`} />
           {window.tabs.map((tab) => (
             <SiteRow
@@ -146,8 +146,8 @@ export function WindowsPanel(props: WindowsPanelProps) {
       }
     >
       {showWindowPicker ? (
-        <PanelContent columns={1}>
-          <Card>
+        <PanelContent columns={1} display={options.display}>
+          <Card display={options.display}>
             <CardHeader text="Choose a window" />
             <div className={styles.windowPickerContainer}>
               <div>

@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ButtonType } from '../enums/buttonType';
 import { DisplayDensity } from '../enums/displayDensity';
+import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
@@ -120,7 +121,7 @@ export function SettingsView(props: SettingsViewProps) {
             </select>
           </SettingsRow>
           <SettingsRow
-            label="Show Actions On Hover"
+            label="Only Show Actions On Hover"
             helpText="When turned on, action buttons (add page, edit page, panel settings, etc) will 
           be hidden by default. They will only show when you hover the mouse over them."
           >
@@ -131,6 +132,21 @@ export function SettingsView(props: SettingsViewProps) {
                 setSettingValue('showActionsOnHover', ev.target.checked)
               }
             />
+          </SettingsRow>
+          <h3>Panels</h3>
+          <SettingsRow
+            label="Default Panel Display Type"
+            helpText="Whether sites display in cards or lists. This setting may override some others."
+          >
+            <select
+              value={settings.defaultPanelDisplay}
+              onChange={(ev) =>
+                setSettingValue('defaultPanelDisplay', ev.target.value)
+              }
+            >
+              <option value={PanelDisplayType.Cards}>Cards</option>
+              <option value={PanelDisplayType.Lists}>Lists</option>
+            </select>
           </SettingsRow>
           <SettingsRow
             label="Show Card Dividers"
@@ -156,9 +172,10 @@ export function SettingsView(props: SettingsViewProps) {
               }
             />
           </SettingsRow>
+          <h3>Cards</h3>
           <SettingsRow
-            label="Show Site Dividers"
-            helpText="Show a divider between each row in a card."
+            label="Show Row Dividers"
+            helpText="Show a divider between each row in a card or list."
           >
             <input
               type="checkbox"

@@ -7,3 +7,9 @@
   grid-auto-rows: max-content;
   padding: 0 15px 15px 15px;
 }
+
+.root.list {
+  row-gap: 0;
+  column-gap: 0;
+  padding: 0 0 15px 0;
+}
