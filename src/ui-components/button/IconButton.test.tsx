@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { MdMenu } from 'react-icons/md';
-import { ButtonKind } from '../../enums/buttonKind';
+import { ControlKind } from '../../enums/controlKind';
 import { ButtonType } from '../../enums/buttonType';
 import { IconButton } from './IconButton';
 
@@ -74,7 +74,7 @@ describe('IconButton', () => {
 
   test('is panel button', () => {
     const props = {
-      kind: ButtonKind.Panel,
+      kind: ControlKind.Panel,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -85,7 +85,7 @@ describe('IconButton', () => {
 
   test('is panel primary button', () => {
     const props = {
-      kind: ButtonKind.Panel,
+      kind: ControlKind.Panel,
       type: ButtonType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
@@ -98,7 +98,7 @@ describe('IconButton', () => {
 
   test('is card button', () => {
     const props = {
-      kind: ButtonKind.Card,
+      kind: ControlKind.Card,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -109,7 +109,7 @@ describe('IconButton', () => {
 
   test('is card primary button', () => {
     const props = {
-      kind: ButtonKind.Card,
+      kind: ControlKind.Card,
       type: ButtonType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
@@ -122,7 +122,7 @@ describe('IconButton', () => {
 
   test('is sidebar button', () => {
     const props = {
-      kind: ButtonKind.SideBar,
+      kind: ControlKind.SideBar,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',
     };
@@ -133,7 +133,7 @@ describe('IconButton', () => {
 
   test('is sidebar primary button', () => {
     const props = {
-      kind: ButtonKind.SideBar,
+      kind: ControlKind.SideBar,
       type: ButtonType.Primary,
       icon: <MdMenu data-testid="icon" />,
       title: 'test',

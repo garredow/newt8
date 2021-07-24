@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonKind } from '../../enums/buttonKind';
+import { ControlKind } from '../../enums/controlKind';
 import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
 import styles from './Button.module.css';
@@ -7,7 +7,7 @@ import styles from './Button.module.css';
 type ButtonProps = ComponentBase & {
   text: string;
   type?: ButtonType;
-  kind?: ButtonKind;
+  kind?: ControlKind;
   disabled?: boolean;
   fullWidth?: boolean;
   htmlType?: 'submit' | 'reset' | 'button';
@@ -16,7 +16,7 @@ type ButtonProps = ComponentBase & {
 
 export function Button({
   type = ButtonType.Secondary,
-  kind = ButtonKind.Default,
+  kind = ControlKind.Default,
   disabled = false,
   fullWidth = false,
   htmlType = 'button',
@@ -26,10 +26,10 @@ export function Button({
     let classes = [styles.root];
 
     switch (kind) {
-      case ButtonKind.Panel:
+      case ControlKind.Panel:
         classes.push(styles.panel);
         break;
-      case ButtonKind.Card:
+      case ControlKind.Card:
         classes.push(styles.card);
         break;
     }

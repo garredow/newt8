@@ -1,0 +1,35 @@
+.root {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+}
+
+.root.default { border: 2px solid  var(--app-accent-color); }
+.root.panel { border: 2px solid  var(--panel-accent-color); }
+.root.card { border: 2px solid  var(--card-accent-color); }
+.root.sidebar { border: 2px solid  var(--sidebar-accent-color); }
+
+.root > input,
+.root > .checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+}
+
+.root.default .checkmark {color: var(--app-bg-color); }
+.root.panel .checkmark {color: var(--panel-bg-color); }
+.root.card .checkmark {color: var(--card-bg-color); }
+.root.sidebar .checkmark {color: var(--sidebar-bg-color); }
+
+.root > input:checked ~ .checkbox {
+  opacity: 1;
+}
+.root.default > input:checked ~ .checkbox {background-color: var(--app-accent-color); }
+.root.panel > input:checked ~ .checkbox {background-color: var(--panel-accent-color); }
+.root.card > input:checked ~ .checkbox {background-color: var(--card-accent-color); }
+.root.sidebar > input:checked ~ .checkbox {background-color: var(--sidebar-accent-color); }
+

@@ -1,7 +1,7 @@
 import { Dialog } from '@reach/dialog';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash';
-import { ButtonKind } from '../enums/buttonKind';
+import { ControlKind } from '../enums/controlKind';
 import { ButtonType } from '../enums/buttonType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Panel } from '../models/Panel';
@@ -327,27 +327,27 @@ export function ConfigureGridDialog({
         </div>
         <div className={styles.gridActions}>
           <Button
-            kind={ButtonKind.Card}
+            kind={ControlKind.Card}
             type={ButtonType.Secondary}
             text="Add Column Left"
             onClick={() => addCol('left')}
           />
           <div className={styles.rowActions}>
             <Button
-              kind={ButtonKind.Card}
+              kind={ControlKind.Card}
               type={ButtonType.Secondary}
               text="Add Row Top"
               onClick={() => addRow('top')}
             />
             <Button
-              kind={ButtonKind.Card}
+              kind={ControlKind.Card}
               type={ButtonType.Secondary}
               text="Add Row Bottom"
               onClick={() => addRow('bottom')}
             />
           </div>
           <Button
-            kind={ButtonKind.Card}
+            kind={ControlKind.Card}
             type={ButtonType.Secondary}
             text="Add Column Right"
             onClick={() => addCol('right')}
@@ -355,7 +355,7 @@ export function ConfigureGridDialog({
         </div>
         <div className={styles.actions}>
           <Button
-            kind={ButtonKind.Card}
+            kind={ControlKind.Card}
             type={ButtonType.Danger}
             text="Reset"
             title="Reset grid to a default safe layout"
@@ -363,21 +363,21 @@ export function ConfigureGridDialog({
           />
           <div style={{ flex: 1 }} />
           <Button
-            kind={ButtonKind.Card}
+            kind={ControlKind.Card}
             type={ButtonType.Secondary}
             text="Cancel"
             title="Restore original grid layout"
             onClick={() => onSave(originalGrid, true)}
           />
           <Button
-            kind={ButtonKind.Card}
+            kind={ControlKind.Card}
             type={ButtonType.Secondary}
             text="Preview"
             title="Apply changes without permanently saving them"
             onClick={() => onSave(grid, false)}
           />
           <Button
-            kind={ButtonKind.Card}
+            kind={ControlKind.Card}
             type={ButtonType.Primary}
             text="Save"
             title="Save grid layout"

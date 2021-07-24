@@ -9,6 +9,8 @@ import { getPanelConfig, PanelOptions } from '../services/panels';
 import { PanelType } from '../enums/panelType';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
+import { Checkbox } from '../ui-components/input/Checkbox';
+import { ControlKind } from '../enums/controlKind';
 
 export type DevicesPanelOptions = PanelOptions & {
   showTabAccessedTime: boolean;
@@ -54,26 +56,24 @@ export function DevicesPanel(props: DevicesPanelProps) {
       extraSettings={
         <>
           <SettingsRow
-            label="Show when tab last accessed"
-            helpText="Display when each tab was last accessed, in relative time."
-          >
-            <input
-              type="checkbox"
-              checked={options.showTabAccessedTime}
-              onChange={(ev) =>
-                handleOptionChanged('showTabAccessedTime', ev.target.checked)
-              }
-            />
-          </SettingsRow>
-          <SettingsRow
             label="Show URL"
             helpText="Display the URL for each tab."
           >
-            <input
-              type="checkbox"
+            <Checkbox
+              kind={ControlKind.Panel}
               checked={options.showUrl}
-              onChange={(ev) =>
-                handleOptionChanged('showUrl', ev.target.checked)
+              onChange={(checked) => handleOptionChanged('showUrl', checked)}
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Show when tab last accessed"
+            helpText="Display when each tab was last accessed, in relative time."
+          >
+            <Checkbox
+              kind={ControlKind.Panel}
+              checked={options.showTabAccessedTime}
+              onChange={(checked) =>
+                handleOptionChanged('showTabAccessedTime', checked)
               }
             />
           </SettingsRow>

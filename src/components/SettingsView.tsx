@@ -10,6 +10,7 @@ import { Theme } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
 import { Button } from '../ui-components/button/Button';
 import { ConfirmDialog } from '../ui-components/ConfirmDialog';
+import { Checkbox } from '../ui-components/input/Checkbox';
 import { SettingsRow } from '../ui-components/panel/SettingsRow';
 import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './SettingsView.module.css';
@@ -81,11 +82,10 @@ export function SettingsView(props: SettingsViewProps) {
             helpText="When turned on, each setting throughout Newt will have a short description
            displayed beneath it. If off, you can still view this text by clicking on the label."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.showSettingHelpText}
-              onChange={(ev) =>
-                setSettingValue('showSettingHelpText', ev.target.checked)
+              onChange={(checked) =>
+                setSettingValue('showSettingHelpText', checked)
               }
             />
           </SettingsRow>
@@ -94,11 +94,10 @@ export function SettingsView(props: SettingsViewProps) {
             helpText="When turned on, you'll be asked to confirm any action that would result in
            something being deleted. Ex: A panel or page."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.confirmBeforeDelete}
-              onChange={(ev) =>
-                setSettingValue('confirmBeforeDelete', ev.target.checked)
+              onChange={(checked) =>
+                setSettingValue('confirmBeforeDelete', checked)
               }
             />
           </SettingsRow>
@@ -125,11 +124,10 @@ export function SettingsView(props: SettingsViewProps) {
             helpText="When turned on, action buttons (add page, edit page, panel settings, etc) will 
           be hidden by default. They will only show when you hover the mouse over them."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.showActionsOnHover}
-              onChange={(ev) =>
-                setSettingValue('showActionsOnHover', ev.target.checked)
+              onChange={(checked) =>
+                setSettingValue('showActionsOnHover', checked)
               }
             />
           </SettingsRow>
@@ -152,11 +150,10 @@ export function SettingsView(props: SettingsViewProps) {
             label="Show Card Dividers"
             helpText="Show a divider between each card in a panel."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.showCardDividers}
-              onChange={(ev) =>
-                setSettingValue('showCardDividers', ev.target.checked)
+              onChange={(checked) =>
+                setSettingValue('showCardDividers', checked)
               }
             />
           </SettingsRow>
@@ -164,12 +161,9 @@ export function SettingsView(props: SettingsViewProps) {
             label="Show Card Shadows"
             helpText="Show a shadow under each card."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.showCardShadow}
-              onChange={(ev) =>
-                setSettingValue('showCardShadow', ev.target.checked)
-              }
+              onChange={(checked) => setSettingValue('showCardShadow', checked)}
             />
           </SettingsRow>
           <h3>Cards</h3>
@@ -177,11 +171,10 @@ export function SettingsView(props: SettingsViewProps) {
             label="Show Row Dividers"
             helpText="Show a divider between each row in a card or list."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.showSiteDividers}
-              onChange={(ev) =>
-                setSettingValue('showSiteDividers', ev.target.checked)
+              onChange={(checked) =>
+                setSettingValue('showSiteDividers', checked)
               }
             />
           </SettingsRow>
@@ -192,12 +185,9 @@ export function SettingsView(props: SettingsViewProps) {
             label="Dynamic themes"
             helpText="When you turn on dark mode for your device, Newt's theme will change to match it."
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={settings.dynamicThemes}
-              onChange={(ev) =>
-                setSettingValue('dynamicThemes', ev.target.checked)
-              }
+              onChange={(checked) => setSettingValue('dynamicThemes', checked)}
             />
           </SettingsRow>
           {settings.dynamicThemes ? (

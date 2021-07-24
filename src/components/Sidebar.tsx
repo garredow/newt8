@@ -22,7 +22,7 @@ import { ComponentBase } from '../models/ComponentBase';
 import { useState } from 'react';
 import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
-import { ButtonKind } from '../enums/buttonKind';
+import { ControlKind } from '../enums/controlKind';
 import { ConfirmDialog } from '../ui-components/ConfirmDialog';
 import { SettingsContext } from '../SettingsContext';
 import { mixin } from '../utilities/mixin';
@@ -141,7 +141,7 @@ export function Sidebar(props: SidebarProps) {
                           >
                             <IconButton
                               size={32}
-                              kind={ButtonKind.SideBar}
+                              kind={ControlKind.SideBar}
                               type={ButtonType.Secondary}
                               className={styles.btnMove}
                               icon={<MdCompareArrows />}
@@ -170,7 +170,7 @@ export function Sidebar(props: SidebarProps) {
 
                             <IconButton
                               size={32}
-                              kind={ButtonKind.SideBar}
+                              kind={ControlKind.SideBar}
                               type={ButtonType.Danger}
                               icon={<MdClose />}
                               title="Delete"
@@ -204,7 +204,7 @@ export function Sidebar(props: SidebarProps) {
         >
           <IconButton
             size={32}
-            kind={ButtonKind.SideBar}
+            kind={ControlKind.SideBar}
             type={ButtonType.Secondary}
             icon={<MdAdd />}
             title="Add Page"
@@ -224,7 +224,7 @@ export function Sidebar(props: SidebarProps) {
           />
           <IconButton
             size={32}
-            kind={ButtonKind.SideBar}
+            kind={ControlKind.SideBar}
             type={ButtonType.Secondary}
             icon={<MdEdit />}
             title="Edit Pages"
@@ -236,7 +236,7 @@ export function Sidebar(props: SidebarProps) {
         <Link to="/settings">
           <IconButton
             size={40}
-            kind={ButtonKind.SideBar}
+            kind={ControlKind.SideBar}
             type={ButtonType.Primary}
             icon={<MdSettings />}
             title="Themes"

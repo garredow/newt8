@@ -4,7 +4,7 @@ import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './NewPanel.module.css';
 import { PanelType } from '../enums/panelType';
 import { ButtonType } from '../enums/buttonType';
-import { ButtonKind } from '../enums/buttonKind';
+import { ControlKind } from '../enums/controlKind';
 import { Button } from '../ui-components/button/Button';
 import {
   PermissionDetail,
@@ -132,13 +132,13 @@ export function NewPanel(props: NewPanelProps) {
                 text="Request Permissions"
                 onClick={request}
                 type={ButtonType.Primary}
-                kind={ButtonKind.Panel}
+                kind={ControlKind.Panel}
               />
               <Button
                 text="Cancel"
                 onClick={cancelRequest}
                 type={ButtonType.Secondary}
-                kind={ButtonKind.Panel}
+                kind={ControlKind.Panel}
               />
               {permissionsError ? (
                 <p className={styles.error}>
@@ -157,7 +157,7 @@ export function NewPanel(props: NewPanelProps) {
                       key={panel}
                       text="Add Panel"
                       type={ButtonType.Secondary}
-                      kind={ButtonKind.Panel}
+                      kind={ControlKind.Panel}
                       fullWidth
                       onClick={() => checkPermissions(panel)}
                     />
@@ -171,7 +171,7 @@ export function NewPanel(props: NewPanelProps) {
                   <Button
                     text="Delete"
                     type={ButtonType.Danger}
-                    kind={ButtonKind.Panel}
+                    kind={ControlKind.Panel}
                     fullWidth
                     onClick={props.onDeletePanel}
                   />

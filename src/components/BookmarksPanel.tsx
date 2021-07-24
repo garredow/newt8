@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonKind } from '../enums/buttonKind';
+import { ControlKind } from '../enums/controlKind';
 import { PanelType } from '../enums/panelType';
 import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
@@ -112,13 +112,13 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
         <>
           <Button
             text="Edit Bookmarks"
-            kind={ButtonKind.Panel}
+            kind={ControlKind.Panel}
             fullWidth
             onClick={editBookmarks}
           />
           <Button
             text="Choose New Folder"
-            kind={ButtonKind.Panel}
+            kind={ControlKind.Panel}
             fullWidth
             onClick={showFolderPicker}
           />
@@ -151,7 +151,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                 folder?
               </p>
               <Button
-                kind={ButtonKind.Card}
+                kind={ControlKind.Card}
                 text="Sure"
                 fullWidth={true}
                 onClick={showFolderPicker}

@@ -10,7 +10,7 @@ import {
   MdSettings,
 } from 'react-icons/md';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ButtonKind } from '../enums/buttonKind';
+import { ControlKind } from '../enums/controlKind';
 import { ButtonType } from '../enums/buttonType';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
@@ -535,25 +535,25 @@ export function ThemeView(props: ThemeViewProps) {
               </p>
               <Button
                 type={ButtonType.Primary}
-                kind={ButtonKind.Default}
+                kind={ControlKind.Default}
                 text="Primary Button"
                 onClick={() => {}}
               />
               <Button
                 type={ButtonType.Secondary}
-                kind={ButtonKind.Default}
+                kind={ControlKind.Default}
                 text="Secondary Button"
                 onClick={() => {}}
               />
               <Button
                 type={ButtonType.Warning}
-                kind={ButtonKind.Default}
+                kind={ControlKind.Default}
                 text="Warning Button"
                 onClick={() => {}}
               />
               <Button
                 type={ButtonType.Danger}
-                kind={ButtonKind.Default}
+                kind={ControlKind.Default}
                 text="Danger Button"
                 onClick={() => {}}
               />
@@ -591,25 +591,25 @@ export function ThemeView(props: ThemeViewProps) {
                 </div>
                 <Button
                   type={ButtonType.Primary}
-                  kind={ButtonKind.Panel}
+                  kind={ControlKind.Panel}
                   text="Primary Panel Button"
                   onClick={() => {}}
                 />
                 <Button
                   type={ButtonType.Secondary}
-                  kind={ButtonKind.Panel}
+                  kind={ControlKind.Panel}
                   text="Secondary Panel Button"
                   onClick={() => {}}
                 />
                 <Button
                   type={ButtonType.Warning}
-                  kind={ButtonKind.Panel}
+                  kind={ControlKind.Panel}
                   text="Warning Panel Button"
                   onClick={() => {}}
                 />
                 <Button
                   type={ButtonType.Danger}
-                  kind={ButtonKind.Panel}
+                  kind={ControlKind.Panel}
                   text="Danger Panel Button"
                   onClick={() => {}}
                 />
@@ -645,25 +645,25 @@ export function ThemeView(props: ThemeViewProps) {
                   />
                   <Button
                     type={ButtonType.Primary}
-                    kind={ButtonKind.Card}
+                    kind={ControlKind.Card}
                     text="Primary Card Button"
                     onClick={() => {}}
                   />
                   <Button
                     type={ButtonType.Secondary}
-                    kind={ButtonKind.Card}
+                    kind={ControlKind.Card}
                     text="Secondary Card Button"
                     onClick={() => {}}
                   />
                   <Button
                     type={ButtonType.Warning}
-                    kind={ButtonKind.Card}
+                    kind={ControlKind.Card}
                     text="Warning Card Button"
                     onClick={() => {}}
                   />
                   <Button
                     type={ButtonType.Danger}
-                    kind={ButtonKind.Card}
+                    kind={ControlKind.Card}
                     text="Danger Card Button"
                     onClick={() => {}}
                   />
@@ -680,7 +680,7 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ButtonType.Primary}
-                  kind={ButtonKind.SideBar}
+                  kind={ControlKind.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
@@ -688,7 +688,7 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ButtonType.Secondary}
-                  kind={ButtonKind.SideBar}
+                  kind={ControlKind.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
@@ -696,7 +696,7 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ButtonType.Warning}
-                  kind={ButtonKind.SideBar}
+                  kind={ControlKind.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
@@ -704,7 +704,7 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ButtonType.Danger}
-                  kind={ButtonKind.SideBar}
+                  kind={ControlKind.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />

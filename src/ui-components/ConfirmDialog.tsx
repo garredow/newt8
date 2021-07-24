@@ -1,6 +1,6 @@
 import { Dialog } from '@reach/dialog';
 import React from 'react';
-import { ButtonKind } from '../enums/buttonKind';
+import { ControlKind } from '../enums/controlKind';
 import { ButtonType } from '../enums/buttonType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Button } from './button/Button';
@@ -32,13 +32,13 @@ export function ConfirmDialog({
       <p className={styles.message}>{message}</p>
       <div className={styles.actions}>
         <Button
-          kind={ButtonKind.Card}
+          kind={ControlKind.Card}
           type={ButtonType.Secondary}
           text="Cancel"
           onClick={onCancel}
         />
         <Button
-          kind={ButtonKind.Card}
+          kind={ControlKind.Card}
           type={danger ? ButtonType.Danger : ButtonType.Primary}
           text="Yes"
           onClick={onConfirm}

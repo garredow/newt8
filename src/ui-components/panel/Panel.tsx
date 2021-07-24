@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
-import { ButtonKind } from '../../enums/buttonKind';
+import { ControlKind } from '../../enums/controlKind';
 import { ButtonType } from '../../enums/buttonType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { DraggablePanelProps } from '../../models/DraggablePanelProps';
@@ -188,7 +188,7 @@ export const Panel = React.forwardRef(
                   <Button
                     text="Delete"
                     type={ButtonType.Danger}
-                    kind={ButtonKind.Panel}
+                    kind={ControlKind.Panel}
                     onClick={handleRequestDelete}
                   />
                 </PanelSettings>

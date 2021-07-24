@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { ButtonKind } from '../../enums/buttonKind';
+import { ControlKind } from '../../enums/controlKind';
 import { ButtonType } from '../../enums/buttonType';
 import { Button } from './Button';
 
@@ -59,7 +59,7 @@ describe('Button', () => {
   });
 
   test('is panel button', () => {
-    const props = { text: 'button text', kind: ButtonKind.Panel };
+    const props = { text: 'button text', kind: ControlKind.Panel };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('panel');
@@ -68,7 +68,7 @@ describe('Button', () => {
   test('is panel primary button', () => {
     const props = {
       text: 'button text',
-      kind: ButtonKind.Panel,
+      kind: ControlKind.Panel,
       type: ButtonType.Primary,
     };
     const { getByText } = render(<Button {...props} />);
@@ -77,7 +77,7 @@ describe('Button', () => {
   });
 
   test('is card button', () => {
-    const props = { text: 'button text', kind: ButtonKind.Card };
+    const props = { text: 'button text', kind: ControlKind.Card };
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('card');
@@ -86,7 +86,7 @@ describe('Button', () => {
   test('is card primary button', () => {
     const props = {
       text: 'button text',
-      kind: ButtonKind.Card,
+      kind: ControlKind.Card,
       type: ButtonType.Primary,
     };
     const { getByText } = render(<Button {...props} />);
