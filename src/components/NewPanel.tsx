@@ -13,11 +13,7 @@ import {
   verifyPermissionsForPanel,
 } from '../services/permissions';
 import { ComponentBase } from '../models/ComponentBase';
-import {
-  getPanelConfig,
-  getPanelConfigs,
-  PanelOptions,
-} from '../services/panels';
+import { getPanelConfig, getPanelConfigs } from '../services/panels';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { useEffect } from 'react';
 import { animateSlideLeft } from '../ui-components/animations';
@@ -27,8 +23,9 @@ import {
   CardFooter,
   CardHeader,
 } from '../ui-components/card';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-type NewPanelOptions = PanelOptions;
+type NewPanelOptions = PanelSettings;
 
 type NewPanelProps = ComponentBase &
   DraggablePanelProps & {

@@ -1,9 +1,9 @@
 import { PanelKind } from '../enums/panelKind';
-import { PanelOptions } from '../services/panels';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
 export type Panel = {
   id: string;
   kind: PanelKind;
   order?: number;
-  options: PanelOptions;
+  options: PanelSettings;
 };

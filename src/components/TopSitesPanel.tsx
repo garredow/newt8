@@ -4,11 +4,12 @@ import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { getTopSites, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-type TopSitesPanelOptions = PanelOptions;
+type TopSitesPanelOptions = PanelSettings;
 
 type TopSitesPanelProps = ComponentBase &
   DraggablePanelProps & {
@@ -40,8 +41,8 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
     >
-      <PanelContent columns={options.columns} display={options.display}>
-        <Card display={options.display}>
+      <PanelContent>
+        <Card>
           {sites.map((site) => (
             <SiteRow
               key={site.url}

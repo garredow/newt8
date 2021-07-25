@@ -12,8 +12,6 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
-import { Orientation } from '../enums/orientation';
-import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme, ThemeValue, ThemeValues } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
@@ -22,6 +20,7 @@ import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
+import { defaultPanelSettings } from '../ui-components/panel/PanelContext';
 import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './ThemeView.module.css';
 
@@ -564,15 +563,13 @@ export function ThemeView(props: ThemeViewProps) {
               panelId="test"
               panelIndex={0}
               options={{
-                columns: 1,
-                display: PanelDisplayType.Default,
+                ...defaultPanelSettings,
                 title: 'Example Panel',
-                orientation: Orientation.Vertical,
               }}
               onOptionsChanged={() => {}}
               onDeletePanel={() => {}}
             >
-              <PanelContent columns={1}>
+              <PanelContent>
                 Here's some primary panel text so you can get an idea how it
                 looks.
                 <div className={styles.panelSecondaryText}>

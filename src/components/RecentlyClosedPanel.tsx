@@ -5,11 +5,12 @@ import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getRecentlyClosed, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-type RecentlyClosedPanelOptions = PanelOptions;
+type RecentlyClosedPanelOptions = PanelSettings;
 
 type RecentlyClosedPanelProps = ComponentBase &
   DraggablePanelProps & {
@@ -39,8 +40,8 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
     >
-      <PanelContent columns={options.columns} display={options.display}>
-        <Card display={options.display}>
+      <PanelContent>
+        <Card>
           {sessions.map((session) => (
             <SiteRow
               key={session.tab!.sessionId}

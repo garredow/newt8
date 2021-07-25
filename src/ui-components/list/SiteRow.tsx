@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBase } from '../../models/ComponentBase';
 import { OpenSiteOption } from '../../services/browser';
-import { SettingsContext } from '../../SettingsContext';
 import { ifClass, joinClasses } from '../../utilities/classes';
+import { PanelContext } from '../panel/PanelContext';
 import styles from './SiteRow.module.css';
 
-export type SiteRowOptions = {
+export type SiteRowSettings = {
   showSecondaryText: boolean;
   showAccentText: boolean;
+  showSiteDividers: boolean;
+  displayDensity: DisplayDensity;
 };
 
 export type SiteRowProps = ComponentBase & {
@@ -16,17 +18,11 @@ export type SiteRowProps = ComponentBase & {
   primaryText?: string;
   secondaryText?: string;
   accentText?: string;
-  showSecondaryText?: boolean;
-  showAccentText?: boolean;
   onClick?: (action: OpenSiteOption) => void;
 };
 
-export function SiteRow({
-  showSecondaryText = true,
-  showAccentText = true,
-  ...props
-}: SiteRowProps) {
-  const { settings } = useContext(SettingsContext);
+export function SiteRow(props: SiteRowProps) {
+  const { settings } = useContext(PanelContext);
 
   function handleClick(ev: any) {
     const action =
@@ -66,12 +62,12 @@ export function SiteRow({
         <div className={styles.primaryText} data-testid="primary-text">
           {props.primaryText}
         </div>
-        {showSecondaryText && props.secondaryText && (
+        {settings.showSecondaryText && props.secondaryText && (
           <div className={styles.secondaryText} data-testid="secondary-text">
             {props.secondaryText}
           </div>
         )}
-        {showAccentText && props.accentText && (
+        {settings.showAccentText && props.accentText && (
           <div className={styles.accentText} data-testid="accent-text">
             {props.accentText}
           </div>

@@ -5,14 +5,15 @@ import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices, openUrl } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
 import { ControlLocation } from '../enums/controlLocation';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-export type DevicesPanelOptions = PanelOptions & {
+export type DevicesPanelOptions = PanelSettings & {
   showTabAccessedTime: boolean;
   showUrl: boolean;
 };
@@ -81,14 +82,10 @@ export function DevicesPanel(props: DevicesPanelProps) {
         </>
       }
     >
-      <PanelContent
-        columns={options.columns}
-        display={options.display}
-        orientation={options.orientation}
-      >
+      <PanelContent>
         {devices.map((device) => {
           return device.sessions.map((session) => (
-            <Card key={session.window?.sessionId} display={options.display}>
+            <Card key={session.window?.sessionId}>
               <CardHeader text={device.deviceName} />
               {session?.window?.tabs?.map((tab) => (
                 <SiteRow
@@ -104,8 +101,6 @@ export function DevicesPanel(props: DevicesPanelProps) {
                       includeSeconds: true,
                     }
                   )}
-                  showSecondaryText={options.showUrl}
-                  showAccentText={options.showTabAccessedTime}
                   onClick={openUrl}
                 />
               ))}

@@ -5,12 +5,13 @@ import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getTabs, SortOrder, switchToTab } from '../services/browser';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { Tab } from '../models/Browser';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-type RecentTabsPanelOptions = PanelOptions;
+type RecentTabsPanelOptions = PanelSettings;
 
 type RecentTabsPanelProps = ComponentBase &
   DraggablePanelProps & {
@@ -42,8 +43,8 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
     >
-      <PanelContent columns={options.columns} display={options.display}>
-        <Card display={options.display}>
+      <PanelContent>
+        <Card>
           {tabs.map((tab) => (
             <SiteRow
               key={tab.id}

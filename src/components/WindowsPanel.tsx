@@ -7,7 +7,7 @@ import { Window } from '../models/Browser';
 import { ComponentBase } from '../models/ComponentBase';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { getWindows, switchToTab } from '../services/browser';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -15,8 +15,9 @@ import { Checkbox } from '../ui-components/input/Checkbox';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import styles from './WindowsPanel.module.css';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-export type WindowsPanelOptions = PanelOptions & {
+export type WindowsPanelOptions = PanelSettings & {
   showCardTitles: boolean;
   windowId: number;
   showTabAccessedTime: boolean;
@@ -74,7 +75,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
         (window) => options.windowId === window.id || options.windowId === 0
       )
       .map((window) => (
-        <Card key={window.id} display={options.display}>
+        <Card key={window.id}>
           <CardHeader text={`Window ${window.id}`} />
           {window.tabs.map((tab) => (
             <SiteRow
@@ -86,8 +87,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
                 addSuffix: true,
                 includeSeconds: true,
               })}
-              showSecondaryText={options.showUrl}
-              showAccentText={options.showTabAccessedTime}
               onClick={() => switchToTab(tab.windowId, tab.id)}
             />
           ))}
@@ -148,12 +147,8 @@ export function WindowsPanel(props: WindowsPanelProps) {
       }
     >
       {showWindowPicker ? (
-        <PanelContent
-          columns={1}
-          display={options.display}
-          orientation={options.orientation}
-        >
-          <Card display={options.display}>
+        <PanelContent columns={1}>
+          <Card>
             <CardHeader text="Choose a window" />
             <div className={styles.windowPickerContainer}>
               <div>
@@ -188,12 +183,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent
-          columns={options.columns}
-          orientation={options.orientation}
-        >
-          {renderWindows()}
-        </PanelContent>
+        <PanelContent>{renderWindows()}</PanelContent>
       )}
     </Panel>
   );

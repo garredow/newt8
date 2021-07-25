@@ -2,10 +2,11 @@ import React from 'react';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { PanelKind } from '../enums/panelKind';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
-type EmptyPanelOptions = PanelOptions;
+type EmptyPanelOptions = PanelSettings;
 
 type EmptyPanelProps = ComponentBase &
   DraggablePanelProps & {
@@ -31,7 +32,7 @@ export function EmptyPanel(props: EmptyPanelProps) {
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
     >
-      <PanelContent columns={1} />
+      <PanelContent />
     </Panel>
   );
 }

@@ -11,11 +11,12 @@ import {
   openUrl,
   OpenSiteOption,
 } from '../services/browser';
-import { getPanelConfig, PanelOptions } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card, CardHeader } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 import styles from './BookmarksPanel.module.css';
 
 type BookmarkFolderItemProps = {
@@ -46,7 +47,7 @@ function BookmarkFolderItem({ node, onChooseFolder }: BookmarkFolderItemProps) {
     </div>
   );
 }
-type BookmarksPanelOptions = PanelOptions & {
+type BookmarksPanelOptions = PanelSettings & {
   bookmarkFolderId: string;
 };
 
@@ -127,11 +128,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       }
     >
       {showFinder ? (
-        <PanelContent
-          columns={1}
-          display={options.display}
-          orientation={options.orientation}
-        >
+        <PanelContent columns={1}>
           <Card>
             <CardHeader text="Choose a folder" />
             <p className={styles.message}>
@@ -148,11 +145,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent
-          columns={options.columns}
-          display={options.display}
-          orientation={options.orientation}
-        >
+        <PanelContent columns={1}>
           {status === Status.Loaded && bookmarks.length === 0 ? (
             <div>
               <p>
@@ -168,7 +161,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
             </div>
           ) : null}
           {bookmarks.map((group) => (
-            <Card key={group.id} display={options.display}>
+            <Card key={group.id}>
               <CardHeader text={group.title} />
               {group
                 .children!.filter((a) => !a.children)
@@ -177,7 +170,6 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                     key={site.id}
                     primaryText={site.title}
                     secondaryText={site.url}
-                    showSecondaryText={false}
                     url={site.url}
                     onClick={(action) => openUrl(site.url!, action)}
                   />

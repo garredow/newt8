@@ -13,7 +13,7 @@ import { DevicesPanel, DevicesPanelOptions } from './DevicesPanel';
 import { ControlType } from '../enums/controlType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig, Page, PanelOptions } from '../services/panels';
+import { getPanelConfig, Page } from '../services/panels';
 import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
@@ -25,6 +25,7 @@ import { SettingsContext } from '../SettingsContext';
 import { ConfigureGridDialog } from './ConfigureGridDialog';
 import { GridLayout } from '../models/GridLayout';
 import { cloneDeep, zip } from 'lodash';
+import { PanelSettings } from '../ui-components/panel/PanelContext';
 
 enum LoadingStatus {
   Init,
@@ -136,7 +137,7 @@ export function DashboardView(props: DashboardViewProps) {
     savePage(newPage);
   }
 
-  function handleOptionsChanged(panelId: string, options: PanelOptions) {
+  function handleOptionsChanged(panelId: string, options: PanelSettings) {
     const panel = page.panels.find((a) => a.id === panelId);
     if (!panel) return;
 
@@ -148,7 +149,7 @@ export function DashboardView(props: DashboardViewProps) {
     updatePanel(panelId, {
       id: panelId,
       kind: newPanelKind,
-      options: getPanelConfig(newPanelKind).defaultOptions as PanelOptions,
+      options: getPanelConfig(newPanelKind).defaultOptions as PanelSettings,
     });
   }
 
@@ -324,7 +325,7 @@ export function DashboardView(props: DashboardViewProps) {
                   id: `panel_${new Date().valueOf()}`,
                   kind: PanelKind.New,
                   options: getPanelConfig(PanelKind.New)
-                    .defaultOptions as PanelOptions,
+                    .defaultOptions as PanelSettings,
                 })
               }
             />
@@ -353,7 +354,7 @@ export function DashboardView(props: DashboardViewProps) {
               id: `panel_${new Date().valueOf()}`,
               kind: PanelKind.New,
               options: getPanelConfig(PanelKind.New)
-                .defaultOptions as PanelOptions,
+                .defaultOptions as PanelSettings,
             });
           }}
         />
