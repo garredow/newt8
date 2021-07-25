@@ -9,7 +9,6 @@ import { SettingsContext } from '../../SettingsContext';
 import { joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
-import { ConfirmDialog } from '../dialog/ConfirmDialog';
 import { SettingsRow } from '../list/SettingsRow';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { Orientation } from '../../enums/orientation';
@@ -51,7 +50,6 @@ export const Panel = React.forwardRef(
     ref: any
   ) => {
     const [showSettings, setShowSettings] = useState(false);
-    const [showConfirm, setShowConfirm] = useState(false);
     const [settings, setSettings] =
       useState<PanelSettings>(defaultPanelSettings);
     const { settings: appSettings } = useContext(SettingsContext);
@@ -118,19 +116,10 @@ export const Panel = React.forwardRef(
           >
             {props.children}
           </div>
-          {showConfirm && (
-            <ConfirmDialog
-              title="Confirm"
-              message="Are you sure you want to delete this?"
-              danger
-              onCancel={() => setShowConfirm(false)}
-              onConfirm={props.onDeletePanel}
-              data-testid="confirm-delete-panel"
-            />
-          )}
           {showSettings && (
             <Dialog
               title={props.options.title}
+              width="medium"
               onClose={() => setShowSettings(false)}
               data-testid="settings"
             >
@@ -164,7 +153,7 @@ export const Panel = React.forwardRef(
               </SettingsRow>
               {enableOrientation ? (
                 <SettingsRow
-                  label="Orientation"
+                  label="Scroll Orientation"
                   helpText="Whether this panel should scroll horizontally or vertically."
                 >
                   <select

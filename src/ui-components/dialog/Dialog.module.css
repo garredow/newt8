@@ -13,6 +13,16 @@
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
+.root.small {
+  max-width: 300px;
+}
+.root.medium {
+  max-width: 450px;
+}
+.root.large {
+  max-width: 1000px;
+}
+
 [data-reach-dialog-overlay] {
   background: hsla(0, 0%, 0%, 0.5) !important;
   backdrop-filter: blur(2px);

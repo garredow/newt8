@@ -1,4 +1,3 @@
-import { Dialog } from '@reach/dialog';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash';
 import { ControlLocation } from '../enums/controlLocation';
@@ -11,6 +10,7 @@ import { IconButton } from '../ui-components/button';
 import { MdClose } from 'react-icons/md';
 import { GridLayout } from '../models/GridLayout';
 import { joinClasses } from '../utilities/classes';
+import { Dialog } from '../ui-components/dialog/Dialog';
 
 type SizeSelectProps = {
   val: string;
@@ -216,12 +216,11 @@ export function ConfigureGridDialog({
 
   return (
     <Dialog
-      onDismiss={() => onCancel(originalGrid)}
-      aria-label="confirm"
-      className={styles.root}
-      data-testid={props['data-testid']}
+      title="Configure Grid"
+      width="large"
+      onClose={() => onSave(originalGrid, true)}
+      data-testid="dialog-configure-grid"
     >
-      <h2 className={styles.title}>Configure Grid</h2>
       {unassignedPanels.length > 0 ? (
         <div>
           These panels need to be assigned to the grid before you can save:
