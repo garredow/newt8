@@ -7,6 +7,8 @@ import { Theme } from './models/Theme';
 type SettingsContextValue = {
   settings: Settings;
   setSettings: (settings: Settings) => Promise<void>;
+  showSettings: () => void;
+  hideSettings: () => void;
 };
 
 const fontWeightOptions = [
@@ -262,6 +264,8 @@ export const defaultSettings: Settings = {
 const defaultValue = {
   settings: defaultSettings,
   setSettings: () => Promise.resolve(),
+  showSettings: () => {},
+  hideSettings: () => {},
 };
 
 export const SettingsContext =

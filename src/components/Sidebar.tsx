@@ -36,7 +36,7 @@ export function Sidebar(props: SidebarProps) {
   const [pageToDelete, setPageToDelete] = useState<string>();
   const [pageClasses, setPageClasses] = useState([styles.page]);
 
-  const { settings } = useContext(SettingsContext);
+  const { settings, showSettings } = useContext(SettingsContext);
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
 
   useEffect(() => {
@@ -233,16 +233,14 @@ export function Sidebar(props: SidebarProps) {
         </div>
       </div>
       <div>
-        <Link to="/settings">
-          <IconButton
-            size={40}
-            location={ControlLocation.SideBar}
-            type={ControlType.Primary}
-            icon={<MdSettings />}
-            title="Themes"
-            onClick={() => {}}
-          />
-        </Link>
+        <IconButton
+          size={40}
+          location={ControlLocation.SideBar}
+          type={ControlType.Primary}
+          icon={<MdSettings />}
+          title="Settings"
+          onClick={showSettings}
+        />
       </div>
       {showConfirm && (
         <ConfirmDialog

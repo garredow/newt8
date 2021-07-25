@@ -1,6 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
-import { useContext } from 'react';
+import { Dialog } from '@reach/dialog';
+import React, { useContext, useEffect, useState } from 'react';
+import { MdClear } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { ControlType } from '../enums/controlType';
 import { DisplayDensity } from '../enums/displayDensity';
@@ -8,17 +8,17 @@ import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
-import { Button } from '../ui-components/button/Button';
-import { ConfirmDialog } from '../ui-components/ConfirmDialog';
-import { Checkbox } from '../ui-components/input/Checkbox';
-import { SettingsRow } from '../ui-components/list/SettingsRow';
+import { Button, IconButton } from '../ui-components/button';
+import { Checkbox } from '../ui-components/input';
+import { SettingsRow } from '../ui-components/list';
 import { isDarkMode } from '../utilities/isDarkMode';
-import styles from './SettingsView.module.css';
+import styles from './SettingsDialog.module.css';
 
-export type SettingsViewProps = ComponentBase;
-
-export function SettingsView(props: SettingsViewProps) {
-  const [showConfirmDeleteTheme, setShowConfirmDeleteTheme] = useState(false);
+export type SettingsDialogProps = ComponentBase & {
+  onClose: () => void;
+};
+export function SettingsDialog({ onClose, ...props }: SettingsDialogProps) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { settings, setSettings } = useContext(SettingsContext);
   const history = useHistory();
 
@@ -45,19 +45,21 @@ export function SettingsView(props: SettingsViewProps) {
     };
 
     history.push('/theme', { theme: newTheme });
+    onClose();
   }
 
   function editTheme() {
     history.push('/theme', { theme: getCurrentTheme() });
+    onClose();
   }
 
   function requestDeleteTheme() {
-    if (settings.confirmBeforeDelete) {
-      setShowConfirmDeleteTheme(true);
+    if (!settings.confirmBeforeDelete || confirmDelete) {
+      deleteTheme();
+      setConfirmDelete(false);
       return;
     }
-
-    deleteTheme();
+    setConfirmDelete(true);
   }
 
   function deleteTheme() {
@@ -72,11 +74,19 @@ export function SettingsView(props: SettingsViewProps) {
   }
 
   return (
-    <div className={styles.root} data-testid={props['data-testid']}>
-      <div className={styles.content}>
-        <h1>Settings</h1>
+    <Dialog
+      onDismiss={() => onClose()}
+      aria-label="confirm"
+      className={styles.root}
+      data-testid={props['data-testid']}
+    >
+      <header className={styles.dialogHeader}>
+        <h2>Settings</h2>
+        <IconButton icon={<MdClear />} title="Close" onClick={onClose} />
+      </header>
+      <div className={styles.dialogContent}>
         <section>
-          <h2>General</h2>
+          <h3>General</h3>
           <SettingsRow
             label="Show Help Text"
             helpText="When turned on, each setting throughout Newt will have a short description
@@ -92,7 +102,7 @@ export function SettingsView(props: SettingsViewProps) {
           <SettingsRow
             label="Confirm Before Delete"
             helpText="When turned on, you'll be asked to confirm any action that would result in
-           something being deleted. Ex: A panel or page."
+           something being deleted, like a panel or page."
           >
             <Checkbox
               checked={settings.confirmBeforeDelete}
@@ -103,7 +113,7 @@ export function SettingsView(props: SettingsViewProps) {
           </SettingsRow>
         </section>
         <section>
-          <h2>Display</h2>
+          <h3>Display</h3>
           <SettingsRow
             label="Display Density"
             helpText="Changes the general information density of the app (spacing, padding, etc). You can also just adjust font size in the theme builder."
@@ -131,7 +141,7 @@ export function SettingsView(props: SettingsViewProps) {
               }
             />
           </SettingsRow>
-          <h3>Panels</h3>
+          <h4>Panels</h4>
           <SettingsRow
             label="Default Panel Display Type"
             helpText="Whether sites display in cards or lists. This setting may override some others."
@@ -157,7 +167,7 @@ export function SettingsView(props: SettingsViewProps) {
               }
             />
           </SettingsRow>
-          <h3>Cards</h3>
+          <h4>Cards</h4>
           <SettingsRow
             label="Show Row Dividers"
             helpText="Show a divider between each row in a card or list."
@@ -180,7 +190,7 @@ export function SettingsView(props: SettingsViewProps) {
           </SettingsRow>
         </section>
         <section>
-          <h2>Theme</h2>
+          <h3>Theme</h3>
           <SettingsRow
             label="Dynamic themes"
             helpText="When you turn on dark mode for your device, Newt's theme will change to match it."
@@ -254,7 +264,7 @@ export function SettingsView(props: SettingsViewProps) {
               disabled={!getCurrentTheme().id.startsWith('custom')}
             />
             <Button
-              text="Delete Theme"
+              text={confirmDelete ? 'Confirm Delete' : 'Delete Theme'}
               type={ControlType.Danger}
               onClick={requestDeleteTheme}
               disabled={!getCurrentTheme().id.startsWith('custom')}
@@ -262,18 +272,6 @@ export function SettingsView(props: SettingsViewProps) {
           </div>
         </section>
       </div>
-      {showConfirmDeleteTheme && (
-        <ConfirmDialog
-          title="Confirm"
-          message="Are you sure you want to delete this theme?"
-          danger
-          onCancel={() => setShowConfirmDeleteTheme(false)}
-          onConfirm={() => {
-            deleteTheme();
-            setShowConfirmDeleteTheme(false);
-          }}
-        />
-      )}
-    </div>
+    </Dialog>
   );
 }

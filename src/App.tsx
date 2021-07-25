@@ -5,13 +5,13 @@ import { defaultSettings, SettingsContext } from './SettingsContext';
 import { Settings } from './models/Settings';
 import { getItem, setItem, StorageKey } from './utilities/storage';
 import styles from './App.module.css';
-import { SettingsView } from './components/SettingsView';
 import { ThemeView } from './components/ThemeView';
 import { Theme, ThemeValues } from './models/Theme';
 import { Sidebar } from './components/Sidebar';
 import { Page } from './services/panels';
 import { defaultPages, PagesContext } from './PagesContext';
 import '@reach/dialog/styles.css';
+import { SettingsDialog } from './components/SettingsDialog';
 
 function App() {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);
@@ -19,6 +19,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(
     window.matchMedia('(prefers-color-scheme: dark)').matches
   );
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     getItem<Settings>(StorageKey.Settings).then((res = defaultSettings) => {
@@ -123,7 +124,14 @@ function App() {
 
   return (
     <MemoryRouter initialEntries={['/dashboard']}>
-      <SettingsContext.Provider value={{ settings, setSettings }}>
+      <SettingsContext.Provider
+        value={{
+          settings,
+          setSettings,
+          showSettings: () => setShowSettings(true),
+          hideSettings: () => setShowSettings(false),
+        }}
+      >
         <PagesContext.Provider
           value={{ pages, setPages, savePage, deletePage }}
         >
@@ -131,9 +139,6 @@ function App() {
             <Switch>
               <Route path="/dashboard">
                 <DashboardView />
-              </Route>
-              <Route path="/settings">
-                <SettingsView />
               </Route>
               <Route path="/theme">
                 <ThemeView />
@@ -145,6 +150,9 @@ function App() {
             </Switch>
             <Sidebar />
           </div>
+          {showSettings && (
+            <SettingsDialog onClose={() => setShowSettings(false)} />
+          )}
         </PagesContext.Provider>
       </SettingsContext.Provider>
     </MemoryRouter>

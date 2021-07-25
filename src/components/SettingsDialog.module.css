@@ -1,0 +1,62 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 90vw !important;
+  max-width: 600px;
+  max-height: 85vh;
+  padding: 10px 0 !important;
+  margin: 0 !important;
+  border-radius: 5px;
+  background-color: var(--card-bg-color) !important;
+  color: var(--card-primary-text-color) !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.5) !important;
+  backdrop-filter: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--card-divider-color);
+  padding: 0 15px 5px 15px;
+}
+
+.dialogContent {
+  padding: 0 20px 20px 20px;
+  overflow-y: auto;
+}
+
+.dialogHeader > h2 {
+  margin: 0;
+}
+
+.content > section {
+  padding-bottom: 10px;
+}
+
+.themeActions {
+  display: flex;
+  justify-content: flex-end;
+}
+.themeActions > button {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  .themeActions {
+    flex-direction: column;
+  }
+  .themeActions > button {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+}
