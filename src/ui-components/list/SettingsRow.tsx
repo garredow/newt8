@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBase } from '../../models/ComponentBase';
 import { SettingsContext } from '../../SettingsContext';
-import { mixin } from '../../utilities/mixin';
+import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './SettingsRow.module.css';
 
 type SettingsRowProps = ComponentBase & {
@@ -13,24 +13,24 @@ type SettingsRowProps = ComponentBase & {
 };
 
 export function SettingsRow(props: SettingsRowProps) {
-  const [classes, setClasses] = useState([styles.root]);
   const [showHelpText, setShowHelpText] = useState(false);
   const { settings } = useContext(SettingsContext);
 
-  useEffect(() => {
-    const newClasses = [styles.root];
-    if (settings.displayDensity === DisplayDensity.Compact) {
-      newClasses.push(styles.compact);
-    }
-    if (settings.displayDensity === DisplayDensity.Spacious) {
-      newClasses.push(styles.spacious);
-    }
-
-    setClasses(newClasses);
-  }, [settings.displayDensity]);
-
   return (
-    <div className={mixin(...classes)} data-testid={props['data-testid']}>
+    <div
+      className={joinClasses(
+        styles.root,
+        ifClass(
+          settings.displayDensity === DisplayDensity.Compact,
+          styles.compact
+        ),
+        ifClass(
+          settings.displayDensity === DisplayDensity.Spacious,
+          styles.spacious
+        )
+      )}
+      data-testid={props['data-testid']}
+    >
       <div className={styles.row}>
         <div
           className={styles.label}

@@ -15,7 +15,7 @@
 
 [data-reach-dialog-overlay] {
   background: hsla(0, 0%, 0%, 0.5) !important;
-  backdrop-filter: none;
+  backdrop-filter: blur(2px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,6 +35,6 @@
 }
 
 .content {
-  padding: 10px 20px 20px 20px;
+  padding: 10px 20px;
   overflow-y: auto;
 }

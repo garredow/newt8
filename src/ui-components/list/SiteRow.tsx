@@ -1,51 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBase } from '../../models/ComponentBase';
 import { OpenSiteOption } from '../../services/browser';
 import { SettingsContext } from '../../SettingsContext';
-import { mixin } from '../../utilities/mixin';
+import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './SiteRow.module.css';
 
+export type SiteRowOptions = {
+  showSecondaryText: boolean;
+  showAccentText: boolean;
+};
+
 export type SiteRowProps = ComponentBase & {
-  title?: string;
-  iconUrl?: string;
   url?: string;
-  line3?: string;
-  showUrl?: boolean;
-  showLine3?: boolean;
-  onClick?: (url: string, action: OpenSiteOption) => void;
+  primaryText?: string;
+  secondaryText?: string;
+  accentText?: string;
+  showSecondaryText?: boolean;
+  showAccentText?: boolean;
+  onClick?: (action: OpenSiteOption) => void;
 };
 
 export function SiteRow({
-  showUrl = true,
-  showLine3 = true,
+  showSecondaryText = true,
+  showAccentText = true,
   ...props
 }: SiteRowProps) {
-  const [classes, setClasses] = useState([styles.root]);
   const { settings } = useContext(SettingsContext);
-
-  useEffect(() => {
-    const newClasses = [styles.root];
-    if (settings.showSiteDividers) {
-      newClasses.push(styles.divider);
-    }
-    if (settings.displayDensity === DisplayDensity.Compact) {
-      newClasses.push(styles.compact);
-    }
-    if (settings.displayDensity === DisplayDensity.Spacious) {
-      newClasses.push(styles.spacious);
-    }
-
-    setClasses(newClasses);
-  }, [settings.showSiteDividers, settings.displayDensity]);
-
-  function isValidImageUrl() {
-    return (
-      props.iconUrl &&
-      (props.iconUrl.startsWith('http') ||
-        props.iconUrl.startsWith('chrome://favicon'))
-    );
-  }
 
   function handleClick(ev: any) {
     const action =
@@ -55,37 +36,44 @@ export function SiteRow({
           : OpenSiteOption.NewTab
         : OpenSiteOption.SameTab;
 
-    props.onClick?.(props.url!, action);
+    props.onClick?.(action);
   }
 
   return (
     <div
-      className={mixin(...classes)}
+      className={joinClasses(
+        styles.root,
+        ifClass(settings.showSiteDividers, styles.divider),
+        ifClass(
+          settings.displayDensity === DisplayDensity.Compact,
+          styles.compact
+        ),
+        ifClass(
+          settings.displayDensity === DisplayDensity.Spacious,
+          styles.spacious
+        )
+      )}
       onClick={handleClick}
       data-testid={props['data-testid']}
     >
-      {isValidImageUrl() ? (
-        <img
-          src={props.iconUrl}
-          alt=""
-          className={styles.icon}
-          data-testid="favicon"
-        />
-      ) : (
-        <div className={styles.icon}></div>
-      )}
+      <img
+        src={`chrome://favicon/size/32@1x/${props.url}`}
+        alt=""
+        className={styles.icon}
+        data-testid="favicon"
+      />
       <div className={styles.details}>
-        <div className={styles.line1} data-testid="line1">
-          {props.title}
+        <div className={styles.primaryText} data-testid="primary-text">
+          {props.primaryText}
         </div>
-        {showUrl && props.url && (
-          <div className={styles.line2} data-testid="line2">
-            {props.url}
+        {showSecondaryText && props.secondaryText && (
+          <div className={styles.secondaryText} data-testid="secondary-text">
+            {props.secondaryText}
           </div>
         )}
-        {showLine3 && props.line3 && (
-          <div className={styles.line3} data-testid="line3">
-            {props.line3}
+        {showAccentText && props.accentText && (
+          <div className={styles.accentText} data-testid="accent-text">
+            {props.accentText}
           </div>
         )}
       </div>

@@ -10,7 +10,7 @@ import styles from './ConfigureGridDialog.module.css';
 import { IconButton } from '../ui-components/button';
 import { MdClose } from 'react-icons/md';
 import { GridLayout } from '../models/GridLayout';
-import { mixin } from '../utilities/mixin';
+import { joinClasses } from '../utilities/classes';
 
 type SizeSelectProps = {
   val: string;
@@ -234,7 +234,7 @@ export function ConfigureGridDialog({
       ) : null}
       <form onSubmit={handleSubmit}>
         <div>
-          <div className={mixin(styles.layoutRow, styles.actionRow)}>
+          <div className={joinClasses(styles.layoutRow, styles.actionRow)}>
             {grid.layout[0]?.map((col, i) => (
               <div key={i} className={styles.sizeCol}>
                 <SizeSelect
@@ -278,7 +278,7 @@ export function ConfigureGridDialog({
               </div>
             );
           })}
-          <div className={mixin(styles.layoutRow, styles.actionRow)}>
+          <div className={joinClasses(styles.layoutRow, styles.actionRow)}>
             {grid.layout[0]?.map((col, i) => (
               <div key={i} className={styles.sizeCol}>
                 <IconButton

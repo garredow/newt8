@@ -2,7 +2,7 @@ import React from 'react';
 import { MdCheck } from 'react-icons/md';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ComponentBase } from '../../models/ComponentBase';
-import { mixin } from '../../utilities/mixin';
+import { joinClasses } from '../../utilities/classes';
 import { Icon } from '../icon';
 import styles from './Checkbox.module.css';
 
@@ -18,7 +18,7 @@ export function Checkbox({
   ...props
 }: CheckboxProps) {
   return (
-    <label className={mixin(styles.root, styles[location])}>
+    <label className={joinClasses(styles.root, styles[location])}>
       <input
         type="checkbox"
         checked={checked}

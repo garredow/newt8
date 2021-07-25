@@ -175,11 +175,11 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                 .map((site) => (
                   <SiteRow
                     key={site.id}
-                    title={site.title}
+                    primaryText={site.title}
+                    secondaryText={site.url}
+                    showSecondaryText={false}
                     url={site.url}
-                    showUrl={false}
-                    iconUrl={`chrome://favicon/size/32@1x/${site.url}`}
-                    onClick={openUrl}
+                    onClick={(action) => openUrl(site.url!, action)}
                   />
                 ))}
             </Card>

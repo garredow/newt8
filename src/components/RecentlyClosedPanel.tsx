@@ -44,10 +44,10 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
           {sessions.map((session) => (
             <SiteRow
               key={session.tab!.sessionId}
-              title={session.tab!.title}
-              iconUrl={`chrome://favicon/size/32@1x/${session.tab!.url}`}
+              primaryText={session.tab!.title}
               url={session.tab!.url}
-              line3={formatDistance(
+              secondaryText={session.tab!.url}
+              accentText={formatDistance(
                 new Date(session.lastModified * 1000),
                 new Date(),
                 {

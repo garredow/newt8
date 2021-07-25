@@ -47,10 +47,10 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
           {tabs.map((tab) => (
             <SiteRow
               key={tab.id}
-              title={tab.title}
-              iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
+              primaryText={tab.title}
               url={tab.url}
-              line3={formatDistance(new Date(tab.accessedAt), new Date(), {
+              secondaryText={tab.url}
+              accentText={formatDistance(new Date(tab.accessedAt), new Date(), {
                 addSuffix: true,
                 includeSeconds: true,
               })}

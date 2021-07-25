@@ -45,9 +45,9 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
           {sites.map((site) => (
             <SiteRow
               key={site.url}
-              title={site.title}
-              iconUrl={`chrome://favicon/size/32@1x/${site.url}`}
+              primaryText={site.title}
               url={site.url}
+              secondaryText={site.url}
               onClick={openUrl}
             />
           ))}

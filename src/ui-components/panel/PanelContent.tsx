@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { SettingsContext } from '../../SettingsContext';
-import { mixin } from '../../utilities/mixin';
+import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './PanelContent.module.css';
 
 type PanelContentProps = ComponentBase & {
@@ -17,25 +17,7 @@ export function PanelContent({
   orientation = Orientation.Vertical,
   ...props
 }: PanelContentProps) {
-  const [classes, setClasses] = useState([styles.root]);
   const { settings } = useContext(SettingsContext);
-
-  useEffect(() => {
-    const newClasses = [styles.root];
-    if (display !== PanelDisplayType.Default) {
-      newClasses.push(display === PanelDisplayType.Lists ? styles.list : '');
-    } else if (settings.defaultPanelDisplay === PanelDisplayType.Lists) {
-      newClasses.push(styles.list);
-    }
-
-    if (orientation === Orientation.Horizontal) {
-      newClasses.push(styles.horizontal);
-    } else {
-      newClasses.push(styles.vertical);
-    }
-
-    setClasses(newClasses);
-  }, [settings.defaultPanelDisplay, display, orientation]);
 
   const style = props.columns
     ? { gridTemplateColumns: `repeat(${props.columns}, 1fr)` }
@@ -43,7 +25,22 @@ export function PanelContent({
 
   return (
     <div
-      className={mixin(...classes)}
+      className={joinClasses(
+        styles.root,
+        ifClass(
+          orientation === Orientation.Horizontal,
+          styles.horizontal,
+          styles.vertical
+        ),
+        ifClass(
+          display === PanelDisplayType.Default,
+          ifClass(
+            settings.defaultPanelDisplay === PanelDisplayType.Lists,
+            styles.list
+          ),
+          ifClass(display === PanelDisplayType.Lists, styles.list)
+        )
+      )}
       style={style}
       data-testid={props['data-testid']}
     >

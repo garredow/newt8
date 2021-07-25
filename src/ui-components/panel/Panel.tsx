@@ -8,7 +8,7 @@ import { ComponentBase } from '../../models/ComponentBase';
 import { DraggablePanelProps } from '../../models/DraggablePanelProps';
 import { PanelOptions } from '../../services/panels';
 import { SettingsContext } from '../../SettingsContext';
-import { mixin } from '../../utilities/mixin';
+import { joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
 import { ConfirmDialog } from '../dialog/ConfirmDialog';
@@ -49,10 +49,9 @@ export const Panel = React.forwardRef(
       props.onOptionsChanged?.(newOpts);
     }
 
-    const classes = [styles.root];
     return (
       <div
-        className={classes.join(' ')}
+        className={styles.root}
         data-testid={props['data-testid']}
         ref={ref}
         style={{
@@ -63,11 +62,10 @@ export const Panel = React.forwardRef(
         <PanelHeader
           className={styles.header}
           text={props.options.title}
-          onTitleChanged={(title) => setOptionValue('title', title)}
           data-testid="panel-header"
         >
           <div
-            className={mixin(
+            className={joinClasses(
               styles.headerActions,
               settings.showActionsOnHover ? styles.headerActionsHidden : ''
             )}
@@ -84,7 +82,7 @@ export const Panel = React.forwardRef(
         </PanelHeader>
 
         <div
-          className={mixin(
+          className={joinClasses(
             styles.content,
             props.options.orientation === Orientation.Vertical
               ? styles.vertical

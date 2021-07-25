@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentBase } from '../../models/ComponentBase';
-import { mixin } from '../../utilities/mixin';
+import { joinClasses } from '../../utilities/classes';
 import styles from './PanelHeader.module.css';
 
 type PanelHeaderProps = ComponentBase & {
@@ -10,7 +10,7 @@ type PanelHeaderProps = ComponentBase & {
 export function PanelHeader(props: PanelHeaderProps) {
   return (
     <div
-      className={mixin(styles.root, props.className)}
+      className={joinClasses(styles.root, props.className)}
       data-testid={props['data-testid']}
     >
       <h1 className={styles.title}>{props.text}</h1>

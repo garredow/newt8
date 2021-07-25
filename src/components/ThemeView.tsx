@@ -628,22 +628,22 @@ export function ThemeView(props: ThemeViewProps) {
                     </div>
                   </div>
                   <SiteRow
-                    title="Example Website 1"
-                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                    url={`https://developer.mozilla.org/en-US/`}
-                    line3="10 minutes ago"
+                    primaryText="Example Website 1"
+                    url={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                    secondaryText={`https://developer.mozilla.org/en-US/`}
+                    accentText="10 minutes ago"
                   />
                   <SiteRow
-                    title="Example Website 2"
-                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                    url={`https://developer.mozilla.org/en-US/`}
-                    line3="10 minutes ago"
+                    primaryText="Example Website 2"
+                    url={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                    secondaryText={`https://developer.mozilla.org/en-US/`}
+                    accentText="10 minutes ago"
                   />
                   <SiteRow
-                    title="Example Website 3"
-                    iconUrl={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
-                    url={`https://developer.mozilla.org/en-US/`}
-                    line3="10 minutes ago"
+                    primaryText="Example Website 3"
+                    url={`chrome://favicon/size/32@1x/https://developer.mozilla.org/en-US/`}
+                    secondaryText={`https://developer.mozilla.org/en-US/`}
+                    accentText="10 minutes ago"
                   />
                   <Button
                     type={ControlType.Primary}

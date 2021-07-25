@@ -47,10 +47,10 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
           {bookmarks.map((bookmark) => (
             <SiteRow
               key={bookmark.id}
-              title={bookmark.title}
-              iconUrl={`chrome://favicon/size/32@1x/${bookmark.url}`}
+              primaryText={bookmark.title}
               url={bookmark.url}
-              line3={formatDistance(
+              secondaryText={bookmark.url}
+              accentText={formatDistance(
                 new Date(bookmark.dateAdded as number),
                 new Date(),
                 {

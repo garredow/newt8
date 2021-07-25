@@ -29,6 +29,7 @@
   height: 20px;
   width: 20px;
   margin-right: 15px;
+  aspect-ratio: 1 / 1;
 }
 
 .details {
@@ -44,19 +45,19 @@
   margin-bottom: 0px;
 }
 
-.line1 {
+.primaryText {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.line2 {
+.secondaryText {
   color: var(--card-secondary-text-color);
   font-size: 0.9em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.line3 {
+.accentText {
   color: var(--card-accent-color);
   font-size: 0.9em;
 }

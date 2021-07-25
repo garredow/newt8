@@ -108,6 +108,8 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       ...defaultPanelOptions,
       title: 'New Bookmarks',
+      showTime: true,
+      showUrl: true,
     },
     options: {},
   },

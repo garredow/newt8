@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentBase } from '../../models/ComponentBase';
-import { mixin } from '../../utilities/mixin';
+import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './CardContent.module.css';
 
 type CardContentProps = ComponentBase & {
@@ -8,12 +8,11 @@ type CardContentProps = ComponentBase & {
 };
 
 export function CardContent({ fullWidth = false, ...props }: CardContentProps) {
-  const classes = [styles.root];
-  if (fullWidth) {
-    classes.push(styles.fullWidth);
-  }
   return (
-    <div className={mixin(...classes)} data-testid={props['data-testid']}>
+    <div
+      className={joinClasses(styles.root, ifClass(fullWidth, styles.fullWidth))}
+      data-testid={props['data-testid']}
+    >
       {props.children}
     </div>
   );

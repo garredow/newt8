@@ -3,7 +3,7 @@ import { IconContext } from 'react-icons/lib';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { ComponentBase } from '../../models/ComponentBase';
-import { mixin } from '../../utilities/mixin';
+import { joinClasses } from '../../utilities/classes';
 import styles from './IconButton.module.css';
 
 type IconButtonProps = ComponentBase & {
@@ -62,7 +62,7 @@ export function IconButton({
   }
   return (
     <button
-      className={mixin(styles.root, props.className)}
+      className={joinClasses(styles.root, props.className)}
       style={buttonStyle}
       onClick={onClick}
       title={title}

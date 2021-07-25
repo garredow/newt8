@@ -79,15 +79,15 @@ export function WindowsPanel(props: WindowsPanelProps) {
           {window.tabs.map((tab) => (
             <SiteRow
               key={tab.id}
-              title={tab.title}
-              iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
+              primaryText={tab.title}
               url={tab.url}
-              line3={formatDistance(new Date(tab.accessedAt), new Date(), {
+              secondaryText={tab.url}
+              accentText={formatDistance(new Date(tab.accessedAt), new Date(), {
                 addSuffix: true,
                 includeSeconds: true,
               })}
-              showUrl={options.showUrl}
-              showLine3={options.showTabAccessedTime}
+              showSecondaryText={options.showUrl}
+              showAccentText={options.showTabAccessedTime}
               onClick={() => switchToTab(tab.windowId, tab.id)}
             />
           ))}
@@ -178,8 +178,8 @@ export function WindowsPanel(props: WindowsPanelProps) {
                   {window.tabs.slice(0, 5).map((tab) => (
                     <SiteRow
                       key={tab.id}
-                      title={tab.title}
-                      iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
+                      primaryText={tab.title}
+                      url={tab.url}
                     />
                   ))}
                 </div>

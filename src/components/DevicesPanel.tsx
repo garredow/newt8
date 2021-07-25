@@ -93,10 +93,10 @@ export function DevicesPanel(props: DevicesPanelProps) {
               {session?.window?.tabs?.map((tab) => (
                 <SiteRow
                   key={tab.sessionId}
-                  title={tab.title}
-                  iconUrl={`chrome://favicon/size/32@1x/${tab.url}`}
+                  primaryText={tab.title}
                   url={tab.url}
-                  line3={formatDistance(
+                  secondaryText={tab.url}
+                  accentText={formatDistance(
                     new Date(session.lastModified * 1000),
                     new Date(),
                     {
@@ -104,8 +104,8 @@ export function DevicesPanel(props: DevicesPanelProps) {
                       includeSeconds: true,
                     }
                   )}
-                  showUrl={options.showUrl}
-                  showLine3={options.showTabAccessedTime}
+                  showSecondaryText={options.showUrl}
+                  showAccentText={options.showTabAccessedTime}
                   onClick={openUrl}
                 />
               ))}

@@ -25,7 +25,7 @@ import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ControlLocation } from '../enums/controlLocation';
 import { ConfirmDialog } from '../ui-components/dialog/ConfirmDialog';
 import { SettingsContext } from '../SettingsContext';
-import { mixin } from '../utilities/mixin';
+import { ifClass, joinClasses } from '../utilities/classes';
 import { DisplayDensity } from '../enums/displayDensity';
 
 export type SidebarProps = ComponentBase;
@@ -34,7 +34,6 @@ export function Sidebar(props: SidebarProps) {
   const [editMode, setEditMode] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<string>();
-  const [pageClasses, setPageClasses] = useState([styles.page]);
 
   const { settings, showSettings } = useContext(SettingsContext);
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
@@ -63,15 +62,6 @@ export function Sidebar(props: SidebarProps) {
 
     return () => window.removeEventListener('keypress', handleShortcutKey);
   });
-
-  useEffect(() => {
-    const newClasses = [styles.page];
-    if (settings.displayDensity === DisplayDensity.Spacious) {
-      newClasses.push(styles.spacious);
-    }
-
-    setPageClasses(newClasses);
-  }, [settings.displayDensity]);
 
   function handlePageClick(pageId: string) {
     const newPages = pages.map((page) =>
@@ -123,18 +113,15 @@ export function Sidebar(props: SidebarProps) {
                 {...provided.droppableProps}
               >
                 {pages.map((page, i) => {
-                  const classes = [...pageClasses];
-                  const editClasses = [styles.pageEdit];
-                  if (page.isActive) {
-                    classes.push(styles.highlight);
-                    editClasses.push(styles.highlight);
-                  }
                   return editMode ? (
                     <div key={page.id}>
                       <Draggable draggableId={page.id} index={i}>
                         {(provided) => (
                           <div
-                            className={editClasses.join(' ')}
+                            className={joinClasses(
+                              styles.pageEdit,
+                              ifClass(page.isActive, styles.highlight)
+                            )}
                             key={page.id}
                             {...provided.draggableProps}
                             ref={provided.innerRef}
@@ -184,7 +171,14 @@ export function Sidebar(props: SidebarProps) {
                     <Link
                       to={`/dashboard`}
                       key={page.id}
-                      className={classes.join(' ')}
+                      className={joinClasses(
+                        styles.page,
+                        ifClass(
+                          settings.displayDensity === DisplayDensity.Spacious,
+                          styles.spacious
+                        ),
+                        ifClass(page.isActive, styles.highlight)
+                      )}
                       onClick={() => handlePageClick(page.id)}
                     >
                       {page.name}
@@ -197,7 +191,7 @@ export function Sidebar(props: SidebarProps) {
           </Droppable>
         </DragDropContext>
         <div
-          className={mixin(
+          className={joinClasses(
             styles.pageActions,
             settings.showActionsOnHover ? styles.hidden : styles.notHidden
           )}

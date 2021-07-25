@@ -20,7 +20,7 @@ import { TopSitesPanel } from './TopSitesPanel';
 import { useContext } from 'react';
 import { PagesContext } from '../PagesContext';
 import { EmptyPanel } from './EmptyPanel';
-import { mixin } from '../utilities/mixin';
+import { joinClasses } from '../utilities/classes';
 import { SettingsContext } from '../SettingsContext';
 import { ConfigureGridDialog } from './ConfigureGridDialog';
 import { GridLayout } from '../models/GridLayout';
@@ -336,7 +336,7 @@ export function DashboardView(props: DashboardViewProps) {
         </div>
       )}
       <div
-        className={mixin(
+        className={joinClasses(
           styles.sidebar,
           settings.showActionsOnHover ? styles.hidden : styles.notHidden
         )}
