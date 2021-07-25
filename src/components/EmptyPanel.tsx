@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { PanelKind } from '../enums/panelKind';
 import { ComponentBase } from '../models/ComponentBase';
@@ -17,9 +17,13 @@ type EmptyPanelProps = ComponentBase &
   };
 
 export function EmptyPanel(props: EmptyPanelProps) {
-  const options: EmptyPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.Empty).defaultOptions,
-    props.options
+  const options: EmptyPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.Empty).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   return (

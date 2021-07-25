@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardHeader } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -28,9 +28,13 @@ type DevicesPanelProps = ComponentBase &
 export function DevicesPanel(props: DevicesPanelProps) {
   const [devices, setDevices] = useState<chrome.sessions.Device[]>([]);
 
-  const options: DevicesPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.Devices).defaultOptions,
-    props.options
+  const options: DevicesPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.Devices).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ControlLocation } from '../enums/controlLocation';
 import { PanelKind } from '../enums/panelKind';
 import { Status } from '../enums/status';
@@ -64,9 +64,13 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [status, setStatus] = useState<Status>(Status.Idle);
 
-  const options: BookmarksPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.Bookmarks).defaultOptions,
-    props.options
+  const options: BookmarksPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.Bookmarks).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {
@@ -145,7 +149,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent columns={1}>
+        <PanelContent>
           {status === Status.Loaded && bookmarks.length === 0 ? (
             <div>
               <p>

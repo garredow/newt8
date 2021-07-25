@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -21,9 +21,13 @@ type TopSitesPanelProps = ComponentBase &
 export function TopSitesPanel(props: TopSitesPanelProps) {
   const [sites, setSites] = useState<chrome.topSites.MostVisitedURL[]>([]);
 
-  const options: TopSitesPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.TopSites).defaultOptions,
-    props.options
+  const options: TopSitesPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.TopSites).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {

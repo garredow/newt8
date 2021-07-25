@@ -1,5 +1,5 @@
 import { formatDistance } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { PanelKind } from '../enums/panelKind';
@@ -35,9 +35,13 @@ export function WindowsPanel(props: WindowsPanelProps) {
   const [windows, setWindows] = useState<Window[] | undefined>();
   const [showWindowPicker, setShowWindowPicker] = useState(false);
 
-  const options: WindowsPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.Windows).defaultOptions,
-    props.options
+  const options: WindowsPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.Windows).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {

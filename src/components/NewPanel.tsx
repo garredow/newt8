@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './NewPanel.module.css';
@@ -42,13 +42,17 @@ export function NewPanel(props: NewPanelProps) {
   const [animate, setAnimate] = useState(false);
   const nodeRef = useRef(null);
 
-  const options: NewPanelOptions = Object.assign(
-    {
-      columns: 1,
-      width: 3,
-      title: 'New Panel',
-    },
-    props.options
+  const options: NewPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        {
+          columns: 1,
+          width: 3,
+          title: 'New Panel',
+        },
+        props.options
+      ),
+    [props.options]
   );
 
   const availablePanels = getPanelConfigs().map((a) => a.kind);

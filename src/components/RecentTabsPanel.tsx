@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -23,9 +23,13 @@ type RecentTabsPanelProps = ComponentBase &
 export function RecentTabsPanel(props: RecentTabsPanelProps) {
   const [tabs, setTabs] = useState<Tab[]>([]);
 
-  const options: RecentTabsPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.RecentTabs).defaultOptions,
-    props.options
+  const options: RecentTabsPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.RecentTabs).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {

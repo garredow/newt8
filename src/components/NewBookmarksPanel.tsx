@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -23,9 +23,13 @@ type NewBookmarksPanelProps = ComponentBase &
 export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
-  const options: NewBookmarksPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.NewBookmarks).defaultOptions,
-    props.options
+  const options: NewBookmarksPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.NewBookmarks).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {

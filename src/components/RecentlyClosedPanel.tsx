@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -22,9 +22,13 @@ type RecentlyClosedPanelProps = ComponentBase &
 export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
   const [sessions, setSessions] = useState<chrome.sessions.Session[]>([]);
 
-  const options: RecentlyClosedPanelOptions = Object.assign(
-    getPanelConfig(PanelKind.RecentlyClosed).defaultOptions,
-    props.options
+  const options: RecentlyClosedPanelOptions = useMemo(
+    () =>
+      Object.assign(
+        getPanelConfig(PanelKind.RecentlyClosed).defaultOptions,
+        props.options
+      ),
+    [props.options]
   );
 
   useEffect(() => {
