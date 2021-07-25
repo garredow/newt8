@@ -164,7 +164,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
             </div>
           ) : null}
           {bookmarks.map((group) => (
-            <Card key={group.id} title={group.title} enableSettings>
+            <Card key={group.id} title={group.title}>
               {group
                 .children!.filter((a) => !a.children)
                 .map((site) => (
