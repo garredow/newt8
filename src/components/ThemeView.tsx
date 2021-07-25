@@ -13,7 +13,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBase } from '../models/ComponentBase';
-import { Theme, ThemeValue, ThemeValues } from '../models/Theme';
+import { Theme, ThemeValues } from '../models/Theme';
 import { SettingsContext } from '../SettingsContext';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
@@ -22,6 +22,7 @@ import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { defaultPanelSettings } from '../ui-components/panel/PanelContext';
 import { isDarkMode } from '../utilities/isDarkMode';
+import { ThemeValueChooser } from './ThemeValueChooser';
 import styles from './ThemeView.module.css';
 
 export type ThemeViewProps = ComponentBase & {};
@@ -440,9 +441,13 @@ export function ThemeView(props: ThemeViewProps) {
                     {section.sizes.map((key) => (
                       <ThemeValueChooser
                         key={key}
-                        id={key}
-                        data={workingTheme.values[key]}
-                        onChange={updateBasicWorkingThemeColor}
+                        title={workingTheme.values[key].name}
+                        value={workingTheme.values[key].value}
+                        type={workingTheme.values[key].type}
+                        options={workingTheme.values[key].options}
+                        onChange={(val) =>
+                          updateBasicWorkingThemeColor(key, val)
+                        }
                       />
                     ))}
                   </div>
@@ -453,9 +458,11 @@ export function ThemeView(props: ThemeViewProps) {
                 {section.colors.map((key) => (
                   <ThemeValueChooser
                     key={key}
-                    id={key}
-                    data={workingTheme.values[key]}
-                    onChange={updateBasicWorkingThemeColor}
+                    title={workingTheme.values[key].name}
+                    value={workingTheme.values[key].value}
+                    type={workingTheme.values[key].type}
+                    options={workingTheme.values[key].options}
+                    onChange={(val) => updateBasicWorkingThemeColor(key, val)}
                   />
                 ))}
               </div>
@@ -487,9 +494,13 @@ export function ThemeView(props: ThemeViewProps) {
                         {section.sizes.map((key) => (
                           <ThemeValueChooser
                             key={key}
-                            id={key}
-                            data={workingTheme.values[key]}
-                            onChange={updateWorkingThemeColor}
+                            title={workingTheme.values[key].name}
+                            value={workingTheme.values[key].value}
+                            type={workingTheme.values[key].type}
+                            options={workingTheme.values[key].options}
+                            onChange={(val) =>
+                              updateWorkingThemeColor(key, val)
+                            }
                           />
                         ))}
                       </div>
@@ -498,12 +509,14 @@ export function ThemeView(props: ThemeViewProps) {
 
                   <h4>Colors</h4>
                   <div className={styles.themeValueList}>
-                    {section.colors.map((colorKey) => (
+                    {section.colors.map((key) => (
                       <ThemeValueChooser
-                        key={colorKey}
-                        id={colorKey}
-                        data={workingTheme.values[colorKey]}
-                        onChange={updateWorkingThemeColor}
+                        key={key}
+                        title={workingTheme.values[key].name}
+                        value={workingTheme.values[key].value}
+                        type={workingTheme.values[key].type}
+                        options={workingTheme.values[key].options}
+                        onChange={(val) => updateWorkingThemeColor(key, val)}
                       />
                     ))}
                   </div>
@@ -711,61 +724,6 @@ export function ThemeView(props: ThemeViewProps) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-type ThemeValueChooserProps = {
-  id: keyof ThemeValues;
-  data: ThemeValue;
-  onChange: (id: keyof ThemeValues, newVal: string) => void;
-};
-
-function ThemeValueChooser({ id, data, onChange }: ThemeValueChooserProps) {
-  function handleColorChange(ev: any) {
-    onChange(id, ev.target.value);
-  }
-
-  return (
-    <div className={styles.colorChooser}>
-      <div className={styles.colorName}>{data.name}</div>
-      <div className={styles.colorRow}>
-        {data.options ? (
-          <select value={data.value} onChange={handleColorChange}>
-            {data.options.map((a) => (
-              <option key={a.key} value={a.key}>
-                {a.name}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <input
-            className={styles.colorInput}
-            value={data.value}
-            onChange={handleColorChange}
-            readOnly={false}
-            type={data.type === 'number' ? 'number' : undefined}
-          />
-        )}
-        {data.type === 'color' ? (
-          <div className={styles.colorPreviewContainer}>
-            <input
-              type="color"
-              className={styles.colorPreviewInput}
-              value={
-                new RegExp(/#[0-9a-fA-F]{6}/).test(data.value)
-                  ? data.value
-                  : '#000000'
-              } // It complains if the value isn't hex
-              onInput={handleColorChange}
-            ></input>
-            <div
-              className={styles.colorPreview}
-              style={{ backgroundColor: data.value }}
-            ></div>
-          </div>
-        ) : null}
       </div>
     </div>
   );
