@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { ComponentBase } from '../../models/ComponentBase';
@@ -11,6 +13,8 @@ type ButtonProps = ComponentBase & {
   disabled?: boolean;
   fullWidth?: boolean;
   htmlType?: 'submit' | 'reset' | 'button';
+  clickToConfirm?: boolean;
+  confirmText?: string;
   onClick?: Function;
 };
 
@@ -20,8 +24,29 @@ export function Button({
   disabled = false,
   fullWidth = false,
   htmlType = 'button',
+  clickToConfirm = false,
+  confirmText = 'Click again to confirm',
   ...props
 }: ButtonProps) {
+  const [clicks, setClicks] = useState(0);
+
+  useEffect(() => {
+    if (clicks === 0) return;
+
+    const timer = setTimeout(() => setClicks(0), 2000);
+    return () => clearTimeout(timer);
+  }, [clicks]);
+
+  function handleClick() {
+    if (!clickToConfirm || clicks + 1 === 2) {
+      props.onClick?.();
+      setClicks(0);
+      return;
+    }
+
+    setClicks(1);
+  }
+
   function getButtonClasses() {
     let classes = [styles.root];
 
@@ -62,10 +87,10 @@ export function Button({
       disabled={disabled}
       type={htmlType}
       title={props.title}
-      onClick={() => props.onClick?.()}
+      onClick={handleClick}
       data-testid={props['data-testid']}
     >
-      {props.text}
+      {clickToConfirm && clicks === 1 ? confirmText : props.text}
     </button>
   );
 }

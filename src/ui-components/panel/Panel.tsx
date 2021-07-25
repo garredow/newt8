@@ -49,15 +49,6 @@ export const Panel = React.forwardRef(
       props.onOptionsChanged?.(newOpts);
     }
 
-    function handleRequestDelete() {
-      if (settings.confirmBeforeDelete) {
-        setShowConfirm(true);
-        return;
-      }
-
-      props.onDeletePanel();
-    }
-
     const classes = [styles.root];
     return (
       <div
@@ -203,7 +194,8 @@ export const Panel = React.forwardRef(
               type={ControlType.Danger}
               location={ControlLocation.Panel}
               fullWidth
-              onClick={handleRequestDelete}
+              clickToConfirm={settings.confirmBeforeDelete}
+              onClick={props.onDeletePanel}
             />
           </Dialog>
         )}

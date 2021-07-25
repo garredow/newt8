@@ -1,10 +1,9 @@
 import React from 'react';
-import { act, fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Panel } from '.';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { defaultSettings, SettingsContext } from '../../SettingsContext';
 import { Settings } from '../../models/Settings';
-import { delay } from '../../utilities/delay';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 
@@ -70,10 +69,7 @@ describe('Panel', () => {
 
     const { getByTestId } = renderWithContext(<Panel {...props} />);
 
-    await act(async () => {
-      fireEvent.click(getByTestId('btn-settings'));
-      await delay(500);
-    });
+    fireEvent.click(getByTestId('btn-settings'));
 
     expect(getByTestId('settings')).toBeVisible();
   });
@@ -195,7 +191,7 @@ describe('Panel', () => {
       onOptionsChanged: jest.fn(),
     };
 
-    const { getByTestId, getByText } = renderWithContext(<Panel {...props} />);
+    const { getByTestId } = renderWithContext(<Panel {...props} />);
 
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.change(getByTestId('inp-title'), {
@@ -205,7 +201,7 @@ describe('Panel', () => {
     expect(props.onOptionsChanged).toBeCalledTimes(1);
   });
 
-  test('renders confirm dialog', () => {
+  test('prompts for delete confirmation', () => {
     const props = {
       panelId: '1',
       panelIndex: 0,
@@ -225,10 +221,10 @@ describe('Panel', () => {
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.click(getByText('Delete Panel'));
 
-    expect(getByTestId('confirm-delete-panel')).toBeVisible();
+    expect(getByText('Click again to confirm')).toBeVisible();
   });
 
-  test('not render confirm dialog when setting is false', () => {
+  test('delete needs one click when confirmBeforeDelete is false', () => {
     const props = {
       panelId: '1',
       panelIndex: 0,
@@ -257,7 +253,7 @@ describe('Panel', () => {
     expect(props.onDeletePanel).toBeCalledTimes(1);
   });
 
-  test('closes the confirm dialog', () => {
+  test('delete needs two clicks when confirmBeforeDelete is true', () => {
     const props = {
       panelId: '1',
       panelIndex: 0,
@@ -272,16 +268,14 @@ describe('Panel', () => {
       onOptionsChanged: jest.fn(),
     };
 
-    const { getByText, getByTestId, queryByTestId } = renderWithContext(
-      <Panel {...props} />
-    );
+    const { getByText, getByTestId } = renderWithContext(<Panel {...props} />, {
+      confirmBeforeDelete: true,
+    } as any);
 
     fireEvent.click(getByTestId('btn-settings'));
-
     fireEvent.click(getByText('Delete Panel'));
-    expect(queryByTestId('confirm-delete-panel')).toBeTruthy();
+    fireEvent.click(getByText('Click again to confirm'));
 
-    fireEvent.click(getByText('Cancel'));
-    expect(queryByTestId('confirm-delete-panel')).toBeNull();
+    expect(props.onDeletePanel).toBeCalledTimes(1);
   });
 });
