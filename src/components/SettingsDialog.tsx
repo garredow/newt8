@@ -1,5 +1,5 @@
 import { Dialog } from '@reach/dialog';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { MdClear } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { ControlType } from '../enums/controlType';

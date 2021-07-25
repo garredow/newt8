@@ -50,6 +50,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
       panelIndex={props.panelIndex}
       options={options}
       enableColumns={true}
+      enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
@@ -80,7 +81,11 @@ export function DevicesPanel(props: DevicesPanelProps) {
         </>
       }
     >
-      <PanelContent columns={options.columns} display={options.display}>
+      <PanelContent
+        columns={options.columns}
+        display={options.display}
+        orientation={options.orientation}
+      >
         {devices.map((device) => {
           return device.sessions.map((session) => (
             <Card key={session.window?.sessionId} display={options.display}>

@@ -108,6 +108,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
       panelIndex={props.panelIndex}
       options={options}
       enableColumns={true}
+      enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
@@ -135,17 +136,23 @@ export function WindowsPanel(props: WindowsPanelProps) {
               onChange={(checked) => handleOptionChanged('showUrl', checked)}
             />
           </SettingsRow>
-          <Button
-            text="Choose New Window"
-            location={ControlLocation.Panel}
-            fullWidth
-            onClick={() => setShowWindowPicker(true)}
-          />
         </>
+      }
+      extraButtons={
+        <Button
+          text="Choose New Window"
+          location={ControlLocation.Panel}
+          fullWidth
+          onClick={() => setShowWindowPicker(true)}
+        />
       }
     >
       {showWindowPicker ? (
-        <PanelContent columns={1} display={options.display}>
+        <PanelContent
+          columns={1}
+          display={options.display}
+          orientation={options.orientation}
+        >
           <Card display={options.display}>
             <CardHeader text="Choose a window" />
             <div className={styles.windowPickerContainer}>
@@ -181,7 +188,12 @@ export function WindowsPanel(props: WindowsPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent columns={options.columns}>{renderWindows()}</PanelContent>
+        <PanelContent
+          columns={options.columns}
+          orientation={options.orientation}
+        >
+          {renderWindows()}
+        </PanelContent>
       )}
     </Panel>
   );

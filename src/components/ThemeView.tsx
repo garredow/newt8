@@ -12,6 +12,7 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
+import { Orientation } from '../enums/orientation';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme, ThemeValue, ThemeValues } from '../models/Theme';
@@ -566,6 +567,7 @@ export function ThemeView(props: ThemeViewProps) {
                 columns: 1,
                 display: PanelDisplayType.Default,
                 title: 'Example Panel',
+                orientation: Orientation.Vertical,
               }}
               onOptionsChanged={() => {}}
               onDeletePanel={() => {}}

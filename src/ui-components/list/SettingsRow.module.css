@@ -24,6 +24,10 @@
   height: 38px;
 }
 
+.row > input {
+  text-align: center;
+}
+
 .label {
   cursor: help;
 }

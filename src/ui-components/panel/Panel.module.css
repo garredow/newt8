@@ -42,8 +42,14 @@
 
 .content {
   flex: 1;
-  padding-bottom: 15px;
+}
+.content.vertical {
+  overflow-x: hidden;
   overflow-y: auto;
+}
+.content.horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .root select {
@@ -55,4 +61,8 @@
 .root input {
   color: var(--panel-primary-text-color);
   border-bottom: 2px solid var(--panel-accent-color);
+}
+
+.extraButtons > button {
+  margin-bottom: 10px;
 }

@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { Orientation } from '../enums/orientation';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { PanelKind } from '../enums/panelKind';
 import { GridLayout } from '../models/GridLayout';
@@ -14,6 +15,7 @@ export type PanelOptions = {
   title: string;
   columns: number;
   display: PanelDisplayType;
+  orientation: Orientation;
 };
 
 export type PanelConfig = {
@@ -30,10 +32,11 @@ export type PanelConfig = {
   };
 };
 
-const defaultPanelOptions = {
+const defaultPanelOptions: PanelOptions = {
   title: 'Panel',
   columns: 1,
   display: PanelDisplayType.Default,
+  orientation: Orientation.Vertical,
 };
 
 const panelConfigs: PanelConfigMap = {

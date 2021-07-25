@@ -1,11 +1,18 @@
 .root {
-  overflow-y: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   row-gap: 15px;
   column-gap: 15px;
-  grid-auto-rows: max-content;
   padding: 0 15px 15px 15px;
+  height: 100%;
+}
+.root.vertical {
+  grid-auto-rows: max-content;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+.root.horizontal {
+  grid-auto-columns: 250px;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr;
 }
 
 .root.list {

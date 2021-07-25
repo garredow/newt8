@@ -105,10 +105,11 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       panelIndex={props.panelIndex}
       options={options as any}
       enableColumns={true}
+      enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
-      extraSettings={
+      extraButtons={
         <>
           <Button
             text="Edit Bookmarks"
@@ -126,7 +127,11 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       }
     >
       {showFinder ? (
-        <PanelContent columns={1} display={options.display}>
+        <PanelContent
+          columns={1}
+          display={options.display}
+          orientation={options.orientation}
+        >
           <Card>
             <CardHeader text="Choose a folder" />
             <p className={styles.message}>
@@ -143,7 +148,11 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
           </Card>
         </PanelContent>
       ) : (
-        <PanelContent columns={options.columns} display={options.display}>
+        <PanelContent
+          columns={options.columns}
+          display={options.display}
+          orientation={options.orientation}
+        >
           {status === Status.Loaded && bookmarks.length === 0 ? (
             <div>
               <p>
