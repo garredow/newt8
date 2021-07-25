@@ -10,13 +10,10 @@ describe('CardHeader', () => {
 
     expect(getByText('action item')).toBeVisible();
   });
-  test('renders children', () => {
-    const { getByText } = render(
-      <CardHeader>
-        <div>child text</div>
-      </CardHeader>
-    );
+  test('renders title', () => {
+    const text = 'some text';
+    const { getByText } = render(<CardHeader text={text} />);
 
-    expect(getByText('child text')).toBeVisible();
+    expect(getByText(text)).toBeVisible();
   });
 });

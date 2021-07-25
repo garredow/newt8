@@ -10,11 +10,8 @@ type CardHeaderProps = ComponentBase & {
 export function CardHeader(props: CardHeaderProps) {
   return (
     <div className={styles.root} data-testid={props['data-testid']}>
-      <div className={styles.row}>
-        <div className={styles.title}>{props.text}</div>
-        <div className={styles.actions}>{props.actions}</div>
-      </div>
-      {props.children}
+      <div className={styles.title}>{props.text}</div>
+      <div className={styles.actions}>{props.actions}</div>
     </div>
   );
 }
