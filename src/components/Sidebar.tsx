@@ -23,7 +23,7 @@ import { useState } from 'react';
 import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ControlLocation } from '../enums/controlLocation';
-import { ConfirmDialog } from '../ui-components/ConfirmDialog';
+import { ConfirmDialog } from '../ui-components/dialog/ConfirmDialog';
 import { SettingsContext } from '../SettingsContext';
 import { mixin } from '../utilities/mixin';
 import { DisplayDensity } from '../enums/displayDensity';
