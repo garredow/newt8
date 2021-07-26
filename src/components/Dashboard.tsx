@@ -18,14 +18,14 @@ import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
 import { useContext } from 'react';
-import { PagesContext } from '../PagesContext';
+import { PagesContext } from '../contexts/PagesContext';
 import { EmptyPanel } from './EmptyPanel';
 import { joinClasses } from '../utilities/classes';
-import { SettingsContext } from '../SettingsContext';
+import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { ConfigureGridDialog } from './ConfigureGridDialog';
 import { GridLayout } from '../models/GridLayout';
 import { cloneDeep, zip } from 'lodash';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 
 enum LoadingStatus {
   Init,
@@ -50,7 +50,7 @@ export function DashboardView(props: DashboardViewProps) {
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
   const [showGridConfig, setShowGridConfig] = useState(false);
   const { pages, savePage } = useContext(PagesContext);
-  const { settings } = useContext(SettingsContext);
+  const { settings } = useContext(AppSettingsContext);
 
   useEffect(() => {
     setStatus(LoadingStatus.Loading);

@@ -1,14 +1,12 @@
 import React from 'react';
-import { DisplayDensity } from './enums/displayDensity';
-import { PanelDisplayType } from './enums/panelDisplayType';
-import { Settings } from './models/Settings';
-import { Theme } from './models/Theme';
+import { DisplayDensity } from '../enums/displayDensity';
+import { PanelDisplayType } from '../enums/panelDisplayType';
+import { Settings } from '../models/Settings';
+import { Theme } from '../models/Theme';
 
-type SettingsContextValue = {
+type AppSettingsContextValue = {
   settings: Settings;
   setSettings: (settings: Settings) => Promise<void>;
-  showSettings: () => void;
-  hideSettings: () => void;
 };
 
 const fontWeightOptions = [
@@ -261,12 +259,10 @@ export const defaultSettings: Settings = {
   defaultPanelDisplay: PanelDisplayType.Cards
 };
 
-const defaultValue = {
+const defaultValue: AppSettingsContextValue = {
   settings: defaultSettings,
   setSettings: () => Promise.resolve(),
-  showSettings: () => {},
-  hideSettings: () => {},
 };
 
-export const SettingsContext =
-  React.createContext<SettingsContextValue>(defaultValue);
+export const AppSettingsContext =
+  React.createContext<AppSettingsContextValue>(defaultValue);

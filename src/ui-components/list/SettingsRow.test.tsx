@@ -1,11 +1,14 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { SettingsRow } from './SettingsRow';
-import { defaultSettings, SettingsContext } from '../../SettingsContext';
+import {
+  defaultSettings,
+  AppSettingsContext,
+} from '../../contexts/AppSettingsContext';
 
 function renderWithContext(element: any) {
   return render(
-    <SettingsContext.Provider
+    <AppSettingsContext.Provider
       value={{
         settings: {
           ...defaultSettings,
@@ -15,7 +18,7 @@ function renderWithContext(element: any) {
       }}
     >
       {element}
-    </SettingsContext.Provider>
+    </AppSettingsContext.Provider>
   );
 }
 describe('SettingsRow', () => {

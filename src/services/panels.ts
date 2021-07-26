@@ -2,10 +2,7 @@ import { cloneDeep } from 'lodash';
 import { PanelKind } from '../enums/panelKind';
 import { GridLayout } from '../models/GridLayout';
 import { Panel } from '../models/Panel';
-import {
-  defaultPanelSettings,
-  PanelSettings,
-} from '../ui-components/panel/PanelContext';
+import { defaultPanelSettings, PanelSettings } from '../contexts/PanelContext';
 import { getItem, StorageKey } from '../utilities/storage';
 import { Permission, PermissionDetail } from './permissions';
 

@@ -13,10 +13,10 @@ import {
 } from '../services/browser';
 import { getPanelConfig } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
-import { Card, CardHeader } from '../ui-components/card';
+import { Card } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 import styles from './BookmarksPanel.module.css';
 
 type BookmarkFolderItemProps = {

@@ -4,7 +4,7 @@ import { PanelKind } from '../enums/panelKind';
 import { ComponentBase } from '../models/ComponentBase';
 import { getPanelConfig } from '../services/panels';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 
 type EmptyPanelOptions = PanelSettings;
 

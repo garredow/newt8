@@ -2,7 +2,10 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { Panel } from '.';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { defaultSettings, SettingsContext } from '../../SettingsContext';
+import {
+  defaultSettings,
+  AppSettingsContext,
+} from '../../contexts/AppSettingsContext';
 import { Settings } from '../../models/Settings';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
@@ -18,13 +21,13 @@ function renderWithContext(element: any, settings?: Settings) {
     },
   };
   return render(
-    <SettingsContext.Provider value={settingsContextVal}>
+    <AppSettingsContext.Provider value={settingsContextVal}>
       <DragDropContext onDragEnd={() => {}}>
         <Droppable droppableId="test">
           {(provided) => <div ref={provided.innerRef}>{element}</div>}
         </Droppable>
       </DragDropContext>
-    </SettingsContext.Provider>
+    </AppSettingsContext.Provider>
   );
 }
 describe('Panel', () => {

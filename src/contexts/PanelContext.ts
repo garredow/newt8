@@ -1,9 +1,9 @@
 import React from 'react';
-import { DisplayDensity } from '../../enums/displayDensity';
-import { Orientation } from '../../enums/orientation';
-import { PanelDisplayType } from '../../enums/panelDisplayType';
-import { CardSettings } from '../card/Card';
-import { SiteRowSettings } from '../list';
+import { DisplayDensity } from '../enums/displayDensity';
+import { Orientation } from '../enums/orientation';
+import { PanelDisplayType } from '../enums/panelDisplayType';
+import { CardSettings } from '../ui-components/card/Card';
+import { SiteRowSettings } from '../ui-components/list';
 
 export type PanelSettings = CardSettings &
   SiteRowSettings & {

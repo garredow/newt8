@@ -9,7 +9,7 @@ import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
 import { Bookmark } from '../models/Bookmark';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 
 type NewBookmarksPanelOptions = PanelSettings;
 

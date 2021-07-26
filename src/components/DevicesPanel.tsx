@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card, CardHeader } from '../ui-components/card';
+import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
@@ -11,7 +11,7 @@ import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
 import { ControlLocation } from '../enums/controlLocation';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 
 export type DevicesPanelOptions = PanelSettings & {
   showTabAccessedTime: boolean;

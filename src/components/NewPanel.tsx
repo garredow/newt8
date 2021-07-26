@@ -17,13 +17,8 @@ import { getPanelConfig, getPanelConfigs } from '../services/panels';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { useEffect } from 'react';
 import { animateSlideLeft } from '../ui-components/animations';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '../ui-components/card';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { Card, CardContent, CardFooter } from '../ui-components/card';
+import { PanelSettings } from '../contexts/PanelContext';
 
 type NewPanelOptions = PanelSettings;
 

@@ -14,13 +14,13 @@ import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme, ThemeValues } from '../models/Theme';
-import { SettingsContext } from '../SettingsContext';
+import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
-import { Card, CardHeader } from '../ui-components/card';
+import { Card } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { defaultPanelSettings } from '../ui-components/panel/PanelContext';
+import { defaultPanelSettings } from '../contexts/PanelContext';
 import { isDarkMode } from '../utilities/isDarkMode';
 import { ThemeValueChooser } from './ThemeValueChooser';
 import styles from './ThemeView.module.css';
@@ -161,7 +161,7 @@ export function ThemeView(props: ThemeViewProps) {
   const [showJson, setShowJson] = useState(false);
   const [themeImportError, setThemeImportError] = useState(false);
   const [themePreviewStyles, setThemePreviewStyles] = useState<any>({});
-  const { settings, setSettings } = useContext(SettingsContext);
+  const { settings, setSettings } = useContext(AppSettingsContext);
   const location = useLocation();
   const history = useHistory();
 

@@ -11,7 +11,7 @@ import { ifClass, joinClasses } from '../../utilities/classes';
 import { Button, IconButton } from '../button';
 import { Dialog } from '../dialog/Dialog';
 import { SettingsRow } from '../list';
-import { PanelContext } from '../panel/PanelContext';
+import { PanelContext } from '../../contexts/PanelContext';
 import styles from './Card.module.css';
 
 export type CardSettings = {

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBase } from '../../models/ComponentBase';
-import { SettingsContext } from '../../SettingsContext';
+import { AppSettingsContext } from '../../contexts/AppSettingsContext';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './SettingsRow.module.css';
 
@@ -14,7 +14,7 @@ type SettingsRowProps = ComponentBase & {
 
 export function SettingsRow(props: SettingsRowProps) {
   const [showHelpText, setShowHelpText] = useState(false);
-  const { settings } = useContext(SettingsContext);
+  const { settings } = useContext(AppSettingsContext);
 
   return (
     <div

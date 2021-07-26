@@ -9,13 +9,13 @@ import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { getWindows, switchToTab } from '../services/browser';
 import { getPanelConfig } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
-import { Card, CardHeader } from '../ui-components/card';
+import { Card } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import styles from './WindowsPanel.module.css';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 
 export type WindowsPanelOptions = PanelSettings & {
   showCardTitles: boolean;

@@ -5,7 +5,7 @@ import { PanelHeader } from '.';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { ComponentBase } from '../../models/ComponentBase';
-import { SettingsContext } from '../../SettingsContext';
+import { AppSettingsContext } from '../../contexts/AppSettingsContext';
 import { joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
@@ -20,7 +20,7 @@ import {
   defaultPanelSettings,
   PanelContext,
   PanelSettings,
-} from './PanelContext';
+} from '../../contexts/PanelContext';
 import { useEffect } from 'react';
 
 type PanelProps = ComponentBase &
@@ -52,7 +52,7 @@ export const Panel = React.forwardRef(
     const [showSettings, setShowSettings] = useState(false);
     const [settings, setSettings] =
       useState<PanelSettings>(defaultPanelSettings);
-    const { settings: appSettings } = useContext(SettingsContext);
+    const { settings: appSettings } = useContext(AppSettingsContext);
 
     useEffect(() => {
       // Figure out settings here so rest of panel doesn't have to

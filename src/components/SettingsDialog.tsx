@@ -5,7 +5,7 @@ import { DisplayDensity } from '../enums/displayDensity';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBase } from '../models/ComponentBase';
 import { Theme } from '../models/Theme';
-import { SettingsContext } from '../SettingsContext';
+import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { Button } from '../ui-components/button';
 import { Dialog } from '../ui-components/dialog/Dialog';
 import { Checkbox } from '../ui-components/input';
@@ -17,7 +17,7 @@ export type SettingsDialogProps = ComponentBase & {
   onClose: () => void;
 };
 export function SettingsDialog({ onClose, ...props }: SettingsDialogProps) {
-  const { settings, setSettings } = useContext(SettingsContext);
+  const { settings, setSettings } = useContext(AppSettingsContext);
   const history = useHistory();
 
   function setSettingValue(key: string, val: any) {

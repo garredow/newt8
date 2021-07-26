@@ -4,7 +4,7 @@ import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { ComponentBase } from '../../models/ComponentBase';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './PanelContent.module.css';
-import { PanelContext } from './PanelContext';
+import { PanelContext } from '../../contexts/PanelContext';
 
 type PanelContentProps = ComponentBase & {
   columns?: number;

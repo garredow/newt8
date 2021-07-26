@@ -9,7 +9,7 @@ import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
 import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { Tab } from '../models/Browser';
-import { PanelSettings } from '../ui-components/panel/PanelContext';
+import { PanelSettings } from '../contexts/PanelContext';
 
 type RecentTabsPanelOptions = PanelSettings;
 

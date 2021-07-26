@@ -3,7 +3,7 @@ import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBase } from '../../models/ComponentBase';
 import { OpenSiteOption } from '../../services/browser';
 import { ifClass, joinClasses } from '../../utilities/classes';
-import { PanelContext } from '../panel/PanelContext';
+import { PanelContext } from '../../contexts/PanelContext';
 import styles from './SiteRow.module.css';
 
 export type SiteRowSettings = {
