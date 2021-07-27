@@ -1,8 +1,8 @@
 import React from 'react';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import styles from './CardFooter.module.css';
 
-type CardFooterProps = ComponentBase;
+type CardFooterProps = ComponentBaseProps;
 
 export function CardFooter(props: CardFooterProps) {
   return (

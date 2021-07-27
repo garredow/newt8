@@ -1,36 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getRecentBookmarks, openUrl } from '../services/browser';
-import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig } from '../services/panels';
-import { PanelKind } from '../enums/panelKind';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Bookmark } from '../models/Bookmark';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type NewBookmarksPanelOptions = PanelSettings;
 
-type NewBookmarksPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options: NewBookmarksPanelOptions;
-    onOptionsChanged: (options: NewBookmarksPanelOptions) => void;
-    onDeletePanel: () => void;
-  };
+type NewBookmarksPanelProps = ComponentBaseProps &
+  PanelBaseProps<NewBookmarksPanelOptions>;
 
 export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
-
-  const options: NewBookmarksPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        getPanelConfig(PanelKind.NewBookmarks).defaultOptions,
-        props.options
-      ),
-    [props.options]
-  );
 
   useEffect(() => {
     getRecentBookmarks().then((res) => {
@@ -40,9 +25,7 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
 
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options}
+      panel={props.panel}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}

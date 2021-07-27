@@ -1,36 +1,17 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { PanelKind } from '../enums/panelKind';
-import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig } from '../services/panels';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type EmptyPanelOptions = PanelSettings;
 
-type EmptyPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options?: EmptyPanelOptions;
-    onOptionsChanged: (options: EmptyPanelOptions) => void;
-
-    onDeletePanel: () => void;
-  };
+type EmptyPanelProps = ComponentBaseProps & PanelBaseProps<EmptyPanelOptions>;
 
 export function EmptyPanel(props: EmptyPanelProps) {
-  const options: EmptyPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        getPanelConfig(PanelKind.Empty).defaultOptions,
-        props.options
-      ),
-    [props.options]
-  );
-
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options}
+      panel={props.panel}
       enableSettings={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}

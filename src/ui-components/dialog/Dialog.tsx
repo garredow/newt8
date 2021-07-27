@@ -1,12 +1,12 @@
 import { Dialog as ReachDialog } from '@reach/dialog';
 import React from 'react';
 import { MdClear } from 'react-icons/md';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import styles from './Dialog.module.css';
 
-export type DialogProps = ComponentBase & {
+export type DialogProps = ComponentBaseProps & {
   title?: string;
   width?: 'small' | 'medium' | 'large';
   onClose: () => void;

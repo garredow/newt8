@@ -4,26 +4,22 @@ import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices, openUrl } from '../services/browser';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { getPanelConfig } from '../services/panels';
 import { PanelKind } from '../enums/panelKind';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
 import { ControlLocation } from '../enums/controlLocation';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 export type DevicesPanelOptions = PanelSettings & {
   showTabAccessedTime: boolean;
   showUrl: boolean;
 };
 
-type DevicesPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options: DevicesPanelOptions;
-    onOptionsChanged: (options: DevicesPanelOptions) => void;
-    onDeletePanel: () => void;
-  };
+type DevicesPanelProps = ComponentBaseProps &
+  PanelBaseProps<DevicesPanelOptions>;
 
 export function DevicesPanel(props: DevicesPanelProps) {
   const [devices, setDevices] = useState<chrome.sessions.Device[]>([]);
@@ -32,9 +28,9 @@ export function DevicesPanel(props: DevicesPanelProps) {
     () =>
       Object.assign(
         getPanelConfig(PanelKind.Devices).defaultOptions,
-        props.options
+        props.panel.options
       ),
-    [props.options]
+    [props.panel.options]
   );
 
   useEffect(() => {
@@ -51,9 +47,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
 
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options}
+      panel={props.panel}
       enableColumns={true}
       enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}

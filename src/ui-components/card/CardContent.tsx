@@ -1,9 +1,9 @@
 import React from 'react';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './CardContent.module.css';
 
-type CardContentProps = ComponentBase & {
+type CardContentProps = ComponentBaseProps & {
   fullWidth?: boolean;
 };
 

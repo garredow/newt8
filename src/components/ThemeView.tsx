@@ -12,7 +12,7 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Theme, ThemeValues } from '../models/Theme';
 import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { IconButton } from '../ui-components/button';
@@ -25,7 +25,7 @@ import { isDarkMode } from '../utilities/isDarkMode';
 import { ThemeValueChooser } from './ThemeValueChooser';
 import styles from './ThemeView.module.css';
 
-export type ThemeViewProps = ComponentBase & {};
+export type ThemeViewProps = ComponentBaseProps & {};
 
 type Section = {
   title: string;
@@ -573,12 +573,14 @@ export function ThemeView(props: ThemeViewProps) {
             </div>
 
             <Panel
-              panelId="test"
-              panelIndex={0}
-              options={{
-                ...defaultPanelSettings,
-                title: 'Example Panel',
-              }}
+              panel={
+                {
+                  options: {
+                    ...defaultPanelSettings,
+                    title: 'Example Panel',
+                  },
+                } as any
+              }
               onOptionsChanged={() => {}}
               onDeletePanel={() => {}}
             >

@@ -1,8 +1,8 @@
 import React from 'react';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import styles from './CardHeader.module.css';
 
-type CardHeaderProps = ComponentBase & {
+type CardHeaderProps = ComponentBaseProps & {
   text?: string;
   actions?: any;
 };

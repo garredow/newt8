@@ -1,9 +1,9 @@
 import React from 'react';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { joinClasses } from '../../utilities/classes';
 import styles from './PanelHeader.module.css';
 
-type PanelHeaderProps = ComponentBase & {
+type PanelHeaderProps = ComponentBaseProps & {
   text: string;
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { DisplayDensity } from '../../enums/displayDensity';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { OpenSiteOption } from '../../services/browser';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { PanelContext } from '../../contexts/PanelContext';
@@ -13,7 +13,7 @@ export type SiteRowSettings = {
   displayDensity: DisplayDensity;
 };
 
-export type SiteRowProps = ComponentBase & {
+export type SiteRowProps = ComponentBaseProps & {
   url?: string;
   primaryText?: string;
   secondaryText?: string;

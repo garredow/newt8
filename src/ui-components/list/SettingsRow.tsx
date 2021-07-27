@@ -2,12 +2,12 @@ import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { DisplayDensity } from '../../enums/displayDensity';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { AppSettingsContext } from '../../contexts/AppSettingsContext';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './SettingsRow.module.css';
 
-type SettingsRowProps = ComponentBase & {
+type SettingsRowProps = ComponentBaseProps & {
   label: string;
   helpText?: string;
 };

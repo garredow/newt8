@@ -2,11 +2,11 @@ import React, { MouseEventHandler } from 'react';
 import { IconContext } from 'react-icons/lib';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { joinClasses } from '../../utilities/classes';
 import styles from './IconButton.module.css';
 
-type IconButtonProps = ComponentBase & {
+type IconButtonProps = ComponentBaseProps & {
   size?: number;
   type?: ControlType;
   location?: ControlLocation;

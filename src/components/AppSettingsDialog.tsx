@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { ControlType } from '../enums/controlType';
 import { DisplayDensity } from '../enums/displayDensity';
 import { PanelDisplayType } from '../enums/panelDisplayType';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Theme } from '../models/Theme';
 import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { Button } from '../ui-components/button';
@@ -13,7 +13,7 @@ import { SettingsRow } from '../ui-components/list';
 import { isDarkMode } from '../utilities/isDarkMode';
 import styles from './AppSettingsDialog.module.css';
 
-export type AppSettingsDialogProps = ComponentBase & {
+export type AppSettingsDialogProps = ComponentBaseProps & {
   onClose: () => void;
 };
 export function AppSettingsDialog({

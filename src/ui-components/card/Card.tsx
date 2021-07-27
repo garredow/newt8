@@ -6,7 +6,7 @@ import { ThemeValueChooser } from '../../components/ThemeValueChooser';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { Button, IconButton } from '../button';
 import { Dialog } from '../dialog/Dialog';
@@ -20,7 +20,7 @@ export type CardSettings = {
   displayStyle: PanelDisplayType;
 };
 
-export type CardProps = ComponentBase & {
+export type CardProps = ComponentBaseProps & {
   cardId?: string;
   title?: string;
   enableSettings?: boolean;

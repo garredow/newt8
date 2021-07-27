@@ -1,8 +1,8 @@
 import React from 'react';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import styles from './PanelSettings.module.css';
 
-type PanelSettingsProps = ComponentBase & {};
+type PanelSettingsProps = ComponentBaseProps & {};
 
 export const PanelSettings = React.forwardRef(
   (props: PanelSettingsProps, ref: any) => (

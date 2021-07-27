@@ -1,12 +1,12 @@
 import React from 'react';
 import { MdCheck } from 'react-icons/md';
 import { ControlLocation } from '../../enums/controlLocation';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { joinClasses } from '../../utilities/classes';
 import { Icon } from '../icon';
 import styles from './Checkbox.module.css';
 
-type CheckboxProps = ComponentBase & {
+type CheckboxProps = ComponentBaseProps & {
   checked?: boolean;
   location?: ControlLocation;
   onChange?: (checked: boolean) => void;

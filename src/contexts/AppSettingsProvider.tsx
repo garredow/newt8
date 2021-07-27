@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Settings } from '../models/Settings';
 import { getItem, setItem, StorageKey } from '../utilities/storage';
 import { defaultSettings, AppSettingsContext } from './AppSettingsContext';
 
-type AppSettingsProviderProps = ComponentBase;
+type AppSettingsProviderProps = ComponentBaseProps;
 
 export function AppSettingsProvider(props: AppSettingsProviderProps) {
   const [settings, setSettingsInternal] = useState<Settings>(defaultSettings);

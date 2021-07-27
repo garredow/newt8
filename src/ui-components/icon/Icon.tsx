@@ -1,8 +1,8 @@
 import React from 'react';
 import { IconContext } from 'react-icons/lib';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 
-type IconProps = ComponentBase & {
+type IconProps = ComponentBaseProps & {
   color?: string;
   size?: string;
   className?: string;

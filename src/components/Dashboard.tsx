@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BookmarksPanel } from './BookmarksPanel';
 import { RecentTabsPanel } from './RecentTabsPanel';
-import { WindowsPanel, WindowsPanelOptions } from './WindowsPanel';
+import { WindowsPanel } from './WindowsPanel';
 import styles from './Dashboard.module.css';
 import { useEffect } from 'react';
 import { PanelKind } from '../enums/panelKind';
@@ -9,10 +9,10 @@ import { IconButton } from '../ui-components/button';
 import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
-import { DevicesPanel, DevicesPanelOptions } from './DevicesPanel';
+import { DevicesPanel } from './DevicesPanel';
 import { ControlType } from '../enums/controlType';
 import { Button } from '../ui-components/button/Button';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { getPanelConfig, Page } from '../services/panels';
 import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
@@ -31,7 +31,7 @@ enum LoadingStatus {
   Idle,
 }
 
-export type DashboardViewProps = ComponentBase;
+export type DashboardViewProps = ComponentBaseProps;
 
 export function DashboardView(props: DashboardViewProps) {
   const [page, setPage] = useState<Page>({
@@ -147,21 +147,21 @@ export function DashboardView(props: DashboardViewProps) {
       id: panelId,
       kind: newPanelKind,
       options: getPanelConfig(newPanelKind).defaultOptions as PanelSettings,
+      cardSettings: {},
     });
   }
 
-  function renderPanel(panel: Panel, index: number) {
+  function renderPanel(panel: Panel<any>, index: number) {
     switch (panel.kind) {
       case PanelKind.New:
         return (
           <NewPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options}
+            panel={panel}
             onPanelKindChanged={(panelKind) =>
               handlePanelKindChange(panel.id, panelKind)
             }
+            onOptionsChanged={() => {}}
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
@@ -169,9 +169,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <EmptyPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -182,9 +180,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <BookmarksPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options as any}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -195,9 +191,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <RecentTabsPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -208,9 +202,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <WindowsPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options as WindowsPanelOptions}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -221,9 +213,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <RecentlyClosedPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -234,9 +224,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <DevicesPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options as DevicesPanelOptions}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -247,9 +235,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <NewBookmarksPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -260,9 +246,7 @@ export function DashboardView(props: DashboardViewProps) {
         return (
           <TopSitesPanel
             key={panel.id}
-            panelId={panel.id}
-            panelIndex={index}
-            options={panel.options}
+            panel={panel}
             onOptionsChanged={(options) =>
               handleOptionsChanged(panel.id, options)
             }
@@ -316,6 +300,7 @@ export function DashboardView(props: DashboardViewProps) {
                   kind: PanelKind.New,
                   options: getPanelConfig(PanelKind.New)
                     .defaultOptions as PanelSettings,
+                  cardSettings: {},
                 })
               }
             />
@@ -345,6 +330,7 @@ export function DashboardView(props: DashboardViewProps) {
               kind: PanelKind.New,
               options: getPanelConfig(PanelKind.New)
                 .defaultOptions as PanelSettings,
+              cardSettings: {},
             });
           }}
         />

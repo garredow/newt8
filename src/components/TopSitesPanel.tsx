@@ -1,34 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { getTopSites, openUrl } from '../services/browser';
-import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig } from '../services/panels';
-import { PanelKind } from '../enums/panelKind';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type TopSitesPanelOptions = PanelSettings;
 
-type TopSitesPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options: TopSitesPanelOptions;
-    onOptionsChanged: (options: TopSitesPanelOptions) => void;
-    onDeletePanel: () => void;
-  };
+type TopSitesPanelProps = ComponentBaseProps &
+  PanelBaseProps<TopSitesPanelOptions>;
 
 export function TopSitesPanel(props: TopSitesPanelProps) {
   const [sites, setSites] = useState<chrome.topSites.MostVisitedURL[]>([]);
-
-  const options: TopSitesPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        getPanelConfig(PanelKind.TopSites).defaultOptions,
-        props.options
-      ),
-    [props.options]
-  );
 
   useEffect(() => {
     getTopSites().then((res) => {
@@ -38,9 +23,7 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
 
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options}
+      panel={props.panel}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}

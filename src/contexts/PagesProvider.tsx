@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Page } from '../services/panels';
 import { getItem, setItem, StorageKey } from '../utilities/storage';
 import { defaultPages, PagesContext } from './PagesContext';
 
-type PagesProviderProps = ComponentBase;
+type PagesProviderProps = ComponentBaseProps;
 
 export function PagesProvider(props: PagesProviderProps) {
   const [pages, setPagesInternal] = useState<Page[]>([]);

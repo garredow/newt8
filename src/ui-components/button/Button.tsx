@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import styles from './Button.module.css';
 
-type ButtonProps = ComponentBase & {
+type ButtonProps = ComponentBaseProps & {
   text: string;
   type?: ControlType;
   location?: ControlLocation;

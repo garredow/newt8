@@ -9,6 +9,7 @@ import {
 import { Settings } from '../../models/Settings';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
+import { Panel as PanelType } from '../../models/Panel';
 
 function renderWithContext(element: any, settings?: Settings) {
   const settingsContextVal = {
@@ -33,15 +34,16 @@ function renderWithContext(element: any, settings?: Settings) {
 describe('Panel', () => {
   test('renders children', () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -57,15 +59,16 @@ describe('Panel', () => {
 
   test('opens settings on button click', async () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -112,15 +115,16 @@ describe('Panel', () => {
 
   test('hide settings button', () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       enableSettings: false,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
@@ -133,15 +137,16 @@ describe('Panel', () => {
 
   test('select correct settings for props', async () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       enableColumns: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
@@ -156,15 +161,16 @@ describe('Panel', () => {
 
   test('sets columns', async () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       enableColumns: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
@@ -181,15 +187,16 @@ describe('Panel', () => {
 
   test('sets title', async () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -206,15 +213,16 @@ describe('Panel', () => {
 
   test('prompts for delete confirmation', () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -229,15 +237,16 @@ describe('Panel', () => {
 
   test('delete needs one click when confirmBeforeDelete is false', () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -258,15 +267,16 @@ describe('Panel', () => {
 
   test('delete needs two clicks when confirmBeforeDelete is true', () => {
     const props = {
-      panelId: '1',
-      panelIndex: 0,
-      options: {
-        title: 'panel title',
-        width: 3,
-        columns: 1,
-        display: PanelDisplayType.Default,
-        orientation: Orientation.Vertical,
-      },
+      panel: {
+        id: '1',
+        options: {
+          title: 'panel title',
+          width: 3,
+          columns: 1,
+          display: PanelDisplayType.Default,
+          orientation: Orientation.Vertical,
+        },
+      } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };

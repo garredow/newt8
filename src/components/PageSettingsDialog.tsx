@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Button } from '../ui-components/button/Button';
 import styles from './PageSettingsDialog.module.css';
 import { IconButton } from '../ui-components/button';
@@ -48,7 +48,7 @@ function SizeSelect(props: SizeSelectProps) {
   );
 }
 
-export type PageSettingsDialogProps = ComponentBase & {
+export type PageSettingsDialogProps = ComponentBaseProps & {
   onClose: () => void;
 };
 export function PageSettingsDialog({ onClose }: PageSettingsDialogProps) {

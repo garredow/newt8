@@ -4,8 +4,7 @@ import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { PanelKind } from '../enums/panelKind';
 import { Window } from '../models/Browser';
-import { ComponentBase } from '../models/ComponentBase';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { getWindows, switchToTab } from '../services/browser';
 import { getPanelConfig } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
@@ -16,6 +15,7 @@ import { Panel, PanelContent } from '../ui-components/panel';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import styles from './WindowsPanel.module.css';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 export type WindowsPanelOptions = PanelSettings & {
   showCardTitles: boolean;
@@ -24,12 +24,8 @@ export type WindowsPanelOptions = PanelSettings & {
   showUrl: boolean;
 };
 
-type WindowsPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options: WindowsPanelOptions;
-    onOptionsChanged: (options: WindowsPanelOptions) => void;
-    onDeletePanel: () => void;
-  };
+type WindowsPanelProps = ComponentBaseProps &
+  PanelBaseProps<WindowsPanelOptions>;
 
 export function WindowsPanel(props: WindowsPanelProps) {
   const [windows, setWindows] = useState<Window[] | undefined>();
@@ -39,9 +35,9 @@ export function WindowsPanel(props: WindowsPanelProps) {
     () =>
       Object.assign(
         getPanelConfig(PanelKind.Windows).defaultOptions,
-        props.options
+        props.panel.options
       ),
-    [props.options]
+    [props.panel.options]
   );
 
   useEffect(() => {
@@ -106,9 +102,7 @@ export function WindowsPanel(props: WindowsPanelProps) {
 
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options}
+      panel={props.panel}
       enableColumns={true}
       enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}

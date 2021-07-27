@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { Panel, PanelContent } from '../ui-components/panel';
 import styles from './NewPanel.module.css';
@@ -12,21 +12,19 @@ import {
   requestPermissions,
   verifyPermissionsForPanel,
 } from '../services/permissions';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { getPanelConfig, getPanelConfigs } from '../services/panels';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
 import { useEffect } from 'react';
 import { animateSlideLeft } from '../ui-components/animations';
 import { Card, CardContent, CardFooter } from '../ui-components/card';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type NewPanelOptions = PanelSettings;
 
-type NewPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options?: NewPanelOptions;
+type NewPanelProps = ComponentBaseProps &
+  PanelBaseProps<NewPanelOptions> & {
     onPanelKindChanged: (panelKind: PanelKind) => void;
-    onDeletePanel: () => void;
   };
 
 export function NewPanel(props: NewPanelProps) {
@@ -36,19 +34,6 @@ export function NewPanel(props: NewPanelProps) {
   const [permissionsError, setPermissionsError] = useState(false);
   const [animate, setAnimate] = useState(false);
   const nodeRef = useRef(null);
-
-  const options: NewPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        {
-          columns: 1,
-          width: 3,
-          title: 'New Panel',
-        },
-        props.options
-      ),
-    [props.options]
-  );
 
   const availablePanels = getPanelConfigs().map((a) => a.kind);
 
@@ -95,15 +80,12 @@ export function NewPanel(props: NewPanelProps) {
     >
       {(state) => (
         <Panel
-          panelId={props.panelId}
-          panelIndex={props.panelIndex}
-          options={options}
+          panel={props.panel}
           enableSettings={false}
           onOptionsChanged={() => {}}
           onDeletePanel={props.onDeletePanel}
           ref={nodeRef}
           style={{
-            gridArea: props.panelId,
             ...animateSlideLeft.defaultStyles,
             ...animateSlideLeft.transitionStyles[state],
           }}

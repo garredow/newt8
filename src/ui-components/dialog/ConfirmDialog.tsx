@@ -2,11 +2,11 @@ import { Dialog } from '@reach/dialog';
 import React from 'react';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { Button } from '../button/Button';
 import styles from './ConfirmDialog.module.css';
 
-export type ConfirmDialogProps = ComponentBase & {
+export type ConfirmDialogProps = ComponentBaseProps & {
   title?: string;
   message?: string;
   danger?: boolean;

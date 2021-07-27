@@ -1,35 +1,20 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getRecentlyClosed, openUrl } from '../services/browser';
-import { ComponentBase } from '../models/ComponentBase';
-import { getPanelConfig } from '../services/panels';
-import { PanelKind } from '../enums/panelKind';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { PanelSettings } from '../contexts/PanelContext';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type RecentlyClosedPanelOptions = PanelSettings;
 
-type RecentlyClosedPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options: RecentlyClosedPanelOptions;
-    onOptionsChanged: (options: RecentlyClosedPanelOptions) => void;
-    onDeletePanel: () => void;
-  };
+type RecentlyClosedPanelProps = ComponentBaseProps &
+  PanelBaseProps<RecentlyClosedPanelOptions>;
 
 export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
   const [sessions, setSessions] = useState<chrome.sessions.Session[]>([]);
-
-  const options: RecentlyClosedPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        getPanelConfig(PanelKind.RecentlyClosed).defaultOptions,
-        props.options
-      ),
-    [props.options]
-  );
 
   useEffect(() => {
     getRecentlyClosed().then((sessions) => setSessions(sessions));
@@ -37,9 +22,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
 
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options}
+      panel={props.panel}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}

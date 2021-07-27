@@ -4,7 +4,8 @@ import { MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { Panel as PanelType } from '../../models/Panel';
 import { AppSettingsContext } from '../../contexts/AppSettingsContext';
 import { joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
@@ -14,32 +15,27 @@ import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { Orientation } from '../../enums/orientation';
 import { Dialog } from '../dialog/Dialog';
 import styles from './Panel.module.css';
-import { DraggablePanelProps } from '../../models/DraggablePanelProps';
 import { Checkbox } from '../input';
-import {
-  defaultPanelSettings,
-  PanelContext,
-  PanelSettings,
-} from '../../contexts/PanelContext';
-import { useEffect } from 'react';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { PanelProvider } from '../../contexts/PanelProvider';
 
-type PanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options: PanelSettings;
-    enableSettings?: boolean;
-    enableColumns?: boolean;
-    enableOrientation?: boolean;
-    enableSecondaryText?: boolean;
-    enableAccentText?: boolean;
-    extraSettings?: React.ReactNode;
-    extraButtons?: React.ReactNode;
-    onOptionsChanged: (options: PanelSettings) => void;
-    onDeletePanel: () => void;
-  };
+type PanelProps = ComponentBaseProps & {
+  panel: PanelType<PanelSettings>;
+  enableSettings?: boolean;
+  enableColumns?: boolean;
+  enableOrientation?: boolean;
+  enableSecondaryText?: boolean;
+  enableAccentText?: boolean;
+  extraSettings?: React.ReactNode;
+  extraButtons?: React.ReactNode;
+  onOptionsChanged: (options: PanelSettings) => void;
+  onDeletePanel: () => void;
+};
 
 export const Panel = React.forwardRef(
   (
     {
+      panel,
       enableSettings = true,
       enableColumns = false,
       enableOrientation = false,
@@ -50,43 +46,27 @@ export const Panel = React.forwardRef(
     ref: any
   ) => {
     const [showSettings, setShowSettings] = useState(false);
-    const [settings, setSettings] =
-      useState<PanelSettings>(defaultPanelSettings);
     const { settings: appSettings } = useContext(AppSettingsContext);
 
-    useEffect(() => {
-      // Figure out settings here so rest of panel doesn't have to
-      const newSettings: PanelSettings = {
-        ...props.options,
-        ...appSettings,
-        displayStyle:
-          props.options.displayStyle === PanelDisplayType.Default
-            ? appSettings.defaultPanelDisplay
-            : props.options.displayStyle,
-      };
-
-      setSettings(newSettings);
-    }, [appSettings, props.options]);
-
     function setOptionValue(key: string, val: any) {
-      const newOpts = { ...props.options, [key]: val };
+      const newOpts = { ...panel.options, [key]: val };
       props.onOptionsChanged?.(newOpts);
     }
 
     return (
-      <PanelContext.Provider value={{ settings }}>
+      <PanelProvider panel={panel}>
         <div
           className={styles.root}
           data-testid={props['data-testid']}
           ref={ref}
           style={{
-            gridArea: props.panelId,
+            gridArea: panel.id,
             ...props.style,
           }}
         >
           <PanelHeader
             className={styles.header}
-            text={props.options.title}
+            text={panel.options.title}
             data-testid="panel-header"
           >
             <div
@@ -109,7 +89,7 @@ export const Panel = React.forwardRef(
           <div
             className={joinClasses(
               styles.content,
-              props.options.orientation === Orientation.Vertical
+              panel.options.orientation === Orientation.Vertical
                 ? styles.vertical
                 : styles.horizontal
             )}
@@ -118,7 +98,7 @@ export const Panel = React.forwardRef(
           </div>
           {showSettings && (
             <Dialog
-              title={props.options.title}
+              title={panel.options.title}
               width="medium"
               onClose={() => setShowSettings(false)}
               data-testid="settings"
@@ -129,8 +109,8 @@ export const Panel = React.forwardRef(
               >
                 <input
                   type="text"
-                  value={props.options.title}
-                  size={props.options.title.length + 1}
+                  value={panel.options.title}
+                  size={panel.options.title.length + 1}
                   onChange={(ev) => setOptionValue('title', ev.target.value)}
                   data-testid="inp-title"
                 />
@@ -140,7 +120,7 @@ export const Panel = React.forwardRef(
                 helpText="Choose how you want information in this panel displayed."
               >
                 <select
-                  value={props.options.displayStyle}
+                  value={panel.options.displayStyle}
                   onChange={(ev) =>
                     setOptionValue('displayStyle', ev.target.value)
                   }
@@ -157,7 +137,7 @@ export const Panel = React.forwardRef(
                   helpText="Whether this panel should scroll horizontally or vertically."
                 >
                   <select
-                    defaultValue={props.options.orientation}
+                    defaultValue={panel.options.orientation}
                     onChange={(ev) =>
                       setOptionValue('orientation', ev.target.value)
                     }
@@ -174,7 +154,7 @@ export const Panel = React.forwardRef(
                   helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
                 >
                   <select
-                    defaultValue={props.options.columns}
+                    defaultValue={panel.options.columns}
                     onChange={(ev) =>
                       setOptionValue('columns', parseInt(ev.target.value, 10))
                     }
@@ -201,7 +181,7 @@ export const Panel = React.forwardRef(
                 >
                   <Checkbox
                     location={ControlLocation.Panel}
-                    checked={props.options.showSecondaryText}
+                    checked={panel.options.showSecondaryText}
                     onChange={(checked) =>
                       setOptionValue('showSecondaryText', checked)
                     }
@@ -215,7 +195,7 @@ export const Panel = React.forwardRef(
                 >
                   <Checkbox
                     location={ControlLocation.Panel}
-                    checked={props.options.showAccentText}
+                    checked={panel.options.showAccentText}
                     onChange={(checked) =>
                       setOptionValue('showAccentText', checked)
                     }
@@ -244,7 +224,7 @@ export const Panel = React.forwardRef(
             </Dialog>
           )}
         </div>
-      </PanelContext.Provider>
+      </PanelProvider>
     );
   }
 );

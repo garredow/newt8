@@ -3,8 +3,7 @@ import { ControlLocation } from '../enums/controlLocation';
 import { PanelKind } from '../enums/panelKind';
 import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
-import { ComponentBase } from '../models/ComponentBase';
-import { DraggablePanelProps } from '../models/DraggablePanelProps';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import {
   getAllBookmarks,
   getBookmarks,
@@ -18,6 +17,7 @@ import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { PanelSettings } from '../contexts/PanelContext';
 import styles from './BookmarksPanel.module.css';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type BookmarkFolderItemProps = {
   node: Bookmark;
@@ -51,12 +51,8 @@ type BookmarksPanelOptions = PanelSettings & {
   bookmarkFolderId: string;
 };
 
-type BookmarksPanelProps = ComponentBase &
-  DraggablePanelProps & {
-    options?: BookmarksPanelOptions;
-    onOptionsChanged: (options: BookmarksPanelOptions) => void;
-    onDeletePanel: () => void;
-  };
+type BookmarksPanelProps = ComponentBaseProps &
+  PanelBaseProps<BookmarksPanelOptions>;
 
 export function BookmarksPanel(props: BookmarksPanelProps) {
   const [showFinder, setShowFinder] = useState(false);
@@ -68,9 +64,9 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
     () =>
       Object.assign(
         getPanelConfig(PanelKind.Bookmarks).defaultOptions,
-        props.options
+        props.panel.options
       ),
-    [props.options]
+    [props.panel.options]
   );
 
   useEffect(() => {
@@ -106,9 +102,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
 
   return (
     <Panel
-      panelId={props.panelId}
-      panelIndex={props.panelIndex}
-      options={options as any}
+      panel={props.panel}
       enableColumns={true}
       enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}

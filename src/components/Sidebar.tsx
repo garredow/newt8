@@ -19,7 +19,7 @@ import { ControlType } from '../enums/controlType';
 import styles from './Sidebar.module.css';
 import { PagesContext } from '../contexts/PagesContext';
 import { useEffect } from 'react';
-import { ComponentBase } from '../models/ComponentBase';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { useState } from 'react';
 import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
@@ -31,7 +31,7 @@ import { useAppSettings } from '../contexts/AppSettingsProvider';
 import { AppSettingsDialog } from './AppSettingsDialog';
 import { PageSettingsDialog } from './PageSettingsDialog';
 
-export type SidebarProps = ComponentBase;
+export type SidebarProps = ComponentBaseProps;
 
 export function Sidebar(props: SidebarProps) {
   const [editMode, setEditMode] = useState(false);

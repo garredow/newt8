@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
-import { ComponentBase } from '../../models/ComponentBase';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './PanelContent.module.css';
 import { PanelContext } from '../../contexts/PanelContext';
 
-type PanelContentProps = ComponentBase & {
+type PanelContentProps = ComponentBaseProps & {
   columns?: number;
 };
 
