@@ -136,7 +136,7 @@ export const Panel = React.forwardRef(
                 />
               </SettingsRow>
               <SettingsRow
-                label="Display"
+                label="Display Style"
                 helpText="Choose how you want information in this panel displayed."
               >
                 <select
@@ -168,6 +168,32 @@ export const Panel = React.forwardRef(
                   </select>
                 </SettingsRow>
               ) : null}
+              {enableColumns ? (
+                <SettingsRow
+                  label="Columns"
+                  helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
+                >
+                  <select
+                    defaultValue={props.options.columns}
+                    onChange={(ev) =>
+                      setOptionValue('columns', parseInt(ev.target.value, 10))
+                    }
+                    data-testid="select-columns"
+                  >
+                    <option value={0}>Auto</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
+                  </select>
+                </SettingsRow>
+              ) : null}
               {enableSecondaryText ? (
                 <SettingsRow
                   label="Show Site Secondary Text"
@@ -194,32 +220,6 @@ export const Panel = React.forwardRef(
                       setOptionValue('showAccentText', checked)
                     }
                   />
-                </SettingsRow>
-              ) : null}
-              {enableColumns ? (
-                <SettingsRow
-                  label="Columns"
-                  helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
-                >
-                  <select
-                    defaultValue={props.options.columns}
-                    onChange={(ev) =>
-                      setOptionValue('columns', parseInt(ev.target.value, 10))
-                    }
-                    data-testid="select-columns"
-                  >
-                    <option value={0}>Auto</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                    <option value={7}>7</option>
-                    <option value={8}>8</option>
-                    <option value={9}>9</option>
-                    <option value={10}>10</option>
-                  </select>
                 </SettingsRow>
               ) : null}
               {props.extraSettings}

@@ -6,7 +6,7 @@ import styles from './Dashboard.module.css';
 import { useEffect } from 'react';
 import { PanelKind } from '../enums/panelKind';
 import { IconButton } from '../ui-components/button';
-import { MdAdd, MdDashboard } from 'react-icons/md';
+import { MdAdd } from 'react-icons/md';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
 import { DevicesPanel, DevicesPanelOptions } from './DevicesPanel';
@@ -22,8 +22,6 @@ import { PagesContext } from '../contexts/PagesContext';
 import { EmptyPanel } from './EmptyPanel';
 import { joinClasses } from '../utilities/classes';
 import { AppSettingsContext } from '../contexts/AppSettingsContext';
-import { ConfigureGridDialog } from './ConfigureGridDialog';
-import { GridLayout } from '../models/GridLayout';
 import { cloneDeep, zip } from 'lodash';
 import { PanelSettings } from '../contexts/PanelContext';
 
@@ -48,7 +46,6 @@ export function DashboardView(props: DashboardViewProps) {
     },
   });
   const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.Init);
-  const [showGridConfig, setShowGridConfig] = useState(false);
   const { pages, savePage } = useContext(PagesContext);
   const { settings } = useContext(AppSettingsContext);
 
@@ -150,13 +147,6 @@ export function DashboardView(props: DashboardViewProps) {
       id: panelId,
       kind: newPanelKind,
       options: getPanelConfig(newPanelKind).defaultOptions as PanelSettings,
-    });
-  }
-
-  function handleSaveGrid(grid: GridLayout) {
-    savePage({
-      ...page,
-      grid,
     });
   }
 
@@ -358,26 +348,7 @@ export function DashboardView(props: DashboardViewProps) {
             });
           }}
         />
-        <IconButton
-          icon={<MdDashboard />}
-          type={ControlType.Primary}
-          title="Configure dashboard grid"
-          onClick={() => setShowGridConfig(true)}
-        />
       </div>
-      {showGridConfig && (
-        <ConfigureGridDialog
-          gridLayout={page.grid}
-          panels={page.panels}
-          onCancel={(newGridLayout) => {}}
-          onSave={(newGridLayout, closeDialog) => {
-            handleSaveGrid(newGridLayout);
-            if (closeDialog) {
-              setShowGridConfig(false);
-            }
-          }}
-        />
-      )}
     </div>
   );
 }

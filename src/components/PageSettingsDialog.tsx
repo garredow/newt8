@@ -3,14 +3,14 @@ import { cloneDeep } from 'lodash';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBase } from '../models/ComponentBase';
-import { Panel } from '../models/Panel';
 import { Button } from '../ui-components/button/Button';
-import styles from './ConfigureGridDialog.module.css';
+import styles from './PageSettingsDialog.module.css';
 import { IconButton } from '../ui-components/button';
 import { MdClose } from 'react-icons/md';
 import { GridLayout } from '../models/GridLayout';
 import { joinClasses } from '../utilities/classes';
 import { Dialog } from '../ui-components/dialog/Dialog';
+import { usePages } from '../contexts/PagesProvider';
 
 type SizeSelectProps = {
   val: string;
@@ -48,19 +48,10 @@ function SizeSelect(props: SizeSelectProps) {
   );
 }
 
-export type ConfigureGridDialogProps = ComponentBase & {
-  gridLayout: GridLayout;
-  panels: Panel[];
-  onSave: (newGridLayout: GridLayout, close: boolean) => void;
-  onCancel: (newGridLayout: GridLayout) => void;
+export type PageSettingsDialogProps = ComponentBase & {
+  onClose: () => void;
 };
-export function ConfigureGridDialog({
-  gridLayout,
-  panels,
-  onSave,
-  onCancel,
-  ...props
-}: ConfigureGridDialogProps) {
+export function PageSettingsDialog({ onClose }: PageSettingsDialogProps) {
   const [originalGrid, setOriginalGrid] = useState<GridLayout>({
     rowSizes: [],
     colSizes: [],
@@ -72,13 +63,18 @@ export function ConfigureGridDialog({
     layout: [[]],
   });
 
+  const { activePage: page, savePage } = usePages();
+
   useEffect(() => {
-    setOriginalGrid(gridLayout);
-    setGrid(gridLayout);
+    setOriginalGrid(page.grid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const panelNameMap = panels.reduce(
+  useEffect(() => {
+    setGrid(page.grid);
+  }, [page]);
+
+  const panelNameMap = page.panels.reduce(
     (acc: any, val) => {
       acc[val.id] = val.options.title;
       return acc;
@@ -92,7 +88,9 @@ export function ConfigureGridDialog({
       row.forEach((col) => assigned.add(col));
     });
 
-    const result = panels.filter((a) => !assigned.has(a.id)).map((a) => a.id);
+    const result = page.panels
+      .filter((a) => !assigned.has(a.id))
+      .map((a) => a.id);
     return result;
   }
 
@@ -192,9 +190,14 @@ export function ConfigureGridDialog({
     setGrid(newGrid);
   }
 
-  function handleSubmit(ev: any) {
-    ev.preventDefault();
-    onSave(grid, true);
+  function handleSave(close: boolean) {
+    savePage({ ...page, grid });
+    if (close) onClose();
+  }
+
+  function handleCancel() {
+    savePage({ ...page, grid: originalGrid });
+    onClose();
   }
 
   function resetToDefault() {
@@ -204,7 +207,7 @@ export function ConfigureGridDialog({
       layout: [[]],
     };
 
-    panels.forEach((panel) => {
+    page.panels.forEach((panel) => {
       newGrid.colSizes.push('1fr');
       newGrid.layout[0].push(panel.id);
     });
@@ -216,9 +219,9 @@ export function ConfigureGridDialog({
 
   return (
     <Dialog
-      title="Configure Grid"
+      title={`Page Settings`}
       width="large"
-      onClose={() => onSave(originalGrid, true)}
+      onClose={handleCancel}
       data-testid="dialog-configure-grid"
     >
       {unassignedPanels.length > 0 ? (
@@ -231,90 +234,54 @@ export function ConfigureGridDialog({
           </ul>
         </div>
       ) : null}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <div className={joinClasses(styles.layoutRow, styles.actionRow)}>
-            {grid.layout[0]?.map((col, i) => (
-              <div key={i} className={styles.sizeCol}>
-                <SizeSelect
-                  val={grid.colSizes[i]}
-                  onChange={(data) => handleSizeChange('col', i, data)}
-                />
-              </div>
-            ))}
-          </div>
-          {grid.layout.map((row, ri) => {
-            return (
-              <div key={ri} className={styles.layoutRow}>
-                <div className={styles.sizeRow}>
-                  <SizeSelect
-                    val={grid.rowSizes[ri]}
-                    onChange={(data) => handleSizeChange('row', ri, data)}
-                  />
-                </div>
-                {row.map((col, ci) => {
-                  return (
-                    <div key={ci} className={styles.layoutCol}>
-                      <select
-                        value={col}
-                        onChange={(ev) => handleChange(ri, ci, ev.target.value)}
-                      >
-                        {getAvailableOptions(ri, ci).map((opt) => (
-                          <option key={opt} value={opt}>
-                            {panelNameMap[opt]}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  );
-                })}
-                <IconButton
-                  icon={<MdClose />}
-                  title="Delete row"
-                  type={ControlType.Danger}
-                  onClick={() => deleteRow(ri)}
-                />
-              </div>
-            );
-          })}
-          <div className={joinClasses(styles.layoutRow, styles.actionRow)}>
-            {grid.layout[0]?.map((col, i) => (
-              <div key={i} className={styles.sizeCol}>
-                <IconButton
-                  icon={<MdClose />}
-                  title="Delete column"
-                  type={ControlType.Danger}
-                  onClick={() => deleteCol(i)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className={styles.compactSizes}>
-          {grid.layout.map((row, i) => (
-            <div key={i}>
-              <span>Row {i + 1}:</span>
-              <SizeSelect
-                val={grid.rowSizes[i]}
-                onChange={(data) => handleSizeChange('row', i, data)}
-              />
-              <div style={{ flex: 1 }} />
-              <IconButton
-                icon={<MdClose />}
-                title="Delete row"
-                type={ControlType.Danger}
-                onClick={() => deleteRow(i)}
-              />
-            </div>
-          ))}
+      <div>
+        <div className={joinClasses(styles.layoutRow, styles.actionRow)}>
           {grid.layout[0]?.map((col, i) => (
-            <div key={i}>
-              <span>Column {i + 1}:</span>
+            <div key={i} className={styles.sizeCol}>
               <SizeSelect
                 val={grid.colSizes[i]}
                 onChange={(data) => handleSizeChange('col', i, data)}
               />
-              <div style={{ flex: 1 }} />
+            </div>
+          ))}
+        </div>
+        {grid.layout.map((row, ri) => {
+          return (
+            <div key={ri} className={styles.layoutRow}>
+              <div className={styles.sizeRow}>
+                <SizeSelect
+                  val={grid.rowSizes[ri]}
+                  onChange={(data) => handleSizeChange('row', ri, data)}
+                />
+              </div>
+              {row.map((col, ci) => {
+                return (
+                  <div key={ci} className={styles.layoutCol}>
+                    <select
+                      value={col}
+                      onChange={(ev) => handleChange(ri, ci, ev.target.value)}
+                    >
+                      {getAvailableOptions(ri, ci).map((opt) => (
+                        <option key={opt} value={opt}>
+                          {panelNameMap[opt]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              })}
+              <IconButton
+                icon={<MdClose />}
+                title="Delete row"
+                type={ControlType.Danger}
+                onClick={() => deleteRow(ri)}
+              />
+            </div>
+          );
+        })}
+        <div className={joinClasses(styles.layoutRow, styles.actionRow)}>
+          {grid.layout[0]?.map((col, i) => (
+            <div key={i} className={styles.sizeCol}>
               <IconButton
                 icon={<MdClose />}
                 title="Delete column"
@@ -324,67 +291,101 @@ export function ConfigureGridDialog({
             </div>
           ))}
         </div>
-        <div className={styles.gridActions}>
-          <Button
-            location={ControlLocation.Card}
-            type={ControlType.Secondary}
-            text="Add Column Left"
-            onClick={() => addCol('left')}
-          />
-          <div className={styles.rowActions}>
-            <Button
-              location={ControlLocation.Card}
-              type={ControlType.Secondary}
-              text="Add Row Top"
-              onClick={() => addRow('top')}
+      </div>
+      <div className={styles.compactSizes}>
+        {grid.layout.map((row, i) => (
+          <div key={i}>
+            <span>Row {i + 1}:</span>
+            <SizeSelect
+              val={grid.rowSizes[i]}
+              onChange={(data) => handleSizeChange('row', i, data)}
             />
-            <Button
-              location={ControlLocation.Card}
-              type={ControlType.Secondary}
-              text="Add Row Bottom"
-              onClick={() => addRow('bottom')}
+            <div style={{ flex: 1 }} />
+            <IconButton
+              icon={<MdClose />}
+              title="Delete row"
+              type={ControlType.Danger}
+              onClick={() => deleteRow(i)}
             />
           </div>
+        ))}
+        {grid.layout[0]?.map((col, i) => (
+          <div key={i}>
+            <span>Column {i + 1}:</span>
+            <SizeSelect
+              val={grid.colSizes[i]}
+              onChange={(data) => handleSizeChange('col', i, data)}
+            />
+            <div style={{ flex: 1 }} />
+            <IconButton
+              icon={<MdClose />}
+              title="Delete column"
+              type={ControlType.Danger}
+              onClick={() => deleteCol(i)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className={styles.gridActions}>
+        <Button
+          location={ControlLocation.Card}
+          type={ControlType.Secondary}
+          text="Add Column Left"
+          onClick={() => addCol('left')}
+        />
+        <div className={styles.rowActions}>
           <Button
             location={ControlLocation.Card}
             type={ControlType.Secondary}
-            text="Add Column Right"
-            onClick={() => addCol('right')}
+            text="Add Row Top"
+            onClick={() => addRow('top')}
+          />
+          <Button
+            location={ControlLocation.Card}
+            type={ControlType.Secondary}
+            text="Add Row Bottom"
+            onClick={() => addRow('bottom')}
           />
         </div>
-        <div className={styles.actions}>
-          <Button
-            location={ControlLocation.Card}
-            type={ControlType.Danger}
-            text="Reset"
-            title="Reset grid to a default safe layout"
-            onClick={resetToDefault}
-          />
-          <div style={{ flex: 1 }} />
-          <Button
-            location={ControlLocation.Card}
-            type={ControlType.Secondary}
-            text="Cancel"
-            title="Restore original grid layout"
-            onClick={() => onSave(originalGrid, true)}
-          />
-          <Button
-            location={ControlLocation.Card}
-            type={ControlType.Secondary}
-            text="Preview"
-            title="Apply changes without permanently saving them"
-            onClick={() => onSave(grid, false)}
-          />
-          <Button
-            location={ControlLocation.Card}
-            type={ControlType.Primary}
-            text="Save"
-            title="Save grid layout"
-            disabled={unassignedPanels.length > 0}
-            htmlType="submit"
-          />
-        </div>
-      </form>
+        <Button
+          location={ControlLocation.Card}
+          type={ControlType.Secondary}
+          text="Add Column Right"
+          onClick={() => addCol('right')}
+        />
+      </div>
+      <div className={styles.actions}>
+        <Button
+          location={ControlLocation.Card}
+          type={ControlType.Danger}
+          text="Reset"
+          title="Reset grid to a default safe layout"
+          onClick={resetToDefault}
+        />
+        <div style={{ flex: 1 }} />
+        <Button
+          location={ControlLocation.Card}
+          type={ControlType.Secondary}
+          text="Cancel"
+          title="Restore original grid layout"
+          onClick={() => handleCancel()}
+        />
+        <Button
+          location={ControlLocation.Card}
+          type={ControlType.Secondary}
+          text="Preview"
+          title="Apply changes without permanently saving them"
+          onClick={() => handleSave(false)}
+        />
+        <Button
+          location={ControlLocation.Card}
+          type={ControlType.Primary}
+          text="Save"
+          title="Save grid layout"
+          disabled={unassignedPanels.length > 0}
+          onClick={() => handleSave(true)}
+        />
+      </div>
     </Dialog>
   );
 }

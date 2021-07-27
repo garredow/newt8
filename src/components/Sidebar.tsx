@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   DragDropContext,
   Draggable,
@@ -11,12 +11,13 @@ import {
   MdAdd,
   MdClose,
   MdCompareArrows,
+  MdDashboard,
   MdEdit,
   MdSettings,
 } from 'react-icons/md';
 import { ControlType } from '../enums/controlType';
 import styles from './Sidebar.module.css';
-import { PagesContext } from '../PagesContext';
+import { PagesContext } from '../contexts/PagesContext';
 import { useEffect } from 'react';
 import { ComponentBase } from '../models/ComponentBase';
 import { useState } from 'react';
@@ -24,9 +25,11 @@ import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ControlLocation } from '../enums/controlLocation';
 import { ConfirmDialog } from '../ui-components/dialog/ConfirmDialog';
-import { SettingsContext } from '../SettingsContext';
 import { ifClass, joinClasses } from '../utilities/classes';
 import { DisplayDensity } from '../enums/displayDensity';
+import { useAppSettings } from '../contexts/AppSettingsProvider';
+import { AppSettingsDialog } from './AppSettingsDialog';
+import { PageSettingsDialog } from './PageSettingsDialog';
 
 export type SidebarProps = ComponentBase;
 
@@ -34,9 +37,14 @@ export function Sidebar(props: SidebarProps) {
   const [editMode, setEditMode] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [pageToDelete, setPageToDelete] = useState<string>();
+  const [showAppSettings, setShowAppSettings] = useState(false);
+  const [showPageSettings, setShowPageSettings] = useState(false);
 
-  const { settings, showSettings } = useContext(SettingsContext);
+  const { settings } = useAppSettings();
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
+
+  const location = useLocation();
+  console.log(location);
 
   useEffect(() => {
     const handleShortcutKey = (ev: KeyboardEvent) => {
@@ -227,13 +235,25 @@ export function Sidebar(props: SidebarProps) {
         </div>
       </div>
       <div>
+        {location.pathname.includes('dashboard') ? (
+          <>
+            <IconButton
+              size={40}
+              location={ControlLocation.SideBar}
+              type={ControlType.Primary}
+              icon={<MdDashboard />}
+              title="Page Settings"
+              onClick={() => setShowPageSettings(true)}
+            />
+          </>
+        ) : null}
         <IconButton
           size={40}
           location={ControlLocation.SideBar}
           type={ControlType.Primary}
           icon={<MdSettings />}
-          title="Settings"
-          onClick={showSettings}
+          title="App Settings"
+          onClick={() => setShowAppSettings(true)}
         />
       </div>
       {showConfirm && (
@@ -244,6 +264,12 @@ export function Sidebar(props: SidebarProps) {
           onCancel={() => setShowConfirm(false)}
           onConfirm={handleDeletePage}
         />
+      )}
+      {showAppSettings && (
+        <AppSettingsDialog onClose={() => setShowAppSettings(false)} />
+      )}
+      {showPageSettings && (
+        <PageSettingsDialog onClose={() => setShowPageSettings(false)} />
       )}
     </div>
   );

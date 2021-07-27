@@ -56,7 +56,15 @@ export function PagesProvider(props: PagesProviderProps) {
   }
 
   return (
-    <PagesContext.Provider value={{ pages, setPages, savePage, deletePage }}>
+    <PagesContext.Provider
+      value={{
+        pages,
+        activePage: pages.find((a) => a.isActive) || pages[0],
+        setPages,
+        savePage,
+        deletePage,
+      }}
+    >
       {props.children}
     </PagesContext.Provider>
   );

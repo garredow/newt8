@@ -11,12 +11,15 @@ import { Dialog } from '../ui-components/dialog/Dialog';
 import { Checkbox } from '../ui-components/input';
 import { SettingsRow } from '../ui-components/list';
 import { isDarkMode } from '../utilities/isDarkMode';
-import styles from './SettingsDialog.module.css';
+import styles from './AppSettingsDialog.module.css';
 
-export type SettingsDialogProps = ComponentBase & {
+export type AppSettingsDialogProps = ComponentBase & {
   onClose: () => void;
 };
-export function SettingsDialog({ onClose, ...props }: SettingsDialogProps) {
+export function AppSettingsDialog({
+  onClose,
+  ...props
+}: AppSettingsDialogProps) {
   const { settings, setSettings } = useContext(AppSettingsContext);
   const history = useHistory();
 

@@ -3,6 +3,7 @@ import { Page } from '../services/panels';
 
 type PagesContextValue = {
   pages: Page[];
+  activePage: Page;
   setPages: (pages: Page[]) => Promise<void>;
   savePage: (page: Page) => Promise<void>;
   deletePage: (pageId: string) => Promise<void>;
@@ -34,7 +35,8 @@ export const defaultPages: Page[] = [
 ];
 
 const defaultValue: PagesContextValue = {
-  pages: [],
+  pages: defaultPages,
+  activePage: defaultPages[0],
   setPages: () => Promise.resolve(),
   savePage: () => Promise.resolve(),
   deletePage: () => Promise.resolve(),
