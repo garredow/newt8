@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ControlLocation } from '../enums/controlLocation';
-import { PanelKind } from '../enums/panelKind';
 import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
@@ -10,7 +9,6 @@ import {
   openUrl,
   OpenSiteOption,
 } from '../services/browser';
-import { getPanelConfig } from '../services/panels';
 import { Button } from '../ui-components/button/Button';
 import { Card } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
@@ -60,29 +58,23 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
   const [status, setStatus] = useState<Status>(Status.Idle);
 
-  const options: BookmarksPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        getPanelConfig(PanelKind.Bookmarks).defaultOptions,
-        props.panel.options
-      ),
-    [props.panel.options]
-  );
-
   useEffect(() => {
-    if (!options.bookmarkFolderId) {
+    if (!props.panel.options.bookmarkFolderId) {
       showFolderPicker();
       return;
     }
     setShowFinder(false);
-    getBookmarks(options.bookmarkFolderId).then((res) => {
+    getBookmarks(props.panel.options.bookmarkFolderId).then((res) => {
       setBookmarks(res.filter((a) => a.children));
       setStatus(Status.Loaded);
     });
-  }, [options.bookmarkFolderId]);
+  }, [props.panel.options.bookmarkFolderId]);
 
   function handleChooseFolder(id: string) {
-    const newOpts: BookmarksPanelOptions = { ...options, bookmarkFolderId: id };
+    const newOpts: BookmarksPanelOptions = {
+      ...props.panel.options,
+      bookmarkFolderId: id,
+    };
     props.onOptionsChanged(newOpts);
   }
 
@@ -95,7 +87,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
 
   function editBookmarks() {
     openUrl(
-      `chrome://bookmarks/?id=${options.bookmarkFolderId}`,
+      `chrome://bookmarks/?id=${props.panel.options.bookmarkFolderId}`,
       OpenSiteOption.NewTab
     );
   }
@@ -157,9 +149,14 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
               />
             </div>
           ) : null}
-          {bookmarks.map((group) => (
-            <Card key={group.id} title={group.title}>
-              {group
+          {bookmarks.map((node) => (
+            <Card
+              key={node.id}
+              cardId={`bookmarks_${node.id}`}
+              title={node.title}
+              enableSettings
+            >
+              {node
                 .children!.filter((a) => !a.children)
                 .map((site) => (
                   <SiteRow

@@ -16,3 +16,11 @@
 
 .actions {
 }
+
+.actions.hide {
+  opacity: 0;
+}
+
+.root:hover .actions {
+  opacity: 1;
+}

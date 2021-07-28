@@ -75,7 +75,12 @@ export function WindowsPanel(props: WindowsPanelProps) {
         (window) => options.windowId === window.id || options.windowId === 0
       )
       .map((window) => (
-        <Card key={window.id} title={`Window ${window.id}`}>
+        <Card
+          key={window.id}
+          title={`Window ${window.id}`}
+          cardId={`window_${window.id}`}
+          enableSettings
+        >
           {window.tabs.map((tab) => (
             <SiteRow
               key={tab.id}

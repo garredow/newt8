@@ -2,19 +2,31 @@ import React from 'react';
 import { DisplayDensity } from '../enums/displayDensity';
 import { Orientation } from '../enums/orientation';
 import { PanelDisplayType } from '../enums/panelDisplayType';
-import { CardSettings } from '../ui-components/card/Card';
-import { SiteRowSettings } from '../ui-components/list';
+import { CardSettings } from '../models/CardSettings';
+import { Panel } from '../models/Panel';
 
-export type PanelSettings = CardSettings &
-  SiteRowSettings & {
-    title: string;
-    columns: number;
-    displayStyle: PanelDisplayType;
-    orientation: Orientation;
-  };
+export type PanelSettings = {
+  title: string;
+  columns: number;
+  displayDensity: DisplayDensity;
+  displayStyle: PanelDisplayType;
+  orientation: Orientation;
+  // Card settings
+  showCardShadow: boolean;
+  showCardDividers: boolean;
+  // Site Row settings
+  showSecondaryText: boolean;
+  showAccentText: boolean;
+  showSiteDividers: boolean;
+};
 
 export type PanelContextValue = {
   settings: PanelSettings;
+  cardSettingsMap: {
+    [cardId: string]: CardSettings;
+  };
+  savePanel: (panel: Panel) => Promise<void>;
+  saveCardSettings: (cardId: string, settings: CardSettings) => Promise<void>;
 };
 
 export const defaultPanelSettings: PanelSettings = {
@@ -32,6 +44,9 @@ export const defaultPanelSettings: PanelSettings = {
 
 const defaultValue: PanelContextValue = {
   settings: defaultPanelSettings,
+  cardSettingsMap: {},
+  savePanel: () => Promise.resolve(),
+  saveCardSettings: () => Promise.resolve(),
 };
 
 export const PanelContext =

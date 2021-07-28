@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { Page } from '../services/panels';
+import { Page } from '../models/Page';
+import { getPanelConfig } from '../services/panels';
 import { getItem, setItem, StorageKey } from '../utilities/storage';
 import { defaultPages, PagesContext } from './PagesContext';
 
@@ -10,8 +11,20 @@ export function PagesProvider(props: PagesProviderProps) {
   const [pages, setPagesInternal] = useState<Page[]>([]);
 
   useEffect(() => {
-    getItem<Page[]>(StorageKey.Pages).then((res) => {
-      setPagesInternal(res || defaultPages);
+    getItem<Page[]>(StorageKey.Pages).then((res = defaultPages) => {
+      // Apply default options to each panel
+      let data = res;
+      data = data.map((page) => ({
+        ...page,
+        panels: page.panels.map((panel) => ({
+          ...panel,
+          options: {
+            ...getPanelConfig(panel.kind).defaultOptions,
+            ...panel.options,
+          },
+        })),
+      }));
+      setPagesInternal(data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

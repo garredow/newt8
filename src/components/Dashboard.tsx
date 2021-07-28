@@ -13,7 +13,7 @@ import { DevicesPanel } from './DevicesPanel';
 import { ControlType } from '../enums/controlType';
 import { Button } from '../ui-components/button/Button';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { getPanelConfig, Page } from '../services/panels';
+import { getPanelConfig } from '../services/panels';
 import { Panel } from '../models/Panel';
 import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
@@ -24,6 +24,7 @@ import { joinClasses } from '../utilities/classes';
 import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { cloneDeep, zip } from 'lodash';
 import { PanelSettings } from '../contexts/PanelContext';
+import { Page } from '../models/Page';
 
 enum LoadingStatus {
   Init,
@@ -147,7 +148,7 @@ export function DashboardView(props: DashboardViewProps) {
       id: panelId,
       kind: newPanelKind,
       options: getPanelConfig(newPanelKind).defaultOptions as PanelSettings,
-      cardSettings: {},
+      cardSettingsMap: {},
     });
   }
 
@@ -300,7 +301,7 @@ export function DashboardView(props: DashboardViewProps) {
                   kind: PanelKind.New,
                   options: getPanelConfig(PanelKind.New)
                     .defaultOptions as PanelSettings,
-                  cardSettings: {},
+                  cardSettingsMap: {},
                 })
               }
             />
@@ -330,7 +331,7 @@ export function DashboardView(props: DashboardViewProps) {
               kind: PanelKind.New,
               options: getPanelConfig(PanelKind.New)
                 .defaultOptions as PanelSettings,
-              cardSettings: {},
+              cardSettingsMap: {},
             });
           }}
         />

@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../ui-components/card';
 import { Panel, PanelContent } from '../ui-components/panel';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
 import { getDevices, openUrl } from '../services/browser';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { getPanelConfig } from '../services/panels';
-import { PanelKind } from '../enums/panelKind';
 import { SettingsRow } from '../ui-components/list/SettingsRow';
 import { Checkbox } from '../ui-components/input/Checkbox';
 import { ControlLocation } from '../enums/controlLocation';
@@ -24,22 +22,13 @@ type DevicesPanelProps = ComponentBaseProps &
 export function DevicesPanel(props: DevicesPanelProps) {
   const [devices, setDevices] = useState<chrome.sessions.Device[]>([]);
 
-  const options: DevicesPanelOptions = useMemo(
-    () =>
-      Object.assign(
-        getPanelConfig(PanelKind.Devices).defaultOptions,
-        props.panel.options
-      ),
-    [props.panel.options]
-  );
-
   useEffect(() => {
     getDevices().then((sessions) => setDevices(sessions));
   }, []);
 
   function handleOptionChanged(key: string, val: any) {
     const newOpts: DevicesPanelOptions = {
-      ...options,
+      ...props.panel.options,
       [key]: val,
     };
     props.onOptionsChanged(newOpts);
@@ -61,7 +50,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
           >
             <Checkbox
               location={ControlLocation.Panel}
-              checked={options.showUrl}
+              checked={props.panel.options.showUrl}
               onChange={(checked) => handleOptionChanged('showUrl', checked)}
             />
           </SettingsRow>
@@ -71,7 +60,7 @@ export function DevicesPanel(props: DevicesPanelProps) {
           >
             <Checkbox
               location={ControlLocation.Panel}
-              checked={options.showTabAccessedTime}
+              checked={props.panel.options.showTabAccessedTime}
               onChange={(checked) =>
                 handleOptionChanged('showTabAccessedTime', checked)
               }
@@ -83,7 +72,12 @@ export function DevicesPanel(props: DevicesPanelProps) {
       <PanelContent>
         {devices.map((device) => {
           return device.sessions.map((session) => (
-            <Card key={session.window?.sessionId} title={device.deviceName}>
+            <Card
+              key={session.window?.sessionId}
+              title={device.deviceName}
+              cardId={`device_${device.deviceName}_window_${session.window?.id}`}
+              enableSettings
+            >
               {session?.window?.tabs?.map((tab) => (
                 <SiteRow
                   key={tab.sessionId}
