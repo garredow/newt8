@@ -15,6 +15,7 @@
 }
 
 .actions {
+  transition: opacity 200ms;
 }
 
 .actions.hide {

@@ -219,7 +219,7 @@ export function PageSettingsDialog({ onClose }: PageSettingsDialogProps) {
 
   return (
     <Dialog
-      title={`Page Settings`}
+      title="Configure Grid"
       width="large"
       onClose={handleCancel}
       data-testid="dialog-configure-grid"

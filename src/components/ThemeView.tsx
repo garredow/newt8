@@ -596,12 +596,10 @@ export function ThemeView(props: ThemeViewProps) {
                   looks.
                 </div>
                 <div className={styles.warningText}>
-                  Here's some warning panel text so you can get an idea how it
-                  looks.
+                  Here's some warning text so you can get an idea how it looks.
                 </div>
                 <div className={styles.errorText}>
-                  Here's some error panel text so you can get an idea how it
-                  looks.
+                  Here's some error text so you can get an idea how it looks.
                 </div>
                 <Button
                   type={ControlType.Primary}
@@ -630,11 +628,11 @@ export function ThemeView(props: ThemeViewProps) {
                 <Card title="Example Card">
                   <div className={styles.cardTextContainer}>
                     <div className={styles.warningText}>
-                      Here's some warning panel text so you can get an idea how
-                      it looks.
+                      Here's some warning text so you can get an idea how it
+                      looks.
                     </div>
                     <div className={styles.errorText}>
-                      Here's some error panel text so you can get an idea how it
+                      Here's some error text so you can get an idea how it
                       looks.
                     </div>
                   </div>
