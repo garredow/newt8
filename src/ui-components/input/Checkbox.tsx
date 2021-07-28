@@ -6,7 +6,7 @@ import { joinClasses } from '../../utilities/classes';
 import { Icon } from '../icon';
 import styles from './Checkbox.module.css';
 
-type CheckboxProps = ComponentBaseProps & {
+export type CheckboxProps = ComponentBaseProps & {
   checked?: boolean;
   location?: ControlLocation;
   onChange?: (checked: boolean) => void;
@@ -18,7 +18,10 @@ export function Checkbox({
   ...props
 }: CheckboxProps) {
   return (
-    <label className={joinClasses(styles.root, styles[location])}>
+    <label
+      className={joinClasses(styles.root, styles[location])}
+      data-testid={props['data-testid']}
+    >
       <input
         type="checkbox"
         checked={checked}

@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { SiteRow } from './SiteRow';
+import { OpenSiteOption } from '../../services/browser';
+import { SiteRow, SiteRowProps } from './SiteRow';
 
 describe('SiteRow', () => {
   test('renders three lines of text', () => {
@@ -27,5 +28,63 @@ describe('SiteRow', () => {
     expect(getByText(props.primaryText)).toBeVisible();
     expect(queryByTestId('secondary-text')).toBeNull();
     expect(queryByTestId('accent-text')).toBeNull();
+  });
+
+  test('should open site in same tab', () => {
+    const props: SiteRowProps = {
+      primaryText: 'title',
+      url: 'url',
+      onClick: jest.fn(),
+    };
+
+    const { getByText } = render(<SiteRow {...props} />);
+
+    fireEvent.click(getByText(props.primaryText!));
+
+    expect(props.onClick).toBeCalledWith(OpenSiteOption.SameTab);
+  });
+
+  test('should open site in new tab', () => {
+    const props: SiteRowProps = {
+      primaryText: 'title',
+      url: 'url',
+      onClick: jest.fn(),
+    };
+
+    const { getByText } = render(<SiteRow {...props} />);
+
+    fireEvent(
+      getByText(props.primaryText!),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        metaKey: true,
+        shiftKey: false,
+      })
+    );
+
+    expect(props.onClick).toBeCalledWith(OpenSiteOption.NewTab);
+  });
+
+  test('should open site in new background tab', () => {
+    const props: SiteRowProps = {
+      primaryText: 'title',
+      url: 'url',
+      onClick: jest.fn(),
+    };
+
+    const { getByText } = render(<SiteRow {...props} />);
+
+    fireEvent(
+      getByText(props.primaryText!),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        metaKey: true,
+        shiftKey: true,
+      })
+    );
+
+    expect(props.onClick).toBeCalledWith(OpenSiteOption.NewBackgroundTab);
   });
 });

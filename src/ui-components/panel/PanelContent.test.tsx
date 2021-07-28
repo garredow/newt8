@@ -4,7 +4,7 @@ import { PanelContent } from '.';
 
 describe('PanelContent', () => {
   test('renders children', () => {
-    const props = {};
+    const props = { columns: 0 };
 
     const { getByText } = render(
       <PanelContent {...props}>
@@ -13,6 +13,20 @@ describe('PanelContent', () => {
     );
 
     expect(getByText('child text')).toBeVisible();
+  });
+
+  test('uses context columns', () => {
+    const props = {};
+
+    const { container } = render(
+      <PanelContent {...props}>
+        <div>child text</div>
+      </PanelContent>
+    );
+
+    expect(container.firstChild).toHaveStyle({
+      gridTemplateColumns: `repeat(1, 1fr)`,
+    });
   });
 
   test('applies column style', () => {

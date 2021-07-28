@@ -3,7 +3,7 @@ import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './CardContent.module.css';
 
-type CardContentProps = ComponentBaseProps & {
+export type CardContentProps = ComponentBaseProps & {
   fullWidth?: boolean;
 };
 

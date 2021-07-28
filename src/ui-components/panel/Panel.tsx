@@ -7,7 +7,7 @@ import { ControlType } from '../../enums/controlType';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { Panel as PanelType } from '../../models/Panel';
 import { AppSettingsContext } from '../../contexts/AppSettingsContext';
-import { joinClasses } from '../../utilities/classes';
+import { ifClass, joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
 import { SettingsRow } from '../list/SettingsRow';
@@ -19,7 +19,7 @@ import { Checkbox } from '../input';
 import { PanelSettings } from '../../contexts/PanelContext';
 import { PanelProvider } from '../../contexts/PanelProvider';
 
-type PanelProps = ComponentBaseProps & {
+export type PanelProps = ComponentBaseProps & {
   panel: PanelType<PanelSettings>;
   enableSettings?: boolean;
   enableColumns?: boolean;
@@ -72,7 +72,10 @@ export const Panel = React.forwardRef(
             <div
               className={joinClasses(
                 styles.headerActions,
-                appSettings.showActionsOnHover ? styles.headerActionsHidden : ''
+                ifClass(
+                  appSettings.showActionsOnHover,
+                  styles.headerActionsHidden
+                )
               )}
             >
               {enableSettings ? (
@@ -89,9 +92,11 @@ export const Panel = React.forwardRef(
           <div
             className={joinClasses(
               styles.content,
-              panel.options.orientation === Orientation.Vertical
-                ? styles.vertical
-                : styles.horizontal
+              ifClass(
+                panel.options.orientation === Orientation.Vertical,
+                styles.vertical,
+                styles.horizontal
+              )
             )}
           >
             {props.children}
@@ -112,7 +117,7 @@ export const Panel = React.forwardRef(
                   value={panel.options.title}
                   size={panel.options.title.length + 1}
                   onChange={(ev) => setOptionValue('title', ev.target.value)}
-                  data-testid="inp-title"
+                  data-testid="input-title"
                 />
               </SettingsRow>
               <SettingsRow
@@ -185,6 +190,7 @@ export const Panel = React.forwardRef(
                     onChange={(checked) =>
                       setOptionValue('showSecondaryText', checked)
                     }
+                    data-testid="check-secondary-text"
                   />
                 </SettingsRow>
               ) : null}
@@ -199,17 +205,14 @@ export const Panel = React.forwardRef(
                     onChange={(checked) =>
                       setOptionValue('showAccentText', checked)
                     }
+                    data-testid="check-accent-text"
                   />
                 </SettingsRow>
               ) : null}
               {props.extraSettings}
               <div
                 className={styles.extraButtons}
-                onClick={(ev) => {
-                  if ((ev.target as HTMLButtonElement).tagName === 'BUTTON') {
-                    setShowSettings(false);
-                  }
-                }}
+                onClick={(ev) => setShowSettings(false)}
               >
                 {props.extraButtons}
               </div>

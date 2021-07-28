@@ -19,7 +19,7 @@ export function Dialog({
 }: DialogProps) {
   return (
     <ReachDialog
-      onDismiss={() => onClose()}
+      onDismiss={onClose}
       aria-label="confirm"
       className={joinClasses(
         styles.root,
@@ -32,7 +32,12 @@ export function Dialog({
     >
       <header className={styles.header}>
         <h2>{title}</h2>
-        <IconButton icon={<MdClear />} title="Close" onClick={onClose} />
+        <IconButton
+          icon={<MdClear />}
+          title="Close"
+          onClick={onClose}
+          data-testid="btn-close-dialog"
+        />
       </header>
       <div className={styles.content}>{props.children}</div>
     </ReachDialog>
