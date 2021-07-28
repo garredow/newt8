@@ -6,13 +6,6 @@ import { ifClass, joinClasses } from '../../utilities/classes';
 import { PanelContext } from '../../contexts/PanelContext';
 import styles from './SiteRow.module.css';
 
-export type SiteRowSettings = {
-  showSecondaryText: boolean;
-  showAccentText: boolean;
-  showSiteDividers: boolean;
-  displayDensity: DisplayDensity;
-};
-
 export type SiteRowProps = ComponentBaseProps & {
   url?: string;
   primaryText?: string;

@@ -5,7 +5,7 @@ import styles from './ThemeValueChooser.module.css';
 
 export type ThemeValueChooserProps = {
   title?: string;
-  value: string;
+  value?: string;
   type: 'color' | 'number' | 'string';
   options?: ThemeValueOption[];
   fitValue?: boolean;
@@ -13,6 +13,7 @@ export type ThemeValueChooserProps = {
 };
 
 export function ThemeValueChooser({
+  value = '',
   fitValue = false,
   ...props
 }: ThemeValueChooserProps) {
@@ -25,7 +26,7 @@ export function ThemeValueChooser({
       <div>{props.title}</div>
       <div className={styles.row}>
         {props.options ? (
-          <select value={props.value} onChange={handleColorChange}>
+          <select value={value} onChange={handleColorChange}>
             {props.options.map((a) => (
               <option key={a.key} value={a.key}>
                 {a.name}
@@ -35,11 +36,11 @@ export function ThemeValueChooser({
         ) : (
           <input
             className={joinClasses(styles.input, ifClass(fitValue, styles.fit))}
-            value={props.value}
+            value={value}
             onChange={handleColorChange}
             readOnly={false}
             type={props.type === 'number' ? 'number' : undefined}
-            size={fitValue && props.value ? props.value.length : undefined}
+            size={fitValue && value ? value.length : undefined}
           />
         )}
         {props.type === 'color' ? (
@@ -48,15 +49,13 @@ export function ThemeValueChooser({
               type="color"
               className={styles.previewInput}
               value={
-                new RegExp(/#[0-9a-fA-F]{6}/).test(props.value)
-                  ? props.value
-                  : '#000000'
+                new RegExp(/#[0-9a-fA-F]{6}/).test(value) ? value : '#000000'
               } // It complains if the value isn't hex
               onInput={handleColorChange}
             ></input>
             <div
               className={styles.preview}
-              style={{ backgroundColor: props.value }}
+              style={{ backgroundColor: value }}
             ></div>
           </div>
         ) : null}

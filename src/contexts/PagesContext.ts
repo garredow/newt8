@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page } from '../services/panels';
+import { Page } from '../models/Page';
 
 type PagesContextValue = {
   pages: Page[];

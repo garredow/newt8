@@ -22,18 +22,4 @@ describe('panels service', () => {
     const result = getPanelConfigs();
     expect(result.some((a) => a.kind === PanelKind.New)).toEqual(false);
   });
-
-  test('getPages returns pages from storage', async () => {
-    (storage.getItem as any).mockImplementation(() => [1, 2, 3]);
-    const result = await getPages();
-
-    expect(result.length).toEqual(3);
-  });
-
-  test('getPages returns [] if no pages in storage', async () => {
-    (storage.getItem as any).mockImplementation(() => null);
-    const result = await getPages();
-
-    expect(result).toEqual([]);
-  });
 });

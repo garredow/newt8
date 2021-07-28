@@ -1,9 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { PanelKind } from '../enums/panelKind';
-import { GridLayout } from '../models/GridLayout';
-import { Panel } from '../models/Panel';
 import { defaultPanelSettings, PanelSettings } from '../contexts/PanelContext';
-import { getItem, StorageKey } from '../utilities/storage';
 import { Permission, PermissionDetail } from './permissions';
 
 export type PanelConfigMap = {
@@ -241,17 +238,4 @@ export function getPanelConfigs(includeMetaPanels = false): PanelConfig[] {
   }
 
   return result;
-}
-
-export type Page = {
-  id: string;
-  name: string;
-  isActive: boolean;
-  panels: Panel[];
-  grid: GridLayout;
-};
-
-export async function getPages(): Promise<Page[]> {
-  const pages = await getItem<Page[]>(StorageKey.Pages);
-  return pages || [];
 }

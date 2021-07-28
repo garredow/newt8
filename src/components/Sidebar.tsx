@@ -21,7 +21,6 @@ import { PagesContext } from '../contexts/PagesContext';
 import { useEffect } from 'react';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { useState } from 'react';
-import { Page } from '../services/panels';
 import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ControlLocation } from '../enums/controlLocation';
 import { ConfirmDialog } from '../ui-components/dialog/ConfirmDialog';
@@ -30,6 +29,7 @@ import { DisplayDensity } from '../enums/displayDensity';
 import { useAppSettings } from '../contexts/AppSettingsProvider';
 import { AppSettingsDialog } from './AppSettingsDialog';
 import { PageSettingsDialog } from './PageSettingsDialog';
+import { Page } from '../models/Page';
 
 export type SidebarProps = ComponentBaseProps;
 
@@ -44,7 +44,6 @@ export function Sidebar(props: SidebarProps) {
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
 
   const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
     const handleShortcutKey = (ev: KeyboardEvent) => {
