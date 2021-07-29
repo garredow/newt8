@@ -1,6 +1,5 @@
 import { PanelKind } from '../enums/panelKind';
-import { getPages, getPanelConfig, getPanelConfigs } from './panels';
-import storage from '../utilities/storage';
+import { getPanelConfig, getPanelConfigs } from './panels';
 
 jest.mock('../utilities/storage', () => ({
   getItem: jest.fn(),

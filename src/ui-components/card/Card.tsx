@@ -22,7 +22,7 @@ export type CardProps = ComponentBaseProps & {
   enableSettings?: boolean;
 };
 
-const defaultCardSettings: CardSettings = {
+export const defaultCardSettings: CardSettings = {
   headerColor: '',
   headerTextColor: '',
   cardColor: '',
@@ -46,19 +46,16 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
   }, [cardId, cardSettingsMap]);
 
   function handleSettingChanged(key: keyof CardSettings, value: string) {
-    if (!cardId) return;
-
     const newSettings = {
       ...cardSettings,
       [key]: value,
     };
 
-    saveCardSettings(cardId, newSettings);
+    saveCardSettings(cardId!, newSettings);
   }
 
   function clearCardStyles() {
-    if (!cardId) return;
-    saveCardSettings(cardId, defaultCardSettings);
+    saveCardSettings(cardId!, defaultCardSettings);
   }
 
   return (
@@ -102,7 +99,7 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
           title={props.title + ' Settings'}
           width="medium"
           onClose={() => setShowConfig(false)}
-          data-testid="card-settings"
+          data-testid="dialog-card-settings"
         >
           <SettingsRow
             label="Header Color"

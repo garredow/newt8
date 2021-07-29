@@ -9,7 +9,7 @@ import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type TopSitesPanelOptions = PanelSettings;
 
-type TopSitesPanelProps = ComponentBaseProps &
+export type TopSitesPanelProps = ComponentBaseProps &
   PanelBaseProps<TopSitesPanelOptions>;
 
 export function TopSitesPanel(props: TopSitesPanelProps) {
