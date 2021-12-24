@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { PanelHeader } from '.';
+import { AppSettingsContext } from '../../contexts/AppSettingsContext';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { PanelProvider } from '../../contexts/PanelProvider';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
+import { Orientation } from '../../enums/orientation';
+import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { Panel as PanelType } from '../../models/Panel';
-import { AppSettingsContext } from '../../contexts/AppSettingsContext';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
-import { SettingsRow } from '../list/SettingsRow';
-import { PanelDisplayType } from '../../enums/panelDisplayType';
-import { Orientation } from '../../enums/orientation';
 import { Dialog } from '../dialog/Dialog';
-import styles from './Panel.module.css';
 import { Checkbox } from '../input';
-import { PanelSettings } from '../../contexts/PanelContext';
-import { PanelProvider } from '../../contexts/PanelProvider';
+import { SettingsRow } from '../list/SettingsRow';
+import styles from './Panel.module.css';
 
 export type PanelProps = ComponentBaseProps & {
   panel: PanelType<PanelSettings>;
@@ -63,10 +62,12 @@ export const Panel = React.forwardRef(
             gridArea: panel.id,
             ...props.style,
           }}
+          data-panel
         >
           <PanelHeader
             className={styles.header}
-            text={panel.options.title}
+            title={panel.options.title}
+            onTitleChanged={(title) => setOptionValue('title', title)}
             data-testid="panel-header"
           >
             <div

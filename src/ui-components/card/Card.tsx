@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { CardHeader } from '.';
 import { ThemeValueChooser } from '../../components/ThemeValueChooser';
+import { PanelContext } from '../../contexts/PanelContext';
 import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
+import { CardSettings } from '../../models/CardSettings';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { Button, IconButton } from '../button';
 import { Dialog } from '../dialog/Dialog';
 import { SettingsRow } from '../list';
-import { PanelContext } from '../../contexts/PanelContext';
 import styles from './Card.module.css';
-import { CardSettings } from '../../models/CardSettings';
-import { useEffect } from 'react';
 
 export type CardProps = ComponentBaseProps & {
   cardId?: string;
   title?: string;
   enableSettings?: boolean;
+  onTitleChanged?: (title: string) => void;
 };
 
 export const defaultCardSettings: CardSettings = {
@@ -73,11 +72,12 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
         backgroundColor: cardSettings.cardColor,
         color: cardSettings.cardTextColor,
       }}
+      data-card
       data-testid={props['data-testid']}
     >
       {props.title || enableSettings ? (
         <CardHeader
-          text={props.title}
+          title={props.title}
           backgroundColor={cardSettings.headerColor}
           textColor={cardSettings.headerTextColor}
           actions={
@@ -91,6 +91,7 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
               />
             )
           }
+          onTitleChanged={props.onTitleChanged}
         />
       ) : null}
       {props.children}

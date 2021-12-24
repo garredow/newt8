@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { PanelSettings } from '../contexts/PanelContext';
 import { ControlLocation } from '../enums/controlLocation';
 import { Status } from '../enums/status';
 import { Bookmark } from '../models/Bookmark';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
+import { PanelBaseProps } from '../models/PanelBaseProps';
 import {
   getAllBookmarks,
   getBookmarks,
-  openUrl,
   OpenSiteOption,
+  openUrl,
+  updateBookmark,
 } from '../services/browser';
 import { Button } from '../ui-components/button/Button';
 import { Card } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { PanelSettings } from '../contexts/PanelContext';
 import styles from './BookmarksPanel.module.css';
-import { PanelBaseProps } from '../models/PanelBaseProps';
 
 type BookmarkFolderItemProps = {
   node: Bookmark;
@@ -155,6 +156,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
               cardId={`bookmarks_${node.id}`}
               title={node.title}
               enableSettings
+              onTitleChanged={(title) => updateBookmark(node.id, { title })}
             >
               {node
                 .children!.filter((a) => !a.children)
@@ -164,7 +166,9 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                     primaryText={site.title}
                     secondaryText={site.url}
                     url={site.url}
+                    editable={true}
                     onClick={(action) => openUrl(site.url!, action)}
+                    onEdit={(title) => updateBookmark(site.id, { title })}
                   />
                 ))}
             </Card>

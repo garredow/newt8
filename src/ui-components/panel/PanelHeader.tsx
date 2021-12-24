@@ -1,10 +1,12 @@
 import React from 'react';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { joinClasses } from '../../utilities/classes';
+import { DynamicText } from '../DynamicText';
 import styles from './PanelHeader.module.css';
 
 type PanelHeaderProps = ComponentBaseProps & {
-  text: string;
+  title: string;
+  onTitleChanged: (title: string) => void;
 };
 
 export function PanelHeader(props: PanelHeaderProps) {
@@ -13,7 +15,12 @@ export function PanelHeader(props: PanelHeaderProps) {
       className={joinClasses(styles.root, props.className)}
       data-testid={props['data-testid']}
     >
-      <h1 className={styles.title}>{props.text}</h1>
+      <DynamicText
+        text={props.title}
+        type="title"
+        editable={true}
+        onEdit={props.onTitleChanged}
+      />
       <div className={styles.flex} />
       {props.children}
     </div>

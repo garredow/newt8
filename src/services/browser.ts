@@ -131,6 +131,10 @@ export function getRecentBookmarks() {
   return promisify<Bookmark[]>(chrome.bookmarks.getRecent, 20);
 }
 
+export function updateBookmark(id: string, changes: Partial<Bookmark>) {
+  return promisify<Bookmark[]>(chrome.bookmarks.update, id, changes);
+}
+
 // Top Sites
 
 export function getTopSites(): Promise<Site[]> {

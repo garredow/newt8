@@ -12,7 +12,7 @@ describe('CardHeader', () => {
   });
   test('renders title', () => {
     const text = 'some text';
-    const { getByText } = render(<CardHeader text={text} />);
+    const { getByText } = render(<CardHeader title={text} />);
 
     expect(getByText(text)).toBeVisible();
   });

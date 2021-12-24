@@ -2,13 +2,15 @@ import React from 'react';
 import { useAppSettings } from '../../contexts/AppSettingsProvider';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
+import { DynamicText } from '../DynamicText';
 import styles from './CardHeader.module.css';
 
 type CardHeaderProps = ComponentBaseProps & {
-  text?: string;
+  title?: string;
   backgroundColor?: string;
   textColor?: string;
   actions?: any;
+  onTitleChanged?: (title: string) => void;
 };
 
 export function CardHeader(props: CardHeaderProps) {
@@ -21,14 +23,15 @@ export function CardHeader(props: CardHeaderProps) {
       }}
       data-testid={props['data-testid']}
     >
-      <div
-        className={styles.title}
+      <DynamicText
         style={{
-          color: props.textColor,
+          color: props.textColor || 'inherit',
         }}
-      >
-        {props.text}
-      </div>
+        text={props.title}
+        type="title"
+        editable={true}
+        onEdit={props.onTitleChanged}
+      />
       <div
         className={joinClasses(
           styles.actions,

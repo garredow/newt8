@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
+import { PanelContext } from '../../contexts/PanelContext';
 import { DisplayDensity } from '../../enums/displayDensity';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { OpenSiteOption } from '../../services/browser';
 import { ifClass, joinClasses } from '../../utilities/classes';
-import { PanelContext } from '../../contexts/PanelContext';
+import { DynamicText } from '../DynamicText';
 import styles from './SiteRow.module.css';
 
 export type SiteRowProps = ComponentBaseProps & {
@@ -11,7 +12,9 @@ export type SiteRowProps = ComponentBaseProps & {
   primaryText?: string;
   secondaryText?: string;
   accentText?: string;
+  editable?: boolean;
   onClick?: (action: OpenSiteOption) => void;
+  onEdit?: (newText: string) => void;
 };
 
 export function SiteRow(props: SiteRowProps) {
@@ -52,9 +55,12 @@ export function SiteRow(props: SiteRowProps) {
         data-testid="favicon"
       />
       <div className={styles.details}>
-        <div className={styles.primaryText} data-testid="primary-text">
-          {props.primaryText}
-        </div>
+        <DynamicText
+          wrap="nowrap"
+          text={props.primaryText}
+          editable={props.editable}
+          onEdit={props.onEdit}
+        />
         {settings.showSecondaryText && props.secondaryText && (
           <div className={styles.secondaryText} data-testid="secondary-text">
             {props.secondaryText}
