@@ -1,0 +1,64 @@
+.root {
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  display: inline-block;
+  position: relative;
+}
+
+.root:hover.default {
+  border-bottom-color: var(--panel-divider-color);
+}
+.root:hover.panel {
+  border-bottom-color: var(--panel-divider-color);
+}
+.root:hover.card {
+  border-bottom-color: var(--card-divider-color);
+}
+.root:hover.sidebar {
+  border-bottom-color: var(--sidebar-divider-color);
+}
+
+.root:focus {
+  outline: none;
+}
+.root:focus.default {
+  border-bottom-color: var(--app-accent-color);
+}
+.root:focus.panel {
+  border-bottom-color: var(--panel-accent-color);
+}
+.root:focus.card {
+  border-bottom-color: var(--card-accent-color);
+}
+.root:focus.sidebar {
+  border-bottom-color: var(--sidebar-accent-color);
+}
+
+.dateContainer {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.date {
+  position: relative;
+  opacity: 0;
+}
+.date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 0, 0, 0.1);
+  color: transparent;
+  opacity: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
