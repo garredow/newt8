@@ -1,0 +1,34 @@
+.root {
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  display: inline-block;
+}
+
+.root:hover.default {
+  border-bottom-color: var(--panel-divider-color);
+}
+.root:hover.panel {
+  border-bottom-color: var(--panel-divider-color);
+}
+.root:hover.card {
+  border-bottom-color: var(--card-divider-color);
+}
+.root:hover.sidebar {
+  border-bottom-color: var(--sidebar-divider-color);
+}
+
+.root:focus {
+  outline: none;
+}
+.root:focus.default {
+  border-bottom-color: var(--app-accent-color);
+}
+.root:focus.panel {
+  border-bottom-color: var(--panel-accent-color);
+}
+.root:focus.card {
+  border-bottom-color: var(--card-accent-color);
+}
+.root:focus.sidebar {
+  border-bottom-color: var(--sidebar-accent-color);
+}
