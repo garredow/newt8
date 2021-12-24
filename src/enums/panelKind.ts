@@ -7,5 +7,6 @@ export enum PanelKind {
   Devices = 'devices',
   NewBookmarks = 'newBookmarks',
   TopSites = 'topSites',
+  Tasks = 'tasks',
   Empty = 'empty',
 }

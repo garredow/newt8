@@ -19,7 +19,7 @@ export function Checkbox({
 }: CheckboxProps) {
   return (
     <label
-      className={joinClasses(styles.root, styles[location])}
+      className={joinClasses(styles.root, styles[location], props.className)}
       data-testid={props['data-testid']}
     >
       <input

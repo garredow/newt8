@@ -1,0 +1,43 @@
+.row {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--card-divider-color);
+}
+.row:last-child {
+  border-bottom: none;
+}
+.row:hover {
+  backdrop-filter: brightness(var(--row-highlight));
+}
+.row.completed {
+  opacity: 0.5;
+}
+
+.checkbox {
+  margin-right: 20px;
+}
+
+.title {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.dueDate {
+  color: var(--card-secondary-text-color);
+}
+.dueDate.dueSoon {
+  color: var(--warning-text-color);
+}
+.dueDate.overdue {
+  color: var(--error-text-color);
+}
+
+.actions {
+  display: block;
+  margin-left: 20px;
+}

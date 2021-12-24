@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
-import { BookmarksPanel } from './BookmarksPanel';
-import { RecentTabsPanel } from './RecentTabsPanel';
-import { WindowsPanel } from './WindowsPanel';
-import styles from './Dashboard.module.css';
-import { useEffect } from 'react';
-import { PanelKind } from '../enums/panelKind';
-import { IconButton } from '../ui-components/button';
+import { cloneDeep, zip } from 'lodash';
+import React, { useContext, useEffect, useState } from 'react';
 import { MdAdd } from 'react-icons/md';
+import { AppSettingsContext } from '../contexts/AppSettingsContext';
+import { PagesContext } from '../contexts/PagesContext';
+import { PanelSettings } from '../contexts/PanelContext';
+import { ControlType } from '../enums/controlType';
+import { PanelKind } from '../enums/panelKind';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
+import { Page } from '../models/Page';
+import { Panel } from '../models/Panel';
+import { getPanelConfig } from '../services/panels';
+import { IconButton } from '../ui-components/button';
+import { Button } from '../ui-components/button/Button';
+import { joinClasses } from '../utilities/classes';
+import { BookmarksPanel } from './BookmarksPanel';
+import styles from './Dashboard.module.css';
+import { DevicesPanel } from './DevicesPanel';
+import { EmptyPanel } from './EmptyPanel';
+import { NewBookmarksPanel } from './NewBookmarksPanel';
 import { NewPanel } from './NewPanel';
 import { RecentlyClosedPanel } from './RecentlyClosedPanel';
-import { DevicesPanel } from './DevicesPanel';
-import { ControlType } from '../enums/controlType';
-import { Button } from '../ui-components/button/Button';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { getPanelConfig } from '../services/panels';
-import { Panel } from '../models/Panel';
-import { NewBookmarksPanel } from './NewBookmarksPanel';
+import { RecentTabsPanel } from './RecentTabsPanel';
+import { TasksPanel } from './TasksPanel';
 import { TopSitesPanel } from './TopSitesPanel';
-import { useContext } from 'react';
-import { PagesContext } from '../contexts/PagesContext';
-import { EmptyPanel } from './EmptyPanel';
-import { joinClasses } from '../utilities/classes';
-import { AppSettingsContext } from '../contexts/AppSettingsContext';
-import { cloneDeep, zip } from 'lodash';
-import { PanelSettings } from '../contexts/PanelContext';
-import { Page } from '../models/Page';
+import { WindowsPanel } from './WindowsPanel';
 
 enum LoadingStatus {
   Init,
@@ -246,6 +245,17 @@ export function DashboardView(props: DashboardViewProps) {
       case PanelKind.TopSites:
         return (
           <TopSitesPanel
+            key={panel.id}
+            panel={panel}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelKind.Tasks:
+        return (
+          <TasksPanel
             key={panel.id}
             panel={panel}
             onOptionsChanged={(options) =>

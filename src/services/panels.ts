@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
-import { PanelKind } from '../enums/panelKind';
 import { defaultPanelSettings, PanelSettings } from '../contexts/PanelContext';
+import { PanelKind } from '../enums/panelKind';
 import { Permission, PermissionDetail } from './permissions';
 
 export type PanelConfigMap = {
@@ -187,6 +187,21 @@ const panelConfigs: PanelConfigMap = {
       title: 'Windows',
       showTabAccessedTime: false,
       showUrl: true,
+    },
+    options: {},
+  },
+  [PanelKind.Tasks]: {
+    id: '',
+    name: 'Tasks',
+    kind: PanelKind.Tasks,
+    description: 'A place to put tasks you need to keep track of.',
+    permissions: [],
+    defaultOptions: {
+      ...defaultPanelSettings,
+      title: 'Tasks',
+      dateFormat: 'relative',
+      showCompleted: true,
+      showDeleted: false,
     },
     options: {},
   },
