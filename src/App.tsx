@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { MemoryRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { DashboardView } from './components/Dashboard';
-import { Settings } from './models/Settings';
-import styles from './App.module.css';
-import { ThemeView } from './components/ThemeView';
-import { Theme, ThemeValues } from './models/Theme';
-import { Sidebar } from './components/Sidebar';
 import '@reach/dialog/styles.css';
+import React, { useEffect, useState } from 'react';
+import { MemoryRouter, Redirect, Route, Switch } from 'react-router-dom';
+import styles from './App.module.css';
+import { DashboardView } from './components/Dashboard';
+import { Sidebar } from './components/Sidebar';
+import { ThemeView } from './components/ThemeView';
 import { useAppSettings } from './contexts/AppSettingsProvider';
+import { Settings } from './models/Settings';
+import { Theme, ThemeValues } from './models/Theme';
 
 function App() {
   const [darkMode, setDarkMode] = useState(
@@ -60,7 +60,7 @@ function App() {
 
   return (
     <MemoryRouter initialEntries={['/dashboard']}>
-      <div className={styles.root}>
+      <div className={styles.root} data-base>
         <Switch>
           <Route path="/dashboard">
             <DashboardView />

@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
-import { IconButton } from '../ui-components/button';
 import {
   MdAdd,
   MdClose,
@@ -15,21 +13,21 @@ import {
   MdEdit,
   MdSettings,
 } from 'react-icons/md';
-import { ControlType } from '../enums/controlType';
-import styles from './Sidebar.module.css';
+import { Link, useLocation } from 'react-router-dom';
+import { useAppSettings } from '../contexts/AppSettingsProvider';
 import { PagesContext } from '../contexts/PagesContext';
-import { useEffect } from 'react';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { useState } from 'react';
-import { moveArrayItem } from '../utilities/moveArrayItem';
 import { ControlLocation } from '../enums/controlLocation';
+import { ControlType } from '../enums/controlType';
+import { DisplayDensity } from '../enums/displayDensity';
+import { ComponentBaseProps } from '../models/ComponentBaseProps';
+import { Page } from '../models/Page';
+import { IconButton } from '../ui-components/button';
 import { ConfirmDialog } from '../ui-components/dialog/ConfirmDialog';
 import { ifClass, joinClasses } from '../utilities/classes';
-import { DisplayDensity } from '../enums/displayDensity';
-import { useAppSettings } from '../contexts/AppSettingsProvider';
+import { moveArrayItem } from '../utilities/moveArrayItem';
 import { AppSettingsDialog } from './AppSettingsDialog';
 import { PageSettingsDialog } from './PageSettingsDialog';
-import { Page } from '../models/Page';
+import styles from './Sidebar.module.css';
 
 export type SidebarProps = ComponentBaseProps;
 
@@ -109,7 +107,11 @@ export function Sidebar(props: SidebarProps) {
   }
 
   return (
-    <div className={styles.root} data-testid={props['data-testid']}>
+    <div
+      className={styles.root}
+      data-testid={props['data-testid']}
+      data-sidebar
+    >
       <div className={styles.pagesContainer}>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="pages" direction="horizontal">

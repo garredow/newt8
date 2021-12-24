@@ -1,0 +1,170 @@
+/* Global */
+
+.root.editing {
+  cursor: text;
+}
+
+/* Base */
+
+.root {
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  display: inline-block;
+}
+div[data-base] .root {
+  color: var(--primary-text-color);
+}
+div[data-base] .root.editable:hover {
+  border-bottom-color: var(--panel-divider-color);
+}
+div[data-base] .root:focus {
+  outline: none;
+  border-bottom-color: var(--app-accent-color) !important;
+}
+div[data-base] .title {
+  font-size: var(--panel-title-text-size);
+  font-weight: var(--panel-title-text-weight);
+  color: var(--panel-title-text-color);
+}
+div[data-base] .primary {
+  color: var(--primary-text-color);
+}
+div[data-base] .secondary {
+  color: var(--secondary-text-color);
+}
+div[data-base] .accent {
+  color: var(--app-accent-color);
+}
+
+/* Panel */
+
+div[data-panel] .root {
+  color: var(--panel-primary-text-color);
+}
+div[data-panel] .editable:hover {
+  border-bottom-color: var(--panel-divider-color);
+}
+div[data-panel] .editable:focus {
+  border-bottom-color: var(--panel-accent-color) !important;
+}
+div[data-panel] .title {
+  font-size: var(--panel-title-text-size);
+  font-weight: var(--panel-title-text-weight);
+  color: var(--panel-title-text-color);
+}
+div[data-panel] .primary {
+  color: var(--panel-primary-text-color);
+}
+div[data-panel] .secondary {
+  color: var(--panel-secondary-text-color);
+}
+div[data-panel] .accent {
+  color: var(--panel-accent-color);
+}
+
+/* Card */
+
+div[data-card] .root {
+  color: var(--card-primary-text-color);
+}
+div[data-card] .editable:hover {
+  border-bottom-color: var(--card-divider-color);
+}
+div[data-card] .editable:focus {
+  border-bottom-color: var(--card-accent-color) !important;
+}
+div[data-card] .title {
+  font-size: var(--card-title-text-size);
+  font-weight: var(--card-title-text-weight);
+  color: var(--card-title-text-color);
+}
+div[data-card] .primary {
+  color: var(--card-primary-text-color);
+}
+div[data-card] .secondary {
+  color: var(--card-secondary-text-color);
+}
+div[data-card] .accent {
+  color: var(--card-accent-color);
+}
+
+/* Sidebar */
+
+div[data-sidebar] .root {
+  color: var(--sidebar-primary-text-color);
+}
+div[data-sidebar] .editable:hover {
+  border-bottom-color: var(--sidebar-divider-color);
+}
+div[data-sidebar] .editable:focus {
+  border-bottom-color: var(--sidebar-accent-color);
+}
+div[data-sidebar] .title {
+  font-size: var(--sidebar-title-text-size);
+  font-weight: var(--sidebar-title-text-weight);
+  color: var(--sidebar-title-text-color);
+}
+div[data-sidebar] .primary {
+  color: var(--sidebar-primary-text-color);
+}
+div[data-sidebar] .secondary {
+  color: var(--sidebar-secondary-text-color);
+}
+div[data-sidebar] .accent {
+  color: var(--sidebar-accent-color);
+}
+
+/* Overrides */
+
+.caption {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.body {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+
+.left {
+  text-align: left;
+}
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+
+.padding-vertical {
+  padding: 10px 0;
+}
+.padding-horizontal {
+  padding: 0 15px;
+}
+.padding-both {
+  padding: 10px 15px;
+}
+.padding-none {
+  padding: 0;
+}
+
+.wrap {
+  white-space: initial;
+}
+
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

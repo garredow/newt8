@@ -16,8 +16,8 @@ import { getPanelConfig } from '../services/panels';
 import taskService from '../services/tasks';
 import { IconButton } from '../ui-components/button';
 import { Card, CardHeader } from '../ui-components/card';
+import { DynamicText } from '../ui-components/DynamicText';
 import { EditableDate } from '../ui-components/EditableDate';
-import { EditableText } from '../ui-components/EditableText';
 import { Checkbox } from '../ui-components/input';
 import { SettingsRow } from '../ui-components/list';
 import { Panel, PanelContent } from '../ui-components/panel';
@@ -143,7 +143,7 @@ export function TasksPanel(props: TasksPanelProps) {
       <PanelContent>
         <Card>
           <CardHeader
-            text="Current"
+            title="Current"
             actions={
               <IconButton
                 icon={<MdAdd />}
@@ -202,7 +202,7 @@ export function TasksPanel(props: TasksPanelProps) {
         {options.showDeleted && (
           <Card>
             <CardHeader
-              text="Trash"
+              title="Trash"
               actions={
                 <IconButton
                   icon={<MdDeleteSweep />}
@@ -281,10 +281,10 @@ function TaskRow(props: TaskRowProps) {
           )
         }
       />
-      <EditableText
-        value={props.task.title}
-        location={ControlLocation.Card}
-        onChange={(val) => updateTask('title', val)}
+      <DynamicText
+        text={props.task.title}
+        editable={true}
+        onEdit={(val) => updateTask('title', val)}
       />
       <div className={styles.spacer} />
       <EditableDate

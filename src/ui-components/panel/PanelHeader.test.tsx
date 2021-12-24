@@ -1,11 +1,11 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { PanelHeader } from '.';
 
 describe('PanelHeader', () => {
   test('renders title', () => {
     const props = {
-      text: 'text',
+      title: 'text',
       editable: false,
       onTitleChanged: jest.fn(),
     };
@@ -16,12 +16,12 @@ describe('PanelHeader', () => {
       </PanelHeader>
     );
 
-    expect(getByText(props.text)).toBeVisible();
+    expect(getByText(props.title)).toBeVisible();
   });
 
   test('renders children', () => {
     const props = {
-      text: 'text',
+      title: 'text',
       editable: false,
       onTitleChanged: jest.fn(),
     };
