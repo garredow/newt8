@@ -52,7 +52,7 @@ describe('Card', () => {
     expect(getByDisplayValue('cardTextColor1')).toBeVisible();
   });
 
-  test('closes card setttings', () => {
+  test('closes card theme setttings', () => {
     const props: CardProps = {
       cardId: 'card1',
       title: 'card title',
@@ -124,6 +124,7 @@ describe('Card', () => {
       settings: defaultPanelSettings,
       cardSettingsMap: {
         card1: {
+          title: 'Card1',
           headerColor: 'headerColor1',
           headerTextColor: 'headerTextColor1',
           cardColor: 'cardColor1',
@@ -144,9 +145,9 @@ describe('Card', () => {
     fireEvent.click(getByText('Clear Styles'));
 
     expect(contextVal.saveCardSettings).toBeCalledTimes(1);
-    expect(contextVal.saveCardSettings).toBeCalledWith(
-      props.cardId,
-      defaultCardSettings
-    );
+    expect(contextVal.saveCardSettings).toBeCalledWith(props.cardId, {
+      ...defaultCardSettings,
+      title: contextVal.cardSettingsMap.card1.title,
+    });
   });
 });

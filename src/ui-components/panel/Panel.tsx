@@ -104,7 +104,7 @@ export const Panel = React.forwardRef(
           </div>
           {showSettings && (
             <Dialog
-              title={panel.options.title}
+              title="Panel Settings"
               width="medium"
               onClose={() => setShowSettings(false)}
               data-testid="settings"

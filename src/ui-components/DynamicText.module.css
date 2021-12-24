@@ -1,16 +1,18 @@
 /* Global */
 
+.root {
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  display: inline-block;
+  min-width: 20px;
+}
+
 .root.editing {
   cursor: text;
 }
 
 /* Base */
 
-.root {
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-  display: inline-block;
-}
 div[data-base] .root {
   color: var(--primary-text-color);
 }

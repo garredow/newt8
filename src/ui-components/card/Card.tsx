@@ -16,12 +16,16 @@ import styles from './Card.module.css';
 
 export type CardProps = ComponentBaseProps & {
   cardId?: string;
+  defaultTitle?: string;
   title?: string;
   enableSettings?: boolean;
+  useCustomerHeader?: boolean;
+  actions?: React.ReactNode;
   onTitleChanged?: (title: string) => void;
 };
 
 export const defaultCardSettings: CardSettings = {
+  title: '',
   headerColor: '',
   headerTextColor: '',
   cardColor: '',
@@ -32,6 +36,7 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
   const [showConfig, setShowConfig] = useState(false);
   const [cardSettings, setCardSettings] =
     useState<CardSettings>(defaultCardSettings);
+
   const {
     settings: panelSettings,
     cardSettingsMap,
@@ -54,7 +59,10 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
   }
 
   function clearCardStyles() {
-    saveCardSettings(cardId!, defaultCardSettings);
+    saveCardSettings(cardId!, {
+      ...defaultCardSettings,
+      title: cardSettings.title,
+    });
   }
 
   return (
@@ -75,13 +83,14 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
       data-card
       data-testid={props['data-testid']}
     >
-      {props.title || enableSettings ? (
-        <CardHeader
-          title={props.title}
-          backgroundColor={cardSettings.headerColor}
-          textColor={cardSettings.headerTextColor}
-          actions={
-            enableSettings && (
+      <CardHeader
+        title={props.title || cardSettings.title || props.defaultTitle}
+        backgroundColor={cardSettings.headerColor}
+        textColor={cardSettings.headerTextColor}
+        actions={
+          <>
+            {props.actions}
+            {enableSettings && (
               <IconButton
                 icon={<MdSettings />}
                 title="Edit card settings"
@@ -89,15 +98,18 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
                 size={28}
                 data-testid="btn-settings"
               />
-            )
-          }
-          onTitleChanged={props.onTitleChanged}
-        />
-      ) : null}
+            )}
+          </>
+        }
+        onTitleChanged={(title) => {
+          handleSettingChanged('title', title);
+          props.onTitleChanged?.(title);
+        }}
+      />
       {props.children}
       {showConfig && cardId && (
         <Dialog
-          title={props.title + ' Settings'}
+          title="Card Settings"
           width="medium"
           onClose={() => setShowConfig(false)}
           data-testid="dialog-card-settings"

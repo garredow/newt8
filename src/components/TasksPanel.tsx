@@ -15,7 +15,7 @@ import { Task } from '../models/Task';
 import { getPanelConfig } from '../services/panels';
 import taskService from '../services/tasks';
 import { IconButton } from '../ui-components/button';
-import { Card, CardHeader } from '../ui-components/card';
+import { Card } from '../ui-components/card';
 import { DynamicText } from '../ui-components/DynamicText';
 import { EditableDate } from '../ui-components/EditableDate';
 import { Checkbox } from '../ui-components/input';
@@ -141,19 +141,20 @@ export function TasksPanel(props: TasksPanelProps) {
       data-testid={props['data-testid']}
     >
       <PanelContent>
-        <Card>
-          <CardHeader
-            title="Current"
-            actions={
-              <IconButton
-                icon={<MdAdd />}
-                title="Add a task"
-                onClick={addTask}
-                size={32}
-                data-testid="btn-settings"
-              />
-            }
-          />
+        <Card
+          cardId="tasks_current"
+          defaultTitle="Current"
+          enableSettings={true}
+          actions={
+            <IconButton
+              icon={<MdAdd />}
+              title="Add a task"
+              onClick={addTask}
+              size={32}
+              data-testid="btn-settings"
+            />
+          }
+        >
           {tasks
             .filter((a) => !a.completedDate && !a.deletedDate)
             .sort((a, b) => {
@@ -176,7 +177,7 @@ export function TasksPanel(props: TasksPanelProps) {
             ))}
         </Card>
         {options.showCompleted && (
-          <Card title="Completed">
+          <Card cardId="tasks_complete" defaultTitle="Completed">
             {tasks
               .filter((a) => a.completedDate && !a.deletedDate)
               .sort((a, b) => {
@@ -200,19 +201,19 @@ export function TasksPanel(props: TasksPanelProps) {
           </Card>
         )}
         {options.showDeleted && (
-          <Card>
-            <CardHeader
-              title="Trash"
-              actions={
-                <IconButton
-                  icon={<MdDeleteSweep />}
-                  title="Permanently delete all"
-                  onClick={deleteDeletedTasks}
-                  size={32}
-                  data-testid="btn-delete-all"
-                />
-              }
-            />
+          <Card
+            cardId="tasks_trash"
+            defaultTitle="Trash"
+            actions={
+              <IconButton
+                icon={<MdDeleteSweep />}
+                title="Permanently delete all"
+                onClick={deleteDeletedTasks}
+                size={32}
+                data-testid="btn-delete-all"
+              />
+            }
+          >
             {tasks
               .filter((a) => a.deletedDate)
               .sort((a, b) => {
