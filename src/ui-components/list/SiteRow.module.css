@@ -37,10 +37,6 @@
   white-space: nowrap;
 }
 
-.details > div {
-  margin-bottom: 4px;
-}
-
 .details > div:last-child {
   margin-bottom: 0px;
 }
@@ -55,6 +51,7 @@
   font-size: 0.9em;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 4px;
 }
 
 .accentText {
