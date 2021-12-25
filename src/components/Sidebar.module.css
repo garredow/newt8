@@ -1,91 +1,25 @@
 .root {
-  background-color: var(--sidebar-bg-color);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--sidebar-bg-color);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  padding: 0 7px;
 }
 
-.pagesContainer {
+.bar {
   display: flex;
   align-items: center;
-}
-
-.pageActions {
-}
-
-.hidden {
-  opacity: 0;
-}
-.notHidden {
-  opacity: 1;
-}
-.pagesContainer:hover .pageActions {
-  transition: opacity 200ms;
-  opacity: 1;
+  padding: 0 7px;
 }
 
 .pages {
   display: flex;
-  height: 50px;
 }
-
-.page,
-.pageEdit {
-  display: flex;
-  align-items: center;
+.pages > div {
   padding: 0 10px;
-  text-transform: uppercase;
-  font-size: var(--sidebar-title-text-size);
-  color: var(--sidebar-title-text-color);
-  background-color: var(--sidebar-bg-color);
-  height: 50px;
 }
 
-.page {
-  text-decoration: none;
-  cursor: pointer;
+.spacer {
+  flex: 1;
 }
-.page:hover {
-  backdrop-filter: brightness(var(--row-highlight));
-}
-.page:active {
-  backdrop-filter: brightness(var(--row-dim));
-}
-
-.page.spacious {
-  padding: 0 15px;
-}
-
-.pageEdit {
-  border-right: 1px solid var(--sidebar-divider-color);
-}
-
-.btnMove {
-  cursor: move !important;
-}
-
-.pageEditTitle {
-  border-bottom: 2px solid var(--sidebar-accent-color);
-  margin: 0 5px;
-}
-.pageEditTitle:focus {
-  outline: none;
-}
-
-.highlight {
-  color: var(--sidebar-accent-color);
-}
-
-/* .pages > div {
-  writing-mode: vertical-lr;
-  text-orientation: mixed;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  text-transform: uppercase;
-  font-size: 1.2em;
-} */

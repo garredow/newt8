@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../utilities/classes';
+import { IconButton } from './button';
 import styles from './DynamicText.module.css';
 
 export type DynamicTextProps = ComponentBaseProps & {
@@ -13,7 +15,10 @@ export type DynamicTextProps = ComponentBaseProps & {
   padding?: 'vertical' | 'horizontal' | 'both' | 'none';
   wrap?: 'wrap' | 'nowrap';
   editable?: boolean;
+  deletable?: boolean;
   onEdit?: (newText: string) => void;
+  onDelete?: () => void;
+  onClick?: () => void;
 };
 
 export function DynamicText(props: DynamicTextProps): JSX.Element {
@@ -44,6 +49,8 @@ export function DynamicText(props: DynamicTextProps): JSX.Element {
         if (editing) {
           ev.preventDefault();
           ev.stopPropagation();
+        } else {
+          props.onClick?.();
         }
       }}
       onContextMenu={(ev) => {
@@ -72,6 +79,15 @@ export function DynamicText(props: DynamicTextProps): JSX.Element {
       data-testid={props['data-testid']}
     >
       {props.text}
+      {editing && props.deletable && (
+        <IconButton
+          icon={<MdDelete />}
+          title="Delete"
+          onClick={props.onDelete}
+          size={24}
+          data-testid="btn-delete"
+        />
+      )}
     </div>
   );
 }

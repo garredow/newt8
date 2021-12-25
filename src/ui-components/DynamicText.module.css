@@ -3,12 +3,17 @@
 .root {
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   min-width: 20px;
 }
 
 .root.editing {
   cursor: text;
+}
+
+.root > button {
+  margin-left: 5px;
 }
 
 /* Base */

@@ -5,25 +5,15 @@ import {
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
-import {
-  MdAdd,
-  MdClose,
-  MdCompareArrows,
-  MdDashboard,
-  MdEdit,
-  MdSettings,
-} from 'react-icons/md';
-import { Link, useLocation } from 'react-router-dom';
-import { useAppSettings } from '../contexts/AppSettingsProvider';
+import { MdAdd, MdDashboard, MdSettings } from 'react-icons/md';
+import { useHistory, useLocation } from 'react-router-dom';
 import { PagesContext } from '../contexts/PagesContext';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
-import { DisplayDensity } from '../enums/displayDensity';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Page } from '../models/Page';
 import { IconButton } from '../ui-components/button';
-import { ConfirmDialog } from '../ui-components/dialog/ConfirmDialog';
-import { ifClass, joinClasses } from '../utilities/classes';
+import { DynamicText } from '../ui-components/DynamicText';
 import { moveArrayItem } from '../utilities/moveArrayItem';
 import { AppSettingsDialog } from './AppSettingsDialog';
 import { PageSettingsDialog } from './PageSettingsDialog';
@@ -32,16 +22,13 @@ import styles from './Sidebar.module.css';
 export type SidebarProps = ComponentBaseProps;
 
 export function Sidebar(props: SidebarProps) {
-  const [editMode, setEditMode] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [pageToDelete, setPageToDelete] = useState<string>();
   const [showAppSettings, setShowAppSettings] = useState(false);
   const [showPageSettings, setShowPageSettings] = useState(false);
 
-  const { settings } = useAppSettings();
   const { pages, setPages, savePage, deletePage } = useContext(PagesContext);
 
   const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     const handleShortcutKey = (ev: KeyboardEvent) => {
@@ -69,6 +56,7 @@ export function Sidebar(props: SidebarProps) {
   });
 
   function handlePageClick(pageId: string) {
+    history.replace('/dashboard');
     const newPages = pages.map((page) =>
       page.id === pageId
         ? { ...page, isActive: true }
@@ -91,28 +79,33 @@ export function Sidebar(props: SidebarProps) {
     setPages(moveArrayItem(pages, oldIndex, newIndex));
   }
 
-  function handleRequestDelete(pageId: string) {
-    if (settings.confirmBeforeDelete) {
-      setPageToDelete(pageId);
-      setShowConfirm(true);
-      return;
-    }
-
-    deletePage(pageId);
-  }
-
-  function handleDeletePage() {
-    setShowConfirm(false);
-    deletePage(pageToDelete!);
-  }
-
   return (
     <div
       className={styles.root}
       data-testid={props['data-testid']}
       data-sidebar
     >
-      <div className={styles.pagesContainer}>
+      <div className={styles.bar}>
+        <IconButton
+          size={32}
+          location={ControlLocation.SideBar}
+          type={ControlType.Secondary}
+          icon={<MdAdd />}
+          title="Add Page"
+          onClick={() =>
+            savePage({
+              id: `page_${new Date().valueOf()}`,
+              name: 'New Page',
+              isActive: true,
+              panels: [],
+              grid: {
+                rowSizes: [],
+                colSizes: [],
+                layout: [],
+              },
+            })
+          }
+        />
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="pages" direction="horizontal">
             {(provided) => (
@@ -121,121 +114,37 @@ export function Sidebar(props: SidebarProps) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {pages.map((page, i) => {
-                  return editMode ? (
-                    <div key={page.id}>
-                      <Draggable draggableId={page.id} index={i}>
-                        {(provided) => (
-                          <div
-                            className={joinClasses(
-                              styles.pageEdit,
-                              ifClass(page.isActive, styles.highlight)
-                            )}
-                            key={page.id}
-                            {...provided.draggableProps}
-                            ref={provided.innerRef}
-                          >
-                            <IconButton
-                              size={32}
-                              location={ControlLocation.SideBar}
-                              type={ControlType.Secondary}
-                              className={styles.btnMove}
-                              icon={<MdCompareArrows />}
-                              title="Drag to reorder"
-                              onClick={() => {}}
-                              {...provided.dragHandleProps}
-                            />
-                            <div
-                              suppressContentEditableWarning
-                              contentEditable={true}
-                              className={styles.pageEditTitle}
-                              onKeyDown={(ev) => {
-                                if (ev.key !== 'Enter') {
-                                  return;
-                                }
+                {pages.map((page, i) => (
+                  <Draggable key={page.id} draggableId={page.id} index={i}>
+                    {(provided) => (
+                      <div
+                        key={page.id}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <DynamicText
+                          key={page.id}
+                          text={page.name}
+                          type="title"
+                          color={page.isActive ? 'accent' : 'primary'}
+                          editable
+                          deletable
+                          onEdit={(text) => handlePageNameChange(page, text)}
+                          onDelete={() => deletePage(page.id)}
+                          onClick={() => handlePageClick(page.id)}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
 
-                                ev.preventDefault();
-                                handlePageNameChange(
-                                  page,
-                                  (ev.target as HTMLHeadingElement).innerText
-                                );
-                              }}
-                            >
-                              {page.name}
-                            </div>
-
-                            <IconButton
-                              size={32}
-                              location={ControlLocation.SideBar}
-                              type={ControlType.Danger}
-                              icon={<MdClose />}
-                              title="Delete"
-                              onClick={() => handleRequestDelete(page.id)}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    </div>
-                  ) : (
-                    <Link
-                      to={`/dashboard`}
-                      key={page.id}
-                      className={joinClasses(
-                        styles.page,
-                        ifClass(
-                          settings.displayDensity === DisplayDensity.Spacious,
-                          styles.spacious
-                        ),
-                        ifClass(page.isActive, styles.highlight)
-                      )}
-                      onClick={() => handlePageClick(page.id)}
-                    >
-                      {page.name}
-                    </Link>
-                  );
-                })}
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
         </DragDropContext>
-        <div
-          className={joinClasses(
-            styles.pageActions,
-            settings.showActionsOnHover ? styles.hidden : styles.notHidden
-          )}
-        >
-          <IconButton
-            size={32}
-            location={ControlLocation.SideBar}
-            type={ControlType.Secondary}
-            icon={<MdAdd />}
-            title="Add Page"
-            onClick={() =>
-              savePage({
-                id: `page_${new Date().valueOf()}`,
-                name: 'New Page',
-                isActive: true,
-                panels: [],
-                grid: {
-                  rowSizes: [],
-                  colSizes: [],
-                  layout: [],
-                },
-              })
-            }
-          />
-          <IconButton
-            size={32}
-            location={ControlLocation.SideBar}
-            type={ControlType.Secondary}
-            icon={<MdEdit />}
-            title="Edit Pages"
-            onClick={() => setEditMode(!editMode)}
-          />
-        </div>
-      </div>
-      <div>
+        <div className={styles.spacer} />
         {location.pathname.includes('dashboard') ? (
           <>
             <IconButton
@@ -257,15 +166,6 @@ export function Sidebar(props: SidebarProps) {
           onClick={() => setShowAppSettings(true)}
         />
       </div>
-      {showConfirm && (
-        <ConfirmDialog
-          title="Confirm"
-          message="Are you sure you want to delete this?"
-          danger
-          onCancel={() => setShowConfirm(false)}
-          onConfirm={handleDeletePage}
-        />
-      )}
       {showAppSettings && (
         <AppSettingsDialog onClose={() => setShowAppSettings(false)} />
       )}
