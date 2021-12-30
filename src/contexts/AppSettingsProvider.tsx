@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Settings } from '../models/Settings';
 import { getItem, setItem, StorageKey } from '../utilities/storage';
-import { defaultSettings, AppSettingsContext } from './AppSettingsContext';
+import { AppSettingsContext, defaultSettings } from './AppSettingsContext';
 
 type AppSettingsProviderProps = ComponentBaseProps;
 

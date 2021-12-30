@@ -1,8 +1,8 @@
 import React from 'react';
-import { Panel, PanelContent } from '../ui-components/panel';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { PanelSettings } from '../contexts/PanelContext';
-import { PanelBaseProps } from '../models/PanelBaseProps';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { Panel, PanelContent } from '../../ui-components/panel';
 
 type EmptyPanelOptions = PanelSettings;
 

@@ -1,21 +1,20 @@
 import { formatDistance } from 'date-fns';
 import React, { useEffect, useMemo, useState } from 'react';
-import { ControlLocation } from '../enums/controlLocation';
-import { ControlType } from '../enums/controlType';
-import { PanelKind } from '../enums/panelKind';
-import { Window } from '../models/Browser';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { getWindows, switchToTab } from '../services/browser';
-import { getPanelConfig } from '../services/panels';
-import { Button } from '../ui-components/button/Button';
-import { Card } from '../ui-components/card';
-import { SiteRow } from '../ui-components/list/SiteRow';
-import { Checkbox } from '../ui-components/input/Checkbox';
-import { Panel, PanelContent } from '../ui-components/panel';
-import { SettingsRow } from '../ui-components/list/SettingsRow';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
+import { PanelKind } from '../../enums/panelKind';
+import { Window } from '../../models/Browser';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { getWindows, switchToTab } from '../../services/browser';
+import { getPanelConfig } from '../../services/panels';
+import { Button } from '../../ui-components/button';
+import { Card } from '../../ui-components/card';
+import { Checkbox } from '../../ui-components/input';
+import { SettingsRow, SiteRow } from '../../ui-components/list';
+import { Panel, PanelContent } from '../../ui-components/panel';
 import styles from './WindowsPanel.module.css';
-import { PanelSettings } from '../contexts/PanelContext';
-import { PanelBaseProps } from '../models/PanelBaseProps';
 
 export type WindowsPanelOptions = PanelSettings & {
   showCardTitles: boolean;

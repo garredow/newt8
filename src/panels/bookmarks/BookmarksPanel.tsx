@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { PanelSettings } from '../contexts/PanelContext';
-import { ControlLocation } from '../enums/controlLocation';
-import { Status } from '../enums/status';
-import { Bookmark } from '../models/Bookmark';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { PanelBaseProps } from '../models/PanelBaseProps';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ControlLocation } from '../../enums/controlLocation';
+import { Status } from '../../enums/status';
+import { Bookmark } from '../../models/Browser';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
 import {
   getAllBookmarks,
   getBookmarks,
   OpenSiteOption,
   openUrl,
   updateBookmark,
-} from '../services/browser';
-import { Button } from '../ui-components/button/Button';
-import { Card } from '../ui-components/card';
-import { SiteRow } from '../ui-components/list/SiteRow';
-import { Panel, PanelContent } from '../ui-components/panel';
+} from '../../services/browser';
+import { Button } from '../../ui-components/button';
+import { Card } from '../../ui-components/card';
+import { SiteRow } from '../../ui-components/list';
+import { Panel, PanelContent } from '../../ui-components/panel';
 import styles from './BookmarksPanel.module.css';
 
 type BookmarkFolderItemProps = {

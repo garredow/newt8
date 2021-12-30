@@ -1,17 +1,17 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { Panel } from '.';
+import React from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Panel } from '.';
 import {
-  defaultSettings,
   AppSettingsContext,
+  defaultSettings,
 } from '../../contexts/AppSettingsContext';
-import { Settings } from '../../models/Settings';
+import { defaultPanelSettings } from '../../contexts/PanelContext';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { Panel as PanelType } from '../../models/Panel';
+import { Settings } from '../../models/Settings';
 import { PanelProps } from './Panel';
-import { defaultPanelSettings } from '../../contexts/PanelContext';
 
 function renderWithContext(element: any, settings?: Settings) {
   const settingsContextVal = {

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '../ui-components/card';
-import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
-import { getRecentBookmarks, openUrl } from '../services/browser';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { Bookmark } from '../models/Bookmark';
-import { PanelSettings } from '../contexts/PanelContext';
-import { PanelBaseProps } from '../models/PanelBaseProps';
+import React, { useEffect, useState } from 'react';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { Bookmark } from '../../models/Bookmark';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { getRecentBookmarks, openUrl } from '../../services/browser';
+import { Card } from '../../ui-components/card';
+import { SiteRow } from '../../ui-components/list/SiteRow';
+import { Panel, PanelContent } from '../../ui-components/panel';
 
 type NewBookmarksPanelOptions = PanelSettings;
 

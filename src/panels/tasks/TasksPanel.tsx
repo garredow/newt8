@@ -6,22 +6,22 @@ import {
 } from 'date-fns';
 import React, { useEffect, useMemo, useState } from 'react';
 import { MdAdd, MdDelete, MdDeleteSweep } from 'react-icons/md';
-import { PanelSettings } from '../contexts/PanelContext';
-import { ControlLocation } from '../enums/controlLocation';
-import { PanelKind } from '../enums/panelKind';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { PanelBaseProps } from '../models/PanelBaseProps';
-import { Task } from '../models/Task';
-import { getPanelConfig } from '../services/panels';
-import taskService from '../services/tasks';
-import { IconButton } from '../ui-components/button';
-import { Card } from '../ui-components/card';
-import { DynamicText } from '../ui-components/DynamicText';
-import { EditableDate } from '../ui-components/EditableDate';
-import { Checkbox } from '../ui-components/input';
-import { SettingsRow } from '../ui-components/list';
-import { Panel, PanelContent } from '../ui-components/panel';
-import { ifClass, joinClasses } from '../utilities/classes';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ControlLocation } from '../../enums/controlLocation';
+import { PanelKind } from '../../enums/panelKind';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { Task } from '../../models/Task';
+import { getPanelConfig } from '../../services/panels';
+import { IconButton } from '../../ui-components/button';
+import { Card } from '../../ui-components/card';
+import { DynamicText } from '../../ui-components/DynamicText';
+import { EditableDate } from '../../ui-components/EditableDate';
+import { Checkbox } from '../../ui-components/input';
+import { SettingsRow } from '../../ui-components/list';
+import { Panel, PanelContent } from '../../ui-components/panel';
+import { ifClass, joinClasses } from '../../utilities/classes';
+import taskService from './service';
 import styles from './TasksPanel.module.css';
 
 type TasksPanelOptions = PanelSettings & {

@@ -1,10 +1,10 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { SettingsRow } from './SettingsRow';
+import React from 'react';
 import {
-  defaultSettings,
   AppSettingsContext,
+  defaultSettings,
 } from '../../contexts/AppSettingsContext';
+import { SettingsRow } from './SettingsRow';
 
 function renderWithContext(element: any) {
   return render(

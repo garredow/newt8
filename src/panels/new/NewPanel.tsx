@@ -1,24 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import { Panel, PanelContent } from '../ui-components/panel';
-import styles from './NewPanel.module.css';
-import { PanelKind } from '../enums/panelKind';
-import { ControlType } from '../enums/controlType';
-import { ControlLocation } from '../enums/controlLocation';
-import { Button } from '../ui-components/button/Button';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ControlType } from '../../enums/controlType';
+import { PanelKind } from '../../enums/panelKind';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { getPanelConfig, getPanelConfigs } from '../../services/panels';
 import {
   PermissionDetail,
   permissionNameMap,
   requestPermissions,
   verifyPermissionsForPanel,
-} from '../services/permissions';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { getPanelConfig, getPanelConfigs } from '../services/panels';
-import { useEffect } from 'react';
-import { animateSlideLeft } from '../ui-components/animations';
-import { Card, CardContent, CardFooter } from '../ui-components/card';
-import { PanelSettings } from '../contexts/PanelContext';
-import { PanelBaseProps } from '../models/PanelBaseProps';
+} from '../../services/permissions';
+import { animateSlideLeft } from '../../ui-components/animations';
+import { Button } from '../../ui-components/button/Button';
+import { Card, CardContent, CardFooter } from '../../ui-components/card';
+import { Panel, PanelContent } from '../../ui-components/panel';
+import styles from './NewPanel.module.css';
 
 type NewPanelOptions = PanelSettings;
 

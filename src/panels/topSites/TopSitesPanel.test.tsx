@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { Panel } from '../models/Panel';
+import { Panel } from '../../models/Panel';
+import * as browser from '../../services/browser';
 import { TopSitesPanel, TopSitesPanelProps } from './TopSitesPanel';
-import * as browser from '../services/browser';
 
-jest.mock('../services/browser');
+jest.mock('../../services/browser');
 
 describe('TopSitesPanel', () => {
   test('renders sites', async () => {

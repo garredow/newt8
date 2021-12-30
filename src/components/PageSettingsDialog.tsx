@@ -1,16 +1,16 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { MdClose } from 'react-icons/md';
+import { usePages } from '../contexts/PagesProvider';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { Button } from '../ui-components/button/Button';
-import styles from './PageSettingsDialog.module.css';
-import { IconButton } from '../ui-components/button';
-import { MdClose } from 'react-icons/md';
 import { GridLayout } from '../models/GridLayout';
-import { joinClasses } from '../utilities/classes';
+import { IconButton } from '../ui-components/button';
+import { Button } from '../ui-components/button/Button';
 import { Dialog } from '../ui-components/dialog/Dialog';
-import { usePages } from '../contexts/PagesProvider';
+import { joinClasses } from '../utilities/classes';
+import styles from './PageSettingsDialog.module.css';
 
 type SizeSelectProps = {
   val: string;

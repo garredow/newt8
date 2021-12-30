@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   MdCheck,
   MdClose,
@@ -10,17 +8,17 @@ import {
   MdSettings,
 } from 'react-icons/md';
 import { useHistory, useLocation } from 'react-router-dom';
+import { AppSettingsContext } from '../contexts/AppSettingsContext';
+import { defaultPanelSettings } from '../contexts/PanelContext';
 import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Theme, ThemeValues } from '../models/Theme';
-import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
 import { Card } from '../ui-components/card';
 import { SiteRow } from '../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../ui-components/panel';
-import { defaultPanelSettings } from '../contexts/PanelContext';
 import { isDarkMode } from '../utilities/isDarkMode';
 import { ThemeValueChooser } from './ThemeValueChooser';
 import styles from './ThemeView.module.css';

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '../ui-components/card';
-import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/list/SiteRow';
-import { getTopSites, openUrl } from '../services/browser';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { PanelSettings } from '../contexts/PanelContext';
-import { PanelBaseProps } from '../models/PanelBaseProps';
+import React, { useEffect, useState } from 'react';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { getTopSites, openUrl } from '../../services/browser';
+import { Card } from '../../ui-components/card';
+import { SiteRow } from '../../ui-components/list';
+import { Panel, PanelContent } from '../../ui-components/panel';
 
 type TopSitesPanelOptions = PanelSettings;
 

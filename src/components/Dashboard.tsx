@@ -9,21 +9,21 @@ import { PanelKind } from '../enums/panelKind';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Page } from '../models/Page';
 import { Panel } from '../models/Panel';
+import { BookmarksPanel } from '../panels/bookmarks/BookmarksPanel';
+import { DevicesPanel } from '../panels/devices/DevicesPanel';
+import { EmptyPanel } from '../panels/empty/EmptyPanel';
+import { NewPanel } from '../panels/new/NewPanel';
+import { NewBookmarksPanel } from '../panels/newBookmarks/NewBookmarksPanel';
+import { RecentlyClosedPanel } from '../panels/recentlyClosed/RecentlyClosedPanel';
+import { RecentTabsPanel } from '../panels/recentTabs/RecentTabsPanel';
+import { TasksPanel } from '../panels/tasks/TasksPanel';
+import { TopSitesPanel } from '../panels/topSites/TopSitesPanel';
+import { WindowsPanel } from '../panels/windows/WindowsPanel';
 import { getPanelConfig } from '../services/panels';
 import { IconButton } from '../ui-components/button';
 import { Button } from '../ui-components/button/Button';
 import { joinClasses } from '../utilities/classes';
-import { BookmarksPanel } from './BookmarksPanel';
 import styles from './Dashboard.module.css';
-import { DevicesPanel } from './DevicesPanel';
-import { EmptyPanel } from './EmptyPanel';
-import { NewBookmarksPanel } from './NewBookmarksPanel';
-import { NewPanel } from './NewPanel';
-import { RecentlyClosedPanel } from './RecentlyClosedPanel';
-import { RecentTabsPanel } from './RecentTabsPanel';
-import { TasksPanel } from './TasksPanel';
-import { TopSitesPanel } from './TopSitesPanel';
-import { WindowsPanel } from './WindowsPanel';
 
 enum LoadingStatus {
   Init,
@@ -264,6 +264,17 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
+      // case PanelKind.AzureDevOps:
+      //   return (
+      //     <AzureDevOpsPanel
+      //       key={panel.id}
+      //       panel={panel}
+      //       onOptionsChanged={(options) =>
+      //         handleOptionsChanged(panel.id, options)
+      //       }
+      //       onDeletePanel={() => deletePanel(panel.id)}
+      //     />
+      //   );
     }
   }
 

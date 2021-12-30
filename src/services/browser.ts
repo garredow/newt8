@@ -9,6 +9,8 @@ import {
 import { promisify } from '../utilities/promisify';
 import { getMetadataForTabs } from './metadata';
 
+// Tabs
+
 export enum SortOrder {
   Original = 'original',
   MostRecent = 'mostRecent',
@@ -19,8 +21,6 @@ export enum OpenSiteOption {
   NewTab = 'newTab',
   NewBackgroundTab = 'newBackgroundTab',
 }
-
-// Tabs
 
 type GetTabsOptions = {
   sortOrder?: SortOrder;

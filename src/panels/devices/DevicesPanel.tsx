@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '../ui-components/card';
-import { Panel, PanelContent } from '../ui-components/panel';
-import { SiteRow } from '../ui-components/list/SiteRow';
 import { formatDistance } from 'date-fns';
-import { getDevices, openUrl } from '../services/browser';
-import { ComponentBaseProps } from '../models/ComponentBaseProps';
-import { SettingsRow } from '../ui-components/list/SettingsRow';
-import { Checkbox } from '../ui-components/input/Checkbox';
-import { ControlLocation } from '../enums/controlLocation';
-import { PanelSettings } from '../contexts/PanelContext';
-import { PanelBaseProps } from '../models/PanelBaseProps';
+import React, { useEffect, useState } from 'react';
+import { PanelSettings } from '../../contexts/PanelContext';
+import { ControlLocation } from '../../enums/controlLocation';
+import { ComponentBaseProps } from '../../models/ComponentBaseProps';
+import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { getDevices, openUrl } from '../../services/browser';
+import { Card } from '../../ui-components/card';
+import { Checkbox } from '../../ui-components/input/Checkbox';
+import { SettingsRow } from '../../ui-components/list/SettingsRow';
+import { SiteRow } from '../../ui-components/list/SiteRow';
+import { Panel, PanelContent } from '../../ui-components/panel';
 
 export type DevicesPanelOptions = PanelSettings & {
   showTabAccessedTime: boolean;

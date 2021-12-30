@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { ControlType } from '../enums/controlType';
 import { DisplayDensity } from '../enums/displayDensity';
 import { PanelDisplayType } from '../enums/panelDisplayType';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Theme } from '../models/Theme';
-import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { Button } from '../ui-components/button';
 import { Dialog } from '../ui-components/dialog/Dialog';
 import { Checkbox } from '../ui-components/input';
