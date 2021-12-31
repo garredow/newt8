@@ -2,8 +2,6 @@ import { Octokit } from 'octokit';
 import { Mapper } from './mapper';
 import { Notification, RawNotification, User } from './models';
 
-// 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
-
 export class GitHub {
   private octokit;
 

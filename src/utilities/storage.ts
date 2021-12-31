@@ -3,9 +3,10 @@ export enum StorageKey {
   Panels = 'panels',
   Pages = 'pages',
   Themes = 'themes',
+  AzureDevOps = 'azureDevOps',
 }
 
-export async function getItem<T>(key: string): Promise<T> {
+export async function getItem<T>(key: string): Promise<T | undefined> {
   return new Promise((resolve) => {
     chrome.storage.local.get(key, (result) => resolve(result[key]));
   });
