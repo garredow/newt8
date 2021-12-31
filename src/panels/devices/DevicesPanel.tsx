@@ -4,7 +4,7 @@ import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { getDevices, openUrl } from '../../services/browser';
-import { Card } from '../../ui-components/card';
+import { Card, CardContent } from '../../ui-components/card';
 import { Checkbox } from '../../ui-components/input/Checkbox';
 import { SettingsRow } from '../../ui-components/list/SettingsRow';
 import { SiteRow } from '../../ui-components/list/SiteRow';
@@ -75,23 +75,25 @@ export function DevicesPanel(props: DevicesPanelProps) {
               cardId={`device_${device.deviceName}_window_${session.window?.id}`}
               enableSettings
             >
-              {session?.window?.tabs?.map((tab) => (
-                <SiteRow
-                  key={tab.sessionId}
-                  primaryText={tab.title}
-                  url={tab.url}
-                  secondaryText={tab.url}
-                  accentText={formatDistance(
-                    new Date(session.lastModified * 1000),
-                    new Date(),
-                    {
-                      addSuffix: true,
-                      includeSeconds: true,
-                    }
-                  )}
-                  onClick={openUrl}
-                />
-              ))}
+              <CardContent>
+                {session?.window?.tabs?.map((tab) => (
+                  <SiteRow
+                    key={tab.sessionId}
+                    primaryText={tab.title}
+                    url={tab.url}
+                    secondaryText={tab.url}
+                    accentText={formatDistance(
+                      new Date(session.lastModified * 1000),
+                      new Date(),
+                      {
+                        addSuffix: true,
+                        includeSeconds: true,
+                      }
+                    )}
+                    onClick={openUrl}
+                  />
+                ))}
+              </CardContent>
             </Card>
           ));
         })}

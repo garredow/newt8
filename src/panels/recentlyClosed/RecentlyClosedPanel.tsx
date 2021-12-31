@@ -4,7 +4,7 @@ import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { getRecentlyClosed, openUrl } from '../../services/browser';
-import { Card } from '../../ui-components/card';
+import { Card, CardContent } from '../../ui-components/card';
 import { SiteRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
 
@@ -29,23 +29,25 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
     >
       <PanelContent>
         <Card>
-          {sessions.map((session) => (
-            <SiteRow
-              key={session.tab!.sessionId}
-              primaryText={session.tab!.title}
-              url={session.tab!.url}
-              secondaryText={session.tab!.url}
-              accentText={formatDistance(
-                new Date(session.lastModified * 1000),
-                new Date(),
-                {
-                  addSuffix: true,
-                  includeSeconds: true,
-                }
-              )}
-              onClick={openUrl}
-            />
-          ))}
+          <CardContent>
+            {sessions.map((session) => (
+              <SiteRow
+                key={session.tab!.sessionId}
+                primaryText={session.tab!.title}
+                url={session.tab!.url}
+                secondaryText={session.tab!.url}
+                accentText={formatDistance(
+                  new Date(session.lastModified * 1000),
+                  new Date(),
+                  {
+                    addSuffix: true,
+                    includeSeconds: true,
+                  }
+                )}
+                onClick={openUrl}
+              />
+            ))}
+          </CardContent>
         </Card>
       </PanelContent>
     </Panel>

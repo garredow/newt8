@@ -13,7 +13,7 @@ import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { Task } from '../../models/Task';
 import { getPanelConfig } from '../../services/panels';
 import { IconButton } from '../../ui-components/button';
-import { Card } from '../../ui-components/card';
+import { Card, CardContent } from '../../ui-components/card';
 import { DynamicText } from '../../ui-components/DynamicText';
 import { EditableDate } from '../../ui-components/EditableDate';
 import { Checkbox } from '../../ui-components/input';
@@ -152,36 +152,14 @@ export function TasksPanel(props: TasksPanelProps) {
             />
           }
         >
-          {tasks
-            .filter((a) => !a.completedDate && !a.deletedDate)
-            .sort((a, b) => {
-              if (!a.dueDate) return 1;
-              if (!b.dueDate) return -1;
-              if (a.dueDate < b.dueDate) return -1;
-              if (a.dueDate > b.dueDate) return 1;
-              return 0;
-            })
-            .map((task) => (
-              <TaskRow
-                key={task.id}
-                task={task}
-                dateFormat={options.dateFormat}
-                onUpdate={(a) => updateTask(a)}
-                onDelete={() =>
-                  updateTask({ ...task, deletedDate: new Date().valueOf() })
-                }
-              />
-            ))}
-        </Card>
-        {options.showCompleted && (
-          <Card cardId="tasks_complete" defaultTitle="Completed">
+          <CardContent>
             {tasks
-              .filter((a) => a.completedDate && !a.deletedDate)
+              .filter((a) => !a.completedDate && !a.deletedDate)
               .sort((a, b) => {
-                if ((a.completedDate as number) < (b.completedDate as number))
-                  return 1;
-                if ((a.completedDate as number) > (b.completedDate as number))
-                  return -1;
+                if (!a.dueDate) return 1;
+                if (!b.dueDate) return -1;
+                if (a.dueDate < b.dueDate) return -1;
+                if (a.dueDate > b.dueDate) return 1;
                 return 0;
               })
               .map((task) => (
@@ -195,6 +173,32 @@ export function TasksPanel(props: TasksPanelProps) {
                   }
                 />
               ))}
+          </CardContent>
+        </Card>
+        {options.showCompleted && (
+          <Card cardId="tasks_complete" defaultTitle="Completed">
+            <CardContent>
+              {tasks
+                .filter((a) => a.completedDate && !a.deletedDate)
+                .sort((a, b) => {
+                  if ((a.completedDate as number) < (b.completedDate as number))
+                    return 1;
+                  if ((a.completedDate as number) > (b.completedDate as number))
+                    return -1;
+                  return 0;
+                })
+                .map((task) => (
+                  <TaskRow
+                    key={task.id}
+                    task={task}
+                    dateFormat={options.dateFormat}
+                    onUpdate={(a) => updateTask(a)}
+                    onDelete={() =>
+                      updateTask({ ...task, deletedDate: new Date().valueOf() })
+                    }
+                  />
+                ))}
+            </CardContent>
           </Card>
         )}
         {options.showDeleted && (
@@ -211,24 +215,26 @@ export function TasksPanel(props: TasksPanelProps) {
               />
             }
           >
-            {tasks
-              .filter((a) => a.deletedDate)
-              .sort((a, b) => {
-                if ((a.deletedDate as number) < (b.deletedDate as number))
-                  return 1;
-                if ((a.deletedDate as number) > (b.deletedDate as number))
-                  return -1;
-                return 0;
-              })
-              .map((task) => (
-                <TaskRow
-                  key={task.id}
-                  task={task}
-                  dateFormat={options.dateFormat}
-                  onUpdate={(a) => updateTask(a)}
-                  onDelete={() => deleteTask(task.id)}
-                />
-              ))}
+            <CardContent>
+              {tasks
+                .filter((a) => a.deletedDate)
+                .sort((a, b) => {
+                  if ((a.deletedDate as number) < (b.deletedDate as number))
+                    return 1;
+                  if ((a.deletedDate as number) > (b.deletedDate as number))
+                    return -1;
+                  return 0;
+                })
+                .map((task) => (
+                  <TaskRow
+                    key={task.id}
+                    task={task}
+                    dateFormat={options.dateFormat}
+                    onUpdate={(a) => updateTask(a)}
+                    onDelete={() => deleteTask(task.id)}
+                  />
+                ))}
+            </CardContent>
           </Card>
         )}
       </PanelContent>

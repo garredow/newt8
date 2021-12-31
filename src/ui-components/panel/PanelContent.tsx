@@ -28,7 +28,8 @@ export function PanelContent(props: PanelContentProps) {
           styles.horizontal,
           styles.vertical
         ),
-        ifClass(settings.displayStyle === PanelDisplayType.Lists, styles.list)
+        ifClass(settings.displayStyle === PanelDisplayType.Lists, styles.list),
+        ifClass(settings.fitCardsToViewport, styles.fitCards)
       )}
       style={style}
       data-testid={props['data-testid']}

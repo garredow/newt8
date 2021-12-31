@@ -24,6 +24,7 @@ export type PanelProps = ComponentBaseProps & {
   enableOrientation?: boolean;
   enableSecondaryText?: boolean;
   enableAccentText?: boolean;
+  enableCardSize?: boolean;
   extraSettings?: React.ReactNode;
   extraButtons?: React.ReactNode;
   onOptionsChanged: (options: PanelSettings) => void;
@@ -39,6 +40,7 @@ export const Panel = React.forwardRef(
       enableOrientation = false,
       enableSecondaryText = true,
       enableAccentText = true,
+      enableCardSize = false,
       ...props
     }: PanelProps,
     ref: any
@@ -176,6 +178,20 @@ export const Panel = React.forwardRef(
                     <option value={9}>9</option>
                     <option value={10}>10</option>
                   </select>
+                </SettingsRow>
+              ) : null}
+              {enableCardSize ? (
+                <SettingsRow
+                  label="Fit Cards to Viewport"
+                  helpText="Any cards in the panel will resize to fit on your screen without scrolling."
+                >
+                  <Checkbox
+                    checked={panel.options.fitCardsToViewport}
+                    onChange={(checked) =>
+                      setOptionValue('fitCardsToViewport', checked)
+                    }
+                    data-testid="check-fit-cards"
+                  />
                 </SettingsRow>
               ) : null}
               {enableSecondaryText ? (

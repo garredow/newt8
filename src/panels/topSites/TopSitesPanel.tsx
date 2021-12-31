@@ -3,7 +3,7 @@ import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { getTopSites, openUrl } from '../../services/browser';
-import { Card } from '../../ui-components/card';
+import { Card, CardContent } from '../../ui-components/card';
 import { SiteRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
 
@@ -30,15 +30,17 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
     >
       <PanelContent>
         <Card>
-          {sites.map((site) => (
-            <SiteRow
-              key={site.url}
-              primaryText={site.title}
-              url={site.url}
-              secondaryText={site.url}
-              onClick={openUrl}
-            />
-          ))}
+          <CardContent>
+            {sites.map((site) => (
+              <SiteRow
+                key={site.url}
+                primaryText={site.title}
+                url={site.url}
+                secondaryText={site.url}
+                onClick={openUrl}
+              />
+            ))}
+          </CardContent>
         </Card>
       </PanelContent>
     </Panel>

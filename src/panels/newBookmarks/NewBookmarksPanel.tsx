@@ -5,7 +5,7 @@ import { Bookmark } from '../../models/Bookmark';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { getRecentBookmarks, openUrl } from '../../services/browser';
-import { Card } from '../../ui-components/card';
+import { Card, CardContent } from '../../ui-components/card';
 import { SiteRow } from '../../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../../ui-components/panel';
 
@@ -32,23 +32,25 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
     >
       <PanelContent>
         <Card>
-          {bookmarks.map((bookmark) => (
-            <SiteRow
-              key={bookmark.id}
-              primaryText={bookmark.title}
-              url={bookmark.url}
-              secondaryText={bookmark.url}
-              accentText={formatDistance(
-                new Date(bookmark.dateAdded as number),
-                new Date(),
-                {
-                  addSuffix: true,
-                  includeSeconds: true,
-                }
-              )}
-              onClick={openUrl}
-            />
-          ))}
+          <CardContent>
+            {bookmarks.map((bookmark) => (
+              <SiteRow
+                key={bookmark.id}
+                primaryText={bookmark.title}
+                url={bookmark.url}
+                secondaryText={bookmark.url}
+                accentText={formatDistance(
+                  new Date(bookmark.dateAdded as number),
+                  new Date(),
+                  {
+                    addSuffix: true,
+                    includeSeconds: true,
+                  }
+                )}
+                onClick={openUrl}
+              />
+            ))}
+          </CardContent>
         </Card>
       </PanelContent>
     </Panel>

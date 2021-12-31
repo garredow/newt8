@@ -41,6 +41,7 @@ const panelConfigs: PanelConfigMap = {
     ],
     defaultOptions: {
       ...defaultPanelSettings,
+      fitCardsToViewport: false,
       title: 'Bookmarks',
       columns: 0,
       showSecondaryText: false,
@@ -241,6 +242,7 @@ const panelConfigs: PanelConfigMap = {
     permissions: [],
     defaultOptions: {
       ...defaultPanelSettings,
+      fitCardsToViewport: false,
       title: '',
     },
     options: {},
@@ -254,6 +256,7 @@ const panelConfigs: PanelConfigMap = {
     permissions: [],
     defaultOptions: {
       ...defaultPanelSettings,
+      fitCardsToViewport: false,
       title: 'New Panel',
     },
     options: {},

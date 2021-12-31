@@ -20,3 +20,7 @@
   column-gap: 0;
   padding: 0 0 15px 0;
 }
+
+.root.fitCards {
+  grid-auto-rows: inherit;
+}
