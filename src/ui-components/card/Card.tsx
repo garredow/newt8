@@ -73,7 +73,8 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
         ifClass(
           panelSettings.displayStyle === PanelDisplayType.Lists,
           styles.list
-        )
+        ),
+        props.className
       )}
       style={{
         backgroundColor: cardSettings.cardColor,

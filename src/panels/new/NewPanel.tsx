@@ -124,7 +124,9 @@ export function NewPanel(props: NewPanelProps) {
             <PanelContent columns={0}>
               {availablePanels.map((panel) => (
                 <Card key={panel} title={getPanelConfig(panel).name}>
-                  <CardContent>{getPanelConfig(panel).description}</CardContent>
+                  <CardContent padding={true}>
+                    {getPanelConfig(panel).description}
+                  </CardContent>
                   <CardFooter>
                     <Button
                       key={panel}
@@ -137,7 +139,9 @@ export function NewPanel(props: NewPanelProps) {
                 </Card>
               ))}
               <Card title="Cancel">
-                <CardContent>Changed your mind? No problem.</CardContent>
+                <CardContent padding={true}>
+                  Changed your mind? No problem.
+                </CardContent>
                 <CardFooter>
                   <Button
                     text="Delete"

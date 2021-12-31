@@ -1,26 +1,3 @@
 .root {
-}
-
-.user {
-  display: flex;
-  align-items: center;
-  margin: 0px 15px 15px 15px;
-}
-
-.user > img {
-  height: 32px;
-  width: 32px;
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
-.user span {
-  display: inline-flex;
-  align-items: center;
-  color: var(--card-secondary-text-color);
-  margin-right: 10px;
-}
-
-.user span > svg {
-  margin-right: 3px;
+  max-height: 500px;
 }
