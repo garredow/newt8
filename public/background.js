@@ -1,5 +1,14 @@
 /* eslint-disable no-undef */
 
+// Bypass CORS issues
+chrome.runtime.onMessage.addListener(function (url, sender, onSuccess) {
+  fetch(url, {})
+    .then((response) => response.text())
+    .then((responseText) => onSuccess(responseText));
+
+  return true;
+});
+
 async function initialize() {
   console.log('Initializing...');
   chrome.tabs.query({}, async (rawTabs) => {
