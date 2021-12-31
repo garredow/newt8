@@ -1,2 +1,22 @@
 .root {
+  position: relative;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+  backdrop-filter: blur(3px);
+  pointer-events: none;
+  display: none;
+}
+
+.mask.showMask {
+  display: block;
+}
+
+.root:focus-within .mask {
+  display: none;
 }

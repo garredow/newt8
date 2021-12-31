@@ -75,6 +75,7 @@ export function GitHubPanel(props: GitHubPanelProps) {
               type="text"
               spellCheck="false"
               value={props.panel.options.accessToken}
+              secret={true}
               onChange={(val) => setOptionValue('accessToken', val)}
               data-testid="input-access-token"
             />
