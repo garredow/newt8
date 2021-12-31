@@ -1,6 +1,6 @@
 import { Octokit } from 'octokit';
 import { Mapper } from './mapper';
-import { Notification, RawNotification, User } from './models';
+import { Event, Notification, RawEvent, RawNotification, User } from './models';
 
 export class GitHub {
   private octokit;
@@ -12,7 +12,6 @@ export class GitHub {
   }
   async getCurrentUser(): Promise<User> {
     const res = await this.octokit.rest.users.getAuthenticated();
-    // console.log('user', res);
 
     return Mapper.toUser(res.data);
   }
@@ -36,6 +35,18 @@ export class GitHub {
     // console.log('events', res);
 
     return res; // TODO: Use mapper
+  }
+
+  async getEvents(username: string): Promise<Event[]> {
+    const res = await this.octokit.rest.activity.listReceivedEventsForUser({
+      username,
+      per_page: 100,
+    });
+    console.log('events', res);
+
+    return res.data
+      .filter((a) => a.type !== 'MemberEvent')
+      .map((a) => Mapper.toEvent(a as RawEvent));
   }
 
   // static async getFeed() {

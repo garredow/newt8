@@ -4,14 +4,19 @@ import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { Button } from '../../ui-components/button';
-import { Input } from '../../ui-components/input';
+import { Checkbox, Input } from '../../ui-components/input';
 import { SettingsRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
+import { EventsCard } from './components/EventsCard';
 import { NotificationsCard } from './components/NotificationsCard';
+import { UserCard } from './components/UserCard';
 import { GitHub } from './service';
 
 export type GitHubPanelOptions = PanelSettings & {
   accessToken: string;
+  showUserCard: boolean;
+  showNotificationsCard: boolean;
+  showEventsCard: boolean;
 };
 
 type GitHubPanelProps = ComponentBaseProps & PanelBaseProps<GitHubPanelOptions>;
@@ -43,14 +48,14 @@ export function GitHubPanel(props: GitHubPanelProps) {
     { enabled: isLoggedIn }
   );
 
-  // const { data: activity = [] } = useQuery(
-  //   'gh_activity',
-  //   () => {
-  //     const gh = new GitHub(props.panel.options.accessToken);
-  //     return gh.getActivity(user?.login as string);
-  //   },
-  //   { enabled: isLoggedIn && !!user }
-  // );
+  const { data: events = [] } = useQuery(
+    'gh_events',
+    () => {
+      const gh = new GitHub(props.panel.options.accessToken);
+      return gh.getEvents(user?.login as string);
+    },
+    { enabled: isLoggedIn && !!user }
+  );
 
   function setOptionValue(key: string, val: any) {
     const newOpts: GitHubPanelOptions = {
@@ -70,6 +75,29 @@ export function GitHubPanel(props: GitHubPanelProps) {
       data-testid={props['data-testid']}
       extraSettings={
         <>
+          <SettingsRow label="User card" helpText="Show the user card.">
+            <Checkbox
+              checked={props.panel.options.showUserCard}
+              onChange={(checked) => setOptionValue('showUserCard', checked)}
+            />
+          </SettingsRow>
+          <SettingsRow
+            label="Notifications card"
+            helpText="Show the notifications card."
+          >
+            <Checkbox
+              checked={props.panel.options.showNotificationsCard}
+              onChange={(checked) =>
+                setOptionValue('showNotificationsCard', checked)
+              }
+            />
+          </SettingsRow>
+          <SettingsRow label="Events card" helpText="Show the events card.">
+            <Checkbox
+              checked={props.panel.options.showEventsCard}
+              onChange={(checked) => setOptionValue('showEventsCard', checked)}
+            />
+          </SettingsRow>
           <SettingsRow
             label="Token"
             helpText="Your GitHub personal access token."
@@ -93,6 +121,7 @@ export function GitHubPanel(props: GitHubPanelProps) {
             onClick={() => {
               queryClient.invalidateQueries('gh_user');
               queryClient.invalidateQueries('gh_notifs');
+              queryClient.invalidateQueries('gh_events');
             }}
           />
         </>
@@ -107,11 +136,20 @@ export function GitHubPanel(props: GitHubPanelProps) {
           </span>
         )}
         {isLoggedIn ? (
-          <NotificationsCard
-            user={user}
-            notifications={notifs}
-            panelOptions={props.panel.options}
-          />
+          <>
+            {props.panel.options.showUserCard && user ? (
+              <UserCard user={user} panelOptions={props.panel.options} />
+            ) : null}
+            {props.panel.options.showNotificationsCard && (
+              <NotificationsCard
+                notifications={notifs}
+                panelOptions={props.panel.options}
+              />
+            )}
+            {props.panel.options.showEventsCard && (
+              <EventsCard events={events} panelOptions={props.panel.options} />
+            )}
+          </>
         ) : (
           <span>
             Please add a GitHub personal access token in panel settings.

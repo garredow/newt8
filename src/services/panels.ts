@@ -226,6 +226,9 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       ...defaultPanelSettings,
       title: 'GitHub',
+      showUserCard: true,
+      showNotificationsCard: false,
+      showEventsCard: true,
     },
     options: {},
   },

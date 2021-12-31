@@ -24,6 +24,34 @@ export type User = {
   location: string | null;
 };
 
+export enum EventType {
+  CreatePullRequest = 'pr',
+  Star = 'star',
+  Fork = 'fork',
+  CreateRepo = 'repo',
+  OpenIssue = 'issue',
+  Unknown = 'unknown',
+}
+export type Event = {
+  id: string;
+  type: EventType;
+  title: string;
+  userAvatalUrl: string;
+  userName: string;
+  repoName: string;
+  action?: string;
+  createdAt: number;
+  entity?: {
+    id: number;
+    state: string;
+    url: string;
+    title: string;
+    body?: string;
+    comments: number;
+    number: number;
+  };
+};
+
 export type RawUser = {
   login: string;
   id: number;
@@ -90,4 +118,80 @@ export type RawNotification = {
   last_read_at: string | null;
   url: string;
   subscription_url: string;
+};
+
+export type RawEventType =
+  | 'IssuesEvent'
+  | 'WatchEvent'
+  | 'ForkEvent'
+  | 'PullRequestEvent'
+  | 'MemberEvent'
+  | 'CreateEvent';
+
+export type RawEvent = {
+  id: string;
+  type: RawEventType;
+  actor: {
+    id: number;
+    login: string;
+    display_login?: string;
+    gravatar_id: string | null;
+    url: string;
+    avatar_url: string;
+  };
+  repo: {
+    id: number;
+    name: string;
+    url: string;
+  };
+  // org?: components["schemas"]["actor"];
+  payload: {
+    action?: string;
+    issue?: {
+      id: number;
+      node_id: string;
+      /** URL for the issue */
+      url: string;
+      repository_url: string;
+      labels_url: string;
+      comments_url: string;
+      events_url: string;
+      html_url: string;
+      /** Number uniquely identifying the issue within its repository */
+      number: number;
+      /** State of the issue; either 'open' or 'closed' */
+      state: 'open' | 'closed';
+      /** Title of the issue */
+      title: string;
+      /** Contents of the issue */
+      body?: string | null;
+      comments: number;
+      closed_at: string | null;
+      created_at: string;
+      updated_at: string;
+    };
+    pull_request?: {
+      id: number;
+      html_url: string;
+      number: number;
+      state: string;
+      title: string;
+      body?: string | null;
+      comments: number;
+      closed_at: string | null;
+      created_at: string;
+      updated_at: string;
+    };
+    // comment?: components["schemas"]["issue-comment"];
+    pages?: {
+      page_name?: string;
+      title?: string;
+      summary?: string | null;
+      action?: string;
+      sha?: string;
+      html_url?: string;
+    }[];
+  };
+  public: boolean;
+  created_at: string | null;
 };
