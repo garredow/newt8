@@ -1,7 +1,6 @@
 import { formatDistance } from 'date-fns';
 import React, { useEffect, useMemo, useState } from 'react';
 import { PanelSettings } from '../../contexts/PanelContext';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { PanelKind } from '../../enums/panelKind';
 import { Window } from '../../models/Browser';
@@ -119,7 +118,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
             helpText="Display when each tab was last accessed, in relative time."
           >
             <Checkbox
-              location={ControlLocation.Panel}
               checked={options.showTabAccessedTime}
               onChange={(checked) =>
                 handleOptionChanged('showTabAccessedTime', checked)
@@ -131,7 +129,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
             helpText="Display the URL for each tab."
           >
             <Checkbox
-              location={ControlLocation.Panel}
               checked={options.showUrl}
               onChange={(checked) => handleOptionChanged('showUrl', checked)}
             />
@@ -141,7 +138,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
       extraButtons={
         <Button
           text="Choose New Window"
-          location={ControlLocation.Panel}
           fullWidth
           onClick={() => setShowWindowPicker(true)}
         />
@@ -154,7 +150,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
               <div>
                 <Button
                   text="All Windows"
-                  location={ControlLocation.Card}
                   type={ControlType.Primary}
                   fullWidth
                   onClick={() => handleChooseWindow(0)}
@@ -165,7 +160,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
                 <div key={window.id}>
                   <Button
                     text={`Window ${window.id}`}
-                    location={ControlLocation.Card}
                     type={ControlType.Secondary}
                     fullWidth
                     onClick={() => handleChooseWindow(window.id!)}

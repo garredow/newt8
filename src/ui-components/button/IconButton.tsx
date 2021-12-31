@@ -1,6 +1,5 @@
 import React, { MouseEventHandler } from 'react';
 import { IconContext } from 'react-icons/lib';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { joinClasses } from '../../utilities/classes';
@@ -9,7 +8,6 @@ import styles from './IconButton.module.css';
 type IconButtonProps = ComponentBaseProps & {
   size?: number;
   type?: ControlType;
-  location?: ControlLocation;
   icon: React.ReactNode;
   title: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -18,7 +16,6 @@ type IconButtonProps = ComponentBaseProps & {
 export function IconButton({
   size = 36,
   type = ControlType.Secondary,
-  location = ControlLocation.Default,
   icon,
   title,
   onClick,
@@ -32,17 +29,6 @@ export function IconButton({
   function getIconClass() {
     let iconClass = [];
 
-    switch (location) {
-      case ControlLocation.Panel:
-        iconClass.push(styles.panel);
-        break;
-      case ControlLocation.Card:
-        iconClass.push(styles.card);
-        break;
-      case ControlLocation.SideBar:
-        iconClass.push(styles.sidebar);
-        break;
-    }
     switch (type) {
       case ControlType.Primary:
         iconClass.push(styles.primary);

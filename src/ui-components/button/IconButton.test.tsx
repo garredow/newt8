@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { MdMenu } from 'react-icons/md';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { IconButton } from './IconButton';
 
@@ -70,77 +69,5 @@ describe('IconButton', () => {
     const { getByTestId } = render(<IconButton {...props} />);
 
     expect(getByTestId('icon')).toHaveClass('danger');
-  });
-
-  test('is panel button', () => {
-    const props = {
-      location: ControlLocation.Panel,
-      icon: <MdMenu data-testid="icon" />,
-      title: 'test',
-    };
-    const { getByTestId } = render(<IconButton {...props} />);
-
-    expect(getByTestId('icon')).toHaveClass('panel');
-  });
-
-  test('is panel primary button', () => {
-    const props = {
-      location: ControlLocation.Panel,
-      type: ControlType.Primary,
-      icon: <MdMenu data-testid="icon" />,
-      title: 'test',
-    };
-    const { getByTestId } = render(<IconButton {...props} />);
-
-    expect(getByTestId('icon')).toHaveClass('panel');
-    expect(getByTestId('icon')).toHaveClass('primary');
-  });
-
-  test('is card button', () => {
-    const props = {
-      location: ControlLocation.Card,
-      icon: <MdMenu data-testid="icon" />,
-      title: 'test',
-    };
-    const { getByTestId } = render(<IconButton {...props} />);
-
-    expect(getByTestId('icon')).toHaveClass('card');
-  });
-
-  test('is card primary button', () => {
-    const props = {
-      location: ControlLocation.Card,
-      type: ControlType.Primary,
-      icon: <MdMenu data-testid="icon" />,
-      title: 'test',
-    };
-    const { getByTestId } = render(<IconButton {...props} />);
-
-    expect(getByTestId('icon')).toHaveClass('card');
-    expect(getByTestId('icon')).toHaveClass('primary');
-  });
-
-  test('is sidebar button', () => {
-    const props = {
-      location: ControlLocation.SideBar,
-      icon: <MdMenu data-testid="icon" />,
-      title: 'test',
-    };
-    const { getByTestId } = render(<IconButton {...props} />);
-
-    expect(getByTestId('icon')).toHaveClass('sidebar');
-  });
-
-  test('is sidebar primary button', () => {
-    const props = {
-      location: ControlLocation.SideBar,
-      type: ControlType.Primary,
-      icon: <MdMenu data-testid="icon" />,
-      title: 'test',
-    };
-    const { getByTestId } = render(<IconButton {...props} />);
-
-    expect(getByTestId('icon')).toHaveClass('sidebar');
-    expect(getByTestId('icon')).toHaveClass('primary');
   });
 });

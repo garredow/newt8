@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import styles from './Button.module.css';
@@ -7,7 +6,6 @@ import styles from './Button.module.css';
 type ButtonProps = ComponentBaseProps & {
   text: string;
   type?: ControlType;
-  location?: ControlLocation;
   disabled?: boolean;
   fullWidth?: boolean;
   htmlType?: 'submit' | 'reset' | 'button';
@@ -18,7 +16,6 @@ type ButtonProps = ComponentBaseProps & {
 
 export function Button({
   type = ControlType.Secondary,
-  location = ControlLocation.Default,
   disabled = false,
   fullWidth = false,
   htmlType = 'button',
@@ -48,14 +45,6 @@ export function Button({
   function getButtonClasses() {
     let classes = [styles.root];
 
-    switch (location) {
-      case ControlLocation.Panel:
-        classes.push(styles.panel);
-        break;
-      case ControlLocation.Card:
-        classes.push(styles.card);
-        break;
-    }
     switch (type) {
       case ControlType.Primary:
         classes.push(styles.primary);

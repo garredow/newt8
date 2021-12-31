@@ -1,6 +1,5 @@
 import { format, parse } from 'date-fns';
 import React from 'react';
-import { ControlLocation } from '../enums/controlLocation';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { joinClasses } from '../utilities/classes';
 import styles from './EditableDate.module.css';
@@ -8,17 +7,13 @@ import styles from './EditableDate.module.css';
 export type EditableDateProps = ComponentBaseProps & {
   value: number;
   label: string;
-  location?: ControlLocation;
   onChange?: (value: number) => void;
 };
 
-export function EditableDate({
-  location = ControlLocation.Default,
-  ...props
-}: EditableDateProps) {
+export function EditableDate(props: EditableDateProps) {
   return (
     <div
-      className={joinClasses(styles.root, styles[location], props.className)}
+      className={joinClasses(styles.root, props.className)}
       title={format(props.value, 'PPPppp')}
       data-testid={props['data-testid']}
     >

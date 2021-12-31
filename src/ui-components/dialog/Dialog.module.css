@@ -11,6 +11,24 @@
   color: var(--card-primary-text-color) !important;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  --bg-color: var(--card-bg-color);
+  --accent-color: var(--card-accent-color);
+  --divider-color: var(--card-divider-color);
+  --title-text-color: var(--card-title-text-color);
+  --title-text-size: var(--card-title-text-size);
+  --title-text-weight: var(--card-title-text-weight);
+  --primary-text-color: var(--card-primary-text-color);
+  --secondary-text-color: var(--card-secondary-text-color);
+
+  --primary-button-bg-color: var(--card-primary-button-bg-color);
+  --primary-button-text-color: var(--card-primary-button-text-color);
+  --secondary-button-bg-color: var(--card-secondary-button-bg-color);
+  --secondary-button-text-color: var(--card-secondary-button-text-color);
+  --warning-button-bg-color: var(--card-warning-button-bg-color);
+  --warning-button-text-color: var(--card-warning-button-text-color);
+  --danger-button-bg-color: var(--card-danger-button-bg-color);
+  --danger-button-text-color: var(--card-danger-button-text-color);
 }
 
 .root.small {

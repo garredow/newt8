@@ -6,6 +6,24 @@
   border-radius: 3px;
   overflow-y: auto;
   padding: 10px 0;
+
+  --bg-color: var(--card-bg-color);
+  --accent-color: var(--card-accent-color);
+  --divider-color: var(--card-divider-color);
+  --title-text-color: var(--card-title-text-color);
+  --title-text-size: var(--card-title-text-size);
+  --title-text-weight: var(--card-title-text-weight);
+  --primary-text-color: var(--card-primary-text-color);
+  --secondary-text-color: var(--card-secondary-text-color);
+
+  --primary-button-bg-color: var(--card-primary-button-bg-color);
+  --primary-button-text-color: var(--card-primary-button-text-color);
+  --secondary-button-bg-color: var(--card-secondary-button-bg-color);
+  --secondary-button-text-color: var(--card-secondary-button-text-color);
+  --warning-button-bg-color: var(--card-warning-button-bg-color);
+  --warning-button-text-color: var(--card-warning-button-text-color);
+  --danger-button-bg-color: var(--card-danger-button-bg-color);
+  --danger-button-text-color: var(--card-danger-button-text-color);
 }
 
 .root.shadow {

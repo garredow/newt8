@@ -51,46 +51,6 @@
   color: var(--danger-button-text-color);
 }
 
-.panel.primary {
-  background-color: var(--panel-primary-button-bg-color);
-  color: var(--panel-primary-button-text-color);
-}
-
-.panel.secondary {
-  background-color: var(--panel-secondary-button-bg-color);
-  color: var(--panel-secondary-button-text-color);
-}
-
-.panel.warning {
-  background-color: var(--panel-warning-button-bg-color);
-  color: var(--panel-warning-button-text-color);
-}
-
-.panel.danger {
-  background-color: var(--panel-danger-button-bg-color);
-  color: var(--panel-danger-button-text-color);
-}
-
-.card.primary {
-  background-color: var(--card-primary-button-bg-color);
-  color: var(--card-primary-button-text-color);
-}
-
-.card.secondary {
-  background-color: var(--card-secondary-button-bg-color);
-  color: var(--card-secondary-button-text-color);
-}
-
-.card.warning {
-  background-color: var(--card-warning-button-bg-color);
-  color: var(--card-warning-button-text-color);
-}
-
-.card.danger {
-  background-color: var(--card-danger-button-bg-color);
-  color: var(--card-danger-button-text-color);
-}
-
 .fullWidth {
   width: 100%;
 }

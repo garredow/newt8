@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { PanelSettings } from '../../contexts/PanelContext';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { PanelKind } from '../../enums/panelKind';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
@@ -109,13 +108,11 @@ export function NewPanel(props: NewPanelProps) {
                 text="Request Permissions"
                 onClick={request}
                 type={ControlType.Primary}
-                location={ControlLocation.Panel}
               />
               <Button
                 text="Cancel"
                 onClick={cancelRequest}
                 type={ControlType.Secondary}
-                location={ControlLocation.Panel}
               />
               {permissionsError ? (
                 <p className={styles.error}>
@@ -133,7 +130,6 @@ export function NewPanel(props: NewPanelProps) {
                       key={panel}
                       text="Add Panel"
                       type={ControlType.Secondary}
-                      location={ControlLocation.Panel}
                       fullWidth
                       onClick={() => checkPermissions(panel)}
                     />
@@ -146,7 +142,6 @@ export function NewPanel(props: NewPanelProps) {
                   <Button
                     text="Delete"
                     type={ControlType.Danger}
-                    location={ControlLocation.Panel}
                     fullWidth
                     onClick={props.onDeletePanel}
                   />

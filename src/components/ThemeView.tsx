@@ -10,7 +10,6 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import { AppSettingsContext } from '../contexts/AppSettingsContext';
 import { defaultPanelSettings } from '../contexts/PanelContext';
-import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Theme, ThemeValues } from '../models/Theme';
@@ -546,25 +545,21 @@ export function ThemeView(props: ThemeViewProps) {
               </p>
               <Button
                 type={ControlType.Primary}
-                location={ControlLocation.Default}
                 text="Primary Button"
                 onClick={() => {}}
               />
               <Button
                 type={ControlType.Secondary}
-                location={ControlLocation.Default}
                 text="Secondary Button"
                 onClick={() => {}}
               />
               <Button
                 type={ControlType.Warning}
-                location={ControlLocation.Default}
                 text="Warning Button"
                 onClick={() => {}}
               />
               <Button
                 type={ControlType.Danger}
-                location={ControlLocation.Default}
                 text="Danger Button"
                 onClick={() => {}}
               />
@@ -601,25 +596,21 @@ export function ThemeView(props: ThemeViewProps) {
                 </div>
                 <Button
                   type={ControlType.Primary}
-                  location={ControlLocation.Panel}
                   text="Primary Panel Button"
                   onClick={() => {}}
                 />
                 <Button
                   type={ControlType.Secondary}
-                  location={ControlLocation.Panel}
                   text="Secondary Panel Button"
                   onClick={() => {}}
                 />
                 <Button
                   type={ControlType.Warning}
-                  location={ControlLocation.Panel}
                   text="Warning Panel Button"
                   onClick={() => {}}
                 />
                 <Button
                   type={ControlType.Danger}
-                  location={ControlLocation.Panel}
                   text="Danger Panel Button"
                   onClick={() => {}}
                 />
@@ -654,25 +645,21 @@ export function ThemeView(props: ThemeViewProps) {
                   />
                   <Button
                     type={ControlType.Primary}
-                    location={ControlLocation.Card}
                     text="Primary Card Button"
                     onClick={() => {}}
                   />
                   <Button
                     type={ControlType.Secondary}
-                    location={ControlLocation.Card}
                     text="Secondary Card Button"
                     onClick={() => {}}
                   />
                   <Button
                     type={ControlType.Warning}
-                    location={ControlLocation.Card}
                     text="Warning Card Button"
                     onClick={() => {}}
                   />
                   <Button
                     type={ControlType.Danger}
-                    location={ControlLocation.Card}
                     text="Danger Card Button"
                     onClick={() => {}}
                   />
@@ -689,7 +676,6 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ControlType.Primary}
-                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
@@ -697,7 +683,6 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ControlType.Secondary}
-                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
@@ -705,7 +690,6 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ControlType.Warning}
-                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />
@@ -713,7 +697,6 @@ export function ThemeView(props: ThemeViewProps) {
                   size={32}
                   title="Example"
                   type={ControlType.Danger}
-                  location={ControlLocation.SideBar}
                   icon={<MdSettings />}
                   onClick={() => {}}
                 />

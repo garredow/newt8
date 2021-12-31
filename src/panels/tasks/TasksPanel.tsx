@@ -7,7 +7,6 @@ import {
 import React, { useEffect, useMemo, useState } from 'react';
 import { MdAdd, MdDelete, MdDeleteSweep } from 'react-icons/md';
 import { PanelSettings } from '../../contexts/PanelContext';
-import { ControlLocation } from '../../enums/controlLocation';
 import { PanelKind } from '../../enums/panelKind';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
@@ -120,7 +119,6 @@ export function TasksPanel(props: TasksPanelProps) {
           </SettingsRow>
           <SettingsRow label="Show completed tasks" helpText="">
             <Checkbox
-              location={ControlLocation.Panel}
               checked={options.showCompleted}
               onChange={(checked) =>
                 handleOptionChanged('showCompleted', checked)
@@ -129,7 +127,6 @@ export function TasksPanel(props: TasksPanelProps) {
           </SettingsRow>
           <SettingsRow label="Show deleted tasks" helpText="">
             <Checkbox
-              location={ControlLocation.Panel}
               checked={options.showDeleted}
               onChange={(checked) =>
                 handleOptionChanged('showDeleted', checked)
@@ -274,7 +271,6 @@ function TaskRow(props: TaskRowProps) {
       <Checkbox
         className={styles.checkbox}
         checked={!!props.task.completedDate}
-        location={ControlLocation.Card}
         onChange={() =>
           updateTask(
             'completedDate',

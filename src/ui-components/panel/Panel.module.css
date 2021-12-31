@@ -3,6 +3,23 @@
   flex-direction: column;
   color: var(--panel-primary-text-color);
   background-color: var(--panel-bg-color);
+
+  --bg-color: var(--panel-bg-color);
+  --accent-color: var(--panel-accent-color);
+  --divider-color: var(--panel-divider-color);
+  --title-text-color: var(--panel-title-text-color);
+  --title-text-size: var(--panel-title-text-size);
+  --title-text-weight: var(--panel-title-text-weight);
+  --primary-text-color: var(--panel-primary-text-color);
+  --secondary-text-color: var(--panel-secondary-text-color);
+  --primary-button-bg-color: var(--panel-primary-button-bg-color);
+  --primary-button-text-color: var(--panel-primary-button-text-color);
+  --secondary-button-bg-color: var(--panel-secondary-button-bg-color);
+  --secondary-button-text-color: var(--panel-secondary-button-text-color);
+  --warning-button-bg-color: var(--panel-warning-button-bg-color);
+  --warning-button-text-color: var(--panel-warning-button-text-color);
+  --danger-button-bg-color: var(--panel-danger-button-bg-color);
+  --danger-button-text-color: var(--panel-danger-button-text-color);
 }
 
 .span1 {

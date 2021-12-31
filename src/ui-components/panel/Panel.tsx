@@ -4,7 +4,6 @@ import { PanelHeader } from '.';
 import { AppSettingsContext } from '../../contexts/AppSettingsContext';
 import { PanelSettings } from '../../contexts/PanelContext';
 import { PanelProvider } from '../../contexts/PanelProvider';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
@@ -62,7 +61,6 @@ export const Panel = React.forwardRef(
             gridArea: panel.id,
             ...props.style,
           }}
-          data-panel
         >
           <PanelHeader
             className={styles.header}
@@ -186,7 +184,6 @@ export const Panel = React.forwardRef(
                   helpText="This is usually the site's URL."
                 >
                   <Checkbox
-                    location={ControlLocation.Panel}
                     checked={panel.options.showSecondaryText}
                     onChange={(checked) =>
                       setOptionValue('showSecondaryText', checked)
@@ -201,7 +198,6 @@ export const Panel = React.forwardRef(
                   helpText="This is usually the time the site was last accessed."
                 >
                   <Checkbox
-                    location={ControlLocation.Panel}
                     checked={panel.options.showAccentText}
                     onChange={(checked) =>
                       setOptionValue('showAccentText', checked)
@@ -220,7 +216,6 @@ export const Panel = React.forwardRef(
               <Button
                 text="Delete Panel"
                 type={ControlType.Danger}
-                location={ControlLocation.Panel}
                 fullWidth
                 clickToConfirm={appSettings.confirmBeforeDelete}
                 onClick={props.onDeletePanel}

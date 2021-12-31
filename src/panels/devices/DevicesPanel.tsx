@@ -1,7 +1,6 @@
 import { formatDistance } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { PanelSettings } from '../../contexts/PanelContext';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { getDevices, openUrl } from '../../services/browser';
@@ -49,7 +48,6 @@ export function DevicesPanel(props: DevicesPanelProps) {
             helpText="Display the URL for each tab."
           >
             <Checkbox
-              location={ControlLocation.Panel}
               checked={props.panel.options.showUrl}
               onChange={(checked) => handleOptionChanged('showUrl', checked)}
             />
@@ -59,7 +57,6 @@ export function DevicesPanel(props: DevicesPanelProps) {
             helpText="Display when each tab was last accessed, in relative time."
           >
             <Checkbox
-              location={ControlLocation.Panel}
               checked={props.panel.options.showTabAccessedTime}
               onChange={(checked) =>
                 handleOptionChanged('showTabAccessedTime', checked)

@@ -1,6 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { Button } from './Button';
 
@@ -56,42 +55,6 @@ describe('Button', () => {
     const { getByText } = render(<Button {...props} />);
 
     expect(getByText(props.text)).toHaveClass('danger');
-  });
-
-  test('is panel button', () => {
-    const props = { text: 'button text', location: ControlLocation.Panel };
-    const { getByText } = render(<Button {...props} />);
-
-    expect(getByText(props.text)).toHaveClass('panel');
-  });
-
-  test('is panel primary button', () => {
-    const props = {
-      text: 'button text',
-      location: ControlLocation.Panel,
-      type: ControlType.Primary,
-    };
-    const { getByText } = render(<Button {...props} />);
-
-    expect(getByText(props.text)).toHaveClass('panel');
-  });
-
-  test('is card button', () => {
-    const props = { text: 'button text', location: ControlLocation.Card };
-    const { getByText } = render(<Button {...props} />);
-
-    expect(getByText(props.text)).toHaveClass('card');
-  });
-
-  test('is card primary button', () => {
-    const props = {
-      text: 'button text',
-      location: ControlLocation.Card,
-      type: ControlType.Primary,
-    };
-    const { getByText } = render(<Button {...props} />);
-
-    expect(getByText(props.text)).toHaveClass('card');
   });
 
   test('is full width', () => {

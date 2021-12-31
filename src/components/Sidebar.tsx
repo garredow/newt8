@@ -8,7 +8,6 @@ import {
 import { MdAdd, MdDashboard, MdSettings } from 'react-icons/md';
 import { useHistory, useLocation } from 'react-router-dom';
 import { PagesContext } from '../contexts/PagesContext';
-import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Page } from '../models/Page';
@@ -80,15 +79,10 @@ export function Sidebar(props: SidebarProps) {
   }
 
   return (
-    <div
-      className={styles.root}
-      data-testid={props['data-testid']}
-      data-sidebar
-    >
+    <div className={styles.root} data-testid={props['data-testid']}>
       <div className={styles.bar}>
         <IconButton
           size={32}
-          location={ControlLocation.SideBar}
           type={ControlType.Secondary}
           icon={<MdAdd />}
           title="Add Page"
@@ -149,7 +143,6 @@ export function Sidebar(props: SidebarProps) {
           <>
             <IconButton
               size={40}
-              location={ControlLocation.SideBar}
               type={ControlType.Primary}
               icon={<MdDashboard />}
               title="Page Settings"
@@ -159,7 +152,6 @@ export function Sidebar(props: SidebarProps) {
         ) : null}
         <IconButton
           size={40}
-          location={ControlLocation.SideBar}
           type={ControlType.Primary}
           icon={<MdSettings />}
           title="App Settings"

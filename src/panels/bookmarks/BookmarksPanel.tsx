@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { PanelSettings } from '../../contexts/PanelContext';
-import { ControlLocation } from '../../enums/controlLocation';
 import { Status } from '../../enums/status';
 import { Bookmark } from '../../models/Browser';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
@@ -103,15 +102,9 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
       data-testid={props['data-testid']}
       extraButtons={
         <>
-          <Button
-            text="Edit Bookmarks"
-            location={ControlLocation.Panel}
-            fullWidth
-            onClick={editBookmarks}
-          />
+          <Button text="Edit Bookmarks" fullWidth onClick={editBookmarks} />
           <Button
             text="Choose New Folder"
-            location={ControlLocation.Panel}
             fullWidth
             onClick={showFolderPicker}
           />
@@ -142,12 +135,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
                 No sub folders found. Would you like to choose a different
                 folder?
               </p>
-              <Button
-                location={ControlLocation.Card}
-                text="Sure"
-                fullWidth={true}
-                onClick={showFolderPicker}
-              />
+              <Button text="Sure" fullWidth={true} onClick={showFolderPicker} />
             </div>
           ) : null}
           {bookmarks.map((node) => (

@@ -3,7 +3,6 @@ import { MdSettings } from 'react-icons/md';
 import { CardHeader } from '.';
 import { ThemeValueChooser } from '../../components/ThemeValueChooser';
 import { PanelContext } from '../../contexts/PanelContext';
-import { ControlLocation } from '../../enums/controlLocation';
 import { ControlType } from '../../enums/controlType';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { CardSettings } from '../../models/CardSettings';
@@ -80,7 +79,6 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
         backgroundColor: cardSettings.cardColor,
         color: cardSettings.cardTextColor,
       }}
-      data-card
       data-testid={props['data-testid']}
     >
       <CardHeader
@@ -157,7 +155,6 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
           <Button
             text="Clear Styles"
             type={ControlType.Danger}
-            location={ControlLocation.Card}
             fullWidth
             onClick={clearCardStyles}
           />

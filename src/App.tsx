@@ -60,7 +60,7 @@ function App() {
 
   return (
     <MemoryRouter initialEntries={['/dashboard']}>
-      <div className={styles.root} data-base>
+      <div className={styles.root}>
         <Switch>
           <Route path="/dashboard">
             <DashboardView />

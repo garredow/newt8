@@ -5,6 +5,23 @@
   background-color: var(--sidebar-bg-color);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  --bg-color: var(--sidebar-bg-color);
+  --accent-color: var(--sidebar-accent-color);
+  --divider-color: var(--sidebar-divider-color);
+  --title-text-color: var(--sidebar-title-text-color);
+  --title-text-size: var(--sidebar-title-text-size);
+  --primary-text-color: var(--sidebar-primary-text-color);
+  --secondary-text-color: var(--sidebar-secondary-text-color);
+
+  --primary-button-bg-color: var(--sidebar-primary-button-bg-color);
+  --primary-button-text-color: var(--sidebar-primary-button-text-color);
+  --secondary-button-bg-color: var(--sidebar-secondary-button-bg-color);
+  --secondary-button-text-color: var(--sidebar-secondary-button-text-color);
+  --warning-button-bg-color: var(--sidebar-warning-button-bg-color);
+  --warning-button-text-color: var(--sidebar-warning-button-text-color);
+  --danger-button-bg-color: var(--sidebar-danger-button-bg-color);
+  --danger-button-text-color: var(--sidebar-danger-button-text-color);
 }
 
 .bar {

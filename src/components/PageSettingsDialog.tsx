@@ -2,7 +2,6 @@ import { cloneDeep } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { usePages } from '../contexts/PagesProvider';
-import { ControlLocation } from '../enums/controlLocation';
 import { ControlType } from '../enums/controlType';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { GridLayout } from '../models/GridLayout';
@@ -328,27 +327,23 @@ export function PageSettingsDialog({ onClose }: PageSettingsDialogProps) {
       </div>
       <div className={styles.gridActions}>
         <Button
-          location={ControlLocation.Card}
           type={ControlType.Secondary}
           text="Add Column Left"
           onClick={() => addCol('left')}
         />
         <div className={styles.rowActions}>
           <Button
-            location={ControlLocation.Card}
             type={ControlType.Secondary}
             text="Add Row Top"
             onClick={() => addRow('top')}
           />
           <Button
-            location={ControlLocation.Card}
             type={ControlType.Secondary}
             text="Add Row Bottom"
             onClick={() => addRow('bottom')}
           />
         </div>
         <Button
-          location={ControlLocation.Card}
           type={ControlType.Secondary}
           text="Add Column Right"
           onClick={() => addCol('right')}
@@ -356,7 +351,6 @@ export function PageSettingsDialog({ onClose }: PageSettingsDialogProps) {
       </div>
       <div className={styles.actions}>
         <Button
-          location={ControlLocation.Card}
           type={ControlType.Danger}
           text="Reset"
           title="Reset grid to a default safe layout"
@@ -364,21 +358,18 @@ export function PageSettingsDialog({ onClose }: PageSettingsDialogProps) {
         />
         <div style={{ flex: 1 }} />
         <Button
-          location={ControlLocation.Card}
           type={ControlType.Secondary}
           text="Cancel"
           title="Restore original grid layout"
           onClick={() => handleCancel()}
         />
         <Button
-          location={ControlLocation.Card}
           type={ControlType.Secondary}
           text="Preview"
           title="Apply changes without permanently saving them"
           onClick={() => handleSave(false)}
         />
         <Button
-          location={ControlLocation.Card}
           type={ControlType.Primary}
           text="Save"
           title="Save grid layout"
