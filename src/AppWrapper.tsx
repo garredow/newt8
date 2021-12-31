@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-// import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental';
-// import { persistQueryClient } from 'react-query/persistQueryClient-experimental';
+import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental';
+import { persistQueryClient } from 'react-query/persistQueryClient-experimental';
 import App from './App';
 import { AppSettingsProvider } from './contexts/AppSettingsProvider';
 import { PagesProvider } from './contexts/PagesProvider';
@@ -17,13 +17,13 @@ const queryClient = new QueryClient({
   },
 });
 
-// const localStoragePersistor = createWebStoragePersistor({
-//   storage: window.localStorage,
-// });
-// persistQueryClient({
-//   queryClient,
-//   persistor: localStoragePersistor,
-// });
+const localStoragePersistor = createWebStoragePersistor({
+  storage: window.localStorage,
+});
+persistQueryClient({
+  queryClient,
+  persistor: localStoragePersistor,
+});
 
 function AppWrapper(props: ComponentBaseProps) {
   return (
