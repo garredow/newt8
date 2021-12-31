@@ -18,7 +18,11 @@ type GitHubPanelProps = ComponentBaseProps & PanelBaseProps<GitHubPanelOptions>;
 export function GitHubPanel(props: GitHubPanelProps) {
   const isLoggedIn = !!props.panel.options.accessToken;
 
-  const { data: user } = useQuery(
+  const {
+    data: user,
+    isError,
+    isLoading,
+  } = useQuery(
     'gh_user',
     () => {
       const gh = new GitHub(props.panel.options.accessToken);
@@ -26,6 +30,7 @@ export function GitHubPanel(props: GitHubPanelProps) {
     },
     { enabled: isLoggedIn }
   );
+
   const { data: notifs = [] } = useQuery(
     'gh_notifs',
     () => {
@@ -34,6 +39,7 @@ export function GitHubPanel(props: GitHubPanelProps) {
     },
     { enabled: isLoggedIn }
   );
+
   // const { data: activity = [] } = useQuery(
   //   'gh_activity',
   //   () => {
@@ -50,8 +56,6 @@ export function GitHubPanel(props: GitHubPanelProps) {
     };
     props.onOptionsChanged(newOpts);
   }
-
-  console.log('options', props.panel.options);
 
   return (
     <Panel
@@ -78,19 +82,26 @@ export function GitHubPanel(props: GitHubPanelProps) {
         </>
       }
     >
-      {isLoggedIn ? (
-        <PanelContent>
+      <PanelContent>
+        {isLoading && <span>Fetching data....</span>}
+        {isError && (
+          <span>
+            There was an issue fetching your GitHub data. Please check your
+            personal access token.
+          </span>
+        )}
+        {isLoggedIn ? (
           <NotificationsCard
             user={user}
             notifications={notifs}
             panelOptions={props.panel.options}
           />
-        </PanelContent>
-      ) : (
-        <PanelContent>
-          Please add a GitHub personal access token in panel settings.
-        </PanelContent>
-      )}
+        ) : (
+          <span>
+            Please add a GitHub personal access token in panel settings.
+          </span>
+        )}
+      </PanelContent>
     </Panel>
   );
 }
