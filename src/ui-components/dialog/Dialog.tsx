@@ -31,7 +31,7 @@ export function Dialog({
       data-testid={props['data-testid']}
     >
       <header className={styles.header}>
-        <h2>{title}</h2>
+        <span>{title}</span>
         <IconButton
           icon={<MdClear />}
           title="Close"

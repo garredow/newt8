@@ -2,10 +2,10 @@
   padding-bottom: 5px;
   margin-bottom: 5px;
   border-bottom: 1px solid var(--card-divider-color);
+  overflow: hidden;
 }
 .root:last-of-type {
-  margin-bottom: 15px;
-  border: none;
+  margin-bottom: 0px;
 }
 
 .root.compact {
@@ -31,6 +31,8 @@
 
 .label {
   cursor: help;
+  white-space: nowrap;
+  margin-right: 10px;
 }
 
 .helptext {

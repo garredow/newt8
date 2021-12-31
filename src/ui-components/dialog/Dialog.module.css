@@ -56,10 +56,9 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--card-divider-color);
   padding: 0 15px 5px 15px;
-}
-
-.header > h2 {
-  margin: 0;
+  font-size: var(--title-text-size);
+  font-weight: var(--title-text-weight);
+  color: var(--title-text-color);
 }
 
 .content {

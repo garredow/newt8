@@ -9,42 +9,87 @@ import { Orientation } from '../../enums/orientation';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { Panel as PanelType } from '../../models/Panel';
+import { PanelSettingsSection } from '../../services/panels';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { IconButton } from '../button';
 import { Button } from '../button/Button';
 import { Dialog } from '../dialog/Dialog';
-import { Checkbox } from '../input';
+import { Checkbox, Input } from '../input';
 import { SettingsRow } from '../list/SettingsRow';
+import { SettingsSection } from '../list/SettingsSection';
 import styles from './Panel.module.css';
+
+const defaultSettingsConfig: PanelSettingsSection[] = [
+  {
+    id: 'panelLayout',
+    title: 'Panel Layout',
+    items: [
+      {
+        type: 'select',
+        key: 'displayStyle',
+        label: 'Display Style',
+        helpText: 'Choose how you want information in this panel displayed.',
+        options: [
+          { label: 'Default', value: PanelDisplayType.Default },
+          { label: 'Cards', value: PanelDisplayType.Cards },
+          { label: 'Lists', value: PanelDisplayType.Lists },
+        ],
+        testId: 'select-display-style',
+      },
+      {
+        type: 'select',
+        key: 'orientation',
+        label: 'Scroll Orientation',
+        helpText:
+          'Whether this panel should scroll horizontally or vertically.',
+        options: [
+          { label: 'Horizontal', value: Orientation.Horizontal },
+          { label: 'Vertical', value: Orientation.Vertical },
+        ],
+        testId: 'select-orientation',
+      },
+      {
+        type: 'select',
+        key: 'columns',
+        label: 'Columns',
+        helpText:
+          "The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width.",
+        options: [
+          { label: 'Auto', value: 0 },
+          { label: '1', value: 1 },
+          { label: '2', value: 2 },
+          { label: '3', value: 3 },
+          { label: '4', value: 4 },
+          { label: '5', value: 5 },
+          { label: '6', value: 6 },
+          { label: '7', value: 7 },
+          { label: '8', value: 8 },
+          { label: '9', value: 9 },
+          { label: '10', value: 10 },
+        ],
+        testId: 'select-columns',
+      },
+      {
+        type: 'checkbox',
+        key: 'fitCardsToViewport',
+        label: 'Fit Cards to Viewport',
+        helpText:
+          'Any cards in the panel will resize to fit on your screen without scrolling.',
+        testId: 'check-fit-cards',
+      },
+    ],
+  },
+];
 
 export type PanelProps = ComponentBaseProps & {
   panel: PanelType<PanelSettings>;
-  enableSettings?: boolean;
-  enableColumns?: boolean;
-  enableOrientation?: boolean;
-  enableSecondaryText?: boolean;
-  enableAccentText?: boolean;
-  enableCardSize?: boolean;
-  extraSettings?: React.ReactNode;
-  extraButtons?: React.ReactNode;
+  settings?: PanelSettingsSection[];
   onOptionsChanged: (options: PanelSettings) => void;
   onDeletePanel: () => void;
 };
 
 export const Panel = React.forwardRef(
-  (
-    {
-      panel,
-      enableSettings = true,
-      enableColumns = false,
-      enableOrientation = false,
-      enableSecondaryText = true,
-      enableAccentText = true,
-      enableCardSize = false,
-      ...props
-    }: PanelProps,
-    ref: any
-  ) => {
+  ({ panel, ...props }: PanelProps, ref: any) => {
     const [showSettings, setShowSettings] = useState(false);
     const { settings: appSettings } = useContext(AppSettingsContext);
 
@@ -79,14 +124,12 @@ export const Panel = React.forwardRef(
                 )
               )}
             >
-              {enableSettings ? (
-                <IconButton
-                  icon={<MdSettings />}
-                  title="Edit panel settings"
-                  onClick={() => setShowSettings(true)}
-                  data-testid="btn-settings"
-                />
-              ) : null}
+              <IconButton
+                icon={<MdSettings />}
+                title="Edit panel settings"
+                onClick={() => setShowSettings(true)}
+                data-testid="btn-settings"
+              />
             </div>
           </PanelHeader>
 
@@ -109,133 +152,74 @@ export const Panel = React.forwardRef(
               onClose={() => setShowSettings(false)}
               data-testid="settings"
             >
-              <SettingsRow
-                label="Title"
-                helpText="What should this panel be called?"
-              >
-                <input
-                  type="text"
-                  value={panel.options.title}
-                  size={panel.options.title.length + 1}
-                  onChange={(ev) => setOptionValue('title', ev.target.value)}
-                  data-testid="input-title"
+              {[...defaultSettingsConfig, ...(props.settings || [])].map(
+                (section) => (
+                  <SettingsSection key={section.id} title={section.title}>
+                    {section.items.map((item) =>
+                      item.type === 'button' ? (
+                        <Button
+                          key={item.key}
+                          text={item.label}
+                          fullWidth
+                          onClick={() => {
+                            setShowSettings(false);
+                            item.onClick?.();
+                          }}
+                          data-testid={item.testId}
+                        />
+                      ) : (
+                        <SettingsRow
+                          key={item.key}
+                          label={item.label}
+                          helpText={item.helpText}
+                        >
+                          {item.type === 'select' ? (
+                            <select
+                              value={(panel.options as any)[item.key]}
+                              onChange={(ev) => {
+                                const val = ev.target.value.match(/^[0-9]*$/)
+                                  ? parseInt(ev.target.value, 10)
+                                  : ev.target.value;
+                                setOptionValue(item.key, val);
+                              }}
+                              data-testid={item.testId}
+                            >
+                              {item.options?.map((opt) => (
+                                <option key={opt.value} value={opt.value}>
+                                  {opt.label}
+                                </option>
+                              ))}
+                            </select>
+                          ) : item.type === 'checkbox' ? (
+                            <Checkbox
+                              checked={(panel.options as any)[item.key]}
+                              onChange={(val) => setOptionValue(item.key, val)}
+                              data-testid={item.testId}
+                            />
+                          ) : item.type === 'input' ? (
+                            <Input
+                              type="text"
+                              spellCheck="false"
+                              value={(panel.options as any)[item.key]}
+                              onChange={(val) => setOptionValue(item.key, val)}
+                              data-testid={item.testId}
+                            />
+                          ) : null}
+                        </SettingsRow>
+                      )
+                    )}
+                  </SettingsSection>
+                )
+              )}
+              <SettingsSection>
+                <Button
+                  text="Delete Panel"
+                  type={ControlType.Danger}
+                  fullWidth
+                  clickToConfirm={appSettings.confirmBeforeDelete}
+                  onClick={props.onDeletePanel}
                 />
-              </SettingsRow>
-              <SettingsRow
-                label="Display Style"
-                helpText="Choose how you want information in this panel displayed."
-              >
-                <select
-                  value={panel.options.displayStyle}
-                  onChange={(ev) =>
-                    setOptionValue('displayStyle', ev.target.value)
-                  }
-                  data-testid="select-display-style"
-                >
-                  <option value={PanelDisplayType.Default}>Default</option>
-                  <option value={PanelDisplayType.Cards}>Cards</option>
-                  <option value={PanelDisplayType.Lists}>Lists</option>
-                </select>
-              </SettingsRow>
-              {enableOrientation ? (
-                <SettingsRow
-                  label="Scroll Orientation"
-                  helpText="Whether this panel should scroll horizontally or vertically."
-                >
-                  <select
-                    defaultValue={panel.options.orientation}
-                    onChange={(ev) =>
-                      setOptionValue('orientation', ev.target.value)
-                    }
-                    data-testid="select-orientation"
-                  >
-                    <option value={Orientation.Vertical}>Vertical</option>
-                    <option value={Orientation.Horizontal}>Horizontal</option>
-                  </select>
-                </SettingsRow>
-              ) : null}
-              {enableColumns ? (
-                <SettingsRow
-                  label="Columns"
-                  helpText="The number of columns the cards in this panel will be arranged in. 'Auto' will change it depending on the panel width."
-                >
-                  <select
-                    defaultValue={panel.options.columns}
-                    onChange={(ev) =>
-                      setOptionValue('columns', parseInt(ev.target.value, 10))
-                    }
-                    data-testid="select-columns"
-                  >
-                    <option value={0}>Auto</option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                    <option value={6}>6</option>
-                    <option value={7}>7</option>
-                    <option value={8}>8</option>
-                    <option value={9}>9</option>
-                    <option value={10}>10</option>
-                  </select>
-                </SettingsRow>
-              ) : null}
-              {enableCardSize ? (
-                <SettingsRow
-                  label="Fit Cards to Viewport"
-                  helpText="Any cards in the panel will resize to fit on your screen without scrolling."
-                >
-                  <Checkbox
-                    checked={panel.options.fitCardsToViewport}
-                    onChange={(checked) =>
-                      setOptionValue('fitCardsToViewport', checked)
-                    }
-                    data-testid="check-fit-cards"
-                  />
-                </SettingsRow>
-              ) : null}
-              {enableSecondaryText ? (
-                <SettingsRow
-                  label="Show Site Secondary Text"
-                  helpText="This is usually the site's URL."
-                >
-                  <Checkbox
-                    checked={panel.options.showSecondaryText}
-                    onChange={(checked) =>
-                      setOptionValue('showSecondaryText', checked)
-                    }
-                    data-testid="check-secondary-text"
-                  />
-                </SettingsRow>
-              ) : null}
-              {enableAccentText ? (
-                <SettingsRow
-                  label="Show Site Accent Text"
-                  helpText="This is usually the time the site was last accessed."
-                >
-                  <Checkbox
-                    checked={panel.options.showAccentText}
-                    onChange={(checked) =>
-                      setOptionValue('showAccentText', checked)
-                    }
-                    data-testid="check-accent-text"
-                  />
-                </SettingsRow>
-              ) : null}
-              {props.extraSettings}
-              <div
-                className={styles.extraButtons}
-                onClick={(ev) => setShowSettings(false)}
-              >
-                {props.extraButtons}
-              </div>
-              <Button
-                text="Delete Panel"
-                type={ControlType.Danger}
-                fullWidth
-                clickToConfirm={appSettings.confirmBeforeDelete}
-                onClick={props.onDeletePanel}
-              />
+              </SettingsSection>
             </Dialog>
           )}
         </div>

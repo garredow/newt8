@@ -21,6 +21,26 @@ export type PanelConfig = {
   };
 };
 
+export type PanelSetting = {
+  type: 'input' | 'checkbox' | 'select' | 'button';
+  key: string;
+  label: string;
+  helpText?: string;
+  options?: {
+    label: string;
+    value: any;
+  }[];
+  controlProps?: { [key: string]: string };
+  onClick?: () => void;
+  testId: string;
+};
+
+export type PanelSettingsSection = {
+  id: string;
+  title?: string;
+  items: PanelSetting[];
+};
+
 const panelConfigs: PanelConfigMap = {
   [PanelKind.Bookmarks]: {
     id: '',

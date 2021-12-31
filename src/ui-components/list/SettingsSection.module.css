@@ -1,0 +1,17 @@
+.root {
+  margin-bottom: 10px;
+}
+.root:last-of-type {
+  margin-bottom: 0px;
+}
+
+.title {
+  color: var(--title-text-color);
+  font-size: 1.1rem;
+  font-weight: var(--title-text-weight);
+  padding: 5px 0;
+}
+
+.root button {
+  margin: 5px 0;
+}

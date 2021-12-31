@@ -26,6 +26,28 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
+      settings={[
+        {
+          id: 'sites',
+          title: 'Sites',
+          items: [
+            {
+              type: 'checkbox',
+              key: 'showSecondaryText',
+              label: 'Show Url',
+              helpText: 'Display the URL for each tab.',
+              testId: 'check-show-url',
+            },
+            {
+              type: 'checkbox',
+              key: 'showAccentText',
+              label: 'Show Date',
+              helpText: 'Display when the tab was closed.',
+              testId: 'check-show-accessed',
+            },
+          ],
+        },
+      ]}
     >
       <PanelContent>
         <Card>

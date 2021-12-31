@@ -12,7 +12,6 @@ export function EmptyPanel(props: EmptyPanelProps) {
   return (
     <Panel
       panel={props.panel}
-      enableSettings={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}

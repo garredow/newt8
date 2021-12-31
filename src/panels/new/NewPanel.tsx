@@ -79,7 +79,6 @@ export function NewPanel(props: NewPanelProps) {
       {(state) => (
         <Panel
           panel={props.panel}
-          enableSettings={false}
           onOptionsChanged={() => {}}
           onDeletePanel={props.onDeletePanel}
           ref={nodeRef}

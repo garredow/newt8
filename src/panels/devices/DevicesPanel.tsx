@@ -5,8 +5,6 @@ import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { getDevices, openUrl } from '../../services/browser';
 import { Card, CardContent } from '../../ui-components/card';
-import { Checkbox } from '../../ui-components/input/Checkbox';
-import { SettingsRow } from '../../ui-components/list/SettingsRow';
 import { SiteRow } from '../../ui-components/list/SiteRow';
 import { Panel, PanelContent } from '../../ui-components/panel';
 
@@ -25,46 +23,35 @@ export function DevicesPanel(props: DevicesPanelProps) {
     getDevices().then((sessions) => setDevices(sessions));
   }, []);
 
-  function handleOptionChanged(key: string, val: any) {
-    const newOpts: DevicesPanelOptions = {
-      ...props.panel.options,
-      [key]: val,
-    };
-    props.onOptionsChanged(newOpts);
-  }
-
   return (
     <Panel
       panel={props.panel}
-      enableColumns={true}
-      enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
-      extraSettings={
-        <>
-          <SettingsRow
-            label="Show URL"
-            helpText="Display the URL for each tab."
-          >
-            <Checkbox
-              checked={props.panel.options.showUrl}
-              onChange={(checked) => handleOptionChanged('showUrl', checked)}
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Show when tab last accessed"
-            helpText="Display when each tab was last accessed, in relative time."
-          >
-            <Checkbox
-              checked={props.panel.options.showTabAccessedTime}
-              onChange={(checked) =>
-                handleOptionChanged('showTabAccessedTime', checked)
-              }
-            />
-          </SettingsRow>
-        </>
-      }
+      settings={[
+        {
+          id: 'sites',
+          title: 'Sites',
+          items: [
+            {
+              type: 'checkbox',
+              key: 'showUrl',
+              label: 'Show Url',
+              helpText: 'Display the URL for each tab.',
+              testId: 'check-show-url',
+            },
+            {
+              type: 'checkbox',
+              key: 'showTabAccessedTime',
+              label: 'Show when tab last accessed',
+              helpText:
+                'Display when each tab was last accessed, in relative time.',
+              testId: 'check-show-accessed',
+            },
+          ],
+        },
+      ]}
     >
       <PanelContent>
         {devices.map((device) => {

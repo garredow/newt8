@@ -141,28 +141,6 @@ describe('Panel', () => {
   //   expect(queryByTestId('settings')).toBeNull();
   // });
 
-  test('hide settings button', () => {
-    const props: PanelProps = {
-      panel: {
-        id: '1',
-        options: {
-          title: 'panel title',
-          width: 3,
-          columns: 1,
-          display: PanelDisplayType.Default,
-          orientation: Orientation.Vertical,
-        },
-      } as unknown as PanelType,
-      enableSettings: false,
-      onDeletePanel: jest.fn(),
-      onOptionsChanged: jest.fn(),
-    };
-
-    const { queryByTestId } = renderWithContext(<Panel {...props} />);
-
-    expect(queryByTestId('btn-settings')).toBeNull();
-  });
-
   test('select correct settings for props', async () => {
     const props: PanelProps = {
       panel: {
@@ -175,7 +153,6 @@ describe('Panel', () => {
           orientation: Orientation.Vertical,
         },
       } as unknown as PanelType,
-      enableColumns: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -185,31 +162,6 @@ describe('Panel', () => {
 
     expect((getByText('1') as HTMLOptionElement).selected).toBeTruthy();
     expect((getByText('5') as HTMLOptionElement).selected).toBeFalsy();
-  });
-
-  test('hides optional settings', async () => {
-    const props: PanelProps = {
-      panel: {
-        id: '1',
-        options: defaultPanelSettings,
-      } as unknown as PanelType,
-      enableColumns: false,
-      enableOrientation: false,
-      enableSecondaryText: false,
-      enableAccentText: false,
-      onDeletePanel: jest.fn(),
-      onOptionsChanged: jest.fn(),
-    };
-
-    const { getByTestId, queryByTestId } = renderWithContext(
-      <Panel {...props} />
-    );
-    fireEvent.click(getByTestId('btn-settings'));
-
-    expect(queryByTestId('select-orientation')).toBeNull();
-    expect(queryByTestId('select-columns')).toBeNull();
-    expect(queryByTestId('check-secondary-text')).toBeNull();
-    expect(queryByTestId('check-accent-text')).toBeNull();
   });
 
   test('sets columns', async () => {
@@ -224,7 +176,6 @@ describe('Panel', () => {
           orientation: Orientation.Vertical,
         },
       } as unknown as PanelType,
-      enableColumns: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -238,33 +189,6 @@ describe('Panel', () => {
     expect(props.onOptionsChanged).toBeCalledWith({
       ...props.panel.options,
       columns: 5,
-    });
-  });
-
-  test('sets title', async () => {
-    const props: PanelProps = {
-      panel: {
-        id: '1',
-        options: {
-          ...defaultPanelSettings,
-          title: 'panel title',
-        },
-      } as unknown as PanelType,
-      onDeletePanel: jest.fn(),
-      onOptionsChanged: jest.fn(),
-    };
-
-    const { getByTestId } = renderWithContext(<Panel {...props} />);
-
-    fireEvent.click(getByTestId('btn-settings'));
-    fireEvent.change(getByTestId('input-title'), {
-      target: { value: 'New Title' },
-    });
-
-    expect(props.onOptionsChanged).toBeCalledTimes(1);
-    expect(props.onOptionsChanged).toBeCalledWith({
-      ...props.panel.options,
-      title: 'New Title',
     });
   });
 
@@ -304,7 +228,6 @@ describe('Panel', () => {
           orientation: Orientation.Vertical,
         },
       } as unknown as PanelType,
-      enableOrientation: true,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
     };
@@ -320,58 +243,6 @@ describe('Panel', () => {
     expect(props.onOptionsChanged).toBeCalledWith({
       ...props.panel.options,
       orientation: Orientation.Horizontal,
-    });
-  });
-
-  test('sets show secondary text', async () => {
-    const props: PanelProps = {
-      panel: {
-        id: '1',
-        options: {
-          ...defaultPanelSettings,
-          showSecondaryText: false,
-        },
-      } as unknown as PanelType,
-      enableSecondaryText: true,
-      onDeletePanel: jest.fn(),
-      onOptionsChanged: jest.fn(),
-    };
-
-    const { getByTestId } = renderWithContext(<Panel {...props} />);
-
-    fireEvent.click(getByTestId('btn-settings'));
-    fireEvent.click(getByTestId('check-secondary-text'));
-
-    expect(props.onOptionsChanged).toBeCalledTimes(1);
-    expect(props.onOptionsChanged).toBeCalledWith({
-      ...props.panel.options,
-      showSecondaryText: true,
-    });
-  });
-
-  test('sets show accent text', async () => {
-    const props: PanelProps = {
-      panel: {
-        id: '1',
-        options: {
-          ...defaultPanelSettings,
-          showAccentText: false,
-        },
-      } as unknown as PanelType,
-      enableAccentText: true,
-      onDeletePanel: jest.fn(),
-      onOptionsChanged: jest.fn(),
-    };
-
-    const { getByTestId } = renderWithContext(<Panel {...props} />);
-
-    fireEvent.click(getByTestId('btn-settings'));
-    fireEvent.click(getByTestId('check-accent-text'));
-
-    expect(props.onOptionsChanged).toBeCalledTimes(1);
-    expect(props.onOptionsChanged).toBeCalledWith({
-      ...props.panel.options,
-      showAccentText: true,
     });
   });
 
@@ -464,16 +335,29 @@ describe('Panel', () => {
       } as unknown as PanelType,
       onDeletePanel: jest.fn(),
       onOptionsChanged: jest.fn(),
+      settings: [
+        {
+          id: 'actions',
+          items: [
+            {
+              type: 'button',
+              key: 'test',
+              label: 'Test',
+              testId: 'btn-test',
+            },
+          ],
+        },
+      ],
     };
 
     const { getByTestId, queryByTestId } = renderWithContext(
-      <Panel {...props} extraButtons={<button data-testid="btn-extra" />} />
+      <Panel {...props} />
     );
 
     fireEvent.click(getByTestId('btn-settings'));
     expect(getByTestId('settings')).toBeVisible();
 
-    fireEvent.click(getByTestId('btn-extra'));
+    fireEvent.click(getByTestId('btn-test'));
     expect(queryByTestId('settings')).toBeNull();
   });
 });

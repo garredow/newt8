@@ -17,7 +17,6 @@ import { Card, CardContent } from '../../ui-components/card';
 import { DynamicText } from '../../ui-components/DynamicText';
 import { EditableDate } from '../../ui-components/EditableDate';
 import { Checkbox } from '../../ui-components/input';
-import { SettingsRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import taskService from './service';
@@ -88,53 +87,42 @@ export function TasksPanel(props: TasksPanelProps) {
     setTasks(newTasks);
   }
 
-  function handleOptionChanged(key: string, val: any) {
-    const newOpts: TasksPanelOptions = {
-      ...options,
-      [key]: val,
-    };
-    props.onOptionsChanged(newOpts);
-  }
-
   return (
     <Panel
       panel={props.panel}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
-      enableSecondaryText={false}
-      enableAccentText={false}
-      extraSettings={
-        <>
-          <SettingsRow label="Date format" helpText="How to display task dates">
-            <select
-              defaultValue={options.dateFormat}
-              onChange={(ev) =>
-                handleOptionChanged('dateFormat', ev.target.value)
-              }
-              data-testid="select-dateFormat"
-            >
-              <option value="relative">Relative</option>
-              <option value="exact">Exact</option>
-            </select>
-          </SettingsRow>
-          <SettingsRow label="Show completed tasks" helpText="">
-            <Checkbox
-              checked={options.showCompleted}
-              onChange={(checked) =>
-                handleOptionChanged('showCompleted', checked)
-              }
-            />
-          </SettingsRow>
-          <SettingsRow label="Show deleted tasks" helpText="">
-            <Checkbox
-              checked={options.showDeleted}
-              onChange={(checked) =>
-                handleOptionChanged('showDeleted', checked)
-              }
-            />
-          </SettingsRow>
-        </>
-      }
+      settings={[
+        {
+          id: 'cards',
+          title: 'Cards',
+          items: [
+            {
+              type: 'select',
+              key: 'dateFormat',
+              label: 'Date Format',
+              helpText: 'How to display task dates',
+              options: [
+                { label: 'Relative', value: 'relative' },
+                { label: 'Exact', value: 'exact' },
+              ],
+              testId: 'select-date-format',
+            },
+            {
+              type: 'checkbox',
+              key: 'showCompleted',
+              label: 'Show completed tasks',
+              testId: 'check-show-completed',
+            },
+            {
+              type: 'checkbox',
+              key: 'showDeleted',
+              label: 'Show deleted tasks',
+              testId: 'check-show-deleted',
+            },
+          ],
+        },
+      ]}
       data-testid={props['data-testid']}
     >
       <PanelContent>

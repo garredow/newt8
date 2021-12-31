@@ -3,9 +3,6 @@ import { useQuery, useQueryClient } from 'react-query';
 import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
-import { Button } from '../../ui-components/button';
-import { Checkbox, Input } from '../../ui-components/input';
-import { SettingsRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
 import { EventsCard } from './components/EventsCard';
 import { NotificationsCard } from './components/NotificationsCard';
@@ -57,75 +54,65 @@ export function GitHubPanel(props: GitHubPanelProps) {
     { enabled: isLoggedIn && !!user }
   );
 
-  function setOptionValue(key: string, val: any) {
-    const newOpts: GitHubPanelOptions = {
-      ...props.panel.options,
-      [key]: val,
-    };
-    props.onOptionsChanged(newOpts);
-  }
-
   return (
     <Panel
       panel={props.panel}
-      enableAccentText={false}
-      enableSecondaryText={false}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
-      extraSettings={
-        <>
-          <SettingsRow label="User card" helpText="Show the user card.">
-            <Checkbox
-              checked={props.panel.options.showUserCard}
-              onChange={(checked) => setOptionValue('showUserCard', checked)}
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Notifications card"
-            helpText="Show the notifications card."
-          >
-            <Checkbox
-              checked={props.panel.options.showNotificationsCard}
-              onChange={(checked) =>
-                setOptionValue('showNotificationsCard', checked)
-              }
-            />
-          </SettingsRow>
-          <SettingsRow label="Events card" helpText="Show the events card.">
-            <Checkbox
-              checked={props.panel.options.showEventsCard}
-              onChange={(checked) => setOptionValue('showEventsCard', checked)}
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Token"
-            helpText="Your GitHub personal access token."
-          >
-            <Input
-              type="text"
-              spellCheck="false"
-              value={props.panel.options.accessToken}
-              secret={true}
-              onChange={(val) => setOptionValue('accessToken', val)}
-              data-testid="input-access-token"
-            />
-          </SettingsRow>
-        </>
-      }
-      extraButtons={
-        <>
-          <Button
-            text="Force Refresh"
-            fullWidth
-            onClick={() => {
-              queryClient.invalidateQueries('gh_user');
-              queryClient.invalidateQueries('gh_notifs');
-              queryClient.invalidateQueries('gh_events');
-            }}
-          />
-        </>
-      }
+      settings={[
+        {
+          id: 'cards',
+          title: 'Cards',
+          items: [
+            {
+              type: 'checkbox',
+              key: 'showUserCard',
+              label: 'User Card',
+              helpText: 'Show the user card.',
+              testId: 'check-user-card',
+            },
+            {
+              type: 'checkbox',
+              key: 'showNotificationsCard',
+              label: 'Notifications Card',
+              helpText: 'Show the notifications card.',
+              testId: 'check-notifications-card',
+            },
+            {
+              type: 'checkbox',
+              key: 'showEventsCard',
+              label: 'Events Card',
+              helpText: 'Show the events card.',
+              testId: 'check-events-card',
+            },
+          ],
+        },
+        {
+          id: 'github',
+          title: 'GitHub',
+          items: [
+            {
+              type: 'input',
+              key: 'accessToken',
+              label: 'Access Token',
+              helpText: 'Your GitHub personal access token.',
+              testId: 'input-access-token',
+            },
+            {
+              type: 'button',
+              key: 'forceRefresh',
+              label: 'Force Refresh',
+              testId: 'btn-force-refresh',
+              onClick: () => {
+                queryClient.invalidateQueries('gh_user');
+                queryClient.invalidateQueries('gh_notifs');
+                queryClient.invalidateQueries('gh_events');
+              },
+            },
+          ],
+        },
+      ]}
     >
       <PanelContent>
         {isLoading && <span>Fetching data....</span>}

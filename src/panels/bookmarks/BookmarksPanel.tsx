@@ -95,21 +95,43 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
   return (
     <Panel
       panel={props.panel}
-      enableColumns={true}
-      enableOrientation={true}
+      settings={[
+        {
+          id: 'sites',
+          title: 'Sites',
+          items: [
+            {
+              type: 'checkbox',
+              key: 'showSecondaryText',
+              label: 'Show Url',
+              helpText: "Show the site's URL.",
+              testId: 'check-secondary-text',
+            },
+          ],
+        },
+        {
+          id: 'actions',
+          items: [
+            {
+              type: 'button',
+              key: 'editBookmarks',
+              label: 'Edit Bookmarks',
+              testId: 'btn-edit-bookmarks',
+              onClick: editBookmarks,
+            },
+            {
+              type: 'button',
+              key: 'choosefolder',
+              label: 'Choose New Folder',
+              testId: 'btn-choose-folder',
+              onClick: showFolderPicker,
+            },
+          ],
+        },
+      ]}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
-      extraButtons={
-        <>
-          <Button text="Edit Bookmarks" fullWidth onClick={editBookmarks} />
-          <Button
-            text="Choose New Folder"
-            fullWidth
-            onClick={showFolderPicker}
-          />
-        </>
-      }
     >
       {showFinder ? (
         <PanelContent columns={1}>

@@ -12,6 +12,7 @@ export type PanelSettings = {
   displayStyle: PanelDisplayType;
   orientation: Orientation;
   fitCardsToViewport: boolean;
+  cardWidth: 'auto' | 'equal';
   // Card settings
   showCardShadow: boolean;
   showCardDividers: boolean;
@@ -37,6 +38,7 @@ export const defaultPanelSettings: PanelSettings = {
   displayDensity: DisplayDensity.Normal,
   orientation: Orientation.Vertical,
   fitCardsToViewport: true,
+  cardWidth: 'auto',
   showCardDividers: false,
   showCardShadow: true,
   showSecondaryText: true,

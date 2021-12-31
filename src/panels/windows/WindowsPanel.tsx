@@ -10,8 +10,7 @@ import { getWindows, switchToTab } from '../../services/browser';
 import { getPanelConfig } from '../../services/panels';
 import { Button } from '../../ui-components/button';
 import { Card } from '../../ui-components/card';
-import { Checkbox } from '../../ui-components/input';
-import { SettingsRow, SiteRow } from '../../ui-components/list';
+import { SiteRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
 import styles from './WindowsPanel.module.css';
 
@@ -57,14 +56,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
     setShowWindowPicker(false);
   }
 
-  function handleOptionChanged(key: string, val: any) {
-    const newOpts: WindowsPanelOptions = {
-      ...options,
-      [key]: val,
-    };
-    props.onOptionsChanged(newOpts);
-  }
-
   function renderWindows() {
     if (!windows) return null;
 
@@ -106,42 +97,44 @@ export function WindowsPanel(props: WindowsPanelProps) {
   return (
     <Panel
       panel={props.panel}
-      enableColumns={true}
-      enableOrientation={true}
       onOptionsChanged={props.onOptionsChanged as any}
       onDeletePanel={props.onDeletePanel}
       data-testid={props['data-testid']}
-      extraSettings={
-        <>
-          <SettingsRow
-            label="Show when tab last accessed"
-            helpText="Display when each tab was last accessed, in relative time."
-          >
-            <Checkbox
-              checked={options.showTabAccessedTime}
-              onChange={(checked) =>
-                handleOptionChanged('showTabAccessedTime', checked)
-              }
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Show URL"
-            helpText="Display the URL for each tab."
-          >
-            <Checkbox
-              checked={options.showUrl}
-              onChange={(checked) => handleOptionChanged('showUrl', checked)}
-            />
-          </SettingsRow>
-        </>
-      }
-      extraButtons={
-        <Button
-          text="Choose New Window"
-          fullWidth
-          onClick={() => setShowWindowPicker(true)}
-        />
-      }
+      settings={[
+        {
+          id: 'sites',
+          title: 'Sites',
+          items: [
+            {
+              type: 'checkbox',
+              key: 'showUrl',
+              label: 'Show Url',
+              helpText: 'Display the URL for each tab.',
+              testId: 'check-show-url',
+            },
+            {
+              type: 'checkbox',
+              key: 'showTabAccessedTime',
+              label: 'Show when tab last accessed',
+              helpText:
+                'Display when each tab was last accessed, in relative time.',
+              testId: 'check-show-accessed',
+            },
+          ],
+        },
+        {
+          id: 'actions',
+          items: [
+            {
+              type: 'button',
+              key: 'chooseWindow',
+              label: 'Choose New Window',
+              testId: 'btn-choose-window',
+              onClick: () => setShowWindowPicker(true),
+            },
+          ],
+        },
+      ]}
     >
       {showWindowPicker ? (
         <PanelContent columns={1}>
