@@ -1,0 +1,56 @@
+.root {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.root:hover {
+  backdrop-filter: brightness(var(--row-highlight));
+}
+.root:active {
+  backdrop-filter: brightness(var(--row-dim));
+}
+
+.root.compact {
+  padding: 5px 15px;
+}
+.root.spacious {
+  padding: 15px 15px;
+}
+
+.divider {
+  border-bottom: 1px solid var(--card-divider-color);
+}
+
+.textContainer {
+  flex: 1;
+}
+
+.icon {
+  min-height: 24px;
+  min-width: 24px;
+  margin-right: 10px;
+}
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.line2 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.repoName {
+  font-size: 0.9rem;
+  color: var(--card-accent-color);
+  margin-right: 10px;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: var(--card-secondary-text-color);
+}

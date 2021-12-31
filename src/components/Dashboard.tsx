@@ -9,9 +9,11 @@ import { PanelKind } from '../enums/panelKind';
 import { ComponentBaseProps } from '../models/ComponentBaseProps';
 import { Page } from '../models/Page';
 import { Panel } from '../models/Panel';
+import { AzureDevOpsPanel } from '../panels/ado/AzureDevOpsPanel';
 import { BookmarksPanel } from '../panels/bookmarks/BookmarksPanel';
 import { DevicesPanel } from '../panels/devices/DevicesPanel';
 import { EmptyPanel } from '../panels/empty/EmptyPanel';
+import { GitHubPanel } from '../panels/github/GitHubPanel';
 import { NewPanel } from '../panels/new/NewPanel';
 import { NewBookmarksPanel } from '../panels/newBookmarks/NewBookmarksPanel';
 import { RecentlyClosedPanel } from '../panels/recentlyClosed/RecentlyClosedPanel';
@@ -264,17 +266,28 @@ export function DashboardView(props: DashboardViewProps) {
             onDeletePanel={() => deletePanel(panel.id)}
           />
         );
-      // case PanelKind.AzureDevOps:
-      //   return (
-      //     <AzureDevOpsPanel
-      //       key={panel.id}
-      //       panel={panel}
-      //       onOptionsChanged={(options) =>
-      //         handleOptionsChanged(panel.id, options)
-      //       }
-      //       onDeletePanel={() => deletePanel(panel.id)}
-      //     />
-      //   );
+      case PanelKind.AzureDevOps:
+        return (
+          <AzureDevOpsPanel
+            key={panel.id}
+            panel={panel}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
+      case PanelKind.GitHub:
+        return (
+          <GitHubPanel
+            key={panel.id}
+            panel={panel}
+            onOptionsChanged={(options) =>
+              handleOptionsChanged(panel.id, options)
+            }
+            onDeletePanel={() => deletePanel(panel.id)}
+          />
+        );
     }
   }
 

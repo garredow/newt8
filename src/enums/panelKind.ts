@@ -8,5 +8,7 @@ export enum PanelKind {
   NewBookmarks = 'newBookmarks',
   TopSites = 'topSites',
   Tasks = 'tasks',
+  AzureDevOps = 'azureDevOps',
+  GitHub = 'gitHub',
   Empty = 'empty',
 }

@@ -205,6 +205,30 @@ const panelConfigs: PanelConfigMap = {
     },
     options: {},
   },
+  [PanelKind.AzureDevOps]: {
+    id: '',
+    name: 'AzureDevOps',
+    kind: PanelKind.AzureDevOps,
+    description: 'View ADO stuff.',
+    permissions: [],
+    defaultOptions: {
+      ...defaultPanelSettings,
+      title: 'Azure DevOps',
+    },
+    options: {},
+  },
+  [PanelKind.GitHub]: {
+    id: '',
+    name: 'GitHub',
+    kind: PanelKind.GitHub,
+    description: 'View your recent GitHub activity.',
+    permissions: [],
+    defaultOptions: {
+      ...defaultPanelSettings,
+      title: 'GitHub',
+    },
+    options: {},
+  },
   [PanelKind.Empty]: {
     id: '',
     name: 'Empty',
