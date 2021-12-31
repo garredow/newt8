@@ -18,20 +18,17 @@
     "newtab": "index.html"
   },
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "options_page": "options/options.html",
-  "permissions": [
-    "storage"
-  ],
+  "permissions": ["storage", "identity"],
   "optional_permissions": [
     "bookmarks",
     "tabs",
     "sessions",
     "topSites",
     "chrome://favicon/*"
-  ]
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8lhqbwDBFW5/3vogbGL5t76NwDqk0cCON2b+FsQRIX76aG6bwcJ24qh2Kn1o1s1psJCVkvsA5OrFPFpaL83Ic/L8FowEqgNs8wRvO4Ymy2yw0V5EF4IUBc5aFYmzR+QWhaDtXvaH/sABc1YbFDIIYanR/Q+2zBqEf+IKJR0usk6hNj0RiVBjk2w9bU+VRM21Ovi/IlImcU6HIATpOGiMLzQHpar7C9ZViDT/cC/6Zz+vSbnSI4Su2Z2LemN/tAw+GMctz3eYppx+WXghEEzqn5Sb+1K9wNd0X7N9yOO/Bj3F5cjdAfX7cnDAcixfhFrOd+T4nn09idSgMLC2TWeQwIDAQAB"
 }
