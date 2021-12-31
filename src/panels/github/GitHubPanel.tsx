@@ -1,8 +1,9 @@
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
+import { Button } from '../../ui-components/button';
 import { Input } from '../../ui-components/input';
 import { SettingsRow } from '../../ui-components/list';
 import { Panel, PanelContent } from '../../ui-components/panel';
@@ -17,6 +18,8 @@ type GitHubPanelProps = ComponentBaseProps & PanelBaseProps<GitHubPanelOptions>;
 
 export function GitHubPanel(props: GitHubPanelProps) {
   const isLoggedIn = !!props.panel.options.accessToken;
+
+  const queryClient = useQueryClient();
 
   const {
     data: user,
@@ -80,6 +83,18 @@ export function GitHubPanel(props: GitHubPanelProps) {
               data-testid="input-access-token"
             />
           </SettingsRow>
+        </>
+      }
+      extraButtons={
+        <>
+          <Button
+            text="Force Refresh"
+            fullWidth
+            onClick={() => {
+              queryClient.invalidateQueries('gh_user');
+              queryClient.invalidateQueries('gh_notifs');
+            }}
+          />
         </>
       }
     >
