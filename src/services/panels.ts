@@ -235,6 +235,7 @@ const panelConfigs: PanelConfigMap = {
     defaultOptions: {
       ...defaultPanelSettings,
       title: 'Azure DevOps',
+      showUserCard: true,
     },
     options: {},
   },
