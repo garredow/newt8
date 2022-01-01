@@ -1,8 +1,8 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { IconContext } from 'react-icons/lib';
 import { ControlType } from '../../enums/controlType';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
-import { joinClasses } from '../../utilities/classes';
+import { ifClass, joinClasses } from '../../utilities/classes';
 import styles from './IconButton.module.css';
 
 type IconButtonProps = ComponentBaseProps & {
@@ -10,6 +10,8 @@ type IconButtonProps = ComponentBaseProps & {
   type?: ControlType;
   icon: React.ReactNode;
   title: string;
+  animation?: 'spin';
+  forceAnimate?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -18,9 +20,28 @@ export function IconButton({
   type = ControlType.Secondary,
   icon,
   title,
+  forceAnimate = false,
   onClick,
   ...props
 }: IconButtonProps) {
+  const [working, setWorking] = useState(false);
+
+  async function handleClick(
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    if (working) return;
+
+    setWorking(true);
+    try {
+      await onClick?.(ev);
+      setWorking(false);
+    } catch (err) {
+      setWorking(false);
+    }
+  }
+
   const buttonStyle = {
     height: `${size}px`,
     width: `${size}px`,
@@ -48,9 +69,16 @@ export function IconButton({
   }
   return (
     <button
-      className={joinClasses(styles.root, props.className)}
+      className={joinClasses(
+        styles.root,
+        ifClass(
+          props.animation === 'spin' && (working || forceAnimate),
+          styles.iconSpin
+        ),
+        props.className
+      )}
       style={buttonStyle}
-      onClick={onClick}
+      onClick={handleClick}
       title={title}
       type="button"
       data-testid={props['data-testid']}
