@@ -79,7 +79,7 @@ describe('Panel', () => {
 
     fireEvent.click(getByTestId('btn-settings'));
 
-    expect(getByTestId('settings')).toBeVisible();
+    expect(getByTestId('dialog-panel-settings')).toBeVisible();
   });
 
   test('closes settings dialog on button click', async () => {
@@ -105,7 +105,7 @@ describe('Panel', () => {
     fireEvent.click(getByTestId('btn-settings'));
     fireEvent.click(getByTestId('btn-close-dialog'));
 
-    expect(queryByTestId('settings')).toBeNull();
+    expect(queryByTestId('dialog-panel-settings')).toBeNull();
   });
 
   // TODO: Fix this test
@@ -355,9 +355,9 @@ describe('Panel', () => {
     );
 
     fireEvent.click(getByTestId('btn-settings'));
-    expect(getByTestId('settings')).toBeVisible();
+    expect(getByTestId('dialog-panel-settings')).toBeVisible();
 
     fireEvent.click(getByTestId('btn-test'));
-    expect(queryByTestId('settings')).toBeNull();
+    expect(queryByTestId('dialog-panel-settings')).toBeNull();
   });
 });

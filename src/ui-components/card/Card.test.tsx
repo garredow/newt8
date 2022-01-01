@@ -9,7 +9,7 @@ import {
 describe('Card', () => {
   test('render children', () => {
     const { getByText } = render(
-      <Card>
+      <Card cardId="test">
         <div>child text</div>
       </Card>
     );
@@ -21,7 +21,6 @@ describe('Card', () => {
     const props: CardProps = {
       cardId: 'card1',
       title: 'card title',
-      enableSettings: true,
     };
 
     const { getByTestId, getByDisplayValue } = render(
@@ -56,7 +55,6 @@ describe('Card', () => {
     const props: CardProps = {
       cardId: 'card1',
       title: 'card title',
-      enableSettings: true,
     };
 
     const { getByTestId, queryByTestId } = render(<Card {...props} />);
@@ -72,7 +70,6 @@ describe('Card', () => {
     const props: CardProps = {
       cardId: 'card1',
       title: 'card title',
-      enableSettings: true,
     };
 
     const contextVal = {
@@ -117,7 +114,6 @@ describe('Card', () => {
     const props: CardProps = {
       cardId: 'card1',
       title: 'card title',
-      enableSettings: true,
     };
 
     const contextVal = {

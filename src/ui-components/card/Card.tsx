@@ -1,24 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { MdSettings } from 'react-icons/md';
 import { CardHeader } from '.';
-import { ThemeValueChooser } from '../../components/ThemeValueChooser';
 import { PanelContext } from '../../contexts/PanelContext';
-import { ControlType } from '../../enums/controlType';
 import { PanelDisplayType } from '../../enums/panelDisplayType';
 import { CardSettings } from '../../models/CardSettings';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
-import { Button, IconButton } from '../button';
-import { Dialog } from '../dialog/Dialog';
-import { SettingsRow } from '../list';
+import { IconButton } from '../button';
+import { SettingConfigSection, SettingsDialog } from '../SettingsDialog';
 import styles from './Card.module.css';
 
 export type CardProps = ComponentBaseProps & {
-  cardId?: string;
+  cardId: string;
   defaultTitle?: string;
   title?: string;
-  enableSettings?: boolean;
-  useCustomerHeader?: boolean;
+  canCustomize?: boolean;
+  settings?: SettingConfigSection[];
   actions?: React.ReactNode;
   onTitleChanged?: (title: string) => void;
 };
@@ -31,8 +28,8 @@ export const defaultCardSettings: CardSettings = {
   cardTextColor: '',
 };
 
-export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
-  const [showConfig, setShowConfig] = useState(false);
+export function Card({ cardId, canCustomize = true, ...props }: CardProps) {
+  const [showSettings, setShowSettings] = useState(false);
   const [cardSettings, setCardSettings] =
     useState<CardSettings>(defaultCardSettings);
 
@@ -48,7 +45,7 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
     }
   }, [cardId, cardSettingsMap]);
 
-  function handleSettingChanged(key: keyof CardSettings, value: string) {
+  function setOptionValue(key: string, value: any) {
     const newSettings = {
       ...cardSettings,
       [key]: value,
@@ -89,11 +86,11 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
         actions={
           <>
             {props.actions}
-            {enableSettings && (
+            {canCustomize && (
               <IconButton
                 icon={<MdSettings />}
                 title="Edit card settings"
-                onClick={() => setShowConfig(true)}
+                onClick={() => setShowSettings(true)}
                 size={28}
                 data-testid="btn-settings"
               />
@@ -101,65 +98,65 @@ export function Card({ cardId, enableSettings = false, ...props }: CardProps) {
           </>
         }
         onTitleChanged={(title) => {
-          handleSettingChanged('title', title);
+          setOptionValue('title', title);
           props.onTitleChanged?.(title);
         }}
       />
       {props.children}
-      {showConfig && cardId && (
-        <Dialog
+      {showSettings && (
+        <SettingsDialog
           title="Card Settings"
           width="medium"
-          onClose={() => setShowConfig(false)}
+          settings={[
+            {
+              id: 'style',
+              title: 'Style',
+              items: [
+                {
+                  type: 'color',
+                  key: 'headerColor',
+                  label: 'Header Color',
+                  helpText: "Choose a custom color for this card's header.",
+                  testId: 'input-header-bg',
+                },
+                {
+                  type: 'color',
+                  key: 'headerTextColor',
+                  label: 'Header Text Color',
+                  helpText:
+                    "Choose a custom color for this card's header text.",
+                  testId: 'input-header-text',
+                },
+                {
+                  type: 'color',
+                  key: 'cardColor',
+                  label: 'Card Color',
+                  helpText: 'Choose a custom color for this card.',
+                  testId: 'input-card-bg',
+                },
+                {
+                  type: 'color',
+                  key: 'cardTextColor',
+                  label: 'Card Text Color',
+                  helpText: "Choose a custom color for this card's text.",
+                  testId: 'input-card-text',
+                },
+                {
+                  type: 'button',
+                  key: 'clearStyles',
+                  label: 'Clear Styles',
+                  testId: 'btn-clear-styles',
+                  onClick: clearCardStyles,
+                },
+              ],
+            },
+            ...(props.settings || []),
+          ]}
+          settingsValues={cardSettings}
+          onSettingChanged={setOptionValue}
+          onClose={() => setShowSettings(false)}
           data-testid="dialog-card-settings"
-        >
-          <SettingsRow
-            label="Header Color"
-            helpText="Choose a custom color for this card's header."
-          >
-            <ThemeValueChooser
-              value={cardSettings.headerColor}
-              type="color"
-              onChange={(val) => handleSettingChanged('headerColor', val)}
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Header Text Color"
-            helpText="Choose a custom color for this card's header text."
-          >
-            <ThemeValueChooser
-              value={cardSettings.headerTextColor}
-              type="color"
-              onChange={(val) => handleSettingChanged('headerTextColor', val)}
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Card Color"
-            helpText="Choose a custom color for this card."
-          >
-            <ThemeValueChooser
-              value={cardSettings.cardColor}
-              type="color"
-              onChange={(val) => handleSettingChanged('cardColor', val)}
-            />
-          </SettingsRow>
-          <SettingsRow
-            label="Card Text Color"
-            helpText="Choose a custom color for this card's text."
-          >
-            <ThemeValueChooser
-              value={cardSettings.cardTextColor}
-              type="color"
-              onChange={(val) => handleSettingChanged('cardTextColor', val)}
-            />
-          </SettingsRow>
-          <Button
-            text="Clear Styles"
-            type={ControlType.Danger}
-            fullWidth
-            onClick={clearCardStyles}
-          />
-        </Dialog>
+        />
       )}
     </div>
   );
