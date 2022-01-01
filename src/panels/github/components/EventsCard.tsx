@@ -6,8 +6,8 @@ import {
   GoIssueOpened,
   GoRepo,
   GoRepoForked,
-  GoStar,
 } from 'react-icons/go';
+import { MdStarBorder } from 'react-icons/md';
 import { DisplayDensity } from '../../../enums/displayDensity';
 import { ComponentBaseProps } from '../../../models/ComponentBaseProps';
 import { Card, CardContent } from '../../../ui-components/card';
@@ -32,7 +32,7 @@ export function EventsCard({ events, ...props }: Props) {
         );
         break;
       case EventType.Star:
-        icon = <Icon icon={<GoStar title="Star" />} size="20" />;
+        icon = <Icon icon={<MdStarBorder title="Star" />} size="20" />;
         break;
       case EventType.Fork:
         icon = <Icon icon={<GoRepoForked title="Fork" />} size="20" />;
