@@ -1,0 +1,16 @@
+.childRow {
+  padding-left: 35px !important;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--secondary-text-color);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.footer > button {
+  margin-left: 7px;
+}

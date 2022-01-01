@@ -22,8 +22,8 @@ export type PanelSettings = {
   showSiteDividers: boolean;
 };
 
-export type PanelContextValue = {
-  settings: PanelSettings;
+export type PanelContextValue<TSettings = PanelSettings> = {
+  settings: TSettings;
   cardSettingsMap: {
     [cardId: string]: CardSettings;
   };
@@ -54,4 +54,4 @@ const defaultValue: PanelContextValue = {
 };
 
 export const PanelContext =
-  React.createContext<PanelContextValue>(defaultValue);
+  React.createContext<PanelContextValue<any>>(defaultValue);

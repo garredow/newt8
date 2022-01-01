@@ -70,7 +70,7 @@ export function SettingsDialog(props: SettingsDialogProps) {
                     value={(props.settingsValues as any)[item.key]}
                     {...item.controlProps}
                     onChange={(ev) => {
-                      const val = ev.target.value.match(/^[0-9]*$/)
+                      const val = ev.target.value.match(/^[0-9]+$/)
                         ? parseInt(ev.target.value, 10)
                         : ev.target.value;
                       props.onSettingChanged(item.key, val);

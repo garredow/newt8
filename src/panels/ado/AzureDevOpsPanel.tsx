@@ -1,32 +1,40 @@
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { Panel, PanelContent } from '../../ui-components/panel';
+import { QueryCard } from './components/QueryCard';
 import { UserCard } from './components/UserCard';
 import { AzureDevOps } from './service';
 
-type AzureDevOpsPanelOptions = PanelSettings & {
+export type AzureDevOpsPanelSettings = PanelSettings & {
   accessToken: string;
   showUserCard: boolean;
 };
 
 type AzureDevOpsPanelProps = ComponentBaseProps &
-  PanelBaseProps<AzureDevOpsPanelOptions>;
+  PanelBaseProps<AzureDevOpsPanelSettings>;
 
 export function AzureDevOpsPanel(props: AzureDevOpsPanelProps) {
   const isLoggedIn = !!props.panel.options.accessToken;
+  const queryClient = useQueryClient();
 
-  const {
-    data: user,
-    isError,
-    isLoading,
-  } = useQuery(
-    'ado_user',
+  const user = useQuery(
+    ['adoPanel', 'users'],
+    async () => {
+      const ado = new AzureDevOps(props.panel.options.accessToken);
+      await ado.getWorkActivity();
+      return ado.getCurrentUser();
+    },
+    { enabled: isLoggedIn }
+  );
+
+  const projects = useQuery(
+    ['adoPanel', 'projects'],
     () => {
       const ado = new AzureDevOps(props.panel.options.accessToken);
-      return ado.getCurrentUser();
+      return ado.getProjects();
     },
     { enabled: isLoggedIn }
   );
@@ -62,13 +70,22 @@ export function AzureDevOpsPanel(props: AzureDevOpsPanelProps) {
               helpText: 'Your Azure DevOps personal access token.',
               testId: 'input-access-token',
             },
+            {
+              type: 'button',
+              key: 'forceRefresh',
+              label: 'Force Refresh',
+              testId: 'btn-force-refresh',
+              onClick: () => {
+                queryClient.invalidateQueries('adoPanel');
+              },
+            },
           ],
         },
       ]}
     >
       <PanelContent>
-        {isLoading && <span>Fetching data....</span>}
-        {isError && (
+        {user.isLoading && <span>Fetching data....</span>}
+        {user.isError && (
           <span>
             There was an issue fetching your Azure DevOps data. Please check
             your personal access token.
@@ -76,9 +93,10 @@ export function AzureDevOpsPanel(props: AzureDevOpsPanelProps) {
         )}
         {isLoggedIn ? (
           <>
-            {props.panel.options.showUserCard && user ? (
-              <UserCard user={user} />
+            {props.panel.options.showUserCard && user.data ? (
+              <UserCard user={user.data} />
             ) : null}
+            <QueryCard projects={projects.data} />
           </>
         ) : (
           <span>
