@@ -122,7 +122,12 @@ export function NewPanel(props: NewPanelProps) {
           ) : (
             <PanelContent columns={0}>
               {availablePanels.map((panel) => (
-                <Card key={panel} title={getPanelConfig(panel).name}>
+                <Card
+                  key={panel}
+                  cardId={`new_${panel}`}
+                  canCustomize={false}
+                  title={getPanelConfig(panel).name}
+                >
                   <CardContent padding={true}>
                     {getPanelConfig(panel).description}
                   </CardContent>
@@ -137,7 +142,7 @@ export function NewPanel(props: NewPanelProps) {
                   </CardFooter>
                 </Card>
               ))}
-              <Card title="Cancel">
+              <Card cardId="new_cancel" title="Cancel" canCustomize={false}>
                 <CardContent padding={true}>
                   Changed your mind? No problem.
                 </CardContent>

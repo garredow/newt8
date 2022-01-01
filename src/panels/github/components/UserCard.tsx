@@ -14,7 +14,7 @@ type Props = ComponentBaseProps & {
 
 export function UserCard({ user, ...props }: Props) {
   return (
-    <Card className={styles.root} title="User">
+    <Card cardId="user" className={styles.root} defaultTitle="User">
       <CardContent>
         <div className={styles.user}>
           {user.avatarUrl ? <img src={user.avatarUrl} alt="" /> : null}

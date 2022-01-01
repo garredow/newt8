@@ -50,7 +50,7 @@ export function EventsCard({ events, ...props }: Props) {
     return icon;
   }
   return (
-    <Card className={styles.root} title="Events">
+    <Card className={styles.root} cardId="events" defaultTitle="Events">
       <CardContent>
         {events.map((a) => (
           <div

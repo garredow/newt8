@@ -14,7 +14,7 @@ type Props = ComponentBaseProps & {
 
 export function NotificationsCard({ notifications, ...props }: Props) {
   return (
-    <Card className={styles.root} title="Notifications">
+    <Card cardId="notifs" className={styles.root} defaultTitle="Notifications">
       <CardContent>
         {notifications.map((a) => (
           <NotificationRow

@@ -44,7 +44,7 @@ export function TopSitesPanel(props: TopSitesPanelProps) {
       ]}
     >
       <PanelContent>
-        <Card>
+        <Card cardId="sites" defaultTitle="Sites">
           <CardContent>
             {sites.map((site) => (
               <SiteRow

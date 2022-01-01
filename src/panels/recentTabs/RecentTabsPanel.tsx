@@ -53,7 +53,7 @@ export function RecentTabsPanel(props: RecentTabsPanelProps) {
       ]}
     >
       <PanelContent>
-        <Card>
+        <Card cardId="sites" defaultTitle="Tabs">
           <CardContent>
             {tabs.map((tab) => (
               <SiteRow

@@ -16,9 +16,6 @@
   margin-left: 5px;
 }
 
-.root {
-  color: var(--primary-text-color);
-}
 .root.editable:hover {
   border-bottom-color: var(--divider-color);
 }

@@ -614,7 +614,7 @@ export function ThemeView(props: ThemeViewProps) {
                   text="Danger Panel Button"
                   onClick={() => {}}
                 />
-                <Card title="Example Card">
+                <Card cardId="example" title="Example Card">
                   <div className={styles.cardTextContainer}>
                     <div className={styles.warningText}>
                       Here's some warning text so you can get an idea how it

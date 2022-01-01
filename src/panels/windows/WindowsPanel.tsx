@@ -68,7 +68,6 @@ export function WindowsPanel(props: WindowsPanelProps) {
           key={window.id}
           title={`Window ${window.id}`}
           cardId={`window_${window.id}`}
-          enableSettings
         >
           {window.tabs.map((tab) => (
             <SiteRow
@@ -138,7 +137,11 @@ export function WindowsPanel(props: WindowsPanelProps) {
     >
       {showWindowPicker ? (
         <PanelContent columns={1}>
-          <Card title="Choose a window">
+          <Card
+            cardId="choose_window"
+            title="Choose a window"
+            canCustomize={false}
+          >
             <div className={styles.windowPickerContainer}>
               <div>
                 <Button

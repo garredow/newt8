@@ -60,7 +60,6 @@ export function DevicesPanel(props: DevicesPanelProps) {
               key={session.window?.sessionId}
               title={device.deviceName}
               cardId={`device_${device.deviceName}_window_${session.window?.id}`}
-              enableSettings
             >
               <CardContent>
                 {session?.window?.tabs?.map((tab) => (

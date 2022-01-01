@@ -129,7 +129,6 @@ export function TasksPanel(props: TasksPanelProps) {
         <Card
           cardId="tasks_current"
           defaultTitle="Current"
-          enableSettings={true}
           actions={
             <IconButton
               icon={<MdAdd />}

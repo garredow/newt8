@@ -53,7 +53,7 @@ export function NewBookmarksPanel(props: NewBookmarksPanelProps) {
       ]}
     >
       <PanelContent>
-        <Card>
+        <Card cardId="sites" defaultTitle="Bookmarks">
           <CardContent>
             {bookmarks.map((bookmark) => (
               <SiteRow

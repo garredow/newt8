@@ -135,7 +135,7 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
     >
       {showFinder ? (
         <PanelContent columns={1}>
-          <Card title="Choose a folder">
+          <Card cardId="choose_folder" title="Choose a folder">
             <p className={styles.message}>
               Each folder in the folder you choose will become a card and list
               the sites inside.
@@ -163,9 +163,8 @@ export function BookmarksPanel(props: BookmarksPanelProps) {
           {bookmarks.map((node) => (
             <Card
               key={node.id}
-              cardId={`bookmarks_${node.id}`}
+              cardId={`folder_${node.id}`}
               title={node.title}
-              enableSettings
               onTitleChanged={(title) => updateBookmark(node.id, { title })}
             >
               {node

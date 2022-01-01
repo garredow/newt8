@@ -50,7 +50,7 @@ export function RecentlyClosedPanel(props: RecentlyClosedPanelProps) {
       ]}
     >
       <PanelContent>
-        <Card>
+        <Card cardId="sites" defaultTitle="Tabs">
           <CardContent>
             {sessions.map((session) => (
               <SiteRow
