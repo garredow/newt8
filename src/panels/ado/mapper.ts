@@ -1,11 +1,20 @@
+// import { PullRequest as AdoPullRequest } from 'azure-devops-node-api/interfaces/BuildInterfaces';
 import { TeamProjectReference } from 'azure-devops-node-api/interfaces/CoreInterfaces';
+import { GitPullRequest } from 'azure-devops-node-api/interfaces/GitInterfaces';
 import {
   Comment as AdoComment,
   QueryHierarchyItem,
   WorkItem as AdoWorkItem,
   WorkItemType as AdoWorkItemType,
 } from 'azure-devops-node-api/interfaces/WorkItemTrackingInterfaces';
-import { Comment, Project, Query, WorkItem, WorkItemType } from './models';
+import {
+  Comment,
+  Project,
+  PullRequest,
+  Query,
+  WorkItem,
+  WorkItemType,
+} from './models';
 
 export class Mapper {
   static toProject(raw: TeamProjectReference): Project {
@@ -102,6 +111,32 @@ export class Mapper {
       },
       createdDate: raw.createdDate?.valueOf()!,
       modifiedDate: raw.modifiedDate?.valueOf()!,
+    };
+  }
+  static toPullRequest(raw: GitPullRequest): PullRequest {
+    return {
+      id: (raw as any).pullRequestId!,
+      title: raw.title!,
+      description: raw.description,
+      createdBy: {
+        id: raw.createdBy!.id!,
+        name: raw.createdBy!.displayName || raw.createdBy!.uniqueName!,
+        subjectDescriptor: raw.createdBy!.descriptor!,
+        avatarUrl: raw.createdBy!.imageUrl!,
+      },
+      createdDate: raw.creationDate!.valueOf(),
+      repository: {
+        id: raw.repository!.id!,
+        name: raw.repository!.name!,
+      },
+      reviewers:
+        raw.reviewers?.map((a) => ({
+          id: a.id!,
+          name: a.displayName!,
+          avatarUrl: a.imageUrl!,
+          vote: a.vote!,
+        })) || [],
+      status: raw.status!,
     };
   }
 }

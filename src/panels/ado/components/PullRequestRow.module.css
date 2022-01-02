@@ -1,0 +1,51 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.root:hover {
+  backdrop-filter: brightness(var(--row-highlight));
+}
+.root:active {
+  backdrop-filter: brightness(var(--row-dim));
+}
+
+.root.compact {
+  padding: 5px 15px;
+}
+.root.spacious {
+  padding: 15px 15px;
+}
+
+.divider {
+  border-bottom: 1px solid var(--card-divider-color);
+}
+
+.createdAvatar {
+  margin-right: 10px;
+}
+
+.container {
+  flex: 1;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.repoName {
+  color: var(--secondary-text-color);
+  font-size: 0.9rem;
+}
+
+.reviewer {
+  margin-left: 3px;
+}

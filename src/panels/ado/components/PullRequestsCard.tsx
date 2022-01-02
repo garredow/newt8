@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import React, { useContext, useMemo } from 'react';
-import { MdRefresh, MdSearch } from 'react-icons/md';
+import { GoGitPullRequest } from 'react-icons/go';
+import { MdRefresh } from 'react-icons/md';
 import { useQuery } from 'react-query';
 import {
   PanelContext,
@@ -9,46 +10,42 @@ import {
 import { ControlType } from '../../../enums/controlType';
 import { CardSettings } from '../../../models/CardSettings';
 import { ComponentBaseProps } from '../../../models/ComponentBaseProps';
-import { openUrl } from '../../../services/browser';
 import { IconButton } from '../../../ui-components/button';
 import { Card, CardContent, CardFooter } from '../../../ui-components/card';
 import { AzureDevOpsPanelSettings } from '../AzureDevOpsPanel';
-import { Project, Query, WorkItem } from '../models';
+import { Project, PullRequest } from '../models';
 import { AzureDevOps } from '../service';
-import styles from './QueryCard.module.css';
-import { WorkItemRow } from './WorkItemRow';
+import { PullRequestRow } from './PullRequestRow';
+import styles from './PullRequestsCard.module.css';
 
 type Props = ComponentBaseProps & {
   projects?: Project[];
 };
 
-type QueryCardSettings = CardSettings & {
+type PullRequestsCardSettings = CardSettings & {
   projectId?: string;
-  queryId?: string;
 };
 
-type QueryCardData = {
-  queries: Query[];
-  workItems: WorkItem[];
+type PullRequestsCardData = {
+  pullRequests: PullRequest[];
   updatedDate: number;
 };
 
-export function QueryCard(props: Props) {
+export function PullRequestsCard(props: Props) {
   const { settings: panelSettings, cardSettingsMap } =
     useContext<PanelContextValue<AzureDevOpsPanelSettings>>(PanelContext);
 
   const cardSettings = useMemo(
-    () => cardSettingsMap.query as QueryCardSettings,
+    () => cardSettingsMap.pullRequests as PullRequestsCardSettings,
     [cardSettingsMap]
   );
 
   const { data, isLoading, isFetching, isError, isSuccess, refetch } =
-    useQuery<QueryCardData>(
-      ['adoPanel', 'queryCard', cardSettings.projectId, cardSettings.queryId],
+    useQuery<PullRequestsCardData>(
+      ['adoPanel', 'prCard', cardSettings.projectId],
       async () => {
-        const result: QueryCardData = {
-          queries: [],
-          workItems: [],
+        const result: PullRequestsCardData = {
+          pullRequests: [],
           updatedDate: new Date().valueOf(),
         };
 
@@ -57,26 +54,23 @@ export function QueryCard(props: Props) {
         }
 
         const ado = new AzureDevOps(panelSettings.accessToken);
-        result.queries = await ado.getQueries(cardSettings.projectId);
-
-        if (cardSettings.queryId) {
-          result.workItems = await ado.getWorkItemsByQuery(
-            cardSettings.projectId,
-            cardSettings.queryId
-          );
-        }
+        result.pullRequests = await ado.getPullRequestsByProject(
+          cardSettings.projectId
+        );
 
         return result;
       },
       { enabled: !!panelSettings.accessToken }
     );
 
+  console.log('pr data', data);
+
   return (
     <Card
-      cardId="query"
+      cardId="pullRequests"
       className={styles.root}
-      headerIcon={<MdSearch />}
-      defaultTitle="Query"
+      headerIcon={<GoGitPullRequest />}
+      defaultTitle="Pull Requests"
       settings={[
         {
           id: 'config',
@@ -98,34 +92,17 @@ export function QueryCard(props: Props) {
                 : [],
               testId: 'select-project',
             },
-            {
-              type: 'select',
-              key: 'queryId',
-              label: 'Query',
-              helpText: 'Choose which query for want executed.',
-              options: data?.queries?.map((a) => ({
-                label: a.path,
-                value: a.id,
-              })),
-              testId: 'select-query',
-            },
           ],
         },
       ]}
     >
       <CardContent>
-        {data?.workItems?.map((item) => (
-          <section key={item.id}>
-            <WorkItemRow workItem={item} onClick={() => openUrl(item.url)} />
-            {item.children.map((childItem) => (
-              <WorkItemRow
-                key={childItem.id}
-                className={styles.childRow}
-                workItem={childItem}
-                onClick={() => openUrl(childItem.url)}
-              />
-            ))}
-          </section>
+        {data?.pullRequests.map((a) => (
+          <PullRequestRow
+            key={a.id}
+            pullRequest={a}
+            onClick={() => console.log('click')}
+          />
         ))}
       </CardContent>
       <CardFooter className={styles.footer}>

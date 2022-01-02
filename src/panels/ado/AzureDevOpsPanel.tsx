@@ -4,6 +4,7 @@ import { PanelSettings } from '../../contexts/PanelContext';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { PanelBaseProps } from '../../models/PanelBaseProps';
 import { Panel, PanelContent } from '../../ui-components/panel';
+import { PullRequestsCard } from './components/PullRequestsCard';
 import { QueryCard } from './components/QueryCard';
 import { UserCard } from './components/UserCard';
 import { AzureDevOps } from './service';
@@ -97,6 +98,7 @@ export function AzureDevOpsPanel(props: AzureDevOpsPanelProps) {
               <UserCard user={user.data} />
             ) : null}
             <QueryCard projects={projects.data} />
+            <PullRequestsCard projects={projects.data} />
           </>
         ) : (
           <span>

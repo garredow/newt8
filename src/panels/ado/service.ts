@@ -10,6 +10,7 @@ import { Mapper } from './mapper';
 import {
   Comment,
   Project,
+  PullRequest,
   Query,
   User,
   WorkItem,
@@ -184,6 +185,14 @@ export class AzureDevOps {
     // console.log('activity', res);
 
     // return res.map((a) => Mapper.toWorkItemType(a));
+  }
+
+  async getPullRequestsByProject(projectId: string): Promise<PullRequest[]> {
+    const api = await this.ado.getGitApi();
+    const res = await api.getPullRequestsByProject(projectId, {});
+    // console.log('raw pull requests', res);
+
+    return res.map((a) => Mapper.toPullRequest(a));
   }
 
   private async followLink<T>(url: string): Promise<T> {

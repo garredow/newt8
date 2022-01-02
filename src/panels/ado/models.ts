@@ -1,3 +1,5 @@
+import { PullRequestStatus } from 'azure-devops-node-api/interfaces/GitInterfaces';
+
 export type User = {
   id: string;
   subjectDescriptor: string;
@@ -68,4 +70,34 @@ export type Comment = {
   modifiedBy: User;
   createdDate: number;
   modifiedDate: number;
+};
+
+export type Repository = {
+  id: string;
+  name: string;
+};
+
+export enum PullRequestVote {
+  Approved = 10,
+  ApprovedWithSuggestions = 5,
+  NoVote = 0,
+  WaitingForAuthor = -5,
+  Rejected = -10,
+}
+
+export type Reviewer = {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  vote: PullRequestVote;
+};
+export type PullRequest = {
+  id: number;
+  title: string;
+  description?: string;
+  createdBy: User;
+  createdDate: number;
+  repository: Repository;
+  reviewers: Reviewer[];
+  status: PullRequestStatus;
 };
