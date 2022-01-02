@@ -13,7 +13,7 @@ body {
   --secondary-text-color: rgba(0, 0, 0, 0.5);
   --warning-text-color: #f6f862;
   --error-text-color: #f45d52;
-  --base-text-size: 16px;
+  --base-text-size: 16;
   --base-text-weight: 400;
 
   --primary-button-bg-color: var(--app-accent-color);

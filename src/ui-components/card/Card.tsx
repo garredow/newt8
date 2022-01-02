@@ -12,6 +12,7 @@ import styles from './Card.module.css';
 
 export type CardProps = ComponentBaseProps & {
   cardId: string;
+  headerIcon?: React.ReactNode;
   defaultTitle?: string;
   title?: string;
   canCustomize?: boolean;
@@ -80,6 +81,7 @@ export function Card({ cardId, canCustomize = true, ...props }: CardProps) {
       data-testid={props['data-testid']}
     >
       <CardHeader
+        icon={props.headerIcon}
         title={props.title || cardSettings.title || props.defaultTitle}
         backgroundColor={cardSettings.headerColor}
         textColor={cardSettings.headerTextColor}

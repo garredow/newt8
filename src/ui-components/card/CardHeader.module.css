@@ -1,9 +1,18 @@
 .root {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 8px 10px 8px 12px;
   margin-top: -10px;
+}
+
+.icon {
+  height: var(--title-text-size);
+  width: var(--title-text-size);
+  margin-right: 7px;
+}
+
+.spacer {
+  flex: 1;
 }
 
 .actions {

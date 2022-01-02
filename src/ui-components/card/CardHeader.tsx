@@ -3,9 +3,11 @@ import { useAppSettings } from '../../contexts/AppSettingsProvider';
 import { ComponentBaseProps } from '../../models/ComponentBaseProps';
 import { ifClass, joinClasses } from '../../utilities/classes';
 import { DynamicText } from '../DynamicText';
+import { Icon } from '../icon';
 import styles from './CardHeader.module.css';
 
 type CardHeaderProps = ComponentBaseProps & {
+  icon?: React.ReactNode;
   title?: string;
   backgroundColor?: string;
   textColor?: string;
@@ -23,7 +25,9 @@ export function CardHeader(props: CardHeaderProps) {
       }}
       data-testid={props['data-testid']}
     >
+      {props.icon ? <Icon className={styles.icon} icon={props.icon} /> : null}
       <DynamicText
+        className={styles.title}
         style={{
           color: props.textColor || 'inherit',
         }}
@@ -32,6 +36,7 @@ export function CardHeader(props: CardHeaderProps) {
         editable={true}
         onEdit={props.onTitleChanged}
       />
+      <div className={styles.spacer} />
       <div
         className={joinClasses(
           styles.actions,
