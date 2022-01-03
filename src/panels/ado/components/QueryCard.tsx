@@ -117,14 +117,6 @@ export function QueryCard(props: Props) {
         {data?.workItems?.map((item) => (
           <section key={item.id}>
             <WorkItemRow workItem={item} onClick={() => openUrl(item.url)} />
-            {item.children.map((childItem) => (
-              <WorkItemRow
-                key={childItem.id}
-                className={styles.childRow}
-                workItem={childItem}
-                onClick={() => openUrl(childItem.url)}
-              />
-            ))}
           </section>
         ))}
       </CardContent>

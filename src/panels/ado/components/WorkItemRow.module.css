@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 15px;
+  padding: 10px 15px 10px 5px;
   cursor: pointer;
 }
 .root:hover {
@@ -13,14 +13,19 @@
 }
 
 .root.compact {
-  padding: 5px 15px;
+  padding: 5px 15px 5px 5px;
 }
 .root.spacious {
-  padding: 15px 15px;
+  padding: 15px 15px 15px 5px;
 }
 
 .divider {
   border-bottom: 1px solid var(--card-divider-color);
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .workItemIcon {

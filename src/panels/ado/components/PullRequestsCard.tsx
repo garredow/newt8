@@ -63,8 +63,6 @@ export function PullRequestsCard(props: Props) {
       { enabled: !!panelSettings.accessToken }
     );
 
-  console.log('pr data', data);
-
   return (
     <Card
       cardId="pullRequests"
